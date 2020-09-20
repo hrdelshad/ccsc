@@ -25,7 +25,9 @@ namespace ccsc.DataLayer.Context
 		#region Contact
 
 		public DbSet<Post> Posts { get; set; }
+		public DbSet<Gender> Genders { get; set; }
 		public DbSet<Contact> Contacts { get; set; }
+		public DbSet<Salutation> Salutations { get; set; }
 
 
 		#endregion

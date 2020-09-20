@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using ccsc.DataLayer.Context;
 
 namespace ccsc.DataLayer.Migrations
 {
     [DbContext(typeof(CcscContext))]
-    partial class CcscContextModelSnapshot : ModelSnapshot
+    [Migration("20200920100053_Gender")]
+    partial class Gender
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -49,13 +51,11 @@ namespace ccsc.DataLayer.Migrations
                         .HasMaxLength(15);
 
                     b.Property<string>("Phone")
+                        .IsRequired()
                         .HasColumnType("nvarchar(15)")
                         .HasMaxLength(15);
 
                     b.Property<int>("PostId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("SalutationId")
                         .HasColumnType("int");
 
                     b.HasKey("ContactId");
@@ -63,8 +63,6 @@ namespace ccsc.DataLayer.Migrations
                     b.HasIndex("CustomerId");
 
                     b.HasIndex("PostId");
-
-                    b.HasIndex("SalutationId");
 
                     b.ToTable("Contacts");
                 });
@@ -560,12 +558,6 @@ namespace ccsc.DataLayer.Migrations
                     b.HasOne("ccsc.DataLayer.Entities.Contacts.Post", "Post")
                         .WithMany()
                         .HasForeignKey("PostId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("ccsc.DataLayer.Entities.Contacts.Salutation", "Salutation")
-                        .WithMany()
-                        .HasForeignKey("SalutationId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });

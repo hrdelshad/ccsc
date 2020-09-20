@@ -44,19 +44,29 @@ namespace ccsc.DataLayer.Entities.Contacts
 
 
 		[Display(Name = "تلفن")]
-		[Required(ErrorMessage = "لطفا {0} را وارد کنید")]
+		//[Required(ErrorMessage = "لطفا {0} را وارد کنید")]
 		[MaxLength(15, ErrorMessage = "{0} نمیتواند بیشتر از {0} کارکتر باشد")]
 		public string Phone { get; set; }
 
+		//[Display(Name = "جنسیت")]
+		//public int GenderId { get; set; }
+
+		[Display(Name = "عنوان")]
+		public int SalutationId { get; set; }
 
 		#region Relations
 
 		[Display(Name = "سازمان")]
-		public Customer Customer { get; set; }
+		public virtual Customer Customer { get; set; }
 
 		[Display(Name = "پست سازمانی")]
-		public Post Post { get; set; }
+		public virtual Post Post { get; set; }
 
+		//[Display(Name = "جنسیت")]
+		//public Gender Gender { get; set; }
+
+		[Display(Name = "عنوان")]
+		public virtual Salutation Salutation { get; set; }
 
 		#endregion
 

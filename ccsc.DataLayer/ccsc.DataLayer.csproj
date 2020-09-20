@@ -7,6 +7,12 @@
   <ItemGroup>
     <Compile Remove="Migrations\20200918064143_init2.cs" />
     <Compile Remove="Migrations\20200918064143_init2.Designer.cs" />
+    <Compile Remove="Migrations\20200920100622_Gender2.cs" />
+    <Compile Remove="Migrations\20200920100622_Gender2.Designer.cs" />
+    <Compile Remove="Migrations\20200920101924_Gender3.cs" />
+    <Compile Remove="Migrations\20200920101924_Gender3.Designer.cs" />
+    <Compile Remove="Migrations\20200920103419_Gender4.cs" />
+    <Compile Remove="Migrations\20200920103419_Gender4.Designer.cs" />
   </ItemGroup>
 
   <ItemGroup>

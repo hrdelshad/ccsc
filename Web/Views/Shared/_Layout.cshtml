@@ -7,6 +7,13 @@
 	<link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap-rtl.min.css" />
 	<link rel="stylesheet" href="~/css/site.css" />
 	<link rel="stylesheet" href="~/css/my.css" />
+	<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+	@*<link href="https://kendo.cdn.telerik.com/2019.3.1023/styles/kendo.bootstrap-v4.min.css" rel="stylesheet" type="text/css" />
+	<script src="https://kendo.cdn.telerik.com/2019.3.1023/js/jquery.min.js"></script>
+	<script src="https://kendo.cdn.telerik.com/2019.3.1023/js/jszip.min.js"></script>
+	<script src="https://kendo.cdn.telerik.com/2019.3.1023/js/kendo.all.min.js"></script>
+	<script src="https://kendo.cdn.telerik.com/2019.3.1023/js/kendo.aspnetmvc.min.js"></script>*@
+
 </head>
 <body class="dir-right">
 	<header>
@@ -34,6 +41,9 @@
 						<li class="nav-item">
 							<a class="nav-link text-light" asp-area="" asp-controller="Products" asp-action="Index">محصولات</a>
 						</li>
+						<li class="nav-item">
+							<a class="nav-link text-light" asp-area="" asp-controller="Requests" asp-action="Index">درخواست ها</a>
+						</li>
 						<li class="nav-item dropdown">
 							<a class="nav-link dropdown-toggle text-light" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 								اطلاعات پایه
@@ -45,6 +55,11 @@
 								<a class="dropdown-item" asp-area="" asp-controller="Posts" asp-action="Index">پست ها</a>
 								<a class="dropdown-item" asp-area="" asp-controller="CourseLevels" asp-action="Index">مقاطع تحصیلی</a>
 								<a class="dropdown-item" asp-area="" asp-controller="CustomerTypes" asp-action="Index">انواع مشتری</a>
+								<a class="dropdown-item" asp-area="" asp-controller="RequestChanels" asp-action="Index">کانال درخواست</a>
+								<a class="dropdown-item" asp-area="" asp-controller="RequestTypes" asp-action="Index">نوع درخواست</a>
+								<a class="dropdown-item" asp-area="" asp-controller="RequestStatus" asp-action="Index">وضعیت درخواست</a>
+								<a class="dropdown-item" asp-area="" asp-controller="Salutations" asp-action="Index">القاب</a>
+								<a class="dropdown-item" asp-area="" asp-controller="Genders" asp-action="Index">جنسیت</a>
 
 							</div>
 						</li>
@@ -65,7 +80,7 @@
 	</div>
 
 	<footer class="border-top footer text-muted">
-		<div class="container">
+		<div class="container text-left">
 			&copy; 2020 - CCSC - <a asp-area="" asp-controller="Home" asp-action="About">About</a>
 		</div>
 	</footer>

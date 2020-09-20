@@ -22,7 +22,7 @@ namespace ccsc.Web.Controllers
         // GET: Contacts
         public async Task<IActionResult> Index()
         {
-            var ccscContext = _context.Contacts.Include(c => c.Customer).Include(c => c.Post);
+            var ccscContext = _context.Contacts.Include(c => c.Customer).Include(c => c.Post).Include(c => c.Salutation);
             return View(await ccscContext.ToListAsync());
         }
 
@@ -37,6 +37,7 @@ namespace ccsc.Web.Controllers
             var contact = await _context.Contacts
                 .Include(c => c.Customer)
                 .Include(c => c.Post)
+                .Include(c => c.Salutation)
                 .FirstOrDefaultAsync(m => m.ContactId == id);
             if (contact == null)
             {
@@ -51,6 +52,7 @@ namespace ccsc.Web.Controllers
         {
             ViewData["CustomerId"] = new SelectList(_context.Customers, "CustomerId", "Title");
             ViewData["PostId"] = new SelectList(_context.Posts, "PostId", "Title");
+            ViewData["SalutationId"] = new SelectList(_context.Salutations, "SalutationId", "Title");
             return View();
         }
 
@@ -59,7 +61,7 @@ namespace ccsc.Web.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("ContactId,FirstName,LasName,CustomerId,PostId,Email,Mobile,Phone")] Contact contact)
+        public async Task<IActionResult> Create([Bind("ContactId,FirstName,LasName,CustomerId,PostId,Email,Mobile,Phone,SalutationId")] Contact contact)
         {
             if (ModelState.IsValid)
             {
@@ -69,6 +71,7 @@ namespace ccsc.Web.Controllers
             }
             ViewData["CustomerId"] = new SelectList(_context.Customers, "CustomerId", "Title", contact.CustomerId);
             ViewData["PostId"] = new SelectList(_context.Posts, "PostId", "Title", contact.PostId);
+            ViewData["SalutationId"] = new SelectList(_context.Salutations, "SalutationId", "Title", contact.SalutationId);
             return View(contact);
         }
 
@@ -87,6 +90,7 @@ namespace ccsc.Web.Controllers
             }
             ViewData["CustomerId"] = new SelectList(_context.Customers, "CustomerId", "Title", contact.CustomerId);
             ViewData["PostId"] = new SelectList(_context.Posts, "PostId", "Title", contact.PostId);
+            ViewData["SalutationId"] = new SelectList(_context.Salutations, "SalutationId", "Title", contact.SalutationId);
             return View(contact);
         }
 
@@ -95,7 +99,7 @@ namespace ccsc.Web.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("ContactId,FirstName,LasName,CustomerId,PostId,Email,Mobile,Phone")] Contact contact)
+        public async Task<IActionResult> Edit(int id, [Bind("ContactId,FirstName,LasName,CustomerId,PostId,Email,Mobile,Phone,SalutationId")] Contact contact)
         {
             if (id != contact.ContactId)
             {
@@ -124,6 +128,7 @@ namespace ccsc.Web.Controllers
             }
             ViewData["CustomerId"] = new SelectList(_context.Customers, "CustomerId", "Title", contact.CustomerId);
             ViewData["PostId"] = new SelectList(_context.Posts, "PostId", "Title", contact.PostId);
+            ViewData["SalutationId"] = new SelectList(_context.Salutations, "SalutationId", "Title", contact.SalutationId);
             return View(contact);
         }
 
@@ -138,6 +143,7 @@ namespace ccsc.Web.Controllers
             var contact = await _context.Contacts
                 .Include(c => c.Customer)
                 .Include(c => c.Post)
+                .Include(c => c.Salutation)
                 .FirstOrDefaultAsync(m => m.ContactId == id);
             if (contact == null)
             {
