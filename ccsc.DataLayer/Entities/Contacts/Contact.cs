@@ -21,7 +21,7 @@ namespace ccsc.DataLayer.Entities.Contacts
 		[Display(Name = "نام خانوادگی")]
 		[Required(ErrorMessage = "لطفا {0} را وارد کنید")]
 		[MaxLength(50, ErrorMessage = "{0} نمیتواند بیشتر از {0} کارکتر باشد")]
-		public string LasName { get; set; }
+		public string LastName { get; set; }
 
 		[Display(Name = "سازمان")]
 		[Required(ErrorMessage = "لطفا {0} را وارد کنید")]

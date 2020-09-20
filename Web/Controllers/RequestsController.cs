@@ -52,7 +52,7 @@ namespace ccsc.Web.Controllers
         // GET: Requests/Create
         public IActionResult Create()
         {
-            ViewData["ContactId"] = new SelectList(_context.Contacts, "ContactId", "Email");
+            ViewData["ContactId"] = new SelectList(_context.Contacts, "ContactId", "LastName");
             ViewData["ProductId"] = new SelectList(_context.Products, "ProductId", "Title");
             ViewData["RequestChanelId"] = new SelectList(_context.RequestChanels, "RequestChanelId", "Title");
             ViewData["RequestStatusId"] = new SelectList(_context.RequestStatuses, "RequestStatusId", "Title");
@@ -73,7 +73,7 @@ namespace ccsc.Web.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["ContactId"] = new SelectList(_context.Contacts, "ContactId", "Email", request.ContactId);
+            ViewData["ContactId"] = new SelectList(_context.Contacts, "ContactId", "LastName", request.ContactId);
             ViewData["ProductId"] = new SelectList(_context.Products, "ProductId", "Title", request.ProductId);
             ViewData["RequestChanelId"] = new SelectList(_context.RequestChanels, "RequestChanelId", "Title", request.RequestChanelId);
             ViewData["RequestStatusId"] = new SelectList(_context.RequestStatuses, "RequestStatusId", "Title", request.RequestStatusId);

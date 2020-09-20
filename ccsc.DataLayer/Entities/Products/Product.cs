@@ -15,7 +15,5 @@ namespace ccsc.DataLayer.Entities.Products
 		[Required(ErrorMessage = "لطفا {0} را وارد کنید")]
 		[MaxLength(200, ErrorMessage = "{0} نمیتواند بیشتر از {0} کارکتر باشد")]
 		public string Title { get; set; }
-
-
 	}
 }

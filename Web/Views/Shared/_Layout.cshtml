@@ -8,24 +8,38 @@
 	<link rel="stylesheet" href="~/css/site.css" />
 	<link rel="stylesheet" href="~/css/my.css" />
 	<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
-	@*<link href="https://kendo.cdn.telerik.com/2019.3.1023/styles/kendo.bootstrap-v4.min.css" rel="stylesheet" type="text/css" />
-	<script src="https://kendo.cdn.telerik.com/2019.3.1023/js/jquery.min.js"></script>
-	<script src="https://kendo.cdn.telerik.com/2019.3.1023/js/jszip.min.js"></script>
-	<script src="https://kendo.cdn.telerik.com/2019.3.1023/js/kendo.all.min.js"></script>
-	<script src="https://kendo.cdn.telerik.com/2019.3.1023/js/kendo.aspnetmvc.min.js"></script>*@
 
+	<link href="https://kendo.cdn.telerik.com/2020.2.513/styles/kendo.bootstrap-v4.min.css" rel="stylesheet" type="text/css" />
+	<link href="https://kendo.cdn.telerik.com/2020.2.513/styles/kendo.rtl.min.css" rel="stylesheet" type="text/css" />
+	<script src="https://kendo.cdn.telerik.com/2020.2.513/js/jquery.min.js"></script>
+	<script src="https://kendo.cdn.telerik.com/2020.2.513/js/jszip.min.js"></script>
+	<script src="https://kendo.cdn.telerik.com/2020.2.513/js/kendo.all.min.js"></script>
+	<script src="https://kendo.cdn.telerik.com/2020.2.513/js/kendo.aspnetmvc.min.js"></script>
 </head>
-<body class="dir-right">
+<body class="k-rtl dir-right">
 	<header>
 		<nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-dark border-bottom box-shadow mb-3">
 			<div class="container">
-				<a class="navbar-brand text-light" asp-area="" asp-controller="Home" asp-action="Index">انیکو</a>
+				<span class="material-icons">
+					<a class="navbar-brand text-light" asp-area="" asp-controller="Home" asp-action="Index">
+
+						home
+
+					</a>
+				</span>
 				<button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
 						aria-expanded="false" aria-label="Toggle navigation">
 					<span class="navbar-toggler-icon bg-light"></span>
 				</button>
 				<div class="navbar-collapse collapse d-sm-inline-flex flex-sm-row">
 					<ul class="navbar-nav flex-grow-1">
+						<li class="nav-item">
+							<span class="material-icons">
+								<a class="nav-link text-light" title="داشبورد" asp-area="" asp-controller="Home" asp-action="Dashboard">
+									analytics
+								</a>
+							</span>
+						</li>
 						<li class="nav-item">
 							<a class="nav-link text-light" asp-area="" asp-controller="Customers" asp-action="Index">مشتریان</a>
 						</li>
@@ -84,7 +98,6 @@
 			&copy; 2020 - CCSC - <a asp-area="" asp-controller="Home" asp-action="About">About</a>
 		</div>
 	</footer>
-	<script src="~/lib/jquery/dist/jquery.min.js"></script>
 	<script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
 	<script src="~/js/site.js" asp-append-version="true"></script>
 	@RenderSection("Scripts", required: false)

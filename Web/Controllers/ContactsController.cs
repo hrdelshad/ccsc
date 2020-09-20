@@ -61,7 +61,7 @@ namespace ccsc.Web.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("ContactId,FirstName,LasName,CustomerId,PostId,Email,Mobile,Phone,SalutationId")] Contact contact)
+        public async Task<IActionResult> Create([Bind("ContactId,FirstName,LastName,CustomerId,PostId,Email,Mobile,Phone,SalutationId")] Contact contact)
         {
             if (ModelState.IsValid)
             {
@@ -99,7 +99,7 @@ namespace ccsc.Web.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("ContactId,FirstName,LasName,CustomerId,PostId,Email,Mobile,Phone,SalutationId")] Contact contact)
+        public async Task<IActionResult> Edit(int id, [Bind("ContactId,FirstName,LastName,CustomerId,PostId,Email,Mobile,Phone,SalutationId")] Contact contact)
         {
             if (id != contact.ContactId)
             {
