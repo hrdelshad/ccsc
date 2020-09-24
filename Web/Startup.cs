@@ -5,6 +5,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using ccsc.DataLayer.Context;
+using ccsc.DataLayer.Entities.Messages;
+using MailKit;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -47,6 +49,9 @@ namespace Web
 				);
 
 			#endregion
+
+			services.Configure<MailSettings>(Configuration.GetSection("MailSettings"));
+			services.AddTransient<ccsc.Core.Services.Interfaces.IMailService, ccsc.Core.Services.MailService>();
 		}
 
 		// This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -75,6 +80,7 @@ namespace Web
 					name: "default",
 					pattern: "{controller=Home}/{action=Index}/{id?}");
 			});
+
 		}
 	}
 }

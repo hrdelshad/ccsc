@@ -1,0 +1,26 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+using Microsoft.AspNetCore.Mvc;
+using Sms;
+
+namespace ccsc.Web.Controllers
+{
+	public class test : Controller
+	{
+		public IActionResult Index()
+		{
+			var username = "targetsms";
+			var password = "Enico2016";
+			var fromNum = "100020400";
+			string[] toNum = { "09125959167" };
+
+			var patternCode = "119";
+
+			DelSms.SendSMS("test", toNum, username, password, fromNum);
+			return null;
+		}
+	
+	}
+}
