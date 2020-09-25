@@ -1,36 +1,41 @@
-﻿@model IEnumerable<ccsc.DataLayer.Entities.Customers.ServerType>
+﻿@using ccsc.DataLayer.Entities.Customers
+@model IEnumerable<ccsc.DataLayer.Entities.Customers.ServerType>
 
-@{
-    ViewData["Title"] = "Index";
-    Layout = "~/Views/Shared/_Layout.cshtml";
-}
+<div class="k-rtl k-grid">
+	@(Html.Kendo().Grid<ServerType>
+	()
+	.Name("grid")
+	.Columns(columns =>
+	{
+		columns.Bound(c => c.ServerTypeId).Width(50).Title("شناسه");
 
-<h1>Index</h1>
+		columns.Bound(c => c.Title);
+	})
+	.ToolBar(t => t.Search())
+	.Search(search =>
+	{
+		search.Field(f => f.Title);
 
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.Title)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Title)
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.ServerTypeId">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.ServerTypeId">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.ServerTypeId">Delete</a>
-            </td>
-        </tr>
-}
-    </tbody>
-</table>
+	})
+	.Scrollable()
+	.Groupable()
+	.Sortable()
+	.Pageable(pageable => pageable
+	.Refresh(true)
+	.PageSizes(true)
+	.ButtonCount(5))
+	.DataSource(dataSource => dataSource
+	.Ajax()
+	.Read(read => read.Action("FillGrid", "ServerTypes"))
+	)
+	)
+</div>
+
+
+
+<script>
+	$(function () {
+		//Notice that the Name() of the Grid is used to get its client-side instance.
+		var grid = $("#grid").data("kendoGrid");
+	});
+</script>
