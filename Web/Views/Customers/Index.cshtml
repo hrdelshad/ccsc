@@ -17,6 +17,42 @@
                 @Html.DisplayNameFor(model => model.Title)
             </th>
             <th>
+                @Html.DisplayNameFor(model => model.Url)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Version)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.VersionCheckDate)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.SMSUser)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.SMSPass)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.SMSCredit)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.MinSMSCredit)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.SMSCreditCheckDate)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.IsActiveSms)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.AfterXDay)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.SendSmsDate)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.UniversityId)
+            </th>
+            <th>
                 @Html.DisplayNameFor(model => model.CustomerType)
             </th>
             <th></th>
@@ -25,16 +61,50 @@
     <tbody>
 @foreach (var item in Model) {
         <tr>
+	        <td>
+				<a asp-action="Details" asp-route-id="@item.CustomerId">@Html.DisplayFor(modelItem => item.Title)</a>
+	        </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Title)
+                @Html.DisplayFor(modelItem => item.Url)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Version)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.VersionCheckDate)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.SMSUser)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.SMSPass)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.SMSCredit)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.MinSMSCredit)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.SMSCreditCheckDate)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.IsActiveSms)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.AfterXDay)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.SendSmsDate)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.UniversityId)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.CustomerType.Title)
             </td>
             <td>
-                <a asp-action="Edit" asp-route-id="@item.CustomerId">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.CustomerId">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.CustomerId">Delete</a>
+	            <a asp-action="Delete" asp-route-id="@item.CustomerId">Delete</a>
             </td>
         </tr>
 }

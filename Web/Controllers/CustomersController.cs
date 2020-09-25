@@ -57,7 +57,7 @@ namespace ccsc.Web.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("CustomerId,Title,CustomerTypeId")] Customer customer)
+        public async Task<IActionResult> Create([Bind("CustomerId,Title,CustomerTypeId,Url,Version,VersionCheckDate,SMSUser,SMSPass,SMSCredit,MinSMSCredit,SMSCreditCheckDate,IsActiveSms,AfterXDay,SendSmsDate,UniversityId")] Customer customer)
         {
             if (ModelState.IsValid)
             {
@@ -91,7 +91,7 @@ namespace ccsc.Web.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("CustomerId,Title,CustomerTypeId")] Customer customer)
+        public async Task<IActionResult> Edit(int id, [Bind("CustomerId,Title,CustomerTypeId,Url,Version,VersionCheckDate,SMSUser,SMSPass,SMSCredit,MinSMSCredit,SMSCreditCheckDate,IsActiveSms,AfterXDay,SendSmsDate,UniversityId")] Customer customer)
         {
             if (id != customer.CustomerId)
             {

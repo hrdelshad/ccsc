@@ -25,6 +25,66 @@
                 <span asp-validation-for="CustomerTypeId" class="text-danger"></span>
             </div>
             <div class="form-group">
+                <label asp-for="Url" class="control-label"></label>
+                <input asp-for="Url" class="form-control" />
+                <span asp-validation-for="Url" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Version" class="control-label"></label>
+                <input asp-for="Version" class="form-control" />
+                <span asp-validation-for="Version" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="VersionCheckDate" class="control-label"></label>
+                <input asp-for="VersionCheckDate" class="form-control" />
+                <span asp-validation-for="VersionCheckDate" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="SMSUser" class="control-label"></label>
+                <input asp-for="SMSUser" class="form-control" />
+                <span asp-validation-for="SMSUser" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="SMSPass" class="control-label"></label>
+                <input asp-for="SMSPass" class="form-control" />
+                <span asp-validation-for="SMSPass" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="SMSCredit" class="control-label"></label>
+                <input asp-for="SMSCredit" class="form-control" />
+                <span asp-validation-for="SMSCredit" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="MinSMSCredit" class="control-label"></label>
+                <input asp-for="MinSMSCredit" class="form-control" />
+                <span asp-validation-for="MinSMSCredit" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="SMSCreditCheckDate" class="control-label"></label>
+                <input asp-for="SMSCreditCheckDate" class="form-control" />
+                <span asp-validation-for="SMSCreditCheckDate" class="text-danger"></span>
+            </div>
+            <div class="form-group form-check">
+                <label class="form-check-label">
+                    <input class="form-check-input" asp-for="IsActiveSms" /> @Html.DisplayNameFor(model => model.IsActiveSms)
+                </label>
+            </div>
+            <div class="form-group">
+                <label asp-for="AfterXDay" class="control-label"></label>
+                <input asp-for="AfterXDay" class="form-control" />
+                <span asp-validation-for="AfterXDay" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="SendSmsDate" class="control-label"></label>
+                <input asp-for="SendSmsDate" class="form-control" />
+                <span asp-validation-for="SendSmsDate" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="UniversityId" class="control-label"></label>
+                <input asp-for="UniversityId" class="form-control" />
+                <span asp-validation-for="UniversityId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
                 <input type="submit" value="Save" class="btn btn-primary" />
             </div>
         </form>
@@ -35,6 +95,3 @@
     <a asp-action="Index">Back to List</a>
 </div>
 
-@section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
-}

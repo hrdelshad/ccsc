@@ -17,10 +17,16 @@ namespace ccsc.DataLayer.Context
 {
 	public class CcscContext:DbContext
 	{
+		public CcscContext()
+		{
+
+		}
+
 		public CcscContext(DbContextOptions<CcscContext> options):base(options)
 		{
 			
 		}
+
 
 		#region Contact
 
