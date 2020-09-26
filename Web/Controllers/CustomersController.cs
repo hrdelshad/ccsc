@@ -1,7 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 using System.Threading.Tasks;
+using System.Timers;
+using ccsc.Core.Services.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
@@ -12,17 +15,61 @@ namespace ccsc.Web.Controllers
 {
     public class CustomersController : Controller
     {
+	    private ICustomerService _service;
         private readonly CcscContext _context;
 
-        public CustomersController(CcscContext context)
+        public CustomersController(ICustomerService service, CcscContext context)
         {
-            _context = context;
+	        _service = service;
+	        _context = context;
         }
+
+        public IActionResult Version()
+        {
+	        
+	        using (CcscContext db = new CcscContext())
+	        {
+		        var customerList = db.Customers.ToList();
+		        foreach (Customer customer in customerList)
+		        {
+			        try
+			        {
+				        var version = _service.GetVersion(customer.Url);
+				        customer.Version = version;
+				        customer.VersionCheckDate = DateTime.Now;
+				        db.SaveChanges();
+			        }
+			        finally
+			        {
+				        
+			        }
+		        }
+	        }
+	        return null;
+        }
+
 
         // GET: Customers
         public async Task<IActionResult> Index()
         {
-            var ccscContext = _context.Customers.Include(c => c.CustomerType);
+	        var ccscContext = _context.Customers.Include(c => c.CustomerType);
+	        foreach (Customer customer in ccscContext)
+		        try
+		        {
+			        var version = _service.GetVersion(customer.Url);
+
+			        customer.Version = version;
+			        customer.VersionCheckDate = DateTime.Now;
+			        _context.Update(customer);
+		        }
+		        catch
+		        {
+
+
+		        }
+
+	        await _context.SaveChangesAsync();
+
             return View(await ccscContext.ToListAsync());
         }
 
@@ -107,7 +154,7 @@ namespace ccsc.Web.Controllers
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!CustomerExists(customer.CustomerId))
+                    if (!_service.CustomerExists(customer.CustomerId))
                     {
                         return NotFound();
                     }
@@ -152,9 +199,5 @@ namespace ccsc.Web.Controllers
             return RedirectToAction(nameof(Index));
         }
 
-        private bool CustomerExists(int id)
-        {
-            return _context.Customers.Any(e => e.CustomerId == id);
-        }
     }
 }

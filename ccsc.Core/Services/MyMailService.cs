@@ -10,10 +10,10 @@ using MimeKit;
 
 namespace ccsc.Core.Services
 {
-	public class MailService : IMailService
+	public class MyMailService : IMyMailService
 	{
 		private readonly MailSettings _mailSettings;
-		public MailService(IOptions<MailSettings> mailSettings)
+		public MyMailService(IOptions<MailSettings> mailSettings)
 		{
 			_mailSettings = mailSettings.Value;
 		}

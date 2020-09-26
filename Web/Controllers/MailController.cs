@@ -12,8 +12,8 @@ namespace ccsc.Web.Controllers
 	[ApiController]
 	public class MailController : Controller
 	{
-		private readonly IMailService mailService;
-		public MailController(IMailService mailService)
+		private readonly IMyMailService mailService;
+		public MailController(IMyMailService mailService)
 		{
 			this.mailService = mailService;
 		}

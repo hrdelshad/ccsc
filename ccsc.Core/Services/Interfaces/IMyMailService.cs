@@ -3,7 +3,7 @@ using ccsc.DataLayer.Entities.Messages;
 
 namespace ccsc.Core.Services.Interfaces
 {
-	public interface IMailService
+	public interface IMyMailService
 	{
 		Task SendEmailAsync(MailRequest mailRequest);
 		Task SendWelcomeEmailAsync(WelcomeRequest request);

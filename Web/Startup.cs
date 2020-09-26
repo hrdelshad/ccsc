@@ -4,6 +4,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using ccsc.Core.Services;
+using ccsc.Core.Services.Interfaces;
 using ccsc.DataLayer.Context;
 using ccsc.DataLayer.Entities.Messages;
 using MailKit;
@@ -50,8 +52,13 @@ namespace Web
 
 			#endregion
 
+			#region IoC
+
+			services.AddTransient<IMyMailService, MyMailService>();
+			services.AddTransient<ICustomerService, CustomerService>();
+
+			#endregion
 			services.Configure<MailSettings>(Configuration.GetSection("MailSettings"));
-			services.AddTransient<ccsc.Core.Services.Interfaces.IMailService, ccsc.Core.Services.MailService>();
 		}
 
 		// This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
