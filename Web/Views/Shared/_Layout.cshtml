@@ -51,30 +51,35 @@
 							<a class="nav-link text-light" asp-area="" asp-controller="Contacts" asp-action="Index">افراد</a>
 						</li>
 						<li class="nav-item">
-							<a class="nav-link text-light" asp-area="" asp-controller="Contracts" asp-action="Index">قراردادها</a>
-						</li>
-						<li class="nav-item">
-							<a class="nav-link text-light" asp-area="" asp-controller="Products" asp-action="Index">محصولات</a>
-						</li>
-						<li class="nav-item">
 							<a class="nav-link text-light" asp-area="" asp-controller="Requests" asp-action="Index">درخواست ها</a>
+						</li>
+						<li class="nav-item dropdown">
+							<a class="nav-link dropdown-toggle text-light" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+								قراردادها
+							</a>
+							<div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+								<a class="dropdown-item" asp-area="" asp-controller="Contracts" asp-action="Index">قراردادها</a>
+								<a class="dropdown-item" asp-area="" asp-controller="ContractProducts" asp-action="Index">محصولات قرارداد</a>
+								<a class="dropdown-item" asp-area="" asp-controller="ContractCours" asp-action="Index">رشته های قرارداد</a>
+							</div>
 						</li>
 						<li class="nav-item dropdown">
 							<a class="nav-link dropdown-toggle text-light" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 								اطلاعات پایه
 							</a>
 							<div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-								<a class="dropdown-item" asp-area="" asp-controller="ServerTypes" asp-action="Index">انوع سرور</a>
-								<a class="dropdown-item" asp-area="" asp-controller="ContractTypes" asp-action="Index">انواع قرارداد</a>
+								<a class="dropdown-item" asp-area="" asp-controller="RequestStatus" asp-action="Index">وضعیت درخواست</a>
 								<a class="dropdown-item" asp-area="" asp-controller="Os" asp-action="Index">انواع سیستم عامل</a>
-								<a class="dropdown-item" asp-area="" asp-controller="Posts" asp-action="Index">پست ها</a>
 								<a class="dropdown-item" asp-area="" asp-controller="CourseLevels" asp-action="Index">مقاطع تحصیلی</a>
-								<a class="dropdown-item" asp-area="" asp-controller="CustomerTypes" asp-action="Index">انواع مشتری</a>
 								<a class="dropdown-item" asp-area="" asp-controller="RequestChanels" asp-action="Index">کانال درخواست</a>
 								<a class="dropdown-item" asp-area="" asp-controller="RequestTypes" asp-action="Index">نوع درخواست</a>
-								<a class="dropdown-item" asp-area="" asp-controller="RequestStatus" asp-action="Index">وضعیت درخواست</a>
-								<a class="dropdown-item" asp-area="" asp-controller="Salutations" asp-action="Index">القاب</a>
+								<a class="dropdown-item" asp-area="" asp-controller="ContractTypes" asp-action="Index">انواع قرارداد</a>
+								<a class="dropdown-item" asp-area="" asp-controller="CustomerTypes" asp-action="Index">انواع مشتری</a>
+								<a class="dropdown-item" asp-area="" asp-controller="ServerTypes" asp-action="Index">انوع سرور</a>
+								<a class="dropdown-item" asp-area="" asp-controller="Products" asp-action="Index">محصولات</a>
+								<a class="dropdown-item" asp-area="" asp-controller="Posts" asp-action="Index">پست ها</a>
 								<a class="dropdown-item" asp-area="" asp-controller="Genders" asp-action="Index">جنسیت</a>
+								<a class="dropdown-item" asp-area="" asp-controller="Salutations" asp-action="Index">القاب</a>
 
 							</div>
 						</li>

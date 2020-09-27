@@ -6,26 +6,27 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using ccsc.DataLayer.Context;
-using ccsc.DataLayer.Entities.Products;
+using ccsc.DataLayer.Entities.Courses;
 
 namespace ccsc.Web.Controllers
 {
-    public class ProductsController : Controller
+    public class Courses1Controller : Controller
     {
         private readonly CcscContext _context;
 
-        public ProductsController(CcscContext context)
+        public Courses1Controller(CcscContext context)
         {
             _context = context;
         }
 
-        // GET: Products
+        // GET: Courses1
         public async Task<IActionResult> Index()
         {
-            return View(await _context.Products.ToListAsync());
+            var ccscContext = _context.Courses.Include(c => c.CourseLevel);
+            return View(await ccscContext.ToListAsync());
         }
 
-        // GET: Products/Details/5
+        // GET: Courses1/Details/5
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -33,39 +34,42 @@ namespace ccsc.Web.Controllers
                 return NotFound();
             }
 
-            var product = await _context.Products
-                .FirstOrDefaultAsync(m => m.ProductId == id);
-            if (product == null)
+            var course = await _context.Courses
+                .Include(c => c.CourseLevel)
+                .FirstOrDefaultAsync(m => m.CourseId == id);
+            if (course == null)
             {
                 return NotFound();
             }
 
-            return View(product);
+            return View(course);
         }
 
-        // GET: Products/Create
+        // GET: Courses1/Create
         public IActionResult Create()
         {
+            ViewData["CourseLevelId"] = new SelectList(_context.CourseLevels, "CourseLevelId", "Title");
             return View();
         }
 
-        // POST: Products/Create
+        // POST: Courses1/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to, for 
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("ProductId,Title,IsActive")] Product product)
+        public async Task<IActionResult> Create([Bind("CourseId,Title,CourseLevelId")] Course course)
         {
             if (ModelState.IsValid)
             {
-                _context.Add(product);
+                _context.Add(course);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            return View(product);
+            ViewData["CourseLevelId"] = new SelectList(_context.CourseLevels, "CourseLevelId", "Title", course.CourseLevelId);
+            return View(course);
         }
 
-        // GET: Products/Edit/5
+        // GET: Courses1/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -73,22 +77,23 @@ namespace ccsc.Web.Controllers
                 return NotFound();
             }
 
-            var product = await _context.Products.FindAsync(id);
-            if (product == null)
+            var course = await _context.Courses.FindAsync(id);
+            if (course == null)
             {
                 return NotFound();
             }
-            return View(product);
+            ViewData["CourseLevelId"] = new SelectList(_context.CourseLevels, "CourseLevelId", "Title", course.CourseLevelId);
+            return View(course);
         }
 
-        // POST: Products/Edit/5
+        // POST: Courses1/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to, for 
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("ProductId,Title,IsActive")] Product product)
+        public async Task<IActionResult> Edit(int id, [Bind("CourseId,Title,CourseLevelId")] Course course)
         {
-            if (id != product.ProductId)
+            if (id != course.CourseId)
             {
                 return NotFound();
             }
@@ -97,12 +102,12 @@ namespace ccsc.Web.Controllers
             {
                 try
                 {
-                    _context.Update(product);
+                    _context.Update(course);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!ProductExists(product.ProductId))
+                    if (!CourseExists(course.CourseId))
                     {
                         return NotFound();
                     }
@@ -113,10 +118,11 @@ namespace ccsc.Web.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            return View(product);
+            ViewData["CourseLevelId"] = new SelectList(_context.CourseLevels, "CourseLevelId", "Title", course.CourseLevelId);
+            return View(course);
         }
 
-        // GET: Products/Delete/5
+        // GET: Courses1/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -124,30 +130,31 @@ namespace ccsc.Web.Controllers
                 return NotFound();
             }
 
-            var product = await _context.Products
-                .FirstOrDefaultAsync(m => m.ProductId == id);
-            if (product == null)
+            var course = await _context.Courses
+                .Include(c => c.CourseLevel)
+                .FirstOrDefaultAsync(m => m.CourseId == id);
+            if (course == null)
             {
                 return NotFound();
             }
 
-            return View(product);
+            return View(course);
         }
 
-        // POST: Products/Delete/5
+        // POST: Courses1/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var product = await _context.Products.FindAsync(id);
-            _context.Products.Remove(product);
+            var course = await _context.Courses.FindAsync(id);
+            _context.Courses.Remove(course);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
-        private bool ProductExists(int id)
+        private bool CourseExists(int id)
         {
-            return _context.Products.Any(e => e.ProductId == id);
+            return _context.Courses.Any(e => e.CourseId == id);
         }
     }
 }

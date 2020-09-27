@@ -28,7 +28,7 @@ namespace ccsc.DataLayer.Context
 		}
 
 
-		#region Contact
+		#region Contacts
 
 		public DbSet<Post> Posts { get; set; }
 		public DbSet<Gender> Genders { get; set; }
@@ -41,6 +41,8 @@ namespace ccsc.DataLayer.Context
 		#region Contracts
 
 		public DbSet<Contract> Contracts { get; set; }
+		public DbSet<ContractCours> ContractCourses { get; set; }
+		public DbSet<ContractProduct> ContractProducts { get; set; }
 		public DbSet<ContractType> ContractTypes { get; set; }
 
 		#endregion

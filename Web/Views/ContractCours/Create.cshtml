@@ -1,4 +1,4 @@
-﻿@model ccsc.DataLayer.Entities.Products.Product
+﻿@model ccsc.DataLayer.Entities.Contracts.ContractCours
 
 @{
     ViewData["Title"] = "Create";
@@ -7,21 +7,19 @@
 
 <h1>Create</h1>
 
-<h4>Product</h4>
+<h4>ContractCours</h4>
 <hr />
 <div class="row">
     <div class="col-md-4">
         <form asp-action="Create">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
-                <label asp-for="Title" class="control-label"></label>
-                <input asp-for="Title" class="form-control" />
-                <span asp-validation-for="Title" class="text-danger"></span>
+                <label asp-for="ContractId" class="control-label"></label>
+                <select asp-for="ContractId" class ="form-control" asp-items="ViewBag.ContractId"></select>
             </div>
-            <div class="form-group form-check">
-                <label class="form-check-label">
-                    <input class="form-check-input" asp-for="IsActive" /> @Html.DisplayNameFor(model => model.IsActive)
-                </label>
+            <div class="form-group">
+                <label asp-for="CourseId" class="control-label"></label>
+                <select asp-for="CourseId" class ="form-control" asp-items="ViewBag.CourseId"></select>
             </div>
             <div class="form-group">
                 <input type="submit" value="Create" class="btn btn-primary" />

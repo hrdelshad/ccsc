@@ -14,11 +14,17 @@ namespace ccsc.DataLayer.Entities.Contracts
 	{
 		public Contract()
 		{
-			
+
 		}
 
 		[Key]
 		public int ContractId { get; set; }
+
+		[Display(Name = "عنوان قرارداد")]
+		[Required(ErrorMessage = "لطفا {0} را وارد کنید")]
+		[MaxLength(200, ErrorMessage = "{0} نمیتواند بیشتر از {0} کارکتر باشد")]
+		public string Title { get; set; }
+
 
 		[Display(Name = "مشتری")]
 		public int CustomerId { get; set; }
@@ -43,20 +49,11 @@ namespace ccsc.DataLayer.Entities.Contracts
 		[Required(ErrorMessage = "لطفا {0} را وارد کنید")]
 		public bool UnLimited { get; set; }
 
-		//[Display(Name = "محصول")][Required(ErrorMessage = "لطفا {0} را وارد کنید")]
-		//public int ProductId { get; set; }
-
 
 		#region Relations
 
 		[Display(Name = "مشتری")]
 		public virtual Customer Customer { get; set; }
-
-		[Display(Name = "محصولات")]
-		public virtual List<Product> Products { get; set; }
-
-		[Display(Name = "رشته ها")]
-		public virtual List<Course> Courses { get; set; }
 
 		#endregion
 	}

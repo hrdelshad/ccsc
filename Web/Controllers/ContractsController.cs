@@ -57,7 +57,7 @@ namespace ccsc.Web.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("ContractId,CustomerId,StartDate,Duration,Amount,ContractStatusId,UnLimited")] Contract contract)
+        public async Task<IActionResult> Create([Bind("ContractId,Title,CustomerId,StartDate,Duration,Amount,ContractStatusId,UnLimited")] Contract contract)
         {
             if (ModelState.IsValid)
             {
@@ -91,7 +91,7 @@ namespace ccsc.Web.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("ContractId,CustomerId,StartDate,Duration,Amount,ContractStatusId,UnLimited")] Contract contract)
+        public async Task<IActionResult> Edit(int id, [Bind("ContractId,Title,CustomerId,StartDate,Duration,Amount,ContractStatusId,UnLimited")] Contract contract)
         {
             if (id != contract.ContractId)
             {

@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using ccsc.DataLayer.Context;
 
 namespace ccsc.DataLayer.Migrations
 {
     [DbContext(typeof(CcscContext))]
-    partial class CcscContextModelSnapshot : ModelSnapshot
+    [Migration("20200926175722_ProductType1")]
+    partial class ProductType1
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -147,11 +149,6 @@ namespace ccsc.DataLayer.Migrations
                     b.Property<DateTime>("StartDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<string>("Title")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(200)")
-                        .HasMaxLength(200);
-
                     b.Property<bool>("UnLimited")
                         .HasColumnType("bit");
 
@@ -160,50 +157,6 @@ namespace ccsc.DataLayer.Migrations
                     b.HasIndex("CustomerId");
 
                     b.ToTable("Contracts");
-                });
-
-            modelBuilder.Entity("ccsc.DataLayer.Entities.Contracts.ContractCours", b =>
-                {
-                    b.Property<int>("ContractCoursId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<int>("ContractId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("CourseId")
-                        .HasColumnType("int");
-
-                    b.HasKey("ContractCoursId");
-
-                    b.HasIndex("ContractId");
-
-                    b.HasIndex("CourseId");
-
-                    b.ToTable("ContractCourses");
-                });
-
-            modelBuilder.Entity("ccsc.DataLayer.Entities.Contracts.ContractProduct", b =>
-                {
-                    b.Property<int>("ContractProductId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<int>("ContractId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("ProductId")
-                        .HasColumnType("int");
-
-                    b.HasKey("ContractProductId");
-
-                    b.HasIndex("ContractId");
-
-                    b.HasIndex("ProductId");
-
-                    b.ToTable("ContractProducts");
                 });
 
             modelBuilder.Entity("ccsc.DataLayer.Entities.Contracts.ContractType", b =>
@@ -230,6 +183,9 @@ namespace ccsc.DataLayer.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+                    b.Property<int?>("ContractId")
+                        .HasColumnType("int");
+
                     b.Property<int>("CourseLevelId")
                         .HasColumnType("int");
 
@@ -239,6 +195,8 @@ namespace ccsc.DataLayer.Migrations
                         .HasMaxLength(200);
 
                     b.HasKey("CourseId");
+
+                    b.HasIndex("ContractId");
 
                     b.HasIndex("CourseLevelId");
 
@@ -431,6 +389,9 @@ namespace ccsc.DataLayer.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+                    b.Property<int?>("ContractId")
+                        .HasColumnType("int");
+
                     b.Property<bool>("IsActive")
                         .HasColumnType("bit");
 
@@ -440,6 +401,8 @@ namespace ccsc.DataLayer.Migrations
                         .HasMaxLength(200);
 
                     b.HasKey("ProductId");
+
+                    b.HasIndex("ContractId");
 
                     b.ToTable("Products");
                 });
@@ -666,38 +629,12 @@ namespace ccsc.DataLayer.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("ccsc.DataLayer.Entities.Contracts.ContractCours", b =>
-                {
-                    b.HasOne("ccsc.DataLayer.Entities.Contracts.Contract", "Contract")
-                        .WithMany()
-                        .HasForeignKey("ContractId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("ccsc.DataLayer.Entities.Courses.Course", "Course")
-                        .WithMany()
-                        .HasForeignKey("CourseId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
-            modelBuilder.Entity("ccsc.DataLayer.Entities.Contracts.ContractProduct", b =>
-                {
-                    b.HasOne("ccsc.DataLayer.Entities.Contracts.Contract", "Contract")
-                        .WithMany()
-                        .HasForeignKey("ContractId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("ccsc.DataLayer.Entities.Products.Product", "Product")
-                        .WithMany()
-                        .HasForeignKey("ProductId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
             modelBuilder.Entity("ccsc.DataLayer.Entities.Courses.Course", b =>
                 {
+                    b.HasOne("ccsc.DataLayer.Entities.Contracts.Contract", null)
+                        .WithMany("Courses")
+                        .HasForeignKey("ContractId");
+
                     b.HasOne("ccsc.DataLayer.Entities.Courses.CourseLevel", "CourseLevel")
                         .WithMany()
                         .HasForeignKey("CourseLevelId")
@@ -733,6 +670,13 @@ namespace ccsc.DataLayer.Migrations
                         .HasForeignKey("ServerTypeId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+                });
+
+            modelBuilder.Entity("ccsc.DataLayer.Entities.Products.Product", b =>
+                {
+                    b.HasOne("ccsc.DataLayer.Entities.Contracts.Contract", null)
+                        .WithMany("Products")
+                        .HasForeignKey("ContractId");
                 });
 
             modelBuilder.Entity("ccsc.DataLayer.Entities.Requests.Request", b =>
