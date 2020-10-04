@@ -7,7 +7,7 @@ using Sms;
 
 namespace ccsc.Web.Controllers
 {
-	public class test : Controller
+	public class SmstestControler : Controller
 	{
 		public IActionResult Index()
 		{

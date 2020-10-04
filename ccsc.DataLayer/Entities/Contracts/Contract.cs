@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Reflection.Metadata.Ecma335;
 using System.Text;
 using ccsc.DataLayer.Entities.Courses;
@@ -39,6 +40,7 @@ namespace ccsc.DataLayer.Entities.Contracts
 
 		[Display(Name = "مبلغ")]
 		[Required(ErrorMessage = "لطفا {0} را وارد کنید")]
+		[Column(TypeName = "decimal(18, 0)")]
 		public decimal Amount { get; set; }
 
 		[Display(Name = "وضعیت")]

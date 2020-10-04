@@ -1,15 +1,22 @@
 ﻿@model IEnumerable<ccsc.DataLayer.Entities.Customers.Customer>
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "فهرست مشتریان";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h1>Index</h1>
+<h1>@ViewData["Title"]</h1>
 
 <p>
-    <a asp-action="Create">Create New</a>
+	<a asp-action="Create">مشتری جدید</a>
 </p>
+<form asp-controller="Customers" asp-action="Index" method="get">
+	<p>
+		<input type="text" name="SearchString">
+		<input type="submit" value="بیاب" />
+	</p>
+</form>
+
 <table class="table">
     <thead>
         <tr>
@@ -43,16 +50,7 @@
             <th>
                 @Html.DisplayNameFor(model => model.IsActiveSms)
             </th>
-            <th>
-                @Html.DisplayNameFor(model => model.AfterXDay)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.SendSmsDate)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.UniversityId)
-            </th>
-            <th>
+           <th>
                 @Html.DisplayNameFor(model => model.CustomerType)
             </th>
             <th></th>
@@ -64,9 +62,9 @@
 	        <td>
 				<a asp-action="Details" asp-route-id="@item.CustomerId">@Html.DisplayFor(modelItem => item.Title)</a>
 	        </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Url)
-            </td>
+	        <td>
+				<a href="@Html.DisplayFor(modelItem => item.Url)">@Html.DisplayFor(modelItem => item.Url)</a>
+	        </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Version)
             </td>
@@ -91,20 +89,11 @@
             <td>
                 @Html.DisplayFor(modelItem => item.IsActiveSms)
             </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.AfterXDay)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.SendSmsDate)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.UniversityId)
-            </td>
-            <td>
+           <td>
                 @Html.DisplayFor(modelItem => item.CustomerType.Title)
             </td>
             <td>
-	            <a asp-action="Delete" asp-route-id="@item.CustomerId">Delete</a>
+	            <a asp-action="Delete" asp-route-id="@item.CustomerId">حذف</a>
             </td>
         </tr>
 }
