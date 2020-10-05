@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Text;
 
 namespace ccsc.DataLayer.Entities.Requests
@@ -8,6 +9,7 @@ namespace ccsc.DataLayer.Entities.Requests
 	public class RequestType
 	{
 		[Key]
+		[DatabaseGenerated(DatabaseGeneratedOption.None)]
 		public int RequestTypeId { get; set; }
 
 		[Display(Name = "نوع درخواست")]

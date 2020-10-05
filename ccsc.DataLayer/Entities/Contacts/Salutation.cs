@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Text;
 
 namespace ccsc.DataLayer.Entities.Contacts
@@ -8,6 +9,7 @@ namespace ccsc.DataLayer.Entities.Contacts
 	public class Salutation
 	{
 		[Key]
+		[DatabaseGenerated(DatabaseGeneratedOption.None)]
 		public int SalutationId { get; set; }
 
 		[Display(Name = "عنوان")]

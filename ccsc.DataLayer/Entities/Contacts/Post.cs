@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace ccsc.DataLayer.Entities.Contacts
 {
@@ -10,6 +11,7 @@ namespace ccsc.DataLayer.Entities.Contacts
 		}
 
 		[Key]
+		[DatabaseGenerated(DatabaseGeneratedOption.None)]
 		public int PostId { get; set; }
 
 		[Display(Name = "عنوان")]

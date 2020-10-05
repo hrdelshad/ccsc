@@ -10,8 +10,8 @@ using ccsc.DataLayer.Context;
 namespace ccsc.DataLayer.Migrations
 {
     [DbContext(typeof(CcscContext))]
-    [Migration("20200926181305_CustomerProduct")]
-    partial class CustomerProduct
+    [Migration("20201005154654_publishedVideo")]
+    partial class publishedVideo
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -74,9 +74,7 @@ namespace ccsc.DataLayer.Migrations
             modelBuilder.Entity("ccsc.DataLayer.Entities.Contacts.Gender", b =>
                 {
                     b.Property<int>("GenderId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .HasColumnType("int");
 
                     b.Property<string>("Title")
                         .IsRequired()
@@ -91,9 +89,7 @@ namespace ccsc.DataLayer.Migrations
             modelBuilder.Entity("ccsc.DataLayer.Entities.Contacts.Post", b =>
                 {
                     b.Property<int>("PostId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .HasColumnType("int");
 
                     b.Property<string>("Title")
                         .IsRequired()
@@ -108,9 +104,7 @@ namespace ccsc.DataLayer.Migrations
             modelBuilder.Entity("ccsc.DataLayer.Entities.Contacts.Salutation", b =>
                 {
                     b.Property<int>("SalutationId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .HasColumnType("int");
 
                     b.Property<int>("GenderId")
                         .HasColumnType("int");
@@ -135,7 +129,7 @@ namespace ccsc.DataLayer.Migrations
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<decimal>("Amount")
-                        .HasColumnType("decimal(18,2)");
+                        .HasColumnType("decimal(18, 0)");
 
                     b.Property<int>("ContractStatusId")
                         .HasColumnType("int");
@@ -149,6 +143,11 @@ namespace ccsc.DataLayer.Migrations
                     b.Property<DateTime>("StartDate")
                         .HasColumnType("datetime2");
 
+                    b.Property<string>("Title")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(200)")
+                        .HasMaxLength(200);
+
                     b.Property<bool>("UnLimited")
                         .HasColumnType("bit");
 
@@ -159,12 +158,54 @@ namespace ccsc.DataLayer.Migrations
                     b.ToTable("Contracts");
                 });
 
-            modelBuilder.Entity("ccsc.DataLayer.Entities.Contracts.ContractType", b =>
+            modelBuilder.Entity("ccsc.DataLayer.Entities.Contracts.ContractCours", b =>
                 {
-                    b.Property<int>("ContractTypeId")
+                    b.Property<int>("ContractCoursId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int>("ContractId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("CourseId")
+                        .HasColumnType("int");
+
+                    b.HasKey("ContractCoursId");
+
+                    b.HasIndex("ContractId");
+
+                    b.HasIndex("CourseId");
+
+                    b.ToTable("ContractCourses");
+                });
+
+            modelBuilder.Entity("ccsc.DataLayer.Entities.Contracts.ContractProduct", b =>
+                {
+                    b.Property<int>("ContractProductId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int>("ContractId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("ProductId")
+                        .HasColumnType("int");
+
+                    b.HasKey("ContractProductId");
+
+                    b.HasIndex("ContractId");
+
+                    b.HasIndex("ProductId");
+
+                    b.ToTable("ContractProducts");
+                });
+
+            modelBuilder.Entity("ccsc.DataLayer.Entities.Contracts.ContractType", b =>
+                {
+                    b.Property<int>("ContractTypeId")
+                        .HasColumnType("int");
 
                     b.Property<string>("Title")
                         .IsRequired()
@@ -183,9 +224,6 @@ namespace ccsc.DataLayer.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int?>("ContractId")
-                        .HasColumnType("int");
-
                     b.Property<int>("CourseLevelId")
                         .HasColumnType("int");
 
@@ -196,8 +234,6 @@ namespace ccsc.DataLayer.Migrations
 
                     b.HasKey("CourseId");
 
-                    b.HasIndex("ContractId");
-
                     b.HasIndex("CourseLevelId");
 
                     b.ToTable("Courses");
@@ -206,9 +242,7 @@ namespace ccsc.DataLayer.Migrations
             modelBuilder.Entity("ccsc.DataLayer.Entities.Courses.CourseLevel", b =>
                 {
                     b.Property<int>("CourseLevelId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .HasColumnType("int");
 
                     b.Property<string>("Title")
                         .IsRequired()
@@ -237,19 +271,21 @@ namespace ccsc.DataLayer.Migrations
                         .HasColumnType("bit");
 
                     b.Property<decimal>("MinSMSCredit")
-                        .HasColumnType("decimal(18,2)");
+                        .HasColumnType("decimal(18, 0)");
 
                     b.Property<decimal>("SMSCredit")
-                        .HasColumnType("decimal(18,2)");
+                        .HasColumnType("decimal(18, 0)");
 
                     b.Property<DateTime?>("SMSCreditCheckDate")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("SMSPass")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("nvarchar(30)")
+                        .HasMaxLength(30);
 
                     b.Property<string>("SMSUser")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("nvarchar(50)")
+                        .HasMaxLength(50);
 
                     b.Property<DateTime?>("SendSmsDate")
                         .HasColumnType("datetime2");
@@ -263,10 +299,12 @@ namespace ccsc.DataLayer.Migrations
                         .HasColumnType("int");
 
                     b.Property<string>("Url")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("nvarchar(200)")
+                        .HasMaxLength(200);
 
                     b.Property<string>("Version")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("nvarchar(50)")
+                        .HasMaxLength(50);
 
                     b.Property<DateTime?>("VersionCheckDate")
                         .HasColumnType("datetime2");
@@ -281,9 +319,7 @@ namespace ccsc.DataLayer.Migrations
             modelBuilder.Entity("ccsc.DataLayer.Entities.Customers.CustomerType", b =>
                 {
                     b.Property<int>("TypeId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .HasColumnType("int");
 
                     b.Property<string>("Title")
                         .IsRequired()
@@ -298,9 +334,7 @@ namespace ccsc.DataLayer.Migrations
             modelBuilder.Entity("ccsc.DataLayer.Entities.Customers.Os", b =>
                 {
                     b.Property<int>("OsId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .HasColumnType("int");
 
                     b.Property<string>("Title")
                         .IsRequired()
@@ -368,9 +402,7 @@ namespace ccsc.DataLayer.Migrations
             modelBuilder.Entity("ccsc.DataLayer.Entities.Customers.ServerType", b =>
                 {
                     b.Property<int>("ServerTypeId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .HasColumnType("int");
 
                     b.Property<string>("Title")
                         .IsRequired()
@@ -382,45 +414,9 @@ namespace ccsc.DataLayer.Migrations
                     b.ToTable("ServerTypes");
                 });
 
-            modelBuilder.Entity("ccsc.DataLayer.Entities.Products.CustomerProduct", b =>
-                {
-                    b.Property<int>("CustomerProductId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<int?>("ContractId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("CustomerId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Description")
-                        .HasColumnType("nvarchar(400)")
-                        .HasMaxLength(400);
-
-                    b.Property<int>("ProductId")
-                        .HasColumnType("int");
-
-                    b.HasKey("CustomerProductId");
-
-                    b.HasIndex("ContractId");
-
-                    b.HasIndex("CustomerId");
-
-                    b.HasIndex("ProductId");
-
-                    b.ToTable("CustomerProducts");
-                });
-
             modelBuilder.Entity("ccsc.DataLayer.Entities.Products.Product", b =>
                 {
                     b.Property<int>("ProductId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<int?>("ContractId")
                         .HasColumnType("int");
 
                     b.Property<bool>("IsActive")
@@ -432,8 +428,6 @@ namespace ccsc.DataLayer.Migrations
                         .HasMaxLength(200);
 
                     b.HasKey("ProductId");
-
-                    b.HasIndex("ContractId");
 
                     b.ToTable("Products");
                 });
@@ -485,9 +479,7 @@ namespace ccsc.DataLayer.Migrations
             modelBuilder.Entity("ccsc.DataLayer.Entities.Requests.RequestChanel", b =>
                 {
                     b.Property<int>("RequestChanelId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .HasColumnType("int");
 
                     b.Property<string>("Title")
                         .IsRequired()
@@ -502,9 +494,7 @@ namespace ccsc.DataLayer.Migrations
             modelBuilder.Entity("ccsc.DataLayer.Entities.Requests.RequestStatus", b =>
                 {
                     b.Property<int>("RequestStatusId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .HasColumnType("int");
 
                     b.Property<bool>("IsActive")
                         .HasColumnType("bit");
@@ -522,9 +512,7 @@ namespace ccsc.DataLayer.Migrations
             modelBuilder.Entity("ccsc.DataLayer.Entities.Requests.RequestType", b =>
                 {
                     b.Property<int>("RequestTypeId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .HasColumnType("int");
 
                     b.Property<string>("Title")
                         .IsRequired()
@@ -534,6 +522,60 @@ namespace ccsc.DataLayer.Migrations
                     b.HasKey("RequestTypeId");
 
                     b.ToTable("RequestTypes");
+                });
+
+            modelBuilder.Entity("ccsc.DataLayer.Entities.Tutorials.PublishedVideo", b =>
+                {
+                    b.Property<int>("PublishedVideoId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int>("ProductId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Version")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(20)")
+                        .HasMaxLength(20);
+
+                    b.Property<int>("VideoId")
+                        .HasColumnType("int");
+
+                    b.HasKey("PublishedVideoId");
+
+                    b.HasIndex("ProductId");
+
+                    b.HasIndex("VideoId");
+
+                    b.ToTable("PublishedVideos");
+                });
+
+            modelBuilder.Entity("ccsc.DataLayer.Entities.Tutorials.Video", b =>
+                {
+                    b.Property<int>("VideoId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(1000)")
+                        .HasMaxLength(1000);
+
+                    b.Property<string>("Path")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(200)")
+                        .HasMaxLength(200);
+
+                    b.Property<string>("Title")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(60)")
+                        .HasMaxLength(60);
+
+                    b.HasKey("VideoId");
+
+                    b.ToTable("Videos");
                 });
 
             modelBuilder.Entity("ccsc.DataLayer.Entities.Users.Role", b =>
@@ -660,12 +702,38 @@ namespace ccsc.DataLayer.Migrations
                         .IsRequired();
                 });
 
+            modelBuilder.Entity("ccsc.DataLayer.Entities.Contracts.ContractCours", b =>
+                {
+                    b.HasOne("ccsc.DataLayer.Entities.Contracts.Contract", "Contract")
+                        .WithMany()
+                        .HasForeignKey("ContractId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("ccsc.DataLayer.Entities.Courses.Course", "Course")
+                        .WithMany()
+                        .HasForeignKey("CourseId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("ccsc.DataLayer.Entities.Contracts.ContractProduct", b =>
+                {
+                    b.HasOne("ccsc.DataLayer.Entities.Contracts.Contract", "Contract")
+                        .WithMany()
+                        .HasForeignKey("ContractId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("ccsc.DataLayer.Entities.Products.Product", "Product")
+                        .WithMany()
+                        .HasForeignKey("ProductId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
             modelBuilder.Entity("ccsc.DataLayer.Entities.Courses.Course", b =>
                 {
-                    b.HasOne("ccsc.DataLayer.Entities.Contracts.Contract", null)
-                        .WithMany("Courses")
-                        .HasForeignKey("ContractId");
-
                     b.HasOne("ccsc.DataLayer.Entities.Courses.CourseLevel", "CourseLevel")
                         .WithMany()
                         .HasForeignKey("CourseLevelId")
@@ -703,32 +771,6 @@ namespace ccsc.DataLayer.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("ccsc.DataLayer.Entities.Products.CustomerProduct", b =>
-                {
-                    b.HasOne("ccsc.DataLayer.Entities.Contracts.Contract", "Contract")
-                        .WithMany()
-                        .HasForeignKey("ContractId");
-
-                    b.HasOne("ccsc.DataLayer.Entities.Customers.Customer", "Customer")
-                        .WithMany()
-                        .HasForeignKey("CustomerId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("ccsc.DataLayer.Entities.Products.Product", "Product")
-                        .WithMany()
-                        .HasForeignKey("ProductId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
-            modelBuilder.Entity("ccsc.DataLayer.Entities.Products.Product", b =>
-                {
-                    b.HasOne("ccsc.DataLayer.Entities.Contracts.Contract", null)
-                        .WithMany("Products")
-                        .HasForeignKey("ContractId");
-                });
-
             modelBuilder.Entity("ccsc.DataLayer.Entities.Requests.Request", b =>
                 {
                     b.HasOne("ccsc.DataLayer.Entities.Contacts.Contact", "Contact")
@@ -756,6 +798,21 @@ namespace ccsc.DataLayer.Migrations
                     b.HasOne("ccsc.DataLayer.Entities.Requests.RequestType", "RequestType")
                         .WithMany()
                         .HasForeignKey("RequestTypeId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("ccsc.DataLayer.Entities.Tutorials.PublishedVideo", b =>
+                {
+                    b.HasOne("ccsc.DataLayer.Entities.Products.Product", "Product")
+                        .WithMany("PublishedVideos")
+                        .HasForeignKey("ProductId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("ccsc.DataLayer.Entities.Tutorials.Video", "Video")
+                        .WithMany("PublishedVideos")
+                        .HasForeignKey("VideoId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });

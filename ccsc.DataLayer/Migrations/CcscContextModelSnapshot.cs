@@ -15,42 +15,57 @@ namespace ccsc.DataLayer.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "3.1.8")
+                .UseIdentityColumns()
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
-                .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                .HasAnnotation("ProductVersion", "5.0.0-rc.1.20451.13");
+
+            modelBuilder.Entity("ProductVideo", b =>
+                {
+                    b.Property<int>("ProductsProductId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("VideosVideoId")
+                        .HasColumnType("int");
+
+                    b.HasKey("ProductsProductId", "VideosVideoId");
+
+                    b.HasIndex("VideosVideoId");
+
+                    b.ToTable("ProductVideo");
+                });
 
             modelBuilder.Entity("ccsc.DataLayer.Entities.Contacts.Contact", b =>
                 {
                     b.Property<int>("ContactId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .UseIdentityColumn();
 
                     b.Property<int>("CustomerId")
                         .HasColumnType("int");
 
                     b.Property<string>("Email")
                         .IsRequired()
-                        .HasColumnType("nvarchar(50)")
-                        .HasMaxLength(50);
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
 
                     b.Property<string>("FirstName")
-                        .HasColumnType("nvarchar(50)")
-                        .HasMaxLength(50);
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
 
                     b.Property<string>("LastName")
                         .IsRequired()
-                        .HasColumnType("nvarchar(50)")
-                        .HasMaxLength(50);
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
 
                     b.Property<string>("Mobile")
                         .IsRequired()
-                        .HasColumnType("nvarchar(15)")
-                        .HasMaxLength(15);
+                        .HasMaxLength(15)
+                        .HasColumnType("nvarchar(15)");
 
                     b.Property<string>("Phone")
-                        .HasColumnType("nvarchar(15)")
-                        .HasMaxLength(15);
+                        .HasMaxLength(15)
+                        .HasColumnType("nvarchar(15)");
 
                     b.Property<int>("PostId")
                         .HasColumnType("int");
@@ -72,14 +87,12 @@ namespace ccsc.DataLayer.Migrations
             modelBuilder.Entity("ccsc.DataLayer.Entities.Contacts.Gender", b =>
                 {
                     b.Property<int>("GenderId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .HasColumnType("int");
 
                     b.Property<string>("Title")
                         .IsRequired()
-                        .HasColumnType("nvarchar(20)")
-                        .HasMaxLength(20);
+                        .HasMaxLength(20)
+                        .HasColumnType("nvarchar(20)");
 
                     b.HasKey("GenderId");
 
@@ -89,14 +102,12 @@ namespace ccsc.DataLayer.Migrations
             modelBuilder.Entity("ccsc.DataLayer.Entities.Contacts.Post", b =>
                 {
                     b.Property<int>("PostId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .HasColumnType("int");
 
                     b.Property<string>("Title")
                         .IsRequired()
-                        .HasColumnType("nvarchar(200)")
-                        .HasMaxLength(200);
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)");
 
                     b.HasKey("PostId");
 
@@ -106,17 +117,15 @@ namespace ccsc.DataLayer.Migrations
             modelBuilder.Entity("ccsc.DataLayer.Entities.Contacts.Salutation", b =>
                 {
                     b.Property<int>("SalutationId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .HasColumnType("int");
 
                     b.Property<int>("GenderId")
                         .HasColumnType("int");
 
                     b.Property<string>("Title")
                         .IsRequired()
-                        .HasColumnType("nvarchar(30)")
-                        .HasMaxLength(30);
+                        .HasMaxLength(30)
+                        .HasColumnType("nvarchar(30)");
 
                     b.HasKey("SalutationId");
 
@@ -130,10 +139,10 @@ namespace ccsc.DataLayer.Migrations
                     b.Property<int>("ContractId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .UseIdentityColumn();
 
                     b.Property<decimal>("Amount")
-                        .HasColumnType("decimal(18,2)");
+                        .HasColumnType("decimal(18,0)");
 
                     b.Property<int>("ContractStatusId")
                         .HasColumnType("int");
@@ -149,8 +158,8 @@ namespace ccsc.DataLayer.Migrations
 
                     b.Property<string>("Title")
                         .IsRequired()
-                        .HasColumnType("nvarchar(200)")
-                        .HasMaxLength(200);
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)");
 
                     b.Property<bool>("UnLimited")
                         .HasColumnType("bit");
@@ -167,7 +176,7 @@ namespace ccsc.DataLayer.Migrations
                     b.Property<int>("ContractCoursId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .UseIdentityColumn();
 
                     b.Property<int>("ContractId")
                         .HasColumnType("int");
@@ -189,7 +198,7 @@ namespace ccsc.DataLayer.Migrations
                     b.Property<int>("ContractProductId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .UseIdentityColumn();
 
                     b.Property<int>("ContractId")
                         .HasColumnType("int");
@@ -209,14 +218,12 @@ namespace ccsc.DataLayer.Migrations
             modelBuilder.Entity("ccsc.DataLayer.Entities.Contracts.ContractType", b =>
                 {
                     b.Property<int>("ContractTypeId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .HasColumnType("int");
 
                     b.Property<string>("Title")
                         .IsRequired()
-                        .HasColumnType("nvarchar(50)")
-                        .HasMaxLength(50);
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
 
                     b.HasKey("ContractTypeId");
 
@@ -228,15 +235,15 @@ namespace ccsc.DataLayer.Migrations
                     b.Property<int>("CourseId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .UseIdentityColumn();
 
                     b.Property<int>("CourseLevelId")
                         .HasColumnType("int");
 
                     b.Property<string>("Title")
                         .IsRequired()
-                        .HasColumnType("nvarchar(200)")
-                        .HasMaxLength(200);
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)");
 
                     b.HasKey("CourseId");
 
@@ -248,14 +255,12 @@ namespace ccsc.DataLayer.Migrations
             modelBuilder.Entity("ccsc.DataLayer.Entities.Courses.CourseLevel", b =>
                 {
                     b.Property<int>("CourseLevelId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .HasColumnType("int");
 
                     b.Property<string>("Title")
                         .IsRequired()
-                        .HasColumnType("nvarchar(100)")
-                        .HasMaxLength(100);
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
 
                     b.HasKey("CourseLevelId");
 
@@ -267,7 +272,7 @@ namespace ccsc.DataLayer.Migrations
                     b.Property<int>("CustomerId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .UseIdentityColumn();
 
                     b.Property<int>("AfterXDay")
                         .HasColumnType("int");
@@ -279,36 +284,40 @@ namespace ccsc.DataLayer.Migrations
                         .HasColumnType("bit");
 
                     b.Property<decimal>("MinSMSCredit")
-                        .HasColumnType("decimal(18,2)");
+                        .HasColumnType("decimal(18,0)");
 
                     b.Property<decimal>("SMSCredit")
-                        .HasColumnType("decimal(18,2)");
+                        .HasColumnType("decimal(18,0)");
 
                     b.Property<DateTime?>("SMSCreditCheckDate")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("SMSPass")
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(30)
+                        .HasColumnType("nvarchar(30)");
 
                     b.Property<string>("SMSUser")
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
 
                     b.Property<DateTime?>("SendSmsDate")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Title")
                         .IsRequired()
-                        .HasColumnType("nvarchar(200)")
-                        .HasMaxLength(200);
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)");
 
                     b.Property<int?>("UniversityId")
                         .HasColumnType("int");
 
                     b.Property<string>("Url")
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)");
 
                     b.Property<string>("Version")
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
 
                     b.Property<DateTime?>("VersionCheckDate")
                         .HasColumnType("datetime2");
@@ -323,14 +332,12 @@ namespace ccsc.DataLayer.Migrations
             modelBuilder.Entity("ccsc.DataLayer.Entities.Customers.CustomerType", b =>
                 {
                     b.Property<int>("TypeId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .HasColumnType("int");
 
                     b.Property<string>("Title")
                         .IsRequired()
-                        .HasColumnType("nvarchar(200)")
-                        .HasMaxLength(200);
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)");
 
                     b.HasKey("TypeId");
 
@@ -340,14 +347,12 @@ namespace ccsc.DataLayer.Migrations
             modelBuilder.Entity("ccsc.DataLayer.Entities.Customers.Os", b =>
                 {
                     b.Property<int>("OsId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .HasColumnType("int");
 
                     b.Property<string>("Title")
                         .IsRequired()
-                        .HasColumnType("nvarchar(100)")
-                        .HasMaxLength(100);
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
 
                     b.HasKey("OsId");
 
@@ -359,7 +364,7 @@ namespace ccsc.DataLayer.Migrations
                     b.Property<int>("ServerId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .UseIdentityColumn();
 
                     b.Property<string>("Cpu")
                         .HasColumnType("nvarchar(max)");
@@ -375,8 +380,8 @@ namespace ccsc.DataLayer.Migrations
 
                     b.Property<string>("Password")
                         .IsRequired()
-                        .HasColumnType("nvarchar(200)")
-                        .HasMaxLength(200);
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)");
 
                     b.Property<int>("Ram")
                         .HasColumnType("int");
@@ -390,8 +395,8 @@ namespace ccsc.DataLayer.Migrations
 
                     b.Property<string>("UserName")
                         .IsRequired()
-                        .HasColumnType("nvarchar(200)")
-                        .HasMaxLength(200);
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)");
 
                     b.Property<bool>("Vpn")
                         .HasColumnType("bit");
@@ -410,14 +415,12 @@ namespace ccsc.DataLayer.Migrations
             modelBuilder.Entity("ccsc.DataLayer.Entities.Customers.ServerType", b =>
                 {
                     b.Property<int>("ServerTypeId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .HasColumnType("int");
 
                     b.Property<string>("Title")
                         .IsRequired()
-                        .HasColumnType("nvarchar(200)")
-                        .HasMaxLength(200);
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)");
 
                     b.HasKey("ServerTypeId");
 
@@ -427,17 +430,15 @@ namespace ccsc.DataLayer.Migrations
             modelBuilder.Entity("ccsc.DataLayer.Entities.Products.Product", b =>
                 {
                     b.Property<int>("ProductId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .HasColumnType("int");
 
                     b.Property<bool>("IsActive")
                         .HasColumnType("bit");
 
                     b.Property<string>("Title")
                         .IsRequired()
-                        .HasColumnType("nvarchar(200)")
-                        .HasMaxLength(200);
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)");
 
                     b.HasKey("ProductId");
 
@@ -449,7 +450,7 @@ namespace ccsc.DataLayer.Migrations
                     b.Property<int>("RequestId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .UseIdentityColumn();
 
                     b.Property<int>("ContactId")
                         .HasColumnType("int");
@@ -491,14 +492,12 @@ namespace ccsc.DataLayer.Migrations
             modelBuilder.Entity("ccsc.DataLayer.Entities.Requests.RequestChanel", b =>
                 {
                     b.Property<int>("RequestChanelId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .HasColumnType("int");
 
                     b.Property<string>("Title")
                         .IsRequired()
-                        .HasColumnType("nvarchar(200)")
-                        .HasMaxLength(200);
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)");
 
                     b.HasKey("RequestChanelId");
 
@@ -508,17 +507,15 @@ namespace ccsc.DataLayer.Migrations
             modelBuilder.Entity("ccsc.DataLayer.Entities.Requests.RequestStatus", b =>
                 {
                     b.Property<int>("RequestStatusId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .HasColumnType("int");
 
                     b.Property<bool>("IsActive")
                         .HasColumnType("bit");
 
                     b.Property<string>("Title")
                         .IsRequired()
-                        .HasColumnType("nvarchar(200)")
-                        .HasMaxLength(200);
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)");
 
                     b.HasKey("RequestStatusId");
 
@@ -528,18 +525,70 @@ namespace ccsc.DataLayer.Migrations
             modelBuilder.Entity("ccsc.DataLayer.Entities.Requests.RequestType", b =>
                 {
                     b.Property<int>("RequestTypeId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .HasColumnType("int");
 
                     b.Property<string>("Title")
                         .IsRequired()
-                        .HasColumnType("nvarchar(200)")
-                        .HasMaxLength(200);
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)");
 
                     b.HasKey("RequestTypeId");
 
                     b.ToTable("RequestTypes");
+                });
+
+            modelBuilder.Entity("ccsc.DataLayer.Entities.Tutorials.PublishedVideo", b =>
+                {
+                    b.Property<int>("PublishedVideoId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .UseIdentityColumn();
+
+                    b.Property<int>("ProductId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Version")
+                        .IsRequired()
+                        .HasMaxLength(20)
+                        .HasColumnType("nvarchar(20)");
+
+                    b.Property<int>("VideoId")
+                        .HasColumnType("int");
+
+                    b.HasKey("PublishedVideoId");
+
+                    b.HasIndex("ProductId");
+
+                    b.HasIndex("VideoId");
+
+                    b.ToTable("PublishedVideos");
+                });
+
+            modelBuilder.Entity("ccsc.DataLayer.Entities.Tutorials.Video", b =>
+                {
+                    b.Property<int>("VideoId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .UseIdentityColumn();
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasMaxLength(1000)
+                        .HasColumnType("nvarchar(1000)");
+
+                    b.Property<string>("Path")
+                        .IsRequired()
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)");
+
+                    b.Property<string>("Title")
+                        .IsRequired()
+                        .HasMaxLength(60)
+                        .HasColumnType("nvarchar(60)");
+
+                    b.HasKey("VideoId");
+
+                    b.ToTable("Videos");
                 });
 
             modelBuilder.Entity("ccsc.DataLayer.Entities.Users.Role", b =>
@@ -547,12 +596,12 @@ namespace ccsc.DataLayer.Migrations
                     b.Property<int>("RoleId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .UseIdentityColumn();
 
                     b.Property<string>("Title")
                         .IsRequired()
-                        .HasColumnType("nvarchar(200)")
-                        .HasMaxLength(200);
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)");
 
                     b.HasKey("RoleId");
 
@@ -564,41 +613,41 @@ namespace ccsc.DataLayer.Migrations
                     b.Property<int>("UserId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .UseIdentityColumn();
 
                     b.Property<string>("ActiveCode")
-                        .HasColumnType("nvarchar(50)")
-                        .HasMaxLength(50);
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
 
                     b.Property<string>("DisplayName")
                         .IsRequired()
-                        .HasColumnType("nvarchar(200)")
-                        .HasMaxLength(200);
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)");
 
                     b.Property<string>("Email")
                         .IsRequired()
-                        .HasColumnType("nvarchar(200)")
-                        .HasMaxLength(200);
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)");
 
                     b.Property<bool>("IsActive")
                         .HasColumnType("bit");
 
                     b.Property<string>("Password")
                         .IsRequired()
-                        .HasColumnType("nvarchar(200)")
-                        .HasMaxLength(200);
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)");
 
                     b.Property<DateTime>("RegisterDate")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("UserAvatar")
-                        .HasColumnType("nvarchar(50)")
-                        .HasMaxLength(50);
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
 
                     b.Property<string>("UserName")
                         .IsRequired()
-                        .HasColumnType("nvarchar(200)")
-                        .HasMaxLength(200);
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)");
 
                     b.HasKey("UserId");
 
@@ -610,7 +659,7 @@ namespace ccsc.DataLayer.Migrations
                     b.Property<int>("UR_id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .UseIdentityColumn();
 
                     b.Property<int>("RoleId")
                         .HasColumnType("int");
@@ -625,6 +674,21 @@ namespace ccsc.DataLayer.Migrations
                     b.HasIndex("UserId");
 
                     b.ToTable("UserRoles");
+                });
+
+            modelBuilder.Entity("ProductVideo", b =>
+                {
+                    b.HasOne("ccsc.DataLayer.Entities.Products.Product", null)
+                        .WithMany()
+                        .HasForeignKey("ProductsProductId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("ccsc.DataLayer.Entities.Tutorials.Video", null)
+                        .WithMany()
+                        .HasForeignKey("VideosVideoId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("ccsc.DataLayer.Entities.Contacts.Contact", b =>
@@ -646,6 +710,12 @@ namespace ccsc.DataLayer.Migrations
                         .HasForeignKey("SalutationId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.Navigation("Customer");
+
+                    b.Navigation("Post");
+
+                    b.Navigation("Salutation");
                 });
 
             modelBuilder.Entity("ccsc.DataLayer.Entities.Contacts.Salutation", b =>
@@ -655,6 +725,8 @@ namespace ccsc.DataLayer.Migrations
                         .HasForeignKey("GenderId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.Navigation("Gender");
                 });
 
             modelBuilder.Entity("ccsc.DataLayer.Entities.Contracts.Contract", b =>
@@ -664,6 +736,8 @@ namespace ccsc.DataLayer.Migrations
                         .HasForeignKey("CustomerId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.Navigation("Customer");
                 });
 
             modelBuilder.Entity("ccsc.DataLayer.Entities.Contracts.ContractCours", b =>
@@ -679,6 +753,10 @@ namespace ccsc.DataLayer.Migrations
                         .HasForeignKey("CourseId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.Navigation("Contract");
+
+                    b.Navigation("Course");
                 });
 
             modelBuilder.Entity("ccsc.DataLayer.Entities.Contracts.ContractProduct", b =>
@@ -694,6 +772,10 @@ namespace ccsc.DataLayer.Migrations
                         .HasForeignKey("ProductId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.Navigation("Contract");
+
+                    b.Navigation("Product");
                 });
 
             modelBuilder.Entity("ccsc.DataLayer.Entities.Courses.Course", b =>
@@ -703,6 +785,8 @@ namespace ccsc.DataLayer.Migrations
                         .HasForeignKey("CourseLevelId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.Navigation("CourseLevel");
                 });
 
             modelBuilder.Entity("ccsc.DataLayer.Entities.Customers.Customer", b =>
@@ -712,6 +796,8 @@ namespace ccsc.DataLayer.Migrations
                         .HasForeignKey("CustomerTypeId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.Navigation("CustomerType");
                 });
 
             modelBuilder.Entity("ccsc.DataLayer.Entities.Customers.Server", b =>
@@ -733,6 +819,12 @@ namespace ccsc.DataLayer.Migrations
                         .HasForeignKey("ServerTypeId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.Navigation("Customer");
+
+                    b.Navigation("Os");
+
+                    b.Navigation("ServerType");
                 });
 
             modelBuilder.Entity("ccsc.DataLayer.Entities.Requests.Request", b =>
@@ -764,6 +856,35 @@ namespace ccsc.DataLayer.Migrations
                         .HasForeignKey("RequestTypeId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.Navigation("Contact");
+
+                    b.Navigation("Product");
+
+                    b.Navigation("RequestChanel");
+
+                    b.Navigation("RequestStatus");
+
+                    b.Navigation("RequestType");
+                });
+
+            modelBuilder.Entity("ccsc.DataLayer.Entities.Tutorials.PublishedVideo", b =>
+                {
+                    b.HasOne("ccsc.DataLayer.Entities.Products.Product", "Product")
+                        .WithMany()
+                        .HasForeignKey("ProductId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("ccsc.DataLayer.Entities.Tutorials.Video", "Video")
+                        .WithMany()
+                        .HasForeignKey("VideoId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Product");
+
+                    b.Navigation("Video");
                 });
 
             modelBuilder.Entity("ccsc.DataLayer.Entities.Users.UserRole", b =>
@@ -779,6 +900,25 @@ namespace ccsc.DataLayer.Migrations
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.Navigation("Role");
+
+                    b.Navigation("User");
+                });
+
+            modelBuilder.Entity("ccsc.DataLayer.Entities.Customers.Customer", b =>
+                {
+                    b.Navigation("Servers");
+                });
+
+            modelBuilder.Entity("ccsc.DataLayer.Entities.Users.Role", b =>
+                {
+                    b.Navigation("UserRoles");
+                });
+
+            modelBuilder.Entity("ccsc.DataLayer.Entities.Users.User", b =>
+                {
+                    b.Navigation("UserRoles");
                 });
 #pragma warning restore 612, 618
         }

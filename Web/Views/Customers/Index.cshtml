@@ -1,15 +1,16 @@
 ﻿@model IEnumerable<ccsc.DataLayer.Entities.Customers.Customer>
 
 @{
-    ViewData["Title"] = "فهرست مشتریان";
+    ViewData["Title"] = "دانشگاه ها";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h1>@ViewData["Title"]</h1>
+	<h1>@ViewData["Title"]</h1>
 
-<p>
-	<a asp-action="Create">مشتری جدید</a>
-</p>
+	<p>
+		<a class="btn btn-primary" asp-action="Create">افزودن</a>
+	</p>
+
 <form asp-controller="Customers" asp-action="Index" method="get">
 	<p>
 		<input type="text" name="SearchString">
@@ -32,19 +33,10 @@
             <th>
                 @Html.DisplayNameFor(model => model.VersionCheckDate)
             </th>
-            <th>
-                @Html.DisplayNameFor(model => model.SMSUser)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.SMSPass)
-            </th>
-            <th>
+	        <th>
                 @Html.DisplayNameFor(model => model.SMSCredit)
             </th>
-            <th>
-                @Html.DisplayNameFor(model => model.MinSMSCredit)
-            </th>
-            <th>
+	        <th>
                 @Html.DisplayNameFor(model => model.SMSCreditCheckDate)
             </th>
             <th>
@@ -71,19 +63,10 @@
             <td>
                 @Html.DisplayFor(modelItem => item.VersionCheckDate)
             </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.SMSUser)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.SMSPass)
-            </td>
-            <td>
+	        <td>
                 @Html.DisplayFor(modelItem => item.SMSCredit)
             </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.MinSMSCredit)
-            </td>
-            <td>
+	        <td>
                 @Html.DisplayFor(modelItem => item.SMSCreditCheckDate)
             </td>
             <td>

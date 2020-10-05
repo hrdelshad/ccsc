@@ -1,14 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics.Contracts;
-using System.IO.Compression;
-using System.Text;
-using ccsc.DataLayer.Entities.Contacts;
+﻿using ccsc.DataLayer.Entities.Contacts;
 using ccsc.DataLayer.Entities.Contracts;
 using ccsc.DataLayer.Entities.Courses;
 using ccsc.DataLayer.Entities.Customers;
 using ccsc.DataLayer.Entities.Products;
 using ccsc.DataLayer.Entities.Requests;
+using ccsc.DataLayer.Entities.Tutorials;
 using ccsc.DataLayer.Entities.Users;
 using Microsoft.EntityFrameworkCore;
 using Contract = ccsc.DataLayer.Entities.Contracts.Contract;
@@ -27,6 +23,10 @@ namespace ccsc.DataLayer.Context
 			
 		}
 
+		#region ModelBulder
+
+
+		#endregion
 
 		#region Contacts
 
@@ -77,6 +77,13 @@ namespace ccsc.DataLayer.Context
 		public DbSet<RequestChanel> RequestChanels { get; set; }
 		public DbSet<RequestStatus> RequestStatuses { get; set; }
 		public DbSet<RequestType> RequestTypes { get; set; }
+
+		#endregion
+
+		#region Tutorials
+
+		public DbSet<PublishedVideo> PublishedVideos { get; set; }
+		public DbSet<Video> Videos { get; set; }
 
 		#endregion
 

@@ -1,17 +1,11 @@
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json.Serialization;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using ccsc.Core.Services;
 using ccsc.Core.Services.Interfaces;
 using ccsc.DataLayer.Context;
 using ccsc.DataLayer.Entities.Messages;
-using MailKit;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
