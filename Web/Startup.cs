@@ -1,4 +1,4 @@
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json.Serialization;
 using ccsc.Core.Services;
 using ccsc.Core.Services.Interfaces;
@@ -10,6 +10,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Newtonsoft.Json;
 
 namespace Web
 {
@@ -38,6 +39,13 @@ namespace Web
 
 			services.AddControllersWithViews();
 
+			// برای جلوگیری از لوپهای انکلود
+			// install the NuGET package: Microsoft.AspNetCore.Mvc.NewtonsoftJson
+			services.AddControllers().AddNewtonsoftJson(options =>
+			{
+				options.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore;
+			});
+
 			#region Database Contexts
 
 			services.AddDbContext<CcscContext>(options=>
@@ -52,6 +60,7 @@ namespace Web
 			services.AddTransient<ICustomerService, CustomerService>();
 
 			#endregion
+
 			services.Configure<MailSettings>(Configuration.GetSection("MailSettings"));
 		}
 

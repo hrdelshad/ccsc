@@ -1,0 +1,51 @@
+﻿@using ccsc.Core.Convertors
+@model ccsc.DataLayer.Entities.Products.ChangeSetViewModel
+
+@{
+	ViewData["Title"] = "Details";
+	Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>Details</h1>
+<p>@DateTime.Now.PersianDate()</p>
+
+<div>
+	<h4>ChangeSet</h4>
+	<hr />
+	<dl class="row">
+		<dt class="col-sm-2">
+			@Html.DisplayNameFor(model => model.User)
+		</dt>
+		<dd class="col-sm-10">
+			@Html.DisplayFor(model => model.User.DisplayName)
+		</dd>
+		<dt class="col-sm-2">
+			@Html.DisplayNameFor(model => model.PersianDate)
+		</dt>
+		<dd class="col-sm-10">
+			@Html.DisplayFor(model => model.PersianDate)
+		</dd>
+		<dt class="col-sm-2">
+			@Html.DisplayNameFor(model => model.Comment)
+		</dt>
+		<dd class="col-sm-10">
+			@Html.DisplayFor(model => model.Comment)
+		</dd>
+		<dt class="col-sm-2">
+			@Html.DisplayNameFor(model => model.Description)
+		</dt>
+		<dd class="col-sm-10">
+			@Html.DisplayFor(model => model.Description)
+		</dd>
+		<dt class="col-sm-2">
+			@Html.DisplayNameFor(model => model.Version)
+		</dt>
+		<dd class="col-sm-10">
+			@Html.DisplayFor(model => model.Version)
+		</dd>
+	</dl>
+</div>
+<div>
+	<a asp-action="Edit" asp-route-id="@Model.ChangeSetId">Edit</a> |
+	<a asp-action="Index">Back to List</a>
+</div>

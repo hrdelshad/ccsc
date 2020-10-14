@@ -2,11 +2,12 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using ccsc.Core.DTOs;
+using ccsc.Core.Services.Interfaces;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using ccsc.DataLayer.Context;
-using ccsc.DataLayer.Entities.Products;
 using ccsc.DataLayer.Entities.Tutorials;
 
 namespace ccsc.Api.Controllers
@@ -19,21 +20,23 @@ namespace ccsc.Api.Controllers
 
         public VideosController(CcscContext context)
         {
-            _context = context;
+	        _context = context;
         }
 
-        // GET: api/Videos1
-        [HttpGet]
-        public async Task<ActionResult<IEnumerable<Video>>> GetVideos()
-        {
-            return await _context.Videos.ToListAsync();
-        }
+		//GET: api/Videos
+	   [HttpGet]
+		public async Task<ActionResult<IEnumerable<Video>>> GetVideos()
+		{
+			var result = await _context.Videos.Include(v=>v.Products).ToListAsync();
+			return result;
+		}
 
-        // GET: api/Videos1/5
-        [HttpGet("{id}")]
+
+		// GET: api/Videos/5
+		[HttpGet("{id}")]
         public async Task<ActionResult<Video>> GetVideo(int id)
         {
-            var video = await _context.Videos.FindAsync(id);
+            var video = await _context.Videos.Where(v=>v.VideoId == id).Include(v => v.Products).FirstOrDefaultAsync();
 
             if (video == null)
             {
@@ -43,7 +46,7 @@ namespace ccsc.Api.Controllers
             return video;
         }
 
-        // PUT: api/Videos1/5
+        // PUT: api/Videos/5
         // To protect from overposting attacks, enable the specific properties you want to bind to, for
         // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
         [HttpPut("{id}")]
@@ -75,7 +78,7 @@ namespace ccsc.Api.Controllers
             return NoContent();
         }
 
-        // POST: api/Videos1
+        // POST: api/Videos
         // To protect from overposting attacks, enable the specific properties you want to bind to, for
         // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
         [HttpPost]
@@ -87,7 +90,7 @@ namespace ccsc.Api.Controllers
             return CreatedAtAction("GetVideo", new { id = video.VideoId }, video);
         }
 
-        // DELETE: api/Videos1/5
+        // DELETE: api/Videos/5
         [HttpDelete("{id}")]
         public async Task<ActionResult<Video>> DeleteVideo(int id)
         {

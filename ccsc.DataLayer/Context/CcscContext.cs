@@ -6,7 +6,9 @@ using ccsc.DataLayer.Entities.Products;
 using ccsc.DataLayer.Entities.Requests;
 using ccsc.DataLayer.Entities.Tutorials;
 using ccsc.DataLayer.Entities.Users;
+using ccsc.DataLayer.Migrations;
 using Microsoft.EntityFrameworkCore;
+using ChangeSet = ccsc.DataLayer.Entities.Products.ChangeSet;
 using Contract = ccsc.DataLayer.Entities.Contracts.Contract;
 
 namespace ccsc.DataLayer.Context
@@ -67,6 +69,7 @@ namespace ccsc.DataLayer.Context
 
 		#region Products
 
+		public DbSet<ChangeSet> ChangeSets { get; set; }
 		public DbSet<Product> Products { get; set; }
 
 		#endregion
@@ -82,8 +85,8 @@ namespace ccsc.DataLayer.Context
 
 		#region Tutorials
 
-		public DbSet<PublishedVideo> PublishedVideos { get; set; }
 		public DbSet<Video> Videos { get; set; }
+		//public DbSet<ProductVideo> ProductVideos { get; set; }
 
 		#endregion
 

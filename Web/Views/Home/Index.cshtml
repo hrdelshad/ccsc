@@ -3,7 +3,9 @@
 }
 
 <div class="text-center">
-	<h1 class="display-4">به مرکز خدمات مشتریان انیکو خوش آمدید!</h1>
+	<h1 class="display-4">به مرکز خدمات مشتریان انیکو خوش آمدید! @ViewData["today"]</h1>
+	<p>@DateTime.Now.PersianDate()</p>
+	<p>@DateTime.Now.PersianDateDayOfWeek()</p>
 	<span class="material-icons">
 		video_library
 	</span>
