@@ -4,12 +4,14 @@ using ccsc.DataLayer.Entities.Courses;
 using ccsc.DataLayer.Entities.Customers;
 using ccsc.DataLayer.Entities.Products;
 using ccsc.DataLayer.Entities.Requests;
+using ccsc.DataLayer.Entities.Services;
 using ccsc.DataLayer.Entities.Tutorials;
 using ccsc.DataLayer.Entities.Users;
 using ccsc.DataLayer.Migrations;
 using Microsoft.EntityFrameworkCore;
 using ChangeSet = ccsc.DataLayer.Entities.Products.ChangeSet;
 using Contract = ccsc.DataLayer.Entities.Contracts.Contract;
+using Duty = ccsc.DataLayer.Entities.Services.Duty;
 
 namespace ccsc.DataLayer.Context
 {
@@ -80,6 +82,16 @@ namespace ccsc.DataLayer.Context
 		public DbSet<RequestChanel> RequestChanels { get; set; }
 		public DbSet<RequestStatus> RequestStatuses { get; set; }
 		public DbSet<RequestType> RequestTypes { get; set; }
+
+		#endregion
+
+		#region Services
+
+		public DbSet<Service> Services { get; set; }
+		public DbSet<ServiceStatus> ServiceStatuses { get; set; }
+		public DbSet<ServiceType> ServiceTypes { get; set; }
+		public DbSet<Duty> Duties { get; set; }
+		public DbSet<DutyStatus> DutyStatuses { get; set; }
 
 		#endregion
 

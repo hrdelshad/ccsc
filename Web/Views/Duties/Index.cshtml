@@ -1,0 +1,72 @@
+﻿@model IEnumerable<ccsc.DataLayer.Entities.Services.Duty>
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>Index</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Title)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.DutyDate)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.DuoDate)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.DoneDate)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Service)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Request)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.DutyStatus)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Title)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.DutyDate)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.DuoDate)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.DoneDate)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Service.text)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Request.Text)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.DutyStatus.Title)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.DutyId">Edit</a> |
+                <a asp-action="Details" asp-route-id="@item.DutyId">Details</a> |
+                <a asp-action="Delete" asp-route-id="@item.DutyId">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

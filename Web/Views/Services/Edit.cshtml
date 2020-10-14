@@ -1,0 +1,60 @@
+﻿@model ccsc.DataLayer.Entities.Services.Service
+
+@{
+    ViewData["Title"] = "Edit";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>Edit</h1>
+
+<h4>Service</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Edit">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="ServiceId" />
+            <div class="form-group">
+                <label asp-for="text" class="control-label"></label>
+                <input asp-for="text" class="form-control" />
+                <span asp-validation-for="text" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ServiceTypeId" class="control-label"></label>
+                <select asp-for="ServiceTypeId" class="form-control" asp-items="ViewBag.ServiceTypeId"></select>
+                <span asp-validation-for="ServiceTypeId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="RegisterDate" class="control-label"></label>
+                <input asp-for="RegisterDate" class="form-control" />
+                <span asp-validation-for="RegisterDate" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ServiceStatusId" class="control-label"></label>
+                <select asp-for="ServiceStatusId" class="form-control" asp-items="ViewBag.ServiceStatusId"></select>
+                <span asp-validation-for="ServiceStatusId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="EndDate" class="control-label"></label>
+                <input asp-for="EndDate" class="form-control" />
+                <span asp-validation-for="EndDate" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="RequestId" class="control-label"></label>
+                <select asp-for="RequestId" class="form-control" asp-items="ViewBag.RequestId"></select>
+                <span asp-validation-for="RequestId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

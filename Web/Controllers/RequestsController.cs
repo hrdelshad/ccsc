@@ -65,7 +65,7 @@ namespace ccsc.Web.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("RequestId,ContactId,RequestTime,RequestChanelId,RequestTypeId,ProductId,RequestStatusId,Content")] Request request)
+        public async Task<IActionResult> Create([Bind("RequestId,ContactId,RequestTime,RequestChanelId,RequestTypeId,ProductId,RequestStatusId,Title,Text")] Request request)
         {
             if (ModelState.IsValid)
             {
@@ -94,7 +94,7 @@ namespace ccsc.Web.Controllers
             {
                 return NotFound();
             }
-            ViewData["ContactId"] = new SelectList(_context.Contacts, "ContactId", "Email", request.ContactId);
+            ViewData["ContactId"] = new SelectList(_context.Contacts, "ContactId", "LastName", request.ContactId);
             ViewData["ProductId"] = new SelectList(_context.Products, "ProductId", "Title", request.ProductId);
             ViewData["RequestChanelId"] = new SelectList(_context.RequestChanels, "RequestChanelId", "Title", request.RequestChanelId);
             ViewData["RequestStatusId"] = new SelectList(_context.RequestStatuses, "RequestStatusId", "Title", request.RequestStatusId);
@@ -107,7 +107,7 @@ namespace ccsc.Web.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("RequestId,ContactId,RequestTime,RequestChanelId,RequestTypeId,ProductId,RequestStatusId,Content")] Request request)
+        public async Task<IActionResult> Edit(int id, [Bind("RequestId,ContactId,RequestTime,RequestChanelId,RequestTypeId,ProductId,RequestStatusId,Title,Text")] Request request)
         {
             if (id != request.RequestId)
             {
@@ -134,7 +134,7 @@ namespace ccsc.Web.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["ContactId"] = new SelectList(_context.Contacts, "ContactId", "Email", request.ContactId);
+            ViewData["ContactId"] = new SelectList(_context.Contacts, "ContactId", "LastName", request.ContactId);
             ViewData["ProductId"] = new SelectList(_context.Products, "ProductId", "Title", request.ProductId);
             ViewData["RequestChanelId"] = new SelectList(_context.RequestChanels, "RequestChanelId", "Title", request.RequestChanelId);
             ViewData["RequestStatusId"] = new SelectList(_context.RequestStatuses, "RequestStatusId", "Title", request.RequestStatusId);

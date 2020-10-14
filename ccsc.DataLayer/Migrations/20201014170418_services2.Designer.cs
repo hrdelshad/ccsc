@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using ccsc.DataLayer.Context;
 
 namespace ccsc.DataLayer.Migrations
 {
     [DbContext(typeof(CcscContext))]
-    partial class CcscContextModelSnapshot : ModelSnapshot
+    [Migration("20201014170418_services2")]
+    partial class services2
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -485,6 +487,10 @@ namespace ccsc.DataLayer.Migrations
                     b.Property<int>("ContactId")
                         .HasColumnType("int");
 
+                    b.Property<string>("Content")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<int?>("ProductId")
                         .HasColumnType("int");
 
@@ -499,16 +505,6 @@ namespace ccsc.DataLayer.Migrations
 
                     b.Property<int>("RequestTypeId")
                         .HasColumnType("int");
-
-                    b.Property<string>("Text")
-                        .IsRequired()
-                        .HasMaxLength(800)
-                        .HasColumnType("nvarchar(800)");
-
-                    b.Property<string>("Title")
-                        .IsRequired()
-                        .HasMaxLength(200)
-                        .HasColumnType("nvarchar(200)");
 
                     b.HasKey("RequestId");
 
@@ -576,72 +572,6 @@ namespace ccsc.DataLayer.Migrations
                     b.ToTable("RequestTypes");
                 });
 
-            modelBuilder.Entity("ccsc.DataLayer.Entities.Services.Duty", b =>
-                {
-                    b.Property<int>("DutyId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .UseIdentityColumn();
-
-                    b.Property<DateTime?>("DoneDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<DateTime?>("DuoDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<DateTime>("DutyDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<int>("DutyStatusId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("RequestId")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("ServiceId")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("ServiceTypeId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Title")
-                        .IsRequired()
-                        .HasMaxLength(200)
-                        .HasColumnType("nvarchar(200)");
-
-                    b.HasKey("DutyId");
-
-                    b.HasIndex("DutyStatusId");
-
-                    b.HasIndex("RequestId");
-
-                    b.HasIndex("ServiceId");
-
-                    b.HasIndex("ServiceTypeId");
-
-                    b.ToTable("Duties");
-                });
-
-            modelBuilder.Entity("ccsc.DataLayer.Entities.Services.DutyStatus", b =>
-                {
-                    b.Property<int>("DutyStatusId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .UseIdentityColumn();
-
-                    b.Property<bool>("IsOpen")
-                        .HasColumnType("bit");
-
-                    b.Property<string>("Title")
-                        .IsRequired()
-                        .HasMaxLength(200)
-                        .HasColumnType("nvarchar(200)");
-
-                    b.HasKey("DutyStatusId");
-
-                    b.ToTable("DutyStatuses");
-                });
-
             modelBuilder.Entity("ccsc.DataLayer.Entities.Services.Service", b =>
                 {
                     b.Property<int>("ServiceId")
@@ -649,14 +579,14 @@ namespace ccsc.DataLayer.Migrations
                         .HasColumnType("int")
                         .UseIdentityColumn();
 
+                    b.Property<int?>("ContactId")
+                        .HasColumnType("int");
+
                     b.Property<DateTime?>("EndDate")
                         .HasColumnType("datetime2");
 
                     b.Property<DateTime>("RegisterDate")
                         .HasColumnType("datetime2");
-
-                    b.Property<int>("RequestId")
-                        .HasColumnType("int");
 
                     b.Property<int>("ServiceStatusId")
                         .HasColumnType("int");
@@ -671,7 +601,7 @@ namespace ccsc.DataLayer.Migrations
 
                     b.HasKey("ServiceId");
 
-                    b.HasIndex("RequestId");
+                    b.HasIndex("ContactId");
 
                     b.HasIndex("ServiceStatusId");
 
@@ -717,6 +647,55 @@ namespace ccsc.DataLayer.Migrations
                     b.HasIndex("ParentServiceTypeId");
 
                     b.ToTable("ServiceTypes");
+                });
+
+            modelBuilder.Entity("ccsc.DataLayer.Entities.Services.Task", b =>
+                {
+                    b.Property<int>("TaskId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .UseIdentityColumn();
+
+                    b.Property<int>("ContactId")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime?>("DoneDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime?>("DuoDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int?>("RequestId")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("ServiceId")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("ServiceTypeId")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("TaskDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("TaskStatusEnum")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Title")
+                        .IsRequired()
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)");
+
+                    b.HasKey("TaskId");
+
+                    b.HasIndex("ContactId");
+
+                    b.HasIndex("RequestId");
+
+                    b.HasIndex("ServiceId");
+
+                    b.HasIndex("ServiceTypeId");
+
+                    b.ToTable("Tasks");
                 });
 
             modelBuilder.Entity("ccsc.DataLayer.Entities.Tutorials.Video", b =>
@@ -1034,42 +1013,11 @@ namespace ccsc.DataLayer.Migrations
                     b.Navigation("RequestType");
                 });
 
-            modelBuilder.Entity("ccsc.DataLayer.Entities.Services.Duty", b =>
-                {
-                    b.HasOne("ccsc.DataLayer.Entities.Services.DutyStatus", "DutyStatus")
-                        .WithMany()
-                        .HasForeignKey("DutyStatusId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("ccsc.DataLayer.Entities.Requests.Request", "Request")
-                        .WithMany("Duties")
-                        .HasForeignKey("RequestId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("ccsc.DataLayer.Entities.Services.Service", "Service")
-                        .WithMany()
-                        .HasForeignKey("ServiceId");
-
-                    b.HasOne("ccsc.DataLayer.Entities.Services.ServiceType", null)
-                        .WithMany("Duties")
-                        .HasForeignKey("ServiceTypeId");
-
-                    b.Navigation("DutyStatus");
-
-                    b.Navigation("Request");
-
-                    b.Navigation("Service");
-                });
-
             modelBuilder.Entity("ccsc.DataLayer.Entities.Services.Service", b =>
                 {
-                    b.HasOne("ccsc.DataLayer.Entities.Requests.Request", "Request")
-                        .WithMany("Services")
-                        .HasForeignKey("RequestId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                    b.HasOne("ccsc.DataLayer.Entities.Contacts.Contact", "Contact")
+                        .WithMany()
+                        .HasForeignKey("ContactId");
 
                     b.HasOne("ccsc.DataLayer.Entities.Services.ServiceStatus", "ServiceStatus")
                         .WithMany()
@@ -1083,7 +1031,7 @@ namespace ccsc.DataLayer.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("Request");
+                    b.Navigation("Contact");
 
                     b.Navigation("ServiceStatus");
 
@@ -1097,6 +1045,33 @@ namespace ccsc.DataLayer.Migrations
                         .HasForeignKey("ParentServiceTypeId");
 
                     b.Navigation("ParentServiceType");
+                });
+
+            modelBuilder.Entity("ccsc.DataLayer.Entities.Services.Task", b =>
+                {
+                    b.HasOne("ccsc.DataLayer.Entities.Contacts.Contact", "Contact")
+                        .WithMany()
+                        .HasForeignKey("ContactId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("ccsc.DataLayer.Entities.Requests.Request", "Request")
+                        .WithMany()
+                        .HasForeignKey("RequestId");
+
+                    b.HasOne("ccsc.DataLayer.Entities.Services.Service", "Service")
+                        .WithMany()
+                        .HasForeignKey("ServiceId");
+
+                    b.HasOne("ccsc.DataLayer.Entities.Services.ServiceType", null)
+                        .WithMany("Tasks")
+                        .HasForeignKey("ServiceTypeId");
+
+                    b.Navigation("Contact");
+
+                    b.Navigation("Request");
+
+                    b.Navigation("Service");
                 });
 
             modelBuilder.Entity("ccsc.DataLayer.Entities.Users.UserRole", b =>
@@ -1123,16 +1098,9 @@ namespace ccsc.DataLayer.Migrations
                     b.Navigation("Servers");
                 });
 
-            modelBuilder.Entity("ccsc.DataLayer.Entities.Requests.Request", b =>
-                {
-                    b.Navigation("Duties");
-
-                    b.Navigation("Services");
-                });
-
             modelBuilder.Entity("ccsc.DataLayer.Entities.Services.ServiceType", b =>
                 {
-                    b.Navigation("Duties");
+                    b.Navigation("Tasks");
                 });
 
             modelBuilder.Entity("ccsc.DataLayer.Entities.Users.Role", b =>

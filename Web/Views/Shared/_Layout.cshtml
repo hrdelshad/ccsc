@@ -50,8 +50,15 @@
 						<li class="nav-item">
 							<a class="nav-link text-light" asp-area="" asp-controller="Contacts" asp-action="Index">افراد</a>
 						</li>
-						<li class="nav-item">
-							<a class="nav-link text-light" asp-area="" asp-controller="Requests" asp-action="Index">درخواست ها</a>
+						<li class="nav-item dropdown">
+							<a class="nav-link dropdown-toggle text-light" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+								خدمات
+							</a>
+							<div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+								<a class="dropdown-item" asp-area="" asp-controller="Requests" asp-action="Index">درخواست ها</a>
+								<a class="dropdown-item" asp-area="" asp-controller="Services" asp-action="Index">سرویس ها</a>
+								<a class="dropdown-item" asp-area="" asp-controller="Duties" asp-action="Index">کارها</a>
+							</div>
 						</li>
 						<li class="nav-item dropdown">
 							<a class="nav-link dropdown-toggle text-light" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -80,7 +87,10 @@
 								<a class="dropdown-item" asp-area="" asp-controller="Posts" asp-action="Index">پست ها</a>
 								<a class="dropdown-item" asp-area="" asp-controller="Genders" asp-action="Index">جنسیت</a>
 								<a class="dropdown-item" asp-area="" asp-controller="Salutations" asp-action="Index">القاب</a>
-
+								<hr/>
+								<a class="dropdown-item" asp-area="" asp-controller="ServiceTypes" asp-action="Index">انواع سرویس</a>
+								<a class="dropdown-item" asp-area="" asp-controller="ServiceStatus" asp-action="Index">وضعیت های سرویس</a>
+								<a class="dropdown-item" asp-area="" asp-controller="DutyStatus" asp-action="Index">وضعیت کارها</a>
 							</div>
 						</li>
 						<li class="nav-item dropdown">

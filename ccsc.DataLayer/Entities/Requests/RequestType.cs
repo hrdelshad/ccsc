@@ -14,7 +14,19 @@ namespace ccsc.DataLayer.Entities.Requests
 
 		[Display(Name = "نوع درخواست")]
 		[Required(ErrorMessage = "لطفا {0} را وارد کنید")]
-		[MaxLength(200, ErrorMessage = "{0} نمیتواند بیشتر از {0} کارکتر باشد")]
+		[MaxLength(200, ErrorMessage = "{0} نمیتواند بیشتر از {1} کارکتر باشد")]
 		public string Title { get; set; }
+
+		[Display(Name = "باسخ از طریق")]
+		public ReplyByEnum ReplyByEnum { get; set; }
+	}
+
+	public enum ReplyByEnum
+	{
+		[Display(Name = "سرویس")]
+		Service,
+
+		[Display(Name = "کار")]
+		Duty
 	}
 }

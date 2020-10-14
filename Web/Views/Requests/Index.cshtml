@@ -17,7 +17,10 @@
                 @Html.DisplayNameFor(model => model.RequestTime)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Content)
+                @Html.DisplayNameFor(model => model.Title)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Text)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.Contact)
@@ -44,7 +47,10 @@
                 @Html.DisplayFor(modelItem => item.RequestTime)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Content)
+                @Html.DisplayFor(modelItem => item.Title)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Text)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Contact.Email)
