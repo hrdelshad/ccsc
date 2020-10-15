@@ -1,6 +1,4 @@
-﻿using ccsc.Core.Services;
-using ccsc.Core.Services.Interfaces;
-using ccsc.DataLayer.Context;
+﻿using ccsc.DataLayer.Context;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;

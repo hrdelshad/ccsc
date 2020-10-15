@@ -10,8 +10,8 @@ using ccsc.DataLayer.Context;
 namespace ccsc.DataLayer.Migrations
 {
     [DbContext(typeof(CcscContext))]
-    [Migration("20201006135100_ChangeSet")]
-    partial class ChangeSetMig
+    [Migration("20201014194642_Duty")]
+    partial class DutyMig
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -487,10 +487,6 @@ namespace ccsc.DataLayer.Migrations
                     b.Property<int>("ContactId")
                         .HasColumnType("int");
 
-                    b.Property<string>("Content")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<int?>("ProductId")
                         .HasColumnType("int");
 
@@ -505,6 +501,16 @@ namespace ccsc.DataLayer.Migrations
 
                     b.Property<int>("RequestTypeId")
                         .HasColumnType("int");
+
+                    b.Property<string>("Text")
+                        .IsRequired()
+                        .HasMaxLength(800)
+                        .HasColumnType("nvarchar(800)");
+
+                    b.Property<string>("Title")
+                        .IsRequired()
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)");
 
                     b.HasKey("RequestId");
 
@@ -559,6 +565,9 @@ namespace ccsc.DataLayer.Migrations
                     b.Property<int>("RequestTypeId")
                         .HasColumnType("int");
 
+                    b.Property<int>("ReplyByEnum")
+                        .HasColumnType("int");
+
                     b.Property<string>("Title")
                         .IsRequired()
                         .HasMaxLength(200)
@@ -567,6 +576,149 @@ namespace ccsc.DataLayer.Migrations
                     b.HasKey("RequestTypeId");
 
                     b.ToTable("RequestTypes");
+                });
+
+            modelBuilder.Entity("ccsc.DataLayer.Entities.Services.Duty", b =>
+                {
+                    b.Property<int>("DutyId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .UseIdentityColumn();
+
+                    b.Property<DateTime?>("DoneDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime?>("DuoDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("DutyDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("DutyStatusId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("RequestId")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("ServiceId")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("ServiceTypeId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Title")
+                        .IsRequired()
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)");
+
+                    b.HasKey("DutyId");
+
+                    b.HasIndex("DutyStatusId");
+
+                    b.HasIndex("RequestId");
+
+                    b.HasIndex("ServiceId");
+
+                    b.HasIndex("ServiceTypeId");
+
+                    b.ToTable("Duties");
+                });
+
+            modelBuilder.Entity("ccsc.DataLayer.Entities.Services.DutyStatus", b =>
+                {
+                    b.Property<int>("DutyStatusId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .UseIdentityColumn();
+
+                    b.Property<bool>("IsOpen")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("Title")
+                        .IsRequired()
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)");
+
+                    b.HasKey("DutyStatusId");
+
+                    b.ToTable("DutyStatuses");
+                });
+
+            modelBuilder.Entity("ccsc.DataLayer.Entities.Services.Service", b =>
+                {
+                    b.Property<int>("ServiceId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .UseIdentityColumn();
+
+                    b.Property<DateTime?>("EndDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("RegisterDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("RequestId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("ServiceStatusId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("ServiceTypeId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("text")
+                        .IsRequired()
+                        .HasMaxLength(500)
+                        .HasColumnType("nvarchar(500)");
+
+                    b.HasKey("ServiceId");
+
+                    b.HasIndex("RequestId");
+
+                    b.HasIndex("ServiceStatusId");
+
+                    b.HasIndex("ServiceTypeId");
+
+                    b.ToTable("Services");
+                });
+
+            modelBuilder.Entity("ccsc.DataLayer.Entities.Services.ServiceStatus", b =>
+                {
+                    b.Property<int>("ServiceStatusId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .UseIdentityColumn();
+
+                    b.Property<string>("title")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.HasKey("ServiceStatusId");
+
+                    b.ToTable("ServiceStatuses");
+                });
+
+            modelBuilder.Entity("ccsc.DataLayer.Entities.Services.ServiceType", b =>
+                {
+                    b.Property<int>("ServiceTypeId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .UseIdentityColumn();
+
+                    b.Property<int?>("ParentServiceTypeId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Title")
+                        .IsRequired()
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)");
+
+                    b.HasKey("ServiceTypeId");
+
+                    b.HasIndex("ParentServiceTypeId");
+
+                    b.ToTable("ServiceTypes");
                 });
 
             modelBuilder.Entity("ccsc.DataLayer.Entities.Tutorials.Video", b =>
@@ -884,6 +1036,71 @@ namespace ccsc.DataLayer.Migrations
                     b.Navigation("RequestType");
                 });
 
+            modelBuilder.Entity("ccsc.DataLayer.Entities.Services.Duty", b =>
+                {
+                    b.HasOne("ccsc.DataLayer.Entities.Services.DutyStatus", "DutyStatus")
+                        .WithMany()
+                        .HasForeignKey("DutyStatusId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("ccsc.DataLayer.Entities.Requests.Request", "Request")
+                        .WithMany("Duties")
+                        .HasForeignKey("RequestId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("ccsc.DataLayer.Entities.Services.Service", "Service")
+                        .WithMany()
+                        .HasForeignKey("ServiceId");
+
+                    b.HasOne("ccsc.DataLayer.Entities.Services.ServiceType", null)
+                        .WithMany("Duties")
+                        .HasForeignKey("ServiceTypeId");
+
+                    b.Navigation("DutyStatus");
+
+                    b.Navigation("Request");
+
+                    b.Navigation("Service");
+                });
+
+            modelBuilder.Entity("ccsc.DataLayer.Entities.Services.Service", b =>
+                {
+                    b.HasOne("ccsc.DataLayer.Entities.Requests.Request", "Request")
+                        .WithMany("Services")
+                        .HasForeignKey("RequestId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("ccsc.DataLayer.Entities.Services.ServiceStatus", "ServiceStatus")
+                        .WithMany()
+                        .HasForeignKey("ServiceStatusId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("ccsc.DataLayer.Entities.Services.ServiceType", "ServiceType")
+                        .WithMany()
+                        .HasForeignKey("ServiceTypeId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Request");
+
+                    b.Navigation("ServiceStatus");
+
+                    b.Navigation("ServiceType");
+                });
+
+            modelBuilder.Entity("ccsc.DataLayer.Entities.Services.ServiceType", b =>
+                {
+                    b.HasOne("ccsc.DataLayer.Entities.Services.ServiceType", "ParentServiceType")
+                        .WithMany()
+                        .HasForeignKey("ParentServiceTypeId");
+
+                    b.Navigation("ParentServiceType");
+                });
+
             modelBuilder.Entity("ccsc.DataLayer.Entities.Users.UserRole", b =>
                 {
                     b.HasOne("ccsc.DataLayer.Entities.Users.Role", "Role")
@@ -906,6 +1123,18 @@ namespace ccsc.DataLayer.Migrations
             modelBuilder.Entity("ccsc.DataLayer.Entities.Customers.Customer", b =>
                 {
                     b.Navigation("Servers");
+                });
+
+            modelBuilder.Entity("ccsc.DataLayer.Entities.Requests.Request", b =>
+                {
+                    b.Navigation("Duties");
+
+                    b.Navigation("Services");
+                });
+
+            modelBuilder.Entity("ccsc.DataLayer.Entities.Services.ServiceType", b =>
+                {
+                    b.Navigation("Duties");
                 });
 
             modelBuilder.Entity("ccsc.DataLayer.Entities.Users.Role", b =>

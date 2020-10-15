@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace ccsc.DataLayer.Migrations
 {
-    public partial class Duty : Migration
+    public partial class DutyMig : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {

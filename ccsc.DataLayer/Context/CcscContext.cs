@@ -7,11 +7,7 @@ using ccsc.DataLayer.Entities.Requests;
 using ccsc.DataLayer.Entities.Services;
 using ccsc.DataLayer.Entities.Tutorials;
 using ccsc.DataLayer.Entities.Users;
-using ccsc.DataLayer.Migrations;
 using Microsoft.EntityFrameworkCore;
-using ChangeSet = ccsc.DataLayer.Entities.Products.ChangeSet;
-using Contract = ccsc.DataLayer.Entities.Contracts.Contract;
-using Duty = ccsc.DataLayer.Entities.Services.Duty;
 
 namespace ccsc.DataLayer.Context
 {
@@ -97,6 +93,7 @@ namespace ccsc.DataLayer.Context
 
 		#region Tutorials
 
+		public DbSet<Audience> Audiences { get; set; }
 		public DbSet<Video> Videos { get; set; }
 		//public DbSet<ProductVideo> ProductVideos { get; set; }
 

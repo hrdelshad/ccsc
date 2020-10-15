@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace ccsc.DataLayer.Migrations
 {
-    public partial class ChangeSet : Migration
+    public partial class ChangeSetMig : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {

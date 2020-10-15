@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using ccsc.DataLayer.Entities.Products;
+using Microsoft.EntityFrameworkCore;
 
 namespace ccsc.DataLayer.Entities.Tutorials
 {
@@ -27,8 +28,11 @@ namespace ccsc.DataLayer.Entities.Tutorials
 
 		#region Relations
 
+		[Display(Name = "مخاطبان")]
+		public virtual ICollection<Audience> Audiences { get; set; }
+
 		[Display(Name = "سامانه(ها)")]
-		public ICollection<Product> Products { get; set; }
+		public virtual ICollection<Product> Products { get; set; }
 
 		#endregion
 
