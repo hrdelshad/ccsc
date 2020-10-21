@@ -1,103 +1,181 @@
-﻿@model ccsc.DataLayer.Entities.Customers.Customer
+﻿@using System.Collections
+@using ccsc.DataLayer.Entities.Customers
+@model ccsc.DataLayer.Entities.Customers.Customer
+
 
 @{
-    ViewData["Title"] = "Details";
-    Layout = "~/Views/Shared/_Layout.cshtml";
+	ViewData["Title"] = "Details";
+	Layout = "~/Views/Shared/_Layout.cshtml";
+	var fullName = Model.CustomerType.Title + " " + Model.Title;
+
 }
 
-<h1>Details</h1>
+<h6>@fullName</h6>
+<hr />
+<div class="card">
+	<div class="card-header">
+		<ul class="nav nav-pills" id="pills-tab" role="tablist">
+			<li class="nav-item">
+				<a class="nav-link active" id="pills-home-tab" data-toggle="pill" href="#pills-home" role="tab" aria-controls="pills-home" aria-selected="true">اطاعات</a>
+			</li>
+			<li class="nav-item">
+				<a class="nav-link" id="pills-remote-tab" data-toggle="pill" href="#pills-remote" role="tab" aria-controls="pills-remote" aria-selected="false">ریموت</a>
+			</li>
+			<li class="nav-item">
+				<a class="nav-link" id="pills-product-tab" data-toggle="pill" href="#pills-product" role="tab" aria-controls="pills-product" aria-selected="false">محصولات</a>
+			</li>
+			<li class="nav-item">
+				<a class="nav-link" id="pills-contract-tab" data-toggle="pill" href="#pills-contract" role="tab" aria-controls="pills-contract" aria-selected="false">قراردادها</a>
+			</li>
+			<li class="nav-item">
+				<a class="nav-link" id="pills-service-tab" data-toggle="pill" href="#pills-service" role="tab" aria-controls="pills-service" aria-selected="false">خدمات</a>
+			</li>
+			<li class="nav-item">
+				<a class="nav-link" id="pills-request-tab" data-toggle="pill" href="#pills-request" role="tab" aria-controls="pills-request" aria-selected="false">درخواست ‌ها</a>
+			</li>
+			<li class="nav-item">
+				<a class="nav-link" id="pills-contact-tab" data-toggle="pill" href="#pills-contact" role="tab" aria-controls="pills-contact" aria-selected="false">کاربران</a>
+			</li>
+		</ul>
+	</div>
+	<div class="tab-content" id="pills-tabContent">
+		<div class="tab-pane fade show active p-3" id="pills-home" role="tabpanel" aria-labelledby="pills-home-tab">
 
-<div>
-    <h4>Customer</h4>
-    <hr />
-    <dl class="row">
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Title)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Title)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Url)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Url)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Version)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Version)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.VersionCheckDate)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.VersionCheckDate)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.SMSUser)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.SMSUser)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.SMSPass)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.SMSPass)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.SMSCredit)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.SMSCredit)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.MinSMSCredit)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.MinSMSCredit)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.SMSCreditCheckDate)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.SMSCreditCheckDate)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.IsActiveSms)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.IsActiveSms)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.AfterXDay)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.AfterXDay)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.SendSmsDate)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.SendSmsDate)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.UniversityId)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.UniversityId)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.CustomerType)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.CustomerType.Title)
-        </dd>
-    </dl>
-</div>
-<div>
-    <a asp-action="Edit" asp-route-id="@Model.CustomerId">Edit</a> |
-    <a asp-action="Index">Back to List</a>
+			<dl class="row">
+
+				<dt class="col-sm-2 text-left">
+					@Html.DisplayNameFor(model => model.Url)
+				</dt>
+				<dd class="col-sm-10">
+					<a href=@Html.DisplayFor(model => model.Url)>@Html.DisplayFor(model => model.Url)</a>
+				</dd>
+				<dt class="col-sm-2 text-left">
+					@Html.DisplayNameFor(model => model.Version)
+				</dt>
+				<dd class="col-sm-10">
+					@Html.DisplayFor(model => model.Version)
+				</dd>
+				<dt class="col-sm-2 text-left">
+					@Html.DisplayNameFor(model => model.VersionCheckDate)
+				</dt>
+				<dd class="col-sm-10">
+					@Html.DisplayFor(model => model.VersionCheckDate)
+				</dd>
+				<dt class="col-sm-2 text-left">
+					@Html.DisplayNameFor(model => model.SMSUser)
+				</dt>
+				<dd class="col-sm-10">
+					@Html.DisplayFor(model => model.SMSUser)
+				</dd>
+				<dt class="col-sm-2 text-left">
+					@Html.DisplayNameFor(model => model.SMSPass)
+				</dt>
+				<dd class="col-sm-10">
+					@Html.DisplayFor(model => model.SMSPass)
+				</dd>
+				<dt class="col-sm-2 text-left">
+					@Html.DisplayNameFor(model => model.SMSCredit)
+				</dt>
+				<dd class="col-sm-10">
+					@Html.DisplayFor(model => model.SMSCredit)
+				</dd>
+				<dt class="col-sm-2 text-left">
+					@Html.DisplayNameFor(model => model.MinSMSCredit)
+				</dt>
+				<dd class="col-sm-10">
+					@Html.DisplayFor(model => model.MinSMSCredit)
+				</dd>
+				<dt class="col-sm-2 text-left">
+					@Html.DisplayNameFor(model => model.SMSCreditCheckDate)
+				</dt>
+				<dd class="col-sm-10">
+					@Html.DisplayFor(model => model.SMSCreditCheckDate)
+				</dd>
+				<dt class="col-sm-2 text-left">
+					@Html.DisplayNameFor(model => model.IsActiveSms)
+				</dt>
+				<dd class="col-sm-10">
+					@Html.DisplayFor(model => model.IsActiveSms)
+				</dd>
+				<dt class="col-sm-2 text-left">
+					@Html.DisplayNameFor(model => model.AfterXDay)
+				</dt>
+				<dd class="col-sm-10">
+					@Html.DisplayFor(model => model.AfterXDay)
+				</dd>
+				<dt class="col-sm-2 text-left">
+					@Html.DisplayNameFor(model => model.SendSmsDate)
+				</dt>
+				<dd class="col-sm-10">
+					@Html.DisplayFor(model => model.SendSmsDate)
+				</dd>
+				<dt class="col-sm-2 text-left">
+					@Html.DisplayNameFor(model => model.UniversityId)
+				</dt>
+				<dd class="col-sm-10">
+					@Html.DisplayFor(model => model.UniversityId)
+				</dd>
+			</dl>
+
+			<div>
+				<a asp-action="Edit" asp-route-id="@Model.CustomerId">ویرایش</a> |
+				<a asp-action="Index">فهرست مشتریان</a>
+			</div>
+		</div>
+		<div class="tab-pane fade p-3" id="pills-remote" role="tabpanel" aria-labelledby="pills-remote-tab">
+			@*<dt class="col-sm-2">
+					@Html.DisplayNameFor(model => model.Servers)
+				</dt>*@
+			<dd class="col-sm-10">
+				<table class="table">
+					<thead>
+						<tr>
+							<th>Url</th>
+							<th>UserName</th>
+							<th>Password</th>
+							<th>ServerType</th>
+							<th>Vpn</th>
+						</tr>
+					</thead>
+					<tbody>
+						@foreach (var item in Model.Servers)
+						{
+							<tr>
+								<td>
+									@Html.DisplayFor(modelItem => item.Url)
+								</td>
+								<td>
+									@Html.DisplayFor(modelItem => item.UserName)
+								</td>
+								<td>
+									@Html.DisplayFor(modelItem => item.Password)
+								</td>
+								<td>
+									@Html.DisplayFor(modelItem => item.ServerType.Title)
+								</td>
+								<td>
+									@Html.CheckBoxFor((modelItem => item.Vpn))
+								</td>
+							</tr>
+						}
+					</tbody>
+				</table>
+			</dd>
+		</div>
+		<div class="tab-pane fade p-3" id="pills-product" role="tabpanel" aria-labelledby="pills-product-tab">
+			محصولات
+		</div>
+		<div class="tab-pane fade p-3" id="pills-contract" role="tabpanel" aria-labelledby="pills-contract-tab">
+			قراردادها
+		</div>
+		<div class="tab-pane fade p-3" id="pills-service" role="tabpanel" aria-labelledby="pills-service-tab">
+			خدمات
+		</div>
+		<div class="tab-pane fade p-3" id="pills-request" role="tabpanel" aria-labelledby="pills-service-tab">
+			درخواست‌ها
+		</div>
+		<div class="tab-pane fade p-3" id="pills-contact" role="tabpanel" aria-labelledby="pills-contact-tab">
+			کاربران
+		</div>
+	</div>
 </div>

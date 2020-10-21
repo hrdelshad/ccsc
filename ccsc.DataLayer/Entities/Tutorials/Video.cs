@@ -20,6 +20,11 @@ namespace ccsc.DataLayer.Entities.Tutorials
 		[MaxLength(200, ErrorMessage = "{0} نمیتواند بیشتر از {0} کارکتر باشد")]
 		public string Path { get; set; }
 
+		[Display(Name = "مسیر پوستر")]
+		[Required(ErrorMessage = "لطفا {0} را وارد کنید")]
+		[MaxLength(200, ErrorMessage = "{0} نمیتواند بیشتر از {0} کارکتر باشد")]
+		public string PosterPath { get; set; }
+
 		[Display(Name = "توضیحات")]
 		[Required(ErrorMessage = "لطفا {0} را وارد کنید")]
 		[MaxLength(1000, ErrorMessage = "{0} نمیتواند بیشتر از {0} کارکتر باشد")]

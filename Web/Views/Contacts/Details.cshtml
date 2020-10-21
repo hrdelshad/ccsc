@@ -1,67 +1,52 @@
 ﻿@model ccsc.DataLayer.Entities.Contacts.Contact
 
 @{
-    ViewData["Title"] = "Details";
-    Layout = "~/Views/Shared/_Layout.cshtml";
+	ViewData["Title"] = "Details";
+	Layout = "~/Views/Shared/_Layout.cshtml";
+	var fullName = Model.Salutation.Title + " " + Model.FirstName + " " + Model.LastName;
 }
 
-<h1>Details</h1>
+<div class="card">
+	<div class="card-header">
+		<a asp-controller="Contacts" asp-action="Edit" asp-route-id=@Model.ContactId>@fullName</a>
+	</div>
+	<div class="card-body">
+		<dl class="row">
+			<dt class="col-sm-2 text-left">
+				@Html.DisplayNameFor(model => model.Email)
+			</dt>
+			<dd class="col-sm-10">
+				@Html.DisplayFor(model => model.Email)
+			</dd>
+			<dt class="col-sm-2 text-left">
+				@Html.DisplayNameFor(model => model.Mobile)
+			</dt>
+			<dd class="col-sm-10">
+				@Html.DisplayFor(model => model.Mobile)
+			</dd>
+			<dt class="col-sm-2 text-left">
+				@Html.DisplayNameFor(model => model.Phone)
+			</dt>
+			<dd class="col-sm-10">
+				@Html.DisplayFor(model => model.Phone)
+			</dd>
+			<dt class="col-sm-2 text-left">
+				@Html.DisplayNameFor(model => model.Customer)
+			</dt>
+			<dd class="col-sm-10">
+				<a asp-controller="Customers" asp-action="Details" asp-route-id=@Model.Customer.CustomerId>@Html.DisplayFor(model => model.Customer.Title)</a>
+			</dd>
+			<dt class="col-sm-2 text-left">
+				@Html.DisplayNameFor(model => model.Post)
+			</dt>
+			<dd class="col-sm-10">
+				@Html.DisplayFor(model => model.Post.Title)
+			</dd>
+		</dl>
+		<div>
+			<a  class="btn btn-primary" asp-action="Edit" asp-route-id="@Model.ContactId">ویرایش</a> 
+			<a  class="btn btn-primary" asp-action="Index">فهرست مخاطبان</a>
+		</div>
+	</div>
+</div>
 
-<div>
-    <h4>Contact</h4>
-    <hr />
-    <dl class="row">
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.FirstName)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.FirstName)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.LastName)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.LastName)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Email)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Email)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Mobile)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Mobile)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Phone)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Phone)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Customer)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Customer.Title)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Post)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Post.Title)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Salutation)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Salutation.Title)
-        </dd>
-    </dl>
-</div>
-<div>
-    <a asp-action="Edit" asp-route-id="@Model.ContactId">Edit</a> |
-    <a asp-action="Index">Back to List</a>
-</div>

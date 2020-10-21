@@ -77,6 +77,7 @@ namespace ccsc.Web.Controllers
 
 			var customer = await _context.Customers
 				.Include(c => c.CustomerType)
+				.Include(c=>c.Servers).ThenInclude(s=>s.ServerType)
 				.FirstOrDefaultAsync(m => m.CustomerId == id);
 			if (customer == null)
 			{

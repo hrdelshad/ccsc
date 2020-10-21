@@ -27,14 +27,39 @@ namespace ccsc.Api.Controllers
 	            .Include(v=>v.Products)
 	            .Include(v=>v.Audiences)
 	            .ToListAsync();
+            Request.HttpContext.Response.Headers.Add("x-Count", _context.Videos.Count().ToString());
             return result;
+        }
+
+        [HttpGet("product/{id}")]
+        public async Task<ActionResult<IEnumerable<Video>>> GetProductVideos(int id)
+        {
+
+            List<Video> result = await _context.Videos
+				.Where(v=>v.Products.Any(p=>p.ProductId == id))
+		        
+		        .ToListAsync();
+	        return result;
+        }
+
+        [HttpGet("audience/{id}")]
+        public async Task<ActionResult<IEnumerable<Video>>> GetAudiencVideos(int id)
+        {
+	        var result = await _context.Videos
+		        .Where(v=>v.Audiences.Any(a=>a.AudienceId==id))
+		        .ToListAsync();
+	        return result;
         }
 
         // GET: api/Videos/5
         [HttpGet("{id}")]
         public async Task<ActionResult<Video>> GetVideo(int id)
         {
-            var video = await _context.Videos.FindAsync(id);
+	        var video = await _context.Videos.Where(v=>v.VideoId == id)
+		        .Include(v => v.Products)
+		        .Include(v => v.Audiences)
+		        .FirstOrDefaultAsync();
+	            //.FindAsync(id);
 
             if (video == null)
             {

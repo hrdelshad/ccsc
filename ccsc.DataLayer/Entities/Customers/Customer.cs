@@ -65,8 +65,8 @@ namespace ccsc.DataLayer.Entities.Customers
 		#region Relations
 
 		[Display(Name = "نوع")]
-		public virtual CustomerType CustomerType { get; set; }
-		[Display(Name = "ریموت")]
+		public CustomerType CustomerType { get; set; }
+		[Display(Name = "ریموت‌ها")]
 		public List<Server> Servers { get; set; }
 
 		#endregion
