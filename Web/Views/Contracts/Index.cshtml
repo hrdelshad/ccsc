@@ -1,15 +1,17 @@
-﻿@model IEnumerable<ccsc.DataLayer.Entities.Contracts.Contract>
+﻿@using ccsc.DataLayer.Entities.Contracts
+@using Microsoft.AspNetCore.Mvc.ModelBinding
+@using Microsoft.EntityFrameworkCore.Infrastructure
+@model IEnumerable<ccsc.DataLayer.Entities.Contracts.Contract>
 
 @{
-    ViewData["Title"] = "Index";
+   
     Layout = "~/Views/Shared/_Layout.cshtml";
+
 }
 
-<h1>Index</h1>
+<h1>@ViewData["Title"]</h1>
 
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
+
 <table class="table">
     <thead>
         <tr>

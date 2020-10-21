@@ -11,6 +11,7 @@ using Microsoft.EntityFrameworkCore.Metadata.Internal;
 
 namespace ccsc.DataLayer.Entities.Contracts
 {
+	[Display(Name = "قرارداد")]
 	public class Contract
 	{
 		public Contract()

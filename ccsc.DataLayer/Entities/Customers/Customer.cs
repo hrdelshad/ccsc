@@ -6,6 +6,7 @@ using System.Text;
 
 namespace ccsc.DataLayer.Entities.Customers
 {
+	[Display(Name = "مشتری")]
 	public class Customer
 	{
 		[Key]

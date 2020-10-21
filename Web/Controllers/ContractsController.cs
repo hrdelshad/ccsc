@@ -22,6 +22,7 @@ namespace ccsc.Web.Controllers
         // GET: Contracts
         public async Task<IActionResult> Index()
         {
+	        
             var ccscContext = _context.Contracts.Include(c => c.Customer);
             return View(await ccscContext.ToListAsync());
         }

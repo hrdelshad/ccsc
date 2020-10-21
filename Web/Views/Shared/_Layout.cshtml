@@ -21,13 +21,6 @@
 	<header>
 		<nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-dark border-bottom box-shadow mb-3">
 			<div class="container">
-				<span class="material-icons">
-					<a class="navbar-brand text-light" asp-area="" asp-controller="Home" asp-action="Index">
-
-						home
-
-					</a>
-				</span>
 				<button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
 						aria-expanded="false" aria-label="Toggle navigation">
 					<span class="navbar-toggler-icon bg-light"></span>
@@ -35,6 +28,21 @@
 				<div class="navbar-collapse collapse d-sm-inline-flex flex-sm-row">
 					<ul class="navbar-nav flex-grow-1">
 						<li class="nav-item">
+							<span class="material-icons">
+								<a class="nav-link text-light" asp-area="" asp-controller="Home" asp-action="Index">
+									home
+								</a>
+							</span>
+							<span class="material-icons">
+								<a class="nav-link text-light" asp-action="Create">
+									add_circle_outline
+								</a>
+							</span>
+							<span class="material-icons">
+								<a class="nav-link text-light" title="رفرش" asp-action="Index">
+									refresh
+								</a>
+							</span>
 							<span class="material-icons">
 								<a class="nav-link text-light" title="داشبورد" asp-area="" asp-controller="Home" asp-action="Dashboard">
 									analytics
@@ -104,10 +112,13 @@
 								<a class="dropdown-item" asp-area="" asp-controller="Videos" asp-action="Index">ویدیوها</a>
 							</div>
 						</li>
+						@*<li class="nav-link text-light">
+							<a class="btn btn-outline-success my-2 my-sm-0" asp-action="Create">افزودن</a>
+						</li>*@
 					</ul>
-					<form class="form-inline my-2 my-lg-0">
-						<input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
-						<button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+					<form class="form-inline my-2 my-lg-0" asp-action="Index" method="get">
+						<input class="form-control mr-sm-2" type="text" name="SearchString" placeholder="جستجو در @ViewData["Title"]" aria-label="Search">
+						<button class="btn btn-outline-light my-2 my-sm-0" type="submit">بیاب</button>
 					</form>
 				</div>
 
