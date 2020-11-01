@@ -1,14 +1,10 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
-using System.Text;
 using System.Text.RegularExpressions;
-using System.Timers;
 using ccsc.Core.Convertors;
 using ccsc.Core.Services.Interfaces;
 using ccsc.DataLayer.Context;
-using Org.BouncyCastle.Security;
 
 namespace ccsc.Core.Services
 {

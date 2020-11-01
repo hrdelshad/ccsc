@@ -30,14 +30,52 @@
                 <span asp-validation-for="Comment" class="text-danger"></span>
             </div>
             <div class="form-group">
+                <label asp-for="Title" class="control-label"></label>
+                <input asp-for="Title" class="form-control" />
+                <span asp-validation-for="Title" class="text-danger"></span>
+            </div>
+            <div class="form-group">
                 <label asp-for="Description" class="control-label"></label>
-                <input asp-for="Description" class="form-control" />
+	            <input asp-for="Description" class="form-control" />
+	            @(Html.Kendo().Editor()
+		            .Name("editor")
+		            .HtmlAttributes(new { style = "width: 100%" })
+		            .StyleSheets(css => css
+			            .Add(Url.Content("~/shared/web/editor/editorStyles.css"))
+		            )
+		            .Value(@Model.Comment)
+		            )
                 <span asp-validation-for="Description" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="Version" class="control-label"></label>
                 <input asp-for="Version" class="form-control" />
                 <span asp-validation-for="Version" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="VideoId" class="control-label"></label>
+                <select asp-for="VideoId" class="form-control" asp-items="ViewBag.VideoId"></select>
+                <span asp-validation-for="VideoId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ProductId" class="control-label"></label>
+                <select asp-for="ProductId" class="form-control" asp-items="ViewBag.ProductId"></select>
+                <span asp-validation-for="ProductId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ChangeTypeId" class="control-label"></label>
+                <select asp-for="ChangeTypeId" class="form-control" asp-items="ViewBag.ChangeTypeId"></select>
+                <span asp-validation-for="ChangeTypeId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="AudienceId" class="control-label"></label>
+                <select asp-for="AudienceId" class="form-control" asp-items="ViewBag.AudienceId"></select>
+                <span asp-validation-for="AudienceId" class="text-danger"></span>
+            </div>
+            <div class="form-group form-check">
+                <label class="form-check-label">
+                    <input class="form-check-input" asp-for="IsPublish" /> @Html.DisplayNameFor(model => model.IsPublish)
+                </label>
             </div>
             <div class="form-group">
                 <input type="submit" value="Save" class="btn btn-primary" />
@@ -50,3 +88,6 @@
     <a asp-action="Index">Back to List</a>
 </div>
 
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

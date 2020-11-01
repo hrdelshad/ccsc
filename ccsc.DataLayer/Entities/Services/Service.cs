@@ -1,6 +1,5 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
-using ccsc.DataLayer.Entities.Contacts;
 using ccsc.DataLayer.Entities.Requests;
 
 namespace ccsc.DataLayer.Entities.Services

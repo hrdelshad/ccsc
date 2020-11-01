@@ -19,7 +19,7 @@ namespace ccsc.Api.Controllers
             _context = context;
         }
 
-        // GET: api/Videos
+        // GET: /Videos
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Video>>> GetVideos()
         {
@@ -56,7 +56,7 @@ namespace ccsc.Api.Controllers
         public async Task<ActionResult<Video>> GetVideo(int id)
         {
 	        var video = await _context.Videos.Where(v=>v.VideoId == id)
-		        .Include(v => v.Products)
+		        .Include(v => v.Products.Where(p=>p.IsActive))
 		        .Include(v => v.Audiences)
 		        .FirstOrDefaultAsync();
 	            //.FindAsync(id);

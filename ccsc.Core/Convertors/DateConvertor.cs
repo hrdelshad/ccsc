@@ -1,43 +1,39 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Globalization;
-using System.Linq.Expressions;
-using System.Text;
-using static System.String;
 
 namespace ccsc.Core.Convertors
 {
 	public static class DateConvertor
 	{
-		public static string PersianDate(this DateTime Value)
+		public static string PersianDate(this DateTime value)
 		{
 			PersianCalendar pc = new PersianCalendar();
 
-			return pc.GetYear(Value) + "/" +
-				   pc.GetMonth(Value).ToString("00") + "/" +
-			       pc.GetDayOfMonth(Value).ToString("00");
+			return pc.GetYear(value) + "/" +
+				   pc.GetMonth(value).ToString("00") + "/" +
+				   pc.GetDayOfMonth(value).ToString("00");
 		}
 
-		public static string PersianDateDayOfWeek(this DateTime Value)
+		public static string PersianDateDayOfWeek(this DateTime value)
 		{
 			PersianCalendar pc = new PersianCalendar();
 
-			return string.Format("{0}, {1}/{2}/{3} {4}:{5}:{6}", 
-				pc.GetDayOfWeek(Value).GetDayOfWeekPersian(),
-				pc.GetMonth(Value),
-				pc.GetDayOfMonth(Value),
-				pc.GetYear(Value),
-				pc.GetHour(Value),
-				pc.GetMinute(Value),
-				pc.GetSecond(Value)).Trim();
+			return string.Format("{0}, {1}/{2}/{3} {4}:{5}:{6}",
+				pc.GetDayOfWeek(value).GetDayOfWeekPersian(),
+				pc.GetMonth(value),
+				pc.GetDayOfMonth(value),
+				pc.GetYear(value),
+				pc.GetHour(value),
+				pc.GetMinute(value),
+				pc.GetSecond(value)).Trim();
 		}
 
 
-		public static string GetDayOfWeekPersian(this DayOfWeek Value)
+		public static string GetDayOfWeekPersian(this DayOfWeek value)
 		{
 			PersianCalendar pc = new PersianCalendar();
 
-			switch (Value)
+			switch (value)
 			{
 				case DayOfWeek.Saturday:
 					return "شنبه";
@@ -53,9 +49,32 @@ namespace ccsc.Core.Convertors
 					return "پنح‌شنبه";
 				case DayOfWeek.Friday:
 					return "جمعه";
-				
+
 				default:
 					return "";
+			}
+		}
+
+		public static string GetQuarterPersian(this DateTime value)
+		{
+			PersianCalendar pc = new PersianCalendar();
+			var month = pc.GetMonth(value);
+			switch (month)
+			{
+				case 1 : return "بهار";
+				case 2 : return "بهار";
+				case 3 : return "بهار";
+				case 4 : return "تابستان";
+				case 5 : return "تابستان";
+				case 6 : return "تابستان";
+				case 7 : return "پاییز ";
+				case 8 : return "پاییز";
+				case 9 : return "پاییز";
+				case 10: return "زمستان";
+				case 11: return "زمستان";
+				case 12: return "زمستان";
+
+				default: return "";
 			}
 		}
 	}

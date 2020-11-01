@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Text;
+﻿using System.ComponentModel.DataAnnotations;
 using ccsc.DataLayer.Entities.Products;
 
 namespace ccsc.DataLayer.Entities.Contracts

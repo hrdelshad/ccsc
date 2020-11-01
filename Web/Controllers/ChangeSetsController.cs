@@ -1,15 +1,11 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using ccsc.Core.Convertors;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using ccsc.DataLayer.Context;
 using ccsc.DataLayer.Entities.Products;
-using Microsoft.TeamFoundation.Core.WebApi;
-using Microsoft.VisualStudio.Services.Common;
 
 namespace ccsc.Web.Controllers
 {
@@ -23,9 +19,24 @@ namespace ccsc.Web.Controllers
         }
 
         // GET: ChangeSets
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(string searchString)
         {
-            var ccscContext = _context.ChangeSets.Include(c => c.User).OrderByDescending(u=>u.Date);
+            var ccscContext = _context.ChangeSets
+	            .Include(c => c.ChangeType)
+	            .Include(c => c.Product)
+	            .Include(c => c.User)
+	            .Include(c => c.Video)
+	            .Where(c=>c.Date>DateTime.Now.AddYears(-1))
+	            .OrderByDescending(c => c.Date);
+            if (!String.IsNullOrEmpty(searchString))
+            {
+	            ccscContext = (IOrderedQueryable<ChangeSet>)ccscContext.Where(c =>
+		            c.Title.Contains(searchString) ||
+		            c.Comment.Contains(searchString) ||
+		            c.Description.Contains(searchString));
+
+            }
+            ViewData["Count"] = ccscContext.Count();
             return View(await ccscContext.ToListAsync());
         }
 
@@ -37,30 +48,29 @@ namespace ccsc.Web.Controllers
                 return NotFound();
             }
 
-             
             var changeSet = await _context.ChangeSets
+                .Include(c => c.Audience)
+                .Include(c => c.ChangeType)
+                .Include(c => c.Product)
                 .Include(c => c.User)
+                .Include(c => c.Video)
                 .FirstOrDefaultAsync(m => m.ChangeSetId == id);
             if (changeSet == null)
             {
                 return NotFound();
             }
 
-            ChangeSetViewModel changeSetViewModel = new ChangeSetViewModel();
-            changeSetViewModel.ChangeSetId = changeSet.ChangeSetId;
-            changeSetViewModel.UserId = changeSet.UserId;
-            changeSetViewModel.User = changeSet.User;
-            changeSetViewModel.Comment = changeSet.Comment;
-            changeSetViewModel.Description = changeSet.Description;
-            changeSetViewModel.Version = changeSet.Version;
-            changeSetViewModel.PersianDate = changeSet.Date.PersianDate();
-            return View(changeSetViewModel);
+            return View(changeSet);
         }
 
         // GET: ChangeSets/Create
         public IActionResult Create()
         {
+            ViewData["AudienceId"] = new SelectList(_context.Audiences, "AudienceId", "Title");
+            ViewData["ChangeTypeId"] = new SelectList(_context.Set<ChangeType>(), "ChangeTypeId", "Description");
+            ViewData["ProductId"] = new SelectList(_context.Products, "ProductId", "Title");
             ViewData["UserId"] = new SelectList(_context.Users, "UserId", "DisplayName");
+            ViewData["VideoId"] = new SelectList(_context.Videos, "VideoId", "Description");
             return View();
         }
 
@@ -69,7 +79,7 @@ namespace ccsc.Web.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("ChangeSetId,UserId,Date,Comment,Description,Version")] ChangeSet changeSet)
+        public async Task<IActionResult> Create([Bind("ChangeSetId,UserId,Date,Comment,Title,Description,Version,VideoId,ProductId,ChangeTypeId,AudienceId,IsPublish")] ChangeSet changeSet)
         {
             if (ModelState.IsValid)
             {
@@ -77,7 +87,11 @@ namespace ccsc.Web.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
+            ViewData["AudienceId"] = new SelectList(_context.Audiences, "AudienceId", "Title", changeSet.AudienceId);
+            ViewData["ChangeTypeId"] = new SelectList(_context.Set<ChangeType>(), "ChangeTypeId", "Description", changeSet.ChangeTypeId);
+            ViewData["ProductId"] = new SelectList(_context.Products, "ProductId", "Title", changeSet.ProductId);
             ViewData["UserId"] = new SelectList(_context.Users, "UserId", "DisplayName", changeSet.UserId);
+            ViewData["VideoId"] = new SelectList(_context.Videos, "VideoId", "Description", changeSet.VideoId);
             return View(changeSet);
         }
 
@@ -94,7 +108,11 @@ namespace ccsc.Web.Controllers
             {
                 return NotFound();
             }
+            ViewData["AudienceId"] = new SelectList(_context.Audiences, "AudienceId", "Title", changeSet.AudienceId);
+            ViewData["ChangeTypeId"] = new SelectList(_context.Set<ChangeType>(), "ChangeTypeId", "Description", changeSet.ChangeTypeId);
+            ViewData["ProductId"] = new SelectList(_context.Products, "ProductId", "Title", changeSet.ProductId);
             ViewData["UserId"] = new SelectList(_context.Users, "UserId", "DisplayName", changeSet.UserId);
+            ViewData["VideoId"] = new SelectList(_context.Videos, "VideoId", "Description", changeSet.VideoId);
             return View(changeSet);
         }
 
@@ -103,7 +121,7 @@ namespace ccsc.Web.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("ChangeSetId,UserId,Date,Comment,Description,Version")] ChangeSet changeSet)
+        public async Task<IActionResult> Edit(int id, [Bind("ChangeSetId,UserId,Date,Comment,Title,Description,Version,VideoId,ProductId,ChangeTypeId,AudienceId,IsPublish")] ChangeSet changeSet)
         {
             if (id != changeSet.ChangeSetId)
             {
@@ -130,7 +148,11 @@ namespace ccsc.Web.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
+            ViewData["AudienceId"] = new SelectList(_context.Audiences, "AudienceId", "Title", changeSet.AudienceId);
+            ViewData["ChangeTypeId"] = new SelectList(_context.Set<ChangeType>(), "ChangeTypeId", "Description", changeSet.ChangeTypeId);
+            ViewData["ProductId"] = new SelectList(_context.Products, "ProductId", "Title", changeSet.ProductId);
             ViewData["UserId"] = new SelectList(_context.Users, "UserId", "DisplayName", changeSet.UserId);
+            ViewData["VideoId"] = new SelectList(_context.Videos, "VideoId", "Description", changeSet.VideoId);
             return View(changeSet);
         }
 
@@ -143,7 +165,11 @@ namespace ccsc.Web.Controllers
             }
 
             var changeSet = await _context.ChangeSets
+                .Include(c => c.Audience)
+                .Include(c => c.ChangeType)
+                .Include(c => c.Product)
                 .Include(c => c.User)
+                .Include(c => c.Video)
                 .FirstOrDefaultAsync(m => m.ChangeSetId == id);
             if (changeSet == null)
             {
@@ -168,8 +194,5 @@ namespace ccsc.Web.Controllers
         {
             return _context.ChangeSets.Any(e => e.ChangeSetId == id);
         }
-
-
-
     }
 }

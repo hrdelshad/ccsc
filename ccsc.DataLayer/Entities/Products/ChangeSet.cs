@@ -1,8 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Text;
+using ccsc.DataLayer.Entities.Tutorials;
 using ccsc.DataLayer.Entities.Users;
 
 namespace ccsc.DataLayer.Entities.Products
@@ -29,6 +28,9 @@ namespace ccsc.DataLayer.Entities.Products
 		[MaxLength(400, ErrorMessage = "{0} نمیتواند بیشتر از {1} کارکتر باشد")]
 		public string Comment { get; set; }
 
+		[Display(Name = "عنوان")]
+		[MaxLength(400, ErrorMessage = "{0} نمیتواند بیشتر از {1} کارکتر باشد")]
+		public string Title { get; set; }
 
 		[Display(Name = "شرح کامل")]
 		[MaxLength(1000, ErrorMessage = "{0} نمیتواند بیشتر از {1} کارکتر باشد")]
@@ -37,6 +39,35 @@ namespace ccsc.DataLayer.Entities.Products
 		[Display(Name = "ورژن")]
 		[MaxLength(30, ErrorMessage = "{0} نمیتواند بیشتر از {1} کارکتر باشد")]
 		public string Version { get; set; }
+
+		[Display(Name = "کد ویدیو مرتبط")]
+		public int? VideoId { get; set; }
+
+		[Display(Name = "ویدیو مرتبط")]
+		public Video Video { get; set; }
+
+		[Display(Name = "کد محصول مرتبط")]
+		public int? ProductId { get; set; }
+
+		[Display(Name = "محصول مرتبط")]
+		public Product Product { get; set; }
+
+		[Display(Name = "کد نوع تغییر")]
+		public int? ChangeTypeId { get; set; }
+
+		[Display(Name = "نوع تغییر")]
+		public ChangeType ChangeType { get; set; }
+
+		[Display(Name = "کد مخاطب")]
+		public int? AudienceId { get; set; }
+
+		[Display(Name = "مخاطب")]
+		public Audience Audience { get; set; }
+
+		[Display(Name = "منتشر شود")]
+		public bool IsPublish { get; set; }
+
+		public string Quarter { get; set; }
 
 
 	}

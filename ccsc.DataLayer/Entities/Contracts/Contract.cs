@@ -1,13 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Reflection.Metadata.Ecma335;
-using System.Text;
-using ccsc.DataLayer.Entities.Courses;
 using ccsc.DataLayer.Entities.Customers;
-using ccsc.DataLayer.Entities.Products;
-using Microsoft.EntityFrameworkCore.Metadata.Internal;
 
 namespace ccsc.DataLayer.Entities.Contracts
 {

@@ -2,8 +2,6 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
-using Microsoft.EntityFrameworkCore.Metadata;
-using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using ccsc.DataLayer.Context;
 
 namespace ccsc.DataLayer.Migrations
@@ -15,7 +13,7 @@ namespace ccsc.DataLayer.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .UseIdentityColumns(1, 1)
+                .UseIdentityColumns()
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("ProductVersion", "5.0.0-rc.1.20451.13");
 
@@ -54,7 +52,7 @@ namespace ccsc.DataLayer.Migrations
                     b.Property<int>("ContactId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
-                        .UseIdentityColumn(1, 1);
+                        .UseIdentityColumn();
 
                     b.Property<int>("CustomerId")
                         .HasColumnType("int");
@@ -154,7 +152,7 @@ namespace ccsc.DataLayer.Migrations
                     b.Property<int>("ContractId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
-                        .UseIdentityColumn(1, 1);
+                        .UseIdentityColumn();
 
                     b.Property<decimal>("Amount")
                         .HasColumnType("decimal(18,0)");
@@ -191,7 +189,7 @@ namespace ccsc.DataLayer.Migrations
                     b.Property<int>("ContractCoursId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
-                        .UseIdentityColumn(1, 1);
+                        .UseIdentityColumn();
 
                     b.Property<int>("ContractId")
                         .HasColumnType("int");
@@ -213,7 +211,7 @@ namespace ccsc.DataLayer.Migrations
                     b.Property<int>("ContractProductId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
-                        .UseIdentityColumn(1, 1);
+                        .UseIdentityColumn();
 
                     b.Property<int>("ContractId")
                         .HasColumnType("int");
@@ -250,7 +248,7 @@ namespace ccsc.DataLayer.Migrations
                     b.Property<int>("CourseId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
-                        .UseIdentityColumn(1, 1);
+                        .UseIdentityColumn();
 
                     b.Property<int>("CourseLevelId")
                         .HasColumnType("int");
@@ -287,7 +285,7 @@ namespace ccsc.DataLayer.Migrations
                     b.Property<int>("CustomerId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
-                        .UseIdentityColumn(1, 1);
+                        .UseIdentityColumn();
 
                     b.Property<int>("AfterXDay")
                         .HasColumnType("int");
@@ -379,7 +377,7 @@ namespace ccsc.DataLayer.Migrations
                     b.Property<int>("ServerId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
-                        .UseIdentityColumn(1, 1);
+                        .UseIdentityColumn();
 
                     b.Property<string>("Cpu")
                         .HasColumnType("nvarchar(max)");
@@ -447,6 +445,12 @@ namespace ccsc.DataLayer.Migrations
                     b.Property<int>("ChangeSetId")
                         .HasColumnType("int");
 
+                    b.Property<int?>("AudienceId")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("ChangeTypeId")
+                        .HasColumnType("int");
+
                     b.Property<string>("Comment")
                         .HasMaxLength(400)
                         .HasColumnType("nvarchar(400)");
@@ -458,6 +462,19 @@ namespace ccsc.DataLayer.Migrations
                         .HasMaxLength(1000)
                         .HasColumnType("nvarchar(1000)");
 
+                    b.Property<bool>("IsPublish")
+                        .HasColumnType("bit");
+
+                    b.Property<int?>("ProductId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Quarter")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Title")
+                        .HasMaxLength(400)
+                        .HasColumnType("nvarchar(400)");
+
                     b.Property<int>("UserId")
                         .HasColumnType("int");
 
@@ -465,11 +482,44 @@ namespace ccsc.DataLayer.Migrations
                         .HasMaxLength(30)
                         .HasColumnType("nvarchar(30)");
 
+                    b.Property<int?>("VideoId")
+                        .HasColumnType("int");
+
                     b.HasKey("ChangeSetId");
+
+                    b.HasIndex("AudienceId");
+
+                    b.HasIndex("ChangeTypeId");
+
+                    b.HasIndex("ProductId");
 
                     b.HasIndex("UserId");
 
+                    b.HasIndex("VideoId");
+
                     b.ToTable("ChangeSets");
+                });
+
+            modelBuilder.Entity("ccsc.DataLayer.Entities.Products.ChangeType", b =>
+                {
+                    b.Property<int>("ChangeTypeId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .UseIdentityColumn();
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasMaxLength(400)
+                        .HasColumnType("nvarchar(400)");
+
+                    b.Property<string>("Title")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.HasKey("ChangeTypeId");
+
+                    b.ToTable("ChangeType");
                 });
 
             modelBuilder.Entity("ccsc.DataLayer.Entities.Products.Product", b =>
@@ -495,7 +545,7 @@ namespace ccsc.DataLayer.Migrations
                     b.Property<int>("RequestId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
-                        .UseIdentityColumn(1, 1);
+                        .UseIdentityColumn();
 
                     b.Property<int>("ContactId")
                         .HasColumnType("int");
@@ -596,7 +646,7 @@ namespace ccsc.DataLayer.Migrations
                     b.Property<int>("DutyId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
-                        .UseIdentityColumn(1, 1);
+                        .UseIdentityColumn();
 
                     b.Property<DateTime?>("DoneDate")
                         .HasColumnType("datetime2");
@@ -642,7 +692,7 @@ namespace ccsc.DataLayer.Migrations
                     b.Property<int>("DutyStatusId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
-                        .UseIdentityColumn(1, 1);
+                        .UseIdentityColumn();
 
                     b.Property<bool>("IsOpen")
                         .HasColumnType("bit");
@@ -662,7 +712,7 @@ namespace ccsc.DataLayer.Migrations
                     b.Property<int>("ServiceId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
-                        .UseIdentityColumn(1, 1);
+                        .UseIdentityColumn();
 
                     b.Property<DateTime?>("EndDate")
                         .HasColumnType("datetime2");
@@ -700,7 +750,7 @@ namespace ccsc.DataLayer.Migrations
                     b.Property<int>("ServiceStatusId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
-                        .UseIdentityColumn(1, 1);
+                        .UseIdentityColumn();
 
                     b.Property<string>("title")
                         .IsRequired()
@@ -717,7 +767,7 @@ namespace ccsc.DataLayer.Migrations
                     b.Property<int>("ServiceTypeId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
-                        .UseIdentityColumn(1, 1);
+                        .UseIdentityColumn();
 
                     b.Property<int?>("ParentServiceTypeId")
                         .HasColumnType("int");
@@ -739,7 +789,7 @@ namespace ccsc.DataLayer.Migrations
                     b.Property<int>("AudienceId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
-                        .UseIdentityColumn(1, 1);
+                        .UseIdentityColumn();
 
                     b.Property<string>("Description")
                         .HasMaxLength(400)
@@ -760,7 +810,7 @@ namespace ccsc.DataLayer.Migrations
                     b.Property<int>("VideoId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
-                        .UseIdentityColumn(1, 1);
+                        .UseIdentityColumn();
 
                     b.Property<string>("Description")
                         .IsRequired()
@@ -792,7 +842,7 @@ namespace ccsc.DataLayer.Migrations
                     b.Property<int>("RoleId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
-                        .UseIdentityColumn(1, 1);
+                        .UseIdentityColumn();
 
                     b.Property<string>("Title")
                         .IsRequired()
@@ -809,7 +859,7 @@ namespace ccsc.DataLayer.Migrations
                     b.Property<int>("UserId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
-                        .UseIdentityColumn(1, 1);
+                        .UseIdentityColumn();
 
                     b.Property<string>("ActiveCode")
                         .HasMaxLength(50)
@@ -855,7 +905,7 @@ namespace ccsc.DataLayer.Migrations
                     b.Property<int>("UR_id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
-                        .UseIdentityColumn(1, 1);
+                        .UseIdentityColumn();
 
                     b.Property<int>("RoleId")
                         .HasColumnType("int");
@@ -1040,13 +1090,37 @@ namespace ccsc.DataLayer.Migrations
 
             modelBuilder.Entity("ccsc.DataLayer.Entities.Products.ChangeSet", b =>
                 {
+                    b.HasOne("ccsc.DataLayer.Entities.Tutorials.Audience", "Audience")
+                        .WithMany()
+                        .HasForeignKey("AudienceId");
+
+                    b.HasOne("ccsc.DataLayer.Entities.Products.ChangeType", "ChangeType")
+                        .WithMany()
+                        .HasForeignKey("ChangeTypeId");
+
+                    b.HasOne("ccsc.DataLayer.Entities.Products.Product", "Product")
+                        .WithMany()
+                        .HasForeignKey("ProductId");
+
                     b.HasOne("ccsc.DataLayer.Entities.Users.User", "User")
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.HasOne("ccsc.DataLayer.Entities.Tutorials.Video", "Video")
+                        .WithMany()
+                        .HasForeignKey("VideoId");
+
+                    b.Navigation("Audience");
+
+                    b.Navigation("ChangeType");
+
+                    b.Navigation("Product");
+
                     b.Navigation("User");
+
+                    b.Navigation("Video");
                 });
 
             modelBuilder.Entity("ccsc.DataLayer.Entities.Requests.Request", b =>

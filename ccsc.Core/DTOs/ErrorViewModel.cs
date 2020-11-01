@@ -1,5 +1,3 @@
-using System;
-
 namespace ccsc.Core.DTOs
 {
 	public class ErrorViewModel

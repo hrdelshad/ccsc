@@ -9,10 +9,9 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Hosting;
 using Newtonsoft.Json;
 
-namespace Web
+namespace ccsc.Web
 {
 	public class Startup
 	{
@@ -29,6 +28,9 @@ namespace Web
             // Add framework services.
             services
                 .AddControllersWithViews()
+				// نمایش تغییرات در ویو بدون نیاز به کامپایل
+				//install the NuGET package: Microsoft.AspNetCore.Mvc.Razor.RuntimeCompilation
+				.AddRazorRuntimeCompilation()
                 .SetCompatibilityVersion(CompatibilityVersion.Version_3_0)
                 // Maintain property names during serialization. See:
                 // https://github.com/aspnet/Announcements/issues/194
@@ -37,7 +39,7 @@ namespace Web
             // Add Kendo UI services to the services container
             services.AddKendo();
 
-			services.AddControllersWithViews();
+			//services.AddControllersWithViews();
 
 			// برای جلوگیری از لوپهای انکلود
 			// install the NuGET package: Microsoft.AspNetCore.Mvc.NewtonsoftJson
@@ -54,7 +56,7 @@ namespace Web
 
 			#endregion
 
-			#region IoC
+			#region DI
 
 			services.AddTransient<IMyMailService, MyMailService>();
 			services.AddTransient<ICustomerService, CustomerService>();
@@ -67,16 +69,17 @@ namespace Web
 		// This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
 		public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
 		{
-			if (env.IsDevelopment())
-			{
-				app.UseDeveloperExceptionPage();
-			}
-			else
-			{
-				app.UseExceptionHandler("/Home/Error");
-				// The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
-				app.UseHsts();
-			}
+			app.UseDeveloperExceptionPage();
+			//if (env.IsDevelopment())
+			//{
+			//	app.UseDeveloperExceptionPage();
+			//}
+			//else
+			//{
+			//	app.UseExceptionHandler("/Home/Error");
+			//	// The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
+			//	app.UseHsts();
+			//}
 			app.UseHttpsRedirection();
 			app.UseStaticFiles();
 
