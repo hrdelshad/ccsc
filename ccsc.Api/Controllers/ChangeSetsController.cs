@@ -29,7 +29,10 @@ namespace ccsc.Api.Controllers
 	            //.Include(c => c.Product)
 	            //.Include(c => c.User)
 	            //.Include(c => c.Video)
-	            .Where(c=>c.Date> DateTime.Now.AddYears(-1))
+	            .Where(c=>
+		            c.Date > DateTime.Now.AddYears(-1) &&
+                    c.IsPublish
+	                      )
 	            .OrderByDescending(c => c.Date)
 	            .ToListAsync();
         }

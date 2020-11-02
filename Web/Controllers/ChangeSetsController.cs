@@ -24,7 +24,7 @@ namespace ccsc.Web.Controllers
             var ccscContext = _context.ChangeSets
 	            .Include(c => c.ChangeType)
 	            .Include(c => c.Product)
-	            .Include(c => c.User)
+	            .Include(c => c.AppUser)
 	            .Include(c => c.Video)
 	            .Where(c=>c.Date>DateTime.Now.AddYears(-1))
 	            .OrderByDescending(c => c.Date);
@@ -52,7 +52,7 @@ namespace ccsc.Web.Controllers
                 .Include(c => c.Audience)
                 .Include(c => c.ChangeType)
                 .Include(c => c.Product)
-                .Include(c => c.User)
+                .Include(c => c.AppUser)
                 .Include(c => c.Video)
                 .FirstOrDefaultAsync(m => m.ChangeSetId == id);
             if (changeSet == null)
@@ -168,7 +168,7 @@ namespace ccsc.Web.Controllers
                 .Include(c => c.Audience)
                 .Include(c => c.ChangeType)
                 .Include(c => c.Product)
-                .Include(c => c.User)
+                .Include(c => c.AppUser)
                 .Include(c => c.Video)
                 .FirstOrDefaultAsync(m => m.ChangeSetId == id);
             if (changeSet == null)

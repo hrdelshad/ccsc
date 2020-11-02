@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using ccsc.DataLayer.Context;
 
 namespace ccsc.DataLayer.Migrations
 {
     [DbContext(typeof(CcscContext))]
-    partial class CcscContextModelSnapshot : ModelSnapshot
+    [Migration("20201102031244_testi")]
+    partial class testi
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -447,9 +449,6 @@ namespace ccsc.DataLayer.Migrations
                     b.Property<int>("ChangeSetId")
                         .HasColumnType("int");
 
-                    b.Property<int?>("AppUserUserId")
-                        .HasColumnType("int");
-
                     b.Property<int?>("AudienceId")
                         .HasColumnType("int");
 
@@ -492,13 +491,13 @@ namespace ccsc.DataLayer.Migrations
 
                     b.HasKey("ChangeSetId");
 
-                    b.HasIndex("AppUserUserId");
-
                     b.HasIndex("AudienceId");
 
                     b.HasIndex("ChangeTypeId");
 
                     b.HasIndex("ProductId");
+
+                    b.HasIndex("UserId");
 
                     b.HasIndex("VideoId");
 
@@ -842,7 +841,7 @@ namespace ccsc.DataLayer.Migrations
                     b.ToTable("Videos");
                 });
 
-            modelBuilder.Entity("ccsc.DataLayer.Entities.Users.AppUser", b =>
+            modelBuilder.Entity("ccsc.DataLayer.Entities.Users.User", b =>
                 {
                     b.Property<int>("UserId")
                         .ValueGeneratedOnAdd()
@@ -1056,10 +1055,6 @@ namespace ccsc.DataLayer.Migrations
 
             modelBuilder.Entity("ccsc.DataLayer.Entities.Products.ChangeSet", b =>
                 {
-                    b.HasOne("ccsc.DataLayer.Entities.Users.AppUser", "AppUser")
-                        .WithMany()
-                        .HasForeignKey("AppUserUserId");
-
                     b.HasOne("ccsc.DataLayer.Entities.Tutorials.Audience", "Audience")
                         .WithMany()
                         .HasForeignKey("AudienceId");
@@ -1072,17 +1067,23 @@ namespace ccsc.DataLayer.Migrations
                         .WithMany()
                         .HasForeignKey("ProductId");
 
+                    b.HasOne("ccsc.DataLayer.Entities.Users.User", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.HasOne("ccsc.DataLayer.Entities.Tutorials.Video", "Video")
                         .WithMany()
                         .HasForeignKey("VideoId");
-
-                    b.Navigation("AppUser");
 
                     b.Navigation("Audience");
 
                     b.Navigation("ChangeType");
 
                     b.Navigation("Product");
+
+                    b.Navigation("User");
 
                     b.Navigation("Video");
                 });

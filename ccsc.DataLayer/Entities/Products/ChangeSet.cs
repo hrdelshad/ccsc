@@ -17,7 +17,7 @@ namespace ccsc.DataLayer.Entities.Products
 
 
 		[Display(Name = "کاربر")]
-		public User User { get; set; }
+		public AppUser AppUser { get; set; }
 
 
 		[Display(Name = "تاریخ")]

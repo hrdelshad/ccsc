@@ -4,9 +4,9 @@ using System.ComponentModel.DataAnnotations;
 
 namespace ccsc.DataLayer.Entities.Users
 {
-	public class User
+	public class AppUser
 	{
-		public User()
+		public AppUser()
 		{
 			
 		}
@@ -48,11 +48,5 @@ namespace ccsc.DataLayer.Entities.Users
 		[Display(Name = "تاریخ عضویت")]
 		public DateTime RegisterDate { get; set; }
 
-
-		#region Relations
-
-		public List<UserRole> UserRoles { get; set; }
-
-		#endregion
 	}
 }
