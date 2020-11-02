@@ -3,9 +3,11 @@ using Newtonsoft.Json.Serialization;
 using ccsc.Core.Services;
 using ccsc.Core.Services.Interfaces;
 using ccsc.DataLayer.Context;
+using ccsc.DataLayer.Entities.Identity;
 using ccsc.DataLayer.Entities.Messages;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -53,6 +55,14 @@ namespace ccsc.Web
 			services.AddDbContext<CcscContext>(options=>
 				options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection"))
 				);
+
+			#endregion
+
+			#region Identity
+
+			services.AddIdentity<User, Role>()
+				.AddEntityFrameworkStores<CcscContext>()
+				.AddDefaultTokenProviders();
 
 			#endregion
 

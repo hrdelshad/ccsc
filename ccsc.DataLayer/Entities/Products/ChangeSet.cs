@@ -13,7 +13,7 @@ namespace ccsc.DataLayer.Entities.Products
 		public int ChangeSetId { get; set; }
 
 		[Display(Name = "کد کاربر")]
-		public int UserId { get; set; }
+		public int AppUserId { get; set; }
 
 
 		[Display(Name = "کاربر")]

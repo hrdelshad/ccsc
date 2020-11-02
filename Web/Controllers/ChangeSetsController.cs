@@ -69,7 +69,7 @@ namespace ccsc.Web.Controllers
             ViewData["AudienceId"] = new SelectList(_context.Audiences, "AudienceId", "Title");
             ViewData["ChangeTypeId"] = new SelectList(_context.Set<ChangeType>(), "ChangeTypeId", "Description");
             ViewData["ProductId"] = new SelectList(_context.Products, "ProductId", "Title");
-            ViewData["UserId"] = new SelectList(_context.Users, "UserId", "DisplayName");
+            ViewData["UserId"] = new SelectList(_context.AppUsers, "UserId", "DisplayName");
             ViewData["VideoId"] = new SelectList(_context.Videos, "VideoId", "Description");
             return View();
         }
@@ -90,7 +90,7 @@ namespace ccsc.Web.Controllers
             ViewData["AudienceId"] = new SelectList(_context.Audiences, "AudienceId", "Title", changeSet.AudienceId);
             ViewData["ChangeTypeId"] = new SelectList(_context.Set<ChangeType>(), "ChangeTypeId", "Description", changeSet.ChangeTypeId);
             ViewData["ProductId"] = new SelectList(_context.Products, "ProductId", "Title", changeSet.ProductId);
-            ViewData["UserId"] = new SelectList(_context.Users, "UserId", "DisplayName", changeSet.UserId);
+            ViewData["UserId"] = new SelectList(_context.AppUsers, "UserId", "DisplayName", changeSet.AppUserId);
             ViewData["VideoId"] = new SelectList(_context.Videos, "VideoId", "Description", changeSet.VideoId);
             return View(changeSet);
         }
@@ -111,7 +111,7 @@ namespace ccsc.Web.Controllers
             ViewData["AudienceId"] = new SelectList(_context.Audiences, "AudienceId", "Title", changeSet.AudienceId);
             ViewData["ChangeTypeId"] = new SelectList(_context.Set<ChangeType>(), "ChangeTypeId", "Description", changeSet.ChangeTypeId);
             ViewData["ProductId"] = new SelectList(_context.Products, "ProductId", "Title", changeSet.ProductId);
-            ViewData["UserId"] = new SelectList(_context.Users, "UserId", "DisplayName", changeSet.UserId);
+            ViewData["UserId"] = new SelectList(_context.AppUsers, "UserId", "DisplayName", changeSet.AppUserId);
             ViewData["VideoId"] = new SelectList(_context.Videos, "VideoId", "Description", changeSet.VideoId);
             return View(changeSet);
         }
@@ -151,7 +151,7 @@ namespace ccsc.Web.Controllers
             ViewData["AudienceId"] = new SelectList(_context.Audiences, "AudienceId", "Title", changeSet.AudienceId);
             ViewData["ChangeTypeId"] = new SelectList(_context.Set<ChangeType>(), "ChangeTypeId", "Description", changeSet.ChangeTypeId);
             ViewData["ProductId"] = new SelectList(_context.Products, "ProductId", "Title", changeSet.ProductId);
-            ViewData["UserId"] = new SelectList(_context.Users, "UserId", "DisplayName", changeSet.UserId);
+            ViewData["UserId"] = new SelectList(_context.AppUsers, "UserId", "DisplayName", changeSet.AppUserId);
             ViewData["VideoId"] = new SelectList(_context.Videos, "VideoId", "Description", changeSet.VideoId);
             return View(changeSet);
         }

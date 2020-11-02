@@ -6,13 +6,9 @@ namespace ccsc.DataLayer.Entities.Users
 {
 	public class AppUser
 	{
-		public AppUser()
-		{
-			
-		}
 
 		[Key]
-		public int UserId { get; set; }
+		public int AppUserId { get; set; }
 
 		[Display(Name = "نام کاربری")]
 		[Required(ErrorMessage = "لطفا {0} را وارد کنید")]
