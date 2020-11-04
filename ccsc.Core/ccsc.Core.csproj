@@ -1,8 +1,14 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>netcoreapp3.1</TargetFramework>
   </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="Services\Identity\Managers\**" />
+    <EmbeddedResource Remove="Services\Identity\Managers\**" />
+    <None Remove="Services\Identity\Managers\**" />
+  </ItemGroup>
 
   <ItemGroup>
     <Folder Include="Security\" />
@@ -10,6 +16,7 @@
 
   <ItemGroup>
     <PackageReference Include="MailKit" Version="2.9.0" />
+    <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="5.0.0-rc.2.20475.17" />
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="5.0.0-rc.2.20475.6" />
     <PackageReference Include="MimeKit" Version="2.9.2" />
     <PackageReference Include="RestSharp" Version="106.10.1" />

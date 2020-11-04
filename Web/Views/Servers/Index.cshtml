@@ -71,7 +71,7 @@
 					@Html.DisplayFor(modelItem => item.ServerType.Title)
 				</td>
 				<td>
-					@Html.DisplayFor(modelItem => item.Customer.Title)
+					<a asp-controller="Customers" asp-action="Details" asp-route-id=@item.Customer.CustomerId>@Html.DisplayFor(modelItem => item.Customer.Title)</a>
 				</td>
 				<td>
 					@Html.DisplayFor(modelItem => item.Os.Title)

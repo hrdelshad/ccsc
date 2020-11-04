@@ -1,4 +1,6 @@
-﻿<!DOCTYPE html>
+﻿
+@inject SignInManager<User> SignInManager;
+<!DOCTYPE html>
 <html lang="en">
 <head>
 	<meta charset="utf-8" />
@@ -113,14 +115,28 @@
 								<a class="dropdown-item" asp-area="" asp-controller="ChangeSets" asp-action="Index">تغییرات</a>
 							</div>
 						</li>
-						@*<li class="nav-link text-light">
-								<a class="btn btn-outline-success my-2 my-sm-0" asp-action="Create">افزودن</a>
+						@if (!SignInManager.IsSignedIn(User))
+						{
+
+							@*<li class="nav-item">
+								<a class="nav-link text-light" asp-area="" asp-controller="Accounts" asp-action="Register">عضویت</a>
 							</li>*@
+							<li class="nav-item">
+								<a class="nav-link text-light" asp-area="" asp-controller="Accounts" asp-action="Login">ورود</a>
+							</li>
+						}
+						else
+						{
+							<form class="form-inline my-2 my-lg-0" asp-area="" asp-controller="Accounts" asp-action="Logout" method="post">
+								<button class="btn btn-outline-light my-2 my-sm-0" type="submit">خروج</button>
+							</form>
+						}
 					</ul>
 					<form class="form-inline my-2 my-lg-0" asp-action="Index" method="get">
 						<input class="form-control mr-sm-2" type="text" name="SearchString" placeholder="جستجو در @ViewData["Title"]" aria-label="Search">
 						<button class="btn btn-outline-light my-2 my-sm-0" type="submit">بیاب</button>
 					</form>
+					
 				</div>
 
 			</div>
@@ -141,6 +157,6 @@
 	<script src="~/js/site.js" asp-append-version="true"></script>
 	<script src="https://cdn.tiny.cloud/1/no-api-key/tinymce/5/tinymce.min.js" referrerpolicy="origin"></script>
 
-@RenderSection("Scripts", required: false)
+	@RenderSection("Scripts", required: false)
 </body>
 </html>

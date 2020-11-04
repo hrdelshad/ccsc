@@ -1,6 +1,9 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json.Serialization;
 using ccsc.Core.Services;
+using ccsc.Core.Services.Identity;
+using ccsc.Core.Services.Identity.Stores;
+using ccsc.Core.Services.Identity.Validators;
 using ccsc.Core.Services.Interfaces;
 using ccsc.DataLayer.Context;
 using ccsc.DataLayer.Entities.Identity;
@@ -60,8 +63,26 @@ namespace ccsc.Web
 
 			#region Identity
 
-			services.AddIdentity<User, Role>()
-				.AddEntityFrameworkStores<CcscContext>()
+			services.AddIdentity<User, Role>(options =>
+				{
+					options.User.RequireUniqueEmail = true;
+					options.Password.RequireNonAlphanumeric = false;
+
+					options.SignIn.RequireConfirmedEmail = true;
+					options.SignIn.RequireConfirmedPhoneNumber = true;
+
+
+				})
+				//.AddEntityFrameworkStores<>()
+				.AddUserStore<MyUserStore>()
+				.AddRoleStore<MyRoleStore>()
+				.AddUserValidator<MyUserValidator>()
+				.AddRoleValidator<MyRoleValidatore>()
+				//.AddUserManager<MyUserManager>()
+				//.AddRoleManager<MyRoleManager>()
+				//.AddSignInManager<MySignInManager>()
+				.AddErrorDescriber<MyErrorDescriber>()
+				.AddClaimsPrincipalFactory<MyUserClaimsPrincipalFactory>()
 				.AddDefaultTokenProviders();
 
 			#endregion
@@ -70,6 +91,7 @@ namespace ccsc.Web
 
 			services.AddTransient<IMyMailService, MyMailService>();
 			services.AddTransient<ICustomerService, CustomerService>();
+
 
 			#endregion
 
@@ -95,6 +117,7 @@ namespace ccsc.Web
 
 			app.UseRouting();
 
+			app.UseAuthentication();
 			app.UseAuthorization();
 
 			app.UseEndpoints(endpoints =>

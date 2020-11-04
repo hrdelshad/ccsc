@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 using ccsc.Core.Services.Interfaces;
@@ -20,30 +21,6 @@ namespace ccsc.Web.Controllers
 			_service = service;
 			_context = context;
 		}
-
-		public async Task<IActionResult> Version()
-		{
-			var ccscContext = _context.Customers.Include(c => c.CustomerType);
-			foreach (Customer customer in ccscContext)
-				try
-				{
-					var version = _service.GetVersion(customer.Url);
-
-					customer.Version = version;
-					customer.VersionCheckDate = DateTime.Now;
-					_context.Update(customer);
-
-				}
-				catch
-				{
-
-				}
-
-			await _context.SaveChangesAsync();
-
-			return RedirectToAction(nameof(Index));
-		}
-
 
 		// GET: Customers
 		public async Task<IActionResult> Index(string searchString)
@@ -190,5 +167,59 @@ namespace ccsc.Web.Controllers
 			return RedirectToAction(nameof(Index));
 		}
 
+
+		public async Task<IActionResult> Versions()
+		{
+
+			var ccscContext = _context.Customers.Include(c => c.CustomerType);
+			foreach (Customer customer in ccscContext)
+				try
+				{
+					var version = _service.GetVersion(customer.Url);
+
+					customer.Version = version;
+					customer.VersionCheckDate = DateTime.Now;
+					_context.Update(customer);
+
+				}
+				catch
+				{
+
+				}
+
+			await _context.SaveChangesAsync();
+
+			return RedirectToAction(nameof(Index));
+		}
+
+
+
+		public async Task<IActionResult> Version(int? id)
+		{
+			if (id == null)
+			{
+				return NotFound();
+			}
+
+
+			var customer = await  _context.Customers.FindAsync(id);
+				try
+				{
+					var version = _service.GetVersion(customer.Url);
+
+					customer.Version = version;
+					customer.VersionCheckDate = DateTime.Now;
+					_context.Update(customer);
+
+				}
+				catch (Exception)
+				{
+					// ignored
+				}
+
+				await _context.SaveChangesAsync();
+				var url = "../Details/" + id.Value.ToString();
+			return Redirect(url);
+		}
 	}
 }

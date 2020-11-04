@@ -15,7 +15,8 @@ namespace ccsc.DataLayer.Context
 {
 	public class CcscContext : IdentityDbContext<User, Role, int, UserClaim, UserRole, UserLogin, RoleClaim, UserToken>
 	{
-		public CcscContext(DbContextOptions<CcscContext> options):base(options)
+		public CcscContext(DbContextOptions<CcscContext> options)
+			:base(options)
 		{
 			
 		}
