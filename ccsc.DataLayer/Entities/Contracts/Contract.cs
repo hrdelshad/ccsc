@@ -50,7 +50,7 @@ namespace ccsc.DataLayer.Entities.Contracts
 		#region Relations
 
 		[Display(Name = "مشتری")]
-		public virtual Customer Customer { get; set; }
+		public Customer Customer { get; set; }
 
 		#endregion
 	}

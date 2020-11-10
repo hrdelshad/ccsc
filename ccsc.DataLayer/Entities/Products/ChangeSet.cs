@@ -40,23 +40,15 @@ namespace ccsc.DataLayer.Entities.Products
 		[MaxLength(30, ErrorMessage = "{0} نمیتواند بیشتر از {1} کارکتر باشد")]
 		public string Version { get; set; }
 
-		[Display(Name = "کد ویدیو مرتبط")]
-		public int? VideoId { get; set; }
 
-		[Display(Name = "ویدیو مرتبط")]
-		public Video Video { get; set; }
+		[Display(Name = "منتشر شود")]
+		public bool IsPublish { get; set; }
 
-		[Display(Name = "کد محصول مرتبط")]
-		public int? ProductId { get; set; }
+		public string Quarter { get; set; }
 
-		[Display(Name = "محصول مرتبط")]
-		public Product Product { get; set; }
 
-		[Display(Name = "کد نوع تغییر")]
-		public int? ChangeTypeId { get; set; }
 
-		[Display(Name = "نوع تغییر")]
-		public ChangeType ChangeType { get; set; }
+		#region Relations
 
 		[Display(Name = "کد مخاطب")]
 		public int? AudienceId { get; set; }
@@ -64,11 +56,27 @@ namespace ccsc.DataLayer.Entities.Products
 		[Display(Name = "مخاطب")]
 		public Audience Audience { get; set; }
 
-		[Display(Name = "منتشر شود")]
-		public bool IsPublish { get; set; }
 
-		public string Quarter { get; set; }
+		[Display(Name = "کد نوع تغییر")]
+		public int? ChangeTypeId { get; set; }
+		[Display(Name = "نوع تغییر")]
+		public ChangeType ChangeType { get; set; }
 
+
+		[Display(Name = "کد محصول مرتبط")]
+		public int? ProductId { get; set; }
+
+		[Display(Name = "محصول مرتبط")]
+		public Product Product { get; set; }
+
+
+		[Display(Name = "کد ویدیو مرتبط")]
+		public int? VideoId { get; set; }
+
+		[Display(Name = "ویدیو مرتبط")]
+		public Video Video { get; set; }
+
+		#endregion
 
 	}
 }

@@ -4,9 +4,11 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using ccsc.DataLayer.Context;
 using ccsc.DataLayer.Entities.Contacts;
+using Microsoft.AspNetCore.Authorization;
 
 namespace ccsc.Web.Controllers
 {
+	[Authorize]
     public class PostsController : Controller
     {
         private readonly CcscContext _context;

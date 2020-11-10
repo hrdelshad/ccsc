@@ -1,8 +1,10 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Sms;
 
 namespace ccsc.Web.Controllers
 {
+	[Authorize]
 	public class SmstestControler : Controller
 	{
 		public IActionResult Index()

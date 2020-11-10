@@ -35,7 +35,7 @@ namespace ccsc.Api.Controllers
         public async Task<ActionResult<IEnumerable<Video>>> GetProductVideos(int id)
         {
 
-            List<Video> result = await _context.Videos
+            var result = await _context.Videos
 				.Where(v=>v.Products.Any(p=>p.ProductId == id))
 		        
 		        .ToListAsync();
@@ -46,6 +46,7 @@ namespace ccsc.Api.Controllers
         public async Task<ActionResult<IEnumerable<Video>>> GetAudiencVideos(int id)
         {
 	        var result = await _context.Videos
+		        .Include(v=>v.Products)
 		        .Where(v=>v.Audiences.Any(a=>a.AudienceId==id))
 		        .ToListAsync();
 	        return result;

@@ -3,11 +3,11 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace ccsc.DataLayer.Entities.Requests
 {
-	public class RequestChanel
+	public class RequestChannel
 	{
 		[Key]
 		[DatabaseGenerated(DatabaseGeneratedOption.None)]
-		public int RequestChanelId { get; set; }
+		public int RequestChannelId { get; set; }
 
 		[Display(Name = "کانال درخواست")]
 		[Required(ErrorMessage = "لطفا {0} را وارد کنید")]

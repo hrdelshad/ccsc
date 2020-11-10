@@ -1,12 +1,15 @@
 ﻿@model IEnumerable<ccsc.DataLayer.Entities.Products.ChangeSet>
 
 @{
-	ViewData["Title"] = "تغییرات";
-	Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
 }
-<div class="row">
-	<h6>.: @ViewData["Title"] :. تعداد: @ViewData["Count"] رکورد</h6>
-</div>
+
+<h1>Index</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
 <table class="table">
     <thead>
         <tr>
@@ -42,6 +45,9 @@
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.IsPublish)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Quarter)
             </th>
             <th></th>
         </tr>
@@ -81,6 +87,9 @@
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.IsPublish)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Quarter)
             </td>
             <td>
                 <a asp-action="Edit" asp-route-id="@item.ChangeSetId">Edit</a> |

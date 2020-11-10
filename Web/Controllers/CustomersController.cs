@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 using ccsc.Core.Services.Interfaces;
@@ -8,9 +7,11 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using ccsc.DataLayer.Context;
 using ccsc.DataLayer.Entities.Customers;
+using Microsoft.AspNetCore.Authorization;
 
 namespace ccsc.Web.Controllers
 {
+	[Authorize]
 	public class CustomersController : Controller
 	{
 		private ICustomerService _service;

@@ -5,9 +5,11 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using ccsc.DataLayer.Context;
 using ccsc.DataLayer.Entities.Requests;
+using Microsoft.AspNetCore.Authorization;
 
 namespace ccsc.Web.Controllers
 {
+	[Authorize]
     public class RequestsController : Controller
     {
         private readonly CcscContext _context;
@@ -52,7 +54,7 @@ namespace ccsc.Web.Controllers
         {
             ViewData["ContactId"] = new SelectList(_context.Contacts, "ContactId", "LastName");
             ViewData["ProductId"] = new SelectList(_context.Products, "ProductId", "Title");
-            ViewData["RequestChanelId"] = new SelectList(_context.RequestChanels, "RequestChanelId", "Title");
+            ViewData["RequestChanelId"] = new SelectList(_context.RequestChannels, "RequestChanelId", "Title");
             ViewData["RequestStatusId"] = new SelectList(_context.RequestStatuses, "RequestStatusId", "Title");
             ViewData["RequestTypeId"] = new SelectList(_context.RequestTypes, "RequestTypeId", "Title");
             return View();
@@ -73,7 +75,7 @@ namespace ccsc.Web.Controllers
             }
             ViewData["ContactId"] = new SelectList(_context.Contacts, "ContactId", "LastName", request.ContactId);
             ViewData["ProductId"] = new SelectList(_context.Products, "ProductId", "Title", request.ProductId);
-            ViewData["RequestChanelId"] = new SelectList(_context.RequestChanels, "RequestChanelId", "Title", request.RequestChanelId);
+            ViewData["RequestChanelId"] = new SelectList(_context.RequestChannels, "RequestChanelId", "Title", request.RequestChanelId);
             ViewData["RequestStatusId"] = new SelectList(_context.RequestStatuses, "RequestStatusId", "Title", request.RequestStatusId);
             ViewData["RequestTypeId"] = new SelectList(_context.RequestTypes, "RequestTypeId", "Title", request.RequestTypeId);
             return View(request);
@@ -94,7 +96,7 @@ namespace ccsc.Web.Controllers
             }
             ViewData["ContactId"] = new SelectList(_context.Contacts, "ContactId", "LastName", request.ContactId);
             ViewData["ProductId"] = new SelectList(_context.Products, "ProductId", "Title", request.ProductId);
-            ViewData["RequestChanelId"] = new SelectList(_context.RequestChanels, "RequestChanelId", "Title", request.RequestChanelId);
+            ViewData["RequestChanelId"] = new SelectList(_context.RequestChannels, "RequestChanelId", "Title", request.RequestChanelId);
             ViewData["RequestStatusId"] = new SelectList(_context.RequestStatuses, "RequestStatusId", "Title", request.RequestStatusId);
             ViewData["RequestTypeId"] = new SelectList(_context.RequestTypes, "RequestTypeId", "Title", request.RequestTypeId);
             return View(request);
@@ -134,7 +136,7 @@ namespace ccsc.Web.Controllers
             }
             ViewData["ContactId"] = new SelectList(_context.Contacts, "ContactId", "LastName", request.ContactId);
             ViewData["ProductId"] = new SelectList(_context.Products, "ProductId", "Title", request.ProductId);
-            ViewData["RequestChanelId"] = new SelectList(_context.RequestChanels, "RequestChanelId", "Title", request.RequestChanelId);
+            ViewData["RequestChanelId"] = new SelectList(_context.RequestChannels, "RequestChanelId", "Title", request.RequestChanelId);
             ViewData["RequestStatusId"] = new SelectList(_context.RequestStatuses, "RequestStatusId", "Title", request.RequestStatusId);
             ViewData["RequestTypeId"] = new SelectList(_context.RequestTypes, "RequestTypeId", "Title", request.RequestTypeId);
             return View(request);

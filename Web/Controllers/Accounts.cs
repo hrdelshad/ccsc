@@ -2,6 +2,7 @@
 using System.Threading.Tasks;
 using ccsc.Core.DTOs.Account;
 using ccsc.DataLayer.Entities.Identity;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 
@@ -20,26 +21,26 @@ namespace ccsc.Web.Controllers
 		}
 
 		[HttpGet("SignUp", Name = "GetRegister")]
-		public IActionResult Register(string returnTo)
+		public IActionResult Register(string returnUrl)
 		{
 			if (_signInManager.IsSignedIn(User))
 			{
 				return RedirectToAction("Index", "Home");
 			}
 
-			ViewData["returnTo"] = returnTo;
+			ViewData["returnUrl"] = returnUrl;
 			return View();
 		}
 
 		[HttpPost("SignUp", Name = "PostRegister")]
-		public async Task<IActionResult> Register(RegisterAccountViewModel account, string returnTo)
+		public async Task<IActionResult> Register(RegisterAccountViewModel account, string returnUrl)
 		{
 			if (_signInManager.IsSignedIn(User))
 			{
 				return RedirectToAction("Index", "Home");
 			}
 
-			ViewData["returnTo"] = returnTo;
+			ViewData["returnUrl"] = returnUrl;
 
 			if (ModelState.IsValid)
 			{
@@ -58,7 +59,7 @@ namespace ccsc.Web.Controllers
 				if (result.Succeeded)
 				{
 					//ToDo Implement Email verification
-					//return RedirectToLocal(returnTo);
+					//return RedirectToLocal(returnUrl);
 					return RedirectToAction("Index", "Home");
 				}
 
@@ -68,31 +69,35 @@ namespace ccsc.Web.Controllers
 			return View(account);
 		}
 
-		[HttpGet("SignIn", Name = "GetLogin")]
-		public IActionResult Login(string returnTo = null)
+		[HttpGet("login", Name = "GetLogin")]
+		public IActionResult Login(string returnUrl = null)
 		{
 			if (_signInManager.IsSignedIn(User))
-				return string.IsNullOrEmpty(returnTo)
-					? RedirectToLocal(returnTo)
+				return string.IsNullOrEmpty(returnUrl)
+					? RedirectToLocal(returnUrl)
 					: RedirectToAction("Index", "Home");
 
-			ViewData["returnTo"] = returnTo;
+			ViewData["returnUrl"] = returnUrl;
 			return View();
 		}
 
-		[HttpPost("SignIn", Name = "PostLogin")]
-		public async Task<IActionResult> Login(LoginViewModel model, string returnTo = null)
+		[HttpPost("login", Name = "PostLogin")]
+		public async Task<IActionResult> Login(LoginViewModel model, string returnUrl = null)
 		{
 			if (_signInManager.IsSignedIn(User))
-				return !string.IsNullOrEmpty(returnTo)
-					? RedirectToLocal(returnTo)
+				return !string.IsNullOrEmpty(returnUrl)
+					? RedirectToLocal(returnUrl)
 					: RedirectToAction("Index", "Home");
 
-			ViewData["returnTo"] = returnTo;
+			ViewData["returnUrl"] = returnUrl;
+
 			if (!ModelState.IsValid) return View(model);
 
 			var result = await _signInManager.PasswordSignInAsync(
-				model.UserName, model.Password, model.RememberMe, true);
+				model.UserName, 
+				model.Password, 
+				model.RememberMe, 
+				true);
 
 			if (!result.Succeeded)
 			{
@@ -106,8 +111,8 @@ namespace ccsc.Web.Controllers
 			}
 			else
 			{
-				return !string.IsNullOrEmpty(returnTo)
-					? RedirectToLocal(returnTo)
+				return !string.IsNullOrEmpty(returnUrl)
+					? RedirectToLocal(returnUrl)
 					: RedirectToAction("Index", "Home");
 			}
 
@@ -116,7 +121,7 @@ namespace ccsc.Web.Controllers
 		}
 
 
-		[HttpPost("SignOut", Name = "GetLogOn")]
+		[HttpPost("logOut", Name = "GetLogOn")]
 		[ValidateAntiForgeryToken]
 		public async Task<IActionResult> Logout()
 		{
@@ -126,9 +131,9 @@ namespace ccsc.Web.Controllers
 
 
 
-		private IActionResult RedirectToLocal(string returnTo)
+		private IActionResult RedirectToLocal(string returnUrl)
 		{
-			return Redirect(Url.IsLocalUrl(returnTo) ? returnTo : "/");
+			return Redirect(Url.IsLocalUrl(returnUrl) ? returnUrl : "/");
 		}
 
 		private void AddErrors(IdentityResult result)

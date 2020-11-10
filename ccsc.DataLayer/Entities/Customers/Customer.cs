@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using ccsc.DataLayer.Entities.Contracts;
 
 namespace ccsc.DataLayer.Entities.Customers
 {
@@ -66,8 +67,12 @@ namespace ccsc.DataLayer.Entities.Customers
 
 		[Display(Name = "نوع")]
 		public CustomerType CustomerType { get; set; }
+
 		[Display(Name = "ریموت‌ها")]
-		public List<Server> Servers { get; set; }
+		public ICollection<Server> Servers { get; set; }
+
+
+		public ICollection<Contract> Contracts { get; set; }
 
 		#endregion
 

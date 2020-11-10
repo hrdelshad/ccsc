@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using ccsc.DataLayer.Entities.Products;
 
@@ -28,6 +29,9 @@ namespace ccsc.DataLayer.Entities.Tutorials
 		[Required(ErrorMessage = "لطفا {0} را وارد کنید")]
 		[MaxLength(1000, ErrorMessage = "{0} نمیتواند بیشتر از {0} کارکتر باشد")]
 		public string Description { get; set; }
+
+
+		public DateTime? PublishedOn { get; set; }
 
 
 		#region Relations

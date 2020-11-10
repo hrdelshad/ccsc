@@ -7,9 +7,11 @@ using ccsc.DataLayer.Context;
 using ccsc.DataLayer.Entities.Customers;
 using Kendo.Mvc.Extensions;
 using Kendo.Mvc.UI;
+using Microsoft.AspNetCore.Authorization;
 
 namespace ccsc.Web.Controllers
 {
+	[Authorize]
 	public class ServerTypesController : Controller
 	{
 		private readonly CcscContext _context;

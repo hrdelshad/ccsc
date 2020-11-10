@@ -2,10 +2,12 @@
 using System.Threading.Tasks;
 using ccsc.Core.Services.Interfaces;
 using ccsc.DataLayer.Entities.Messages;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace ccsc.Web.Controllers
 {
+	[Authorize]
 	[Route("api/[controller]")]
 	[ApiController]
 	public class MailController : Controller

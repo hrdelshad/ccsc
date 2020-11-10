@@ -1,28 +1,33 @@
-﻿using System.Linq;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using ccsc.DataLayer.Context;
 using ccsc.DataLayer.Entities.Requests;
+using Microsoft.AspNetCore.Authorization;
 
 namespace ccsc.Web.Controllers
 {
-    public class RequestChanelsController : Controller
+    [Authorize]
+    public class RequestChannelsController : Controller
     {
         private readonly CcscContext _context;
 
-        public RequestChanelsController(CcscContext context)
+        public RequestChannelsController(CcscContext context)
         {
             _context = context;
         }
 
-        // GET: RequestChanels
+        // GET: RequestChannels
         public async Task<IActionResult> Index()
         {
-            return View(await _context.RequestChanels.ToListAsync());
+            return View(await _context.RequestChannels.ToListAsync());
         }
 
-        // GET: RequestChanels/Details/5
+        // GET: RequestChannels/Details/5
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -30,39 +35,39 @@ namespace ccsc.Web.Controllers
                 return NotFound();
             }
 
-            var requestChanel = await _context.RequestChanels
-                .FirstOrDefaultAsync(m => m.RequestChanelId == id);
-            if (requestChanel == null)
+            var requestChannel = await _context.RequestChannels
+                .FirstOrDefaultAsync(m => m.RequestChannelId == id);
+            if (requestChannel == null)
             {
                 return NotFound();
             }
 
-            return View(requestChanel);
+            return View(requestChannel);
         }
 
-        // GET: RequestChanels/Create
+        // GET: RequestChannels/Create
         public IActionResult Create()
         {
             return View();
         }
 
-        // POST: RequestChanels/Create
+        // POST: RequestChannels/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to, for 
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("RequestChanelId,Title")] RequestChanel requestChanel)
+        public async Task<IActionResult> Create([Bind("RequestChannelId,Title")] RequestChannel requestChannel)
         {
             if (ModelState.IsValid)
             {
-                _context.Add(requestChanel);
+                _context.Add(requestChannel);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            return View(requestChanel);
+            return View(requestChannel);
         }
 
-        // GET: RequestChanels/Edit/5
+        // GET: RequestChannels/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -70,22 +75,22 @@ namespace ccsc.Web.Controllers
                 return NotFound();
             }
 
-            var requestChanel = await _context.RequestChanels.FindAsync(id);
-            if (requestChanel == null)
+            var requestChannel = await _context.RequestChannels.FindAsync(id);
+            if (requestChannel == null)
             {
                 return NotFound();
             }
-            return View(requestChanel);
+            return View(requestChannel);
         }
 
-        // POST: RequestChanels/Edit/5
+        // POST: RequestChannels/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to, for 
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("RequestChanelId,Title")] RequestChanel requestChanel)
+        public async Task<IActionResult> Edit(int id, [Bind("RequestChannelId,Title")] RequestChannel requestChannel)
         {
-            if (id != requestChanel.RequestChanelId)
+            if (id != requestChannel.RequestChannelId)
             {
                 return NotFound();
             }
@@ -94,12 +99,12 @@ namespace ccsc.Web.Controllers
             {
                 try
                 {
-                    _context.Update(requestChanel);
+                    _context.Update(requestChannel);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!RequestChanelExists(requestChanel.RequestChanelId))
+                    if (!RequestChannelExists(requestChannel.RequestChannelId))
                     {
                         return NotFound();
                     }
@@ -110,10 +115,10 @@ namespace ccsc.Web.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            return View(requestChanel);
+            return View(requestChannel);
         }
 
-        // GET: RequestChanels/Delete/5
+        // GET: RequestChannels/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -121,30 +126,30 @@ namespace ccsc.Web.Controllers
                 return NotFound();
             }
 
-            var requestChanel = await _context.RequestChanels
-                .FirstOrDefaultAsync(m => m.RequestChanelId == id);
-            if (requestChanel == null)
+            var requestChannel = await _context.RequestChannels
+                .FirstOrDefaultAsync(m => m.RequestChannelId == id);
+            if (requestChannel == null)
             {
                 return NotFound();
             }
 
-            return View(requestChanel);
+            return View(requestChannel);
         }
 
-        // POST: RequestChanels/Delete/5
+        // POST: RequestChannels/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var requestChanel = await _context.RequestChanels.FindAsync(id);
-            _context.RequestChanels.Remove(requestChanel);
+            var requestChannel = await _context.RequestChannels.FindAsync(id);
+            _context.RequestChannels.Remove(requestChannel);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
-        private bool RequestChanelExists(int id)
+        private bool RequestChannelExists(int id)
         {
-            return _context.RequestChanels.Any(e => e.RequestChanelId == id);
+            return _context.RequestChannels.Any(e => e.RequestChannelId == id);
         }
     }
 }

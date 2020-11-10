@@ -16,7 +16,7 @@
             <input type="hidden" asp-for="ChangeSetId" />
             <div class="form-group">
                 <label asp-for="AppUserId" class="control-label"></label>
-                <select asp-for="AppUserId" class="form-control" asp-items="ViewBag.UserId"></select>
+                <select asp-for="AppUserId" class="form-control" asp-items="ViewBag.AppUserId"></select>
                 <span asp-validation-for="AppUserId" class="text-danger"></span>
             </div>
             <div class="form-group">
@@ -36,15 +36,7 @@
             </div>
             <div class="form-group">
                 <label asp-for="Description" class="control-label"></label>
-	            <input asp-for="Description" class="form-control" />
-	            @(Html.Kendo().Editor()
-		            .Name("editor")
-		            .HtmlAttributes(new { style = "width: 100%" })
-		            .StyleSheets(css => css
-			            .Add(Url.Content("~/shared/web/editor/editorStyles.css"))
-		            )
-		            .Value(@Model.Comment)
-		            )
+                <input asp-for="Description" class="form-control" />
                 <span asp-validation-for="Description" class="text-danger"></span>
             </div>
             <div class="form-group">
@@ -76,6 +68,11 @@
                 <label class="form-check-label">
                     <input class="form-check-input" asp-for="IsPublish" /> @Html.DisplayNameFor(model => model.IsPublish)
                 </label>
+            </div>
+            <div class="form-group">
+                <label asp-for="Quarter" class="control-label"></label>
+                <input asp-for="Quarter" class="form-control" />
+                <span asp-validation-for="Quarter" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <input type="submit" value="Save" class="btn btn-primary" />

@@ -51,7 +51,7 @@ namespace ccsc.DataLayer.Entities.Requests
 		public virtual Contact Contact { get; set; }
 
 		[Display(Name = "کانال درخواست")]
-		public virtual RequestChanel RequestChanel { get; set; }
+		public virtual RequestChannel RequestChanel { get; set; }
 
 		[Display(Name = "نوع درخواست")]
 		public virtual RequestType RequestType { get; set; }

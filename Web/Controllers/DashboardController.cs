@@ -4,10 +4,12 @@ using System.Linq;
 using ccsc.Core.DTOs;
 using Kendo.Mvc.Extensions;
 using Kendo.Mvc.UI;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Web.Controllers
 {
+	[Authorize]
 	public class DashboardController : Controller
 	{
 		public static Random random = new Random();

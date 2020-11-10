@@ -135,6 +135,7 @@ namespace ccsc.DataLayer.Context
 		#region Products
 
 		public DbSet<ChangeSet> ChangeSets { get; set; }
+		public DbSet<ChangeType> ChangeTypes { get; set; }
 		public DbSet<Product> Products { get; set; }
 
 		#endregion
@@ -142,7 +143,7 @@ namespace ccsc.DataLayer.Context
 		#region Requests
 
 		public DbSet<Request> Requests { get; set; }
-		public DbSet<RequestChanel> RequestChanels { get; set; }
+		public DbSet<RequestChannel> RequestChannels { get; set; }
 		public DbSet<RequestStatus> RequestStatuses { get; set; }
 		public DbSet<RequestType> RequestTypes { get; set; }
 
@@ -150,11 +151,12 @@ namespace ccsc.DataLayer.Context
 
 		#region Services
 
+		public DbSet<Duty> Duties { get; set; }
+		public DbSet<DutyStatus> DutyStatuses { get; set; }
+		public DbSet<Faq> Faqs { get; set; }
 		public DbSet<Service> Services { get; set; }
 		public DbSet<ServiceStatus> ServiceStatuses { get; set; }
 		public DbSet<ServiceType> ServiceTypes { get; set; }
-		public DbSet<Duty> Duties { get; set; }
-		public DbSet<DutyStatus> DutyStatuses { get; set; }
 
 		#endregion
 
