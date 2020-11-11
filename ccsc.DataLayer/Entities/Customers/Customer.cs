@@ -2,7 +2,10 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using ccsc.DataLayer.Entities.Contacts;
 using ccsc.DataLayer.Entities.Contracts;
+using ccsc.DataLayer.Entities.Requests;
+using ccsc.DataLayer.Entities.Services;
 
 namespace ccsc.DataLayer.Entities.Customers
 {
@@ -16,10 +19,6 @@ namespace ccsc.DataLayer.Entities.Customers
 		[Required(ErrorMessage = "لطفا {0} را وارد کنید")]
 		[MaxLength(200, ErrorMessage = "{0} نمیتواند بیشتر از {0} کارکتر باشد")]
 		public string Title { get; set; }
-
-		[Display(Name = "نوع")]
-		[Required(ErrorMessage = "لطفا {0} را وارد کنید")]
-		public int CustomerTypeId { get; set; }
 
 		[Display(Name = "آدرس سامانه")]
 		[MaxLength(200, ErrorMessage = "{0} نمیتواند بیشتر از {0} کارکتر باشد")]
@@ -63,7 +62,12 @@ namespace ccsc.DataLayer.Entities.Customers
 		[Display(Name = "کد")]
 		public int? UniversityId { get; set; }
 
+
 		#region Relations
+
+		[Display(Name = "نوع")]
+		[Required(ErrorMessage = "لطفا {0} را وارد کنید")]
+		public int CustomerTypeId { get; set; }
 
 		[Display(Name = "نوع")]
 		public CustomerType CustomerType { get; set; }
@@ -71,8 +75,13 @@ namespace ccsc.DataLayer.Entities.Customers
 		[Display(Name = "ریموت‌ها")]
 		public ICollection<Server> Servers { get; set; }
 
-
 		public ICollection<Contract> Contracts { get; set; }
+
+		public ICollection<Service> Services { get; set; }
+
+		public ICollection<Request> Requests { get; set; }
+
+		public ICollection<Contact> Contacts { get; set; }
 
 		#endregion
 

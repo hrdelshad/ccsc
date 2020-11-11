@@ -1,4 +1,4 @@
-﻿@model ccsc.DataLayer.Entities.Contracts.ContractProduct
+﻿@model ccsc.DataLayer.Entities.Contracts.ContractStatus
 
 @{
     ViewData["Title"] = "Details";
@@ -8,24 +8,24 @@
 <h1>Details</h1>
 
 <div>
-    <h4>ContractProduct</h4>
+    <h4>ContractStatus</h4>
     <hr />
     <dl class="row">
         <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Contract)
+            @Html.DisplayNameFor(model => model.Title)
         </dt>
         <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Contract.Title)
+            @Html.DisplayFor(model => model.Title)
         </dd>
         <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Product)
+            @Html.DisplayNameFor(model => model.IsOk)
         </dt>
         <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Product.Title)
+            @Html.DisplayFor(model => model.IsOk)
         </dd>
     </dl>
 </div>
 <div>
-    <a asp-action="Edit" asp-route-id="@Model.ContractProductId">Edit</a> |
+    <a asp-action="Edit" asp-route-id="@Model.ContractStatusId">Edit</a> |
     <a asp-action="Index">Back to List</a>
 </div>

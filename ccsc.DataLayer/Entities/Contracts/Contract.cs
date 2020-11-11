@@ -1,7 +1,9 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using ccsc.DataLayer.Entities.Customers;
+using ccsc.DataLayer.Entities.Products;
 
 namespace ccsc.DataLayer.Entities.Contracts
 {
@@ -21,10 +23,6 @@ namespace ccsc.DataLayer.Entities.Contracts
 		[MaxLength(200, ErrorMessage = "{0} نمیتواند بیشتر از {0} کارکتر باشد")]
 		public string Title { get; set; }
 
-
-		[Display(Name = "مشتری")]
-		public int CustomerId { get; set; }
-
 		[Display(Name = "تاریخ شروع قرارداد")]
 		[Required(ErrorMessage = "لطفا {0} را وارد کنید")]
 		public DateTime StartDate { get; set; }
@@ -38,10 +36,6 @@ namespace ccsc.DataLayer.Entities.Contracts
 		[Column(TypeName = "decimal(18, 0)")]
 		public decimal Amount { get; set; }
 
-		[Display(Name = "وضعیت")]
-		[Required(ErrorMessage = "لطفا {0} را وارد کنید")]
-		public int ContractStatusId { get; set; }
-
 		[Display(Name = "نامحدود")]
 		[Required(ErrorMessage = "لطفا {0} را وارد کنید")]
 		public bool UnLimited { get; set; }
@@ -49,8 +43,21 @@ namespace ccsc.DataLayer.Entities.Contracts
 
 		#region Relations
 
+		[Display(Name = "وضعیت")]
+		[Required(ErrorMessage = "لطفا {0} را وارد کنید")]
+		public int ContractStatusId { get; set; }
+
+		[Display(Name = "وضعیت")]
+		public ContractStatus ContractStatus { get; set; }
+
+		[Display(Name = "مشتری")]
+		public int CustomerId { get; set; }
+
 		[Display(Name = "مشتری")]
 		public Customer Customer { get; set; }
+
+		[Display(Name = "محصولات")]
+		public ICollection<Product> Products { get; set; }
 
 		#endregion
 	}

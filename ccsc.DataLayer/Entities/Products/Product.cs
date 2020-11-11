@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using ccsc.DataLayer.Entities.Contracts;
 using ccsc.DataLayer.Entities.Tutorials;
 
 namespace ccsc.DataLayer.Entities.Products
@@ -27,6 +28,9 @@ namespace ccsc.DataLayer.Entities.Products
 
 		[Display(Name = "ویدیو(ها)")]
 		public ICollection<Video> Videos { get; set; }
+
+		[Display(Name = "قرارداد(ها)")]
+		public ICollection<Contract> Contracts { get; set; }
 
 		#endregion
 

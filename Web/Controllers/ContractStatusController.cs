@@ -6,26 +6,26 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using ccsc.DataLayer.Context;
-using ccsc.DataLayer.Entities.Tutorials;
+using ccsc.DataLayer.Entities.Contracts;
 
 namespace ccsc.Web.Controllers
 {
-    public class VideosController : Controller
+    public class ContractStatusController : Controller
     {
         private readonly CcscContext _context;
 
-        public VideosController(CcscContext context)
+        public ContractStatusController(CcscContext context)
         {
             _context = context;
         }
 
-        // GET: Videos
+        // GET: ContractStatus
         public async Task<IActionResult> Index()
         {
-            return View(await _context.Videos.ToListAsync());
+            return View(await _context.ContractStatuses.ToListAsync());
         }
 
-        // GET: Videos/Details/5
+        // GET: ContractStatus/Details/5
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -33,39 +33,39 @@ namespace ccsc.Web.Controllers
                 return NotFound();
             }
 
-            var video = await _context.Videos
-                .FirstOrDefaultAsync(m => m.VideoId == id);
-            if (video == null)
+            var contractStatus = await _context.ContractStatuses
+                .FirstOrDefaultAsync(m => m.ContractStatusId == id);
+            if (contractStatus == null)
             {
                 return NotFound();
             }
 
-            return View(video);
+            return View(contractStatus);
         }
 
-        // GET: Videos/Create
+        // GET: ContractStatus/Create
         public IActionResult Create()
         {
             return View();
         }
 
-        // POST: Videos/Create
+        // POST: ContractStatus/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to, for 
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("VideoId,Title,Path,PosterPath,Description,PublishedOn")] Video video)
+        public async Task<IActionResult> Create([Bind("ContractStatusId,Title,IsOk")] ContractStatus contractStatus)
         {
             if (ModelState.IsValid)
             {
-                _context.Add(video);
+                _context.Add(contractStatus);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            return View(video);
+            return View(contractStatus);
         }
 
-        // GET: Videos/Edit/5
+        // GET: ContractStatus/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -73,22 +73,22 @@ namespace ccsc.Web.Controllers
                 return NotFound();
             }
 
-            var video = await _context.Videos.FindAsync(id);
-            if (video == null)
+            var contractStatus = await _context.ContractStatuses.FindAsync(id);
+            if (contractStatus == null)
             {
                 return NotFound();
             }
-            return View(video);
+            return View(contractStatus);
         }
 
-        // POST: Videos/Edit/5
+        // POST: ContractStatus/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to, for 
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("VideoId,Title,Path,PosterPath,Description,PublishedOn")] Video video)
+        public async Task<IActionResult> Edit(int id, [Bind("ContractStatusId,Title,IsOk")] ContractStatus contractStatus)
         {
-            if (id != video.VideoId)
+            if (id != contractStatus.ContractStatusId)
             {
                 return NotFound();
             }
@@ -97,12 +97,12 @@ namespace ccsc.Web.Controllers
             {
                 try
                 {
-                    _context.Update(video);
+                    _context.Update(contractStatus);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!VideoExists(video.VideoId))
+                    if (!ContractStatusExists(contractStatus.ContractStatusId))
                     {
                         return NotFound();
                     }
@@ -113,10 +113,10 @@ namespace ccsc.Web.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            return View(video);
+            return View(contractStatus);
         }
 
-        // GET: Videos/Delete/5
+        // GET: ContractStatus/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -124,30 +124,30 @@ namespace ccsc.Web.Controllers
                 return NotFound();
             }
 
-            var video = await _context.Videos
-                .FirstOrDefaultAsync(m => m.VideoId == id);
-            if (video == null)
+            var contractStatus = await _context.ContractStatuses
+                .FirstOrDefaultAsync(m => m.ContractStatusId == id);
+            if (contractStatus == null)
             {
                 return NotFound();
             }
 
-            return View(video);
+            return View(contractStatus);
         }
 
-        // POST: Videos/Delete/5
+        // POST: ContractStatus/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var video = await _context.Videos.FindAsync(id);
-            _context.Videos.Remove(video);
+            var contractStatus = await _context.ContractStatuses.FindAsync(id);
+            _context.ContractStatuses.Remove(contractStatus);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
-        private bool VideoExists(int id)
+        private bool ContractStatusExists(int id)
         {
-            return _context.Videos.Any(e => e.VideoId == id);
+            return _context.ContractStatuses.Any(e => e.ContractStatusId == id);
         }
     }
 }

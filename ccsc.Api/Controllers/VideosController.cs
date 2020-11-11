@@ -24,6 +24,7 @@ namespace ccsc.Api.Controllers
         public async Task<ActionResult<IEnumerable<Video>>> GetVideos()
         {
             var result = await _context.Videos
+	            .Where(v=>v.PublishedOn.HasValue)
 	            .Include(v=>v.Products)
 	            .Include(v=>v.Audiences)
 	            .ToListAsync();

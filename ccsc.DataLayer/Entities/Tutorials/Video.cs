@@ -12,25 +12,25 @@ namespace ccsc.DataLayer.Entities.Tutorials
 
 		[Display(Name = "عنوان")]
 		[Required(ErrorMessage = "لطفا {0} را وارد کنید")]
-		[MaxLength(60, ErrorMessage = "{0} نمیتواند بیشتر از {0} کارکتر باشد")]
+		[MaxLength(60, ErrorMessage = "{0} نمیتواند بیشتر از {1} کارکتر باشد")]
 		public string Title { get; set; }
 
 		[Display(Name = "مسیر")]
 		[Required(ErrorMessage = "لطفا {0} را وارد کنید")]
-		[MaxLength(200, ErrorMessage = "{0} نمیتواند بیشتر از {0} کارکتر باشد")]
+		[MaxLength(200, ErrorMessage = "{0} نمیتواند بیشتر از {1} کارکتر باشد")]
 		public string Path { get; set; }
 
 		[Display(Name = "مسیر پوستر")]
-		[Required(ErrorMessage = "لطفا {0} را وارد کنید")]
-		[MaxLength(200, ErrorMessage = "{0} نمیتواند بیشتر از {0} کارکتر باشد")]
+		[MaxLength(200, ErrorMessage = "{0} نمیتواند بیشتر از {1} کارکتر باشد")]
 		public string PosterPath { get; set; }
 
 		[Display(Name = "توضیحات")]
 		[Required(ErrorMessage = "لطفا {0} را وارد کنید")]
-		[MaxLength(1000, ErrorMessage = "{0} نمیتواند بیشتر از {0} کارکتر باشد")]
+		[MaxLength(1000, ErrorMessage = "{0} نمیتواند بیشتر از {1} کارکتر باشد")]
 		public string Description { get; set; }
 
-
+		[Display(Name = "تاریخ انتشار")]
+		[DataType(DataType.Date)]
 		public DateTime? PublishedOn { get; set; }
 
 

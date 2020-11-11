@@ -15,7 +15,7 @@ namespace ccsc.DataLayer.Entities.Courses
 
 		#region Relations
 		[Display(Name = "مقطع")]
-		public virtual CourseLevel CourseLevel { get; set; }
+		public CourseLevel CourseLevel { get; set; }
 
 		#endregion
 	}

@@ -109,7 +109,7 @@ namespace ccsc.DataLayer.Context
 
 		public DbSet<Contract> Contracts { get; set; }
 		public DbSet<ContractCours> ContractCourses { get; set; }
-		public DbSet<ContractProduct> ContractProducts { get; set; }
+		public DbSet<ContractStatus> ContractStatuses { get; set; }
 		public DbSet<ContractType> ContractTypes { get; set; }
 
 		#endregion

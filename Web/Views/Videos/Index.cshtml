@@ -20,7 +20,13 @@
                 @Html.DisplayNameFor(model => model.Path)
             </th>
             <th>
+                @Html.DisplayNameFor(model => model.PosterPath)
+            </th>
+            <th>
                 @Html.DisplayNameFor(model => model.Description)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.PublishedOn)
             </th>
             <th></th>
         </tr>
@@ -35,7 +41,13 @@
                 @Html.DisplayFor(modelItem => item.Path)
             </td>
             <td>
+                @Html.DisplayFor(modelItem => item.PosterPath)
+            </td>
+            <td>
                 @Html.DisplayFor(modelItem => item.Description)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.PublishedOn)
             </td>
             <td>
                 <a asp-action="Edit" asp-route-id="@item.VideoId">Edit</a> |

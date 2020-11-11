@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using ccsc.DataLayer.Context;
 
 namespace ccsc.DataLayer.Migrations
 {
     [DbContext(typeof(CcscContext))]
-    partial class CcscContextModelSnapshot : ModelSnapshot
+    [Migration("20201110154514_AddFaq")]
+    partial class AddFaq
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -223,6 +225,28 @@ namespace ccsc.DataLayer.Migrations
                     b.HasIndex("CourseId");
 
                     b.ToTable("ContractCourses");
+                });
+
+            modelBuilder.Entity("ccsc.DataLayer.Entities.Contracts.ContractProduct", b =>
+                {
+                    b.Property<int>("ContractProductId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .UseIdentityColumn();
+
+                    b.Property<int>("ContractId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("ProductId")
+                        .HasColumnType("int");
+
+                    b.HasKey("ContractProductId");
+
+                    b.HasIndex("ContractId");
+
+                    b.HasIndex("ProductId");
+
+                    b.ToTable("ContractProducts");
                 });
 
             modelBuilder.Entity("ccsc.DataLayer.Entities.Contracts.ContractStatus", b =>
@@ -1122,6 +1146,7 @@ namespace ccsc.DataLayer.Migrations
                         .HasColumnType("nvarchar(200)");
 
                     b.Property<string>("PosterPath")
+                        .IsRequired()
                         .HasMaxLength(200)
                         .HasColumnType("nvarchar(200)");
 
@@ -1303,6 +1328,25 @@ namespace ccsc.DataLayer.Migrations
                     b.Navigation("Contract");
 
                     b.Navigation("Course");
+                });
+
+            modelBuilder.Entity("ccsc.DataLayer.Entities.Contracts.ContractProduct", b =>
+                {
+                    b.HasOne("ccsc.DataLayer.Entities.Contracts.Contract", "Contract")
+                        .WithMany()
+                        .HasForeignKey("ContractId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("ccsc.DataLayer.Entities.Products.Product", "Product")
+                        .WithMany()
+                        .HasForeignKey("ProductId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Contract");
+
+                    b.Navigation("Product");
                 });
 
             modelBuilder.Entity("ccsc.DataLayer.Entities.Courses.Course", b =>
