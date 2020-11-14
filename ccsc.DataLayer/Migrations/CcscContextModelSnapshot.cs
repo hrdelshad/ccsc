@@ -17,51 +17,51 @@ namespace ccsc.DataLayer.Migrations
             modelBuilder
                 .UseIdentityColumns()
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
-                .HasAnnotation("ProductVersion", "5.0.0-rc.2.20475.6");
+                .HasAnnotation("ProductVersion", "5.0.0");
 
-            modelBuilder.Entity("AudienceVideo", b =>
-                {
-                    b.Property<int>("AudiencesAudienceId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("VideosVideoId")
-                        .HasColumnType("int");
-
-                    b.HasKey("AudiencesAudienceId", "VideosVideoId");
-
-                    b.HasIndex("VideosVideoId");
-
-                    b.ToTable("AudienceVideo");
-                });
-
-            modelBuilder.Entity("ContractProduct", b =>
+            modelBuilder.Entity("ContractSubSystem", b =>
                 {
                     b.Property<int>("ContractsContractId")
                         .HasColumnType("int");
 
-                    b.Property<int>("ProductsProductId")
+                    b.Property<int>("SubSystemsSubSystemId")
                         .HasColumnType("int");
 
-                    b.HasKey("ContractsContractId", "ProductsProductId");
+                    b.HasKey("ContractsContractId", "SubSystemsSubSystemId");
 
-                    b.HasIndex("ProductsProductId");
+                    b.HasIndex("SubSystemsSubSystemId");
 
-                    b.ToTable("ContractProduct");
+                    b.ToTable("ContractSubSystem");
                 });
 
-            modelBuilder.Entity("ProductVideo", b =>
+            modelBuilder.Entity("SubSystemVideo", b =>
                 {
-                    b.Property<int>("ProductsProductId")
+                    b.Property<int>("SubSystemsSubSystemId")
                         .HasColumnType("int");
 
                     b.Property<int>("VideosVideoId")
                         .HasColumnType("int");
 
-                    b.HasKey("ProductsProductId", "VideosVideoId");
+                    b.HasKey("SubSystemsSubSystemId", "VideosVideoId");
 
                     b.HasIndex("VideosVideoId");
 
-                    b.ToTable("ProductVideo");
+                    b.ToTable("SubSystemVideo");
+                });
+
+            modelBuilder.Entity("UserTypeVideo", b =>
+                {
+                    b.Property<int>("UserTypesUserTypeId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("VideosVideoId")
+                        .HasColumnType("int");
+
+                    b.HasKey("UserTypesUserTypeId", "VideosVideoId");
+
+                    b.HasIndex("VideosVideoId");
+
+                    b.ToTable("UserTypeVideo");
                 });
 
             modelBuilder.Entity("ccsc.DataLayer.Entities.Contacts.Contact", b =>
@@ -700,9 +700,6 @@ namespace ccsc.DataLayer.Migrations
                     b.Property<int>("AppUserId")
                         .HasColumnType("int");
 
-                    b.Property<int?>("AudienceId")
-                        .HasColumnType("int");
-
                     b.Property<int?>("ChangeTypeId")
                         .HasColumnType("int");
 
@@ -717,18 +714,21 @@ namespace ccsc.DataLayer.Migrations
                         .HasMaxLength(1000)
                         .HasColumnType("nvarchar(1000)");
 
-                    b.Property<bool>("IsPublish")
+                    b.Property<bool?>("IsPublish")
                         .HasColumnType("bit");
-
-                    b.Property<int?>("ProductId")
-                        .HasColumnType("int");
 
                     b.Property<string>("Quarter")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int?>("SubSystemId")
+                        .HasColumnType("int");
+
                     b.Property<string>("Title")
                         .HasMaxLength(400)
                         .HasColumnType("nvarchar(400)");
+
+                    b.Property<int?>("UserTypeId")
+                        .HasColumnType("int");
 
                     b.Property<string>("Version")
                         .HasMaxLength(30)
@@ -741,11 +741,11 @@ namespace ccsc.DataLayer.Migrations
 
                     b.HasIndex("AppUserId");
 
-                    b.HasIndex("AudienceId");
-
                     b.HasIndex("ChangeTypeId");
 
-                    b.HasIndex("ProductId");
+                    b.HasIndex("SubSystemId");
+
+                    b.HasIndex("UserTypeId");
 
                     b.HasIndex("VideoId");
 
@@ -755,9 +755,7 @@ namespace ccsc.DataLayer.Migrations
             modelBuilder.Entity("ccsc.DataLayer.Entities.Products.ChangeType", b =>
                 {
                     b.Property<int>("ChangeTypeId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .UseIdentityColumn();
+                        .HasColumnType("int");
 
                     b.Property<string>("Description")
                         .IsRequired()
@@ -774,9 +772,9 @@ namespace ccsc.DataLayer.Migrations
                     b.ToTable("ChangeTypes");
                 });
 
-            modelBuilder.Entity("ccsc.DataLayer.Entities.Products.Product", b =>
+            modelBuilder.Entity("ccsc.DataLayer.Entities.Products.SubSystem", b =>
                 {
-                    b.Property<int>("ProductId")
+                    b.Property<int>("SubSystemId")
                         .HasColumnType("int");
 
                     b.Property<bool>("IsActive")
@@ -787,9 +785,9 @@ namespace ccsc.DataLayer.Migrations
                         .HasMaxLength(200)
                         .HasColumnType("nvarchar(200)");
 
-                    b.HasKey("ProductId");
+                    b.HasKey("SubSystemId");
 
-                    b.ToTable("Products");
+                    b.ToTable("SubSystems");
                 });
 
             modelBuilder.Entity("ccsc.DataLayer.Entities.Requests.Request", b =>
@@ -805,9 +803,6 @@ namespace ccsc.DataLayer.Migrations
                     b.Property<int?>("CustomerId")
                         .HasColumnType("int");
 
-                    b.Property<int?>("ProductId")
-                        .HasColumnType("int");
-
                     b.Property<int>("RequestChanelId")
                         .HasColumnType("int");
 
@@ -818,6 +813,9 @@ namespace ccsc.DataLayer.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<int>("RequestTypeId")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("SubSystemId")
                         .HasColumnType("int");
 
                     b.Property<string>("Text")
@@ -836,13 +834,13 @@ namespace ccsc.DataLayer.Migrations
 
                     b.HasIndex("CustomerId");
 
-                    b.HasIndex("ProductId");
-
                     b.HasIndex("RequestChanelId");
 
                     b.HasIndex("RequestStatusId");
 
                     b.HasIndex("RequestTypeId");
+
+                    b.HasIndex("SubSystemId");
 
                     b.ToTable("Requests");
                 });
@@ -976,25 +974,25 @@ namespace ccsc.DataLayer.Migrations
                         .HasMaxLength(2000)
                         .HasColumnType("nvarchar(2000)");
 
-                    b.Property<int?>("AudienceId")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("ProductId")
-                        .HasColumnType("int");
-
                     b.Property<string>("Question")
                         .IsRequired()
                         .HasMaxLength(200)
                         .HasColumnType("nvarchar(200)");
+
+                    b.Property<int?>("SubSystemId")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("UserTypeId")
+                        .HasColumnType("int");
 
                     b.Property<int?>("VideoId")
                         .HasColumnType("int");
 
                     b.HasKey("FaqId");
 
-                    b.HasIndex("AudienceId");
+                    b.HasIndex("SubSystemId");
 
-                    b.HasIndex("ProductId");
+                    b.HasIndex("UserTypeId");
 
                     b.HasIndex("VideoId");
 
@@ -1083,12 +1081,10 @@ namespace ccsc.DataLayer.Migrations
                     b.ToTable("ServiceTypes");
                 });
 
-            modelBuilder.Entity("ccsc.DataLayer.Entities.Tutorials.Audience", b =>
+            modelBuilder.Entity("ccsc.DataLayer.Entities.Tutorials.UserType", b =>
                 {
-                    b.Property<int>("AudienceId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .UseIdentityColumn();
+                    b.Property<int>("UserTypeId")
+                        .HasColumnType("int");
 
                     b.Property<string>("Description")
                         .HasMaxLength(400)
@@ -1099,9 +1095,9 @@ namespace ccsc.DataLayer.Migrations
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
 
-                    b.HasKey("AudienceId");
+                    b.HasKey("UserTypeId");
 
-                    b.ToTable("Audiences");
+                    b.ToTable("UserTypes");
                 });
 
             modelBuilder.Entity("ccsc.DataLayer.Entities.Tutorials.Video", b =>
@@ -1116,6 +1112,9 @@ namespace ccsc.DataLayer.Migrations
                         .HasMaxLength(1000)
                         .HasColumnType("nvarchar(1000)");
 
+                    b.Property<DateTime?>("ModifiedOn")
+                        .HasColumnType("datetime2");
+
                     b.Property<string>("Path")
                         .IsRequired()
                         .HasMaxLength(200)
@@ -1124,6 +1123,9 @@ namespace ccsc.DataLayer.Migrations
                     b.Property<string>("PosterPath")
                         .HasMaxLength(200)
                         .HasColumnType("nvarchar(200)");
+
+                    b.Property<bool>("Publish")
+                        .HasColumnType("bit");
 
                     b.Property<DateTime?>("PublishedOn")
                         .HasColumnType("datetime2");
@@ -1141,9 +1143,7 @@ namespace ccsc.DataLayer.Migrations
             modelBuilder.Entity("ccsc.DataLayer.Entities.Users.AppUser", b =>
                 {
                     b.Property<int>("AppUserId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .UseIdentityColumn();
+                        .HasColumnType("int");
 
                     b.Property<string>("ActiveCode")
                         .HasMaxLength(50)
@@ -1184,11 +1184,26 @@ namespace ccsc.DataLayer.Migrations
                     b.ToTable("AppUsers");
                 });
 
-            modelBuilder.Entity("AudienceVideo", b =>
+            modelBuilder.Entity("ContractSubSystem", b =>
                 {
-                    b.HasOne("ccsc.DataLayer.Entities.Tutorials.Audience", null)
+                    b.HasOne("ccsc.DataLayer.Entities.Contracts.Contract", null)
                         .WithMany()
-                        .HasForeignKey("AudiencesAudienceId")
+                        .HasForeignKey("ContractsContractId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("ccsc.DataLayer.Entities.Products.SubSystem", null)
+                        .WithMany()
+                        .HasForeignKey("SubSystemsSubSystemId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("SubSystemVideo", b =>
+                {
+                    b.HasOne("ccsc.DataLayer.Entities.Products.SubSystem", null)
+                        .WithMany()
+                        .HasForeignKey("SubSystemsSubSystemId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -1199,26 +1214,11 @@ namespace ccsc.DataLayer.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("ContractProduct", b =>
+            modelBuilder.Entity("UserTypeVideo", b =>
                 {
-                    b.HasOne("ccsc.DataLayer.Entities.Contracts.Contract", null)
+                    b.HasOne("ccsc.DataLayer.Entities.Tutorials.UserType", null)
                         .WithMany()
-                        .HasForeignKey("ContractsContractId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("ccsc.DataLayer.Entities.Products.Product", null)
-                        .WithMany()
-                        .HasForeignKey("ProductsProductId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
-            modelBuilder.Entity("ProductVideo", b =>
-                {
-                    b.HasOne("ccsc.DataLayer.Entities.Products.Product", null)
-                        .WithMany()
-                        .HasForeignKey("ProductsProductId")
+                        .HasForeignKey("UserTypesUserTypeId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -1425,17 +1425,17 @@ namespace ccsc.DataLayer.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("ccsc.DataLayer.Entities.Tutorials.Audience", "Audience")
-                        .WithMany()
-                        .HasForeignKey("AudienceId");
-
                     b.HasOne("ccsc.DataLayer.Entities.Products.ChangeType", "ChangeType")
                         .WithMany()
                         .HasForeignKey("ChangeTypeId");
 
-                    b.HasOne("ccsc.DataLayer.Entities.Products.Product", "Product")
+                    b.HasOne("ccsc.DataLayer.Entities.Products.SubSystem", "SubSystem")
                         .WithMany()
-                        .HasForeignKey("ProductId");
+                        .HasForeignKey("SubSystemId");
+
+                    b.HasOne("ccsc.DataLayer.Entities.Tutorials.UserType", "UserType")
+                        .WithMany()
+                        .HasForeignKey("UserTypeId");
 
                     b.HasOne("ccsc.DataLayer.Entities.Tutorials.Video", "Video")
                         .WithMany()
@@ -1443,11 +1443,11 @@ namespace ccsc.DataLayer.Migrations
 
                     b.Navigation("AppUser");
 
-                    b.Navigation("Audience");
-
                     b.Navigation("ChangeType");
 
-                    b.Navigation("Product");
+                    b.Navigation("SubSystem");
+
+                    b.Navigation("UserType");
 
                     b.Navigation("Video");
                 });
@@ -1463,10 +1463,6 @@ namespace ccsc.DataLayer.Migrations
                     b.HasOne("ccsc.DataLayer.Entities.Customers.Customer", null)
                         .WithMany("Requests")
                         .HasForeignKey("CustomerId");
-
-                    b.HasOne("ccsc.DataLayer.Entities.Products.Product", "Product")
-                        .WithMany()
-                        .HasForeignKey("ProductId");
 
                     b.HasOne("ccsc.DataLayer.Entities.Requests.RequestChannel", "RequestChanel")
                         .WithMany()
@@ -1486,15 +1482,19 @@ namespace ccsc.DataLayer.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("Contact");
+                    b.HasOne("ccsc.DataLayer.Entities.Products.SubSystem", "SubSystem")
+                        .WithMany()
+                        .HasForeignKey("SubSystemId");
 
-                    b.Navigation("Product");
+                    b.Navigation("Contact");
 
                     b.Navigation("RequestChanel");
 
                     b.Navigation("RequestStatus");
 
                     b.Navigation("RequestType");
+
+                    b.Navigation("SubSystem");
                 });
 
             modelBuilder.Entity("ccsc.DataLayer.Entities.Services.Duty", b =>
@@ -1528,21 +1528,21 @@ namespace ccsc.DataLayer.Migrations
 
             modelBuilder.Entity("ccsc.DataLayer.Entities.Services.Faq", b =>
                 {
-                    b.HasOne("ccsc.DataLayer.Entities.Tutorials.Audience", "Audience")
+                    b.HasOne("ccsc.DataLayer.Entities.Products.SubSystem", "SubSystem")
                         .WithMany()
-                        .HasForeignKey("AudienceId");
+                        .HasForeignKey("SubSystemId");
 
-                    b.HasOne("ccsc.DataLayer.Entities.Products.Product", "Product")
+                    b.HasOne("ccsc.DataLayer.Entities.Tutorials.UserType", "UserType")
                         .WithMany()
-                        .HasForeignKey("ProductId");
+                        .HasForeignKey("UserTypeId");
 
                     b.HasOne("ccsc.DataLayer.Entities.Tutorials.Video", "Video")
                         .WithMany()
                         .HasForeignKey("VideoId");
 
-                    b.Navigation("Audience");
+                    b.Navigation("SubSystem");
 
-                    b.Navigation("Product");
+                    b.Navigation("UserType");
 
                     b.Navigation("Video");
                 });

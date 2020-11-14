@@ -1,5 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
-using ccsc.DataLayer.Entities.Products;
+using ccsc.DataLayer.Entities.ChangeSets;
 using ccsc.DataLayer.Entities.Tutorials;
 
 namespace ccsc.DataLayer.Entities.Services
@@ -22,17 +22,17 @@ namespace ccsc.DataLayer.Entities.Services
 		#region Relations
 
 		[Display(Name = "کد مخاطب")]
-		public int? AudienceId { get; set; }
+		public int? UserTypeId { get; set; }
 
 		[Display(Name = "مخاطب")]
-		public Audience Audience { get; set; }
+		public UserType UserType { get; set; }
 
 
 		[Display(Name = "کد محصول مرتبط")]
-		public int? ProductId { get; set; }
+		public int? SubSystemId { get; set; }
 
 		[Display(Name = "محصول مرتبط")]
-		public Product Product { get; set; }
+		public SubSystem SubSystem { get; set; }
 
 
 		[Display(Name = "کد ویدیو مرتبط")]

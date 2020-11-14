@@ -1,29 +1,22 @@
-﻿using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
-namespace ccsc.DataLayer.Entities.Tutorials
+namespace ccsc.DataLayer.Entities.ChangeSets
 {
-	public class Audience
+	public class ChangeType
 	{
 		[Key]
-		[Display(Name = "شناسه")]
-		public int AudienceId { get; set; }
+		[DatabaseGenerated(DatabaseGeneratedOption.None)]
+		public int ChangeTypeId { get; set; }
 
-
-		[Display(Name = "عنوان")]
+		[Display(Name = "نوع تغییر")]
 		[Required(ErrorMessage = "لطفا {0} را وارد کنید")]
 		[MaxLength(50, ErrorMessage = "{0} نمیتواند بیشتر از {1} کارکتر باشد")]
 		public string Title { get; set; }
 
 		[Display(Name = "توضیحات")]
+		[Required(ErrorMessage = "لطفا {0} را وارد کنید")]
 		[MaxLength(400, ErrorMessage = "{0} نمیتواند بیشتر از {1} کارکتر باشد")]
 		public string Description { get; set; }
-
-		#region Relations
-
-		[Display(Name = "ویدیوهای مرتبط")]
-		public virtual ICollection<Video> Videos { get; set; }
-
-		#endregion
 	}
 }

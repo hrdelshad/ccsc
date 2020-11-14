@@ -2,8 +2,8 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using ccsc.DataLayer.Entities.ChangeSets;
 using ccsc.DataLayer.Entities.Customers;
-using ccsc.DataLayer.Entities.Products;
 
 namespace ccsc.DataLayer.Entities.Contracts
 {
@@ -57,7 +57,7 @@ namespace ccsc.DataLayer.Entities.Contracts
 		public Customer Customer { get; set; }
 
 		[Display(Name = "محصولات")]
-		public ICollection<Product> Products { get; set; }
+		public ICollection<SubSystem> SubSystems { get; set; }
 
 		#endregion
 	}

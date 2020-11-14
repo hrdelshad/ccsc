@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace ccsc.DataLayer.Entities.Users
 {
@@ -8,6 +9,7 @@ namespace ccsc.DataLayer.Entities.Users
 	{
 
 		[Key]
+		[DatabaseGenerated(DatabaseGeneratedOption.None)]
 		public int AppUserId { get; set; }
 
 		[Display(Name = "نام کاربری")]

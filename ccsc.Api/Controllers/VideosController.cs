@@ -25,30 +25,30 @@ namespace ccsc.Api.Controllers
         {
             var result = await _context.Videos
 	            .Where(v=>v.PublishedOn.HasValue)
-	            .Include(v=>v.Products)
-	            .Include(v=>v.Audiences)
+	            .Include(v=>v.SubSystems)
+	            .Include(v=>v.UserTypes)
 	            .ToListAsync();
             Request.HttpContext.Response.Headers.Add("x-Count", _context.Videos.Count().ToString());
             return result;
         }
 
-        [HttpGet("product/{id}")]
+        [HttpGet("subsystem/{id}")]
         public async Task<ActionResult<IEnumerable<Video>>> GetProductVideos(int id)
         {
 
             var result = await _context.Videos
-				.Where(v=>v.Products.Any(p=>p.ProductId == id))
+				.Where(v=>v.SubSystems.Any(p=>p.SubSystemId == id))
 		        
 		        .ToListAsync();
 	        return result;
         }
 
-        [HttpGet("audience/{id}")]
+        [HttpGet("Usertype/{id}")]
         public async Task<ActionResult<IEnumerable<Video>>> GetAudiencVideos(int id)
         {
 	        var result = await _context.Videos
-		        .Include(v=>v.Products)
-		        .Where(v=>v.Audiences.Any(a=>a.AudienceId==id))
+		        .Include(v=>v.SubSystems)
+		        .Where(v=>v.UserTypes.Any(a=>a.UserTypeId==id))
 		        .ToListAsync();
 	        return result;
         }
@@ -58,8 +58,8 @@ namespace ccsc.Api.Controllers
         public async Task<ActionResult<Video>> GetVideo(int id)
         {
 	        var video = await _context.Videos.Where(v=>v.VideoId == id)
-		        .Include(v => v.Products.Where(p=>p.IsActive))
-		        .Include(v => v.Audiences)
+		        .Include(v => v.SubSystems.Where(p=>p.IsActive))
+		        .Include(v => v.UserTypes)
 		        .FirstOrDefaultAsync();
 	            //.FindAsync(id);
 

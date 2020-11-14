@@ -1,9 +1,9 @@
-﻿using ccsc.DataLayer.Entities.Contacts;
+﻿using ccsc.DataLayer.Entities.ChangeSets;
+using ccsc.DataLayer.Entities.Contacts;
 using ccsc.DataLayer.Entities.Contracts;
 using ccsc.DataLayer.Entities.Courses;
 using ccsc.DataLayer.Entities.Customers;
 using ccsc.DataLayer.Entities.Identity;
-using ccsc.DataLayer.Entities.Products;
 using ccsc.DataLayer.Entities.Requests;
 using ccsc.DataLayer.Entities.Services;
 using ccsc.DataLayer.Entities.Tutorials;
@@ -95,6 +95,14 @@ namespace ccsc.DataLayer.Context
 
 		#endregion
 
+		#region ChangeSets
+
+		public DbSet<ChangeSet> ChangeSets { get; set; }
+		public DbSet<ChangeType> ChangeTypes { get; set; }
+		public DbSet<SubSystem> SubSystems { get; set; }
+
+		#endregion
+
 		#region Contacts
 
 		public DbSet<Post> Posts { get; set; }
@@ -132,14 +140,6 @@ namespace ccsc.DataLayer.Context
 
 		#endregion
 
-		#region Products
-
-		public DbSet<ChangeSet> ChangeSets { get; set; }
-		public DbSet<ChangeType> ChangeTypes { get; set; }
-		public DbSet<Product> Products { get; set; }
-
-		#endregion
-
 		#region Requests
 
 		public DbSet<Request> Requests { get; set; }
@@ -162,9 +162,8 @@ namespace ccsc.DataLayer.Context
 
 		#region Tutorials
 
-		public DbSet<Audience> Audiences { get; set; }
+		public DbSet<UserType> UserTypes { get; set; }
 		public DbSet<Video> Videos { get; set; }
-		//public DbSet<ProductVideo> ProductVideos { get; set; }
 
 		#endregion
 

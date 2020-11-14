@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using ccsc.DataLayer.Context;
+using ccsc.DataLayer.Entities.ChangeSets;
 using ccsc.DataLayer.Entities.Products;
 
 namespace ccsc.Api.Controllers
@@ -31,7 +32,7 @@ namespace ccsc.Api.Controllers
 	            //.Include(c => c.Video)
 	            .Where(c=>
 		            c.Date > DateTime.Now.AddYears(-1) &&
-                    c.IsPublish
+                    c.IsPublish.Value
 	                      )
 	            .OrderByDescending(c => c.Date)
 	            .ToListAsync();
@@ -51,21 +52,21 @@ namespace ccsc.Api.Controllers
             return changeSet;
         }
 
-        [HttpGet("product/{id}")]
+        [HttpGet("subsystem/{id}")]
         public async Task<ActionResult<IEnumerable<ChangeSet>>> GetProductChangeSets(int id)
         {
 
 	        List<ChangeSet> result = await _context.ChangeSets
-		        .Where(c=>c.ProductId.Value == id )
+		        .Where(c=>c.SubSystemId.Value == id )
 		        .ToListAsync();
 	        return result;
         }
 
-        [HttpGet("audience/{id}")]
+        [HttpGet("usertype/{id}")]
         public async Task<ActionResult<IEnumerable<ChangeSet>>> GetAudiencChangeSets(int id)
         {
 	        var result = await _context.ChangeSets
-                .Where(c=>c.AudienceId.Value == id)
+                .Where(c=>c.UserTypeId.Value == id)
 		        .ToListAsync();
 	        return result;
         }

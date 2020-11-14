@@ -1,4 +1,5 @@
 ﻿using System.Linq;
+using ccsc.DataLayer.Entities.ChangeSets;
 using ccsc.DataLayer.Entities.Products;
 
 namespace ccsc.Core.DTOs
@@ -15,7 +16,7 @@ namespace ccsc.Core.DTOs
 
 		#region Relations
 
-		public virtual IQueryable<Product> Products { get; set; }
+		public virtual IQueryable<SubSystem> SubSystems { get; set; }
 
 		#endregion
 	}

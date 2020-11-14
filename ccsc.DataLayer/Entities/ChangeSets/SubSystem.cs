@@ -4,18 +4,19 @@ using System.ComponentModel.DataAnnotations.Schema;
 using ccsc.DataLayer.Entities.Contracts;
 using ccsc.DataLayer.Entities.Tutorials;
 
-namespace ccsc.DataLayer.Entities.Products
+namespace ccsc.DataLayer.Entities.ChangeSets
 {
-	public class Product
+	public class SubSystem
 	{
 
 		[Key]
 		[DatabaseGenerated(DatabaseGeneratedOption.None)]
-		public int ProductId { get; set; }
+		public int SubSystemId { get; set; }
+
 
 		[Display(Name = "محصول")]
 		[Required(ErrorMessage = "لطفا {0} را وارد کنید")]
-		[MaxLength(200, ErrorMessage = "{0} نمیتواند بیشتر از {0} کارکتر باشد")]
+		[MaxLength(200, ErrorMessage = "{0} نمیتواند بیشتر از {1} کارکتر باشد")]
 		public string Title { get; set; }
 
 

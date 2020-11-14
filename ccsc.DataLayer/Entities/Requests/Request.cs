@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using ccsc.DataLayer.Entities.ChangeSets;
 using ccsc.DataLayer.Entities.Contacts;
-using ccsc.DataLayer.Entities.Products;
 using ccsc.DataLayer.Entities.Services;
 
 namespace ccsc.DataLayer.Entities.Requests
@@ -29,7 +29,7 @@ namespace ccsc.DataLayer.Entities.Requests
 		public int RequestTypeId { get; set; }
 
 		[Display(Name = "محصول")]
-		public int? ProductId { get; set; }
+		public int? SubSystemId { get; set; }
 
 		[Display(Name = "وضعیت")]
 		[Required(ErrorMessage = "لطفا {0} را وارد کنید")]
@@ -57,7 +57,7 @@ namespace ccsc.DataLayer.Entities.Requests
 		public virtual RequestType RequestType { get; set; }
 
 		[Display(Name = "محصول")]
-		public virtual Product Product { get; set; }
+		public SubSystem SubSystem { get; set; }
 
 		[Display(Name = "وضعیت")]
 		public virtual RequestStatus RequestStatus { get; set; }

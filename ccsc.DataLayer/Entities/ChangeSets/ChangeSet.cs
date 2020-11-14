@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 using ccsc.DataLayer.Entities.Tutorials;
 using ccsc.DataLayer.Entities.Users;
 
-namespace ccsc.DataLayer.Entities.Products
+namespace ccsc.DataLayer.Entities.ChangeSets
 {
 	public class ChangeSet
 	{
@@ -41,8 +41,8 @@ namespace ccsc.DataLayer.Entities.Products
 		public string Version { get; set; }
 
 
-		[Display(Name = "منتشر شود")]
-		public bool IsPublish { get; set; }
+		[Display(Name = "منتشر شود")] 
+		public bool? IsPublish { get; set; }
 
 		public string Quarter { get; set; }
 
@@ -51,10 +51,10 @@ namespace ccsc.DataLayer.Entities.Products
 		#region Relations
 
 		[Display(Name = "کد مخاطب")]
-		public int? AudienceId { get; set; }
+		public int? UserTypeId { get; set; }
 
 		[Display(Name = "مخاطب")]
-		public Audience Audience { get; set; }
+		public UserType UserType { get; set; }
 
 
 		[Display(Name = "کد نوع تغییر")]
@@ -64,10 +64,10 @@ namespace ccsc.DataLayer.Entities.Products
 
 
 		[Display(Name = "کد محصول مرتبط")]
-		public int? ProductId { get; set; }
+		public int? SubSystemId { get; set; }
 
 		[Display(Name = "محصول مرتبط")]
-		public Product Product { get; set; }
+		public SubSystem SubSystem { get; set; }
 
 
 		[Display(Name = "کد ویدیو مرتبط")]

@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using ccsc.DataLayer.Entities.Products;
+using ccsc.DataLayer.Entities.ChangeSets;
 
 namespace ccsc.DataLayer.Entities.Tutorials
 {
@@ -33,14 +33,20 @@ namespace ccsc.DataLayer.Entities.Tutorials
 		[DataType(DataType.Date)]
 		public DateTime? PublishedOn { get; set; }
 
+		[Display(Name = "تاریخ بروزرسانی")]
+		[DataType(DataType.Date)]
+		public DateTime? ModifiedOn { get; set; }
+
+		[Display(Name = "انتشار")]
+		public bool Publish { get; set; }
 
 		#region Relations
 
 		[Display(Name = "مخاطبان")]
-		public ICollection<Audience> Audiences { get; set; }
+		public ICollection<UserType> UserTypes { get; set; }
 
 		[Display(Name = "سامانه(ها)")]
-		public ICollection<Product> Products { get; set; }
+		public ICollection<SubSystem> SubSystems { get; set; }
 
 		#endregion
 
