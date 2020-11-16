@@ -18,9 +18,9 @@
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
-    <PackageReference Include="Microsoft.TeamFoundationServer.Client" Version="16.177.0-preview" />
-    <PackageReference Include="Microsoft.TeamFoundationServer.ExtendedClient" Version="16.177.0-preview" />
-    <PackageReference Include="Microsoft.VisualStudio.Services.Client" Version="16.177.0-preview" />
+    <PackageReference Include="Microsoft.TeamFoundationServer.Client" Version="16.177.1-preview" />
+    <PackageReference Include="Microsoft.TeamFoundationServer.ExtendedClient" Version="16.177.1-preview" />
+    <PackageReference Include="Microsoft.VisualStudio.Services.Client" Version="16.177.1-preview" />
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="5.0.0" />
   </ItemGroup>
 

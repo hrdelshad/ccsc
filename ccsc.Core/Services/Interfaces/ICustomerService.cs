@@ -1,4 +1,7 @@
-﻿namespace ccsc.Core.Services.Interfaces
+﻿using System.Collections.Generic;
+using ccsc.DataLayer.Entities.ChangeSets;
+
+namespace ccsc.Core.Services.Interfaces
 {
 	public interface ICustomerService
 	{

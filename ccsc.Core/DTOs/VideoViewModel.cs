@@ -1,6 +1,5 @@
 ﻿using System.Linq;
 using ccsc.DataLayer.Entities.ChangeSets;
-using ccsc.DataLayer.Entities.Products;
 
 namespace ccsc.Core.DTOs
 {

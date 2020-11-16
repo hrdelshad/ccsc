@@ -6,7 +6,6 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using ccsc.DataLayer.Context;
 using ccsc.DataLayer.Entities.ChangeSets;
-using ccsc.DataLayer.Entities.Products;
 
 namespace ccsc.Api.Controllers
 {

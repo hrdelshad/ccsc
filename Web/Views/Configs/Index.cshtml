@@ -1,0 +1,50 @@
+﻿@model IEnumerable<TfsChangeSetViewModel>
+
+@{
+	ViewData["Title"] = "تغییرات";
+	Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h3>فهرست آخرین تغییرات</h3>
+<p>@DateTime.Now.PersianDateDayOfWeek()</p>
+<table class="table">
+	<thead>
+		<tr>
+			<th>
+				@Html.DisplayNameFor(model => model.changesetId)
+			</th>
+			<th>
+				@Html.DisplayNameFor(model => model.createdDate)
+			</th>
+			<th>
+				@Html.DisplayNameFor(model => model.Author.displayName)
+			</th>
+			<th>
+				@Html.DisplayNameFor(model => model.comment)
+			</th>
+			<th></th>
+		</tr>
+	</thead>
+	<tbody>
+		@foreach (var item in Model)
+		{
+		<tr>
+			<td>
+				@Html.DisplayFor(modelItem => item.changesetId)
+			</td>
+			<td>
+				@Html.DisplayFor(modelItem => item.createdDate)
+			</td>
+			<td>
+				@Html.DisplayFor(modelItem => item.Author.displayName)
+			</td>
+			<td>
+				@Html.DisplayFor(modelItem => item.comment)
+			</td>
+			<td>
+				<input type="submit" value="Add" class="btn btn-outline-dark"/>
+			</td>
+		</tr>
+		}
+	</tbody>
+</table>
