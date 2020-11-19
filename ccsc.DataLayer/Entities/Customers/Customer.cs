@@ -33,22 +33,22 @@ namespace ccsc.DataLayer.Entities.Customers
 
 		[Display(Name = "کاربری پیامک")]
 		[MaxLength(50, ErrorMessage = "{0} نمیتواند بیشتر از {0} کارکتر باشد")]
-		public string SMSUser { get; set; }
+		public string SmsUser { get; set; }
 
 		[Display(Name = "پسورد پیامک")]
 		[MaxLength(30, ErrorMessage = "{0} نمیتواند بیشتر از {0} کارکتر باشد")]
-		public string SMSPass { get; set; }
+		public string SmsPass { get; set; }
 
 		[Display(Name = "اعتبار پیامک")]
 		[Column(TypeName = "decimal(18, 0)")]
-		public decimal SMSCredit { get; set; }
+		public decimal SmsCredit { get; set; }
 
 		[Display(Name = "کف اعتبار")]
 		[Column(TypeName = "decimal(18, 0)")]
-		public decimal MinSMSCredit { get; set; }
+		public decimal MinSmsCredit { get; set; }
 
 		[Display(Name = "زمان بررسی اعتبار پیامک")]
-		public DateTime? SMSCreditCheckDate { get; set; }
+		public DateTime? SmsCreditCheckDate { get; set; }
 
 		[Display(Name = "پیامک؟")]
 		public bool IsActiveSms { get; set; }

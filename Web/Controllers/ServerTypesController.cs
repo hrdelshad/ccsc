@@ -1,5 +1,4 @@
-﻿using System;
-using System.Linq;
+﻿using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -29,24 +28,15 @@ namespace ccsc.Web.Controllers
 
 		public IActionResult FillGrid([DataSourceRequest] DataSourceRequest request)
 		{
-			try
-			{
-				var list = _context.ServerTypes
-					.OrderByDescending(i => i.Title)
-					.Select(item => new
-					{
-						Title = item.Title,
-						ServerTypeId = item.ServerTypeId
-					}).OrderBy(i => i.Title)
-					.ToList();
+			var list = _context.ServerTypes
+				.OrderByDescending(i => i.Title)
+				.Select(item => new
+				{
+					item.Title, item.ServerTypeId
+				}).OrderBy(i => i.Title)
+				.ToList();
 
-				return Json(list.ToDataSourceResult(request));
-
-			}
-			catch (Exception ex)
-			{
-				throw ex;
-			}
+			return Json(list.ToDataSourceResult(request));
 		}
 
 		// GET: ServerTypes/Details/5

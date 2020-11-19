@@ -190,7 +190,7 @@ namespace ccsc.Web.Controllers
 				}
 				catch
 				{
-
+					// ignored
 				}
 
 			await _context.SaveChangesAsync();

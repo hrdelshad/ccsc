@@ -6,14 +6,14 @@ namespace ccsc.Core.DTOs
 	public class TfsChangeSetViewModel
 	{
 
-		public int changesetId { get; set; }
-		public string url { get; set; }
-		public string comment { get; set; }
-		public DateTime createdDate { get; set; }
+		public int ChangeSetId { get; set; }
+		public string Url { get; set; }
+		public string Comment { get; set; }
+		public DateTime CreatedDate { get; set; }
 
-		public Guid id { get; set; }
+		public Guid Id { get; set; }
 
-		[ForeignKey("id")]
+		[ForeignKey("Id")]
 		public AuthorViewModel Author { get; set; }
 
 

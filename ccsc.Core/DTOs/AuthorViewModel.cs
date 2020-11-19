@@ -4,8 +4,8 @@ namespace ccsc.Core.DTOs
 {
 	public class AuthorViewModel
 	{
-		public Guid id { get; set; }
-		public string displayName { get; set; }
-		public string uniqueName { get; set; }
+		public Guid Id { get; set; }
+		public string DisplayName { get; set; }
+		public string UniqueName { get; set; }
 	}
 }

@@ -23,11 +23,11 @@ namespace ccsc.Core.Services
 				using (HttpClient client = new HttpClient())
 				{
 					client.DefaultRequestHeaders.Accept.Add(
-						new System.Net.Http.Headers.MediaTypeWithQualityHeaderValue("application/json"));
+						new MediaTypeWithQualityHeaderValue("application/json"));
 
 					client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Basic",
 						Convert.ToBase64String(
-							System.Text.ASCIIEncoding.ASCII.GetBytes(
+							System.Text.Encoding.ASCII.GetBytes(
 								string.Format("{0}:{1}", "", personalaccesstoken))));
 
 					using (HttpResponseMessage response = client.GetAsync(apiUrl).Result)
@@ -41,12 +41,11 @@ namespace ccsc.Core.Services
 					}
 				}
 			}
-			catch (Exception ex)
+			catch (Exception)
 			{
+				// ReSharper disable once PossibleNullReferenceException
 				throw null;
 			}
-
-			return null;
 		}
 	}
 

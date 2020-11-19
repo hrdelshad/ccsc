@@ -1,6 +1,4 @@
-﻿using System.Collections.Generic;
-using System.Threading.Tasks;
-using ccsc.Core.DTOs;
+﻿using System.Threading.Tasks;
 using ccsc.Core.Services.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 
@@ -22,7 +20,7 @@ namespace ccsc.Web.Controllers
 			var newChangeSets = res;
 			
 			//return View(newChangeSets);
-			return View((IEnumerable<TfsChangeSetViewModel>) newChangeSets);
+			return View(newChangeSets);
 		}
 
 	}

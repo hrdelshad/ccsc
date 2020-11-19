@@ -10,11 +10,6 @@ namespace ccsc.DataLayer.Entities.Contracts
 	[Display(Name = "قرارداد")]
 	public class Contract
 	{
-		public Contract()
-		{
-
-		}
-
 		[Key]
 		public int ContractId { get; set; }
 

@@ -46,10 +46,8 @@ namespace ccsc.Core.Services
 				{
 					return GetVersionFromApi(universityUrl);
 				}
-				var version = response.Content.ReadAsStringAsync().Result;
-				return version.Replace("\"", "");
 			}
-			catch (Exception ex)
+			catch (Exception)
 			{
 				return "سرور در دسترس نیست.";
 			}
@@ -77,7 +75,7 @@ namespace ccsc.Core.Services
 				var version = response.Content.ReadAsStringAsync().Result;
 				return version.Replace("\"", "");
 			}
-			catch (Exception ex)
+			catch (Exception)
 			{
 				return "سرور در دسترس نیست.";
 			}
@@ -101,7 +99,7 @@ namespace ccsc.Core.Services
 				{
 					throw new ApplicationException("Version Not Found in Login Page");
 				}
-				return version.Groups[1].Value.ToString().Trim();
+				return version.Groups[1].Value.Trim();
 			}
 
 			throw new ApplicationException("Error in Load Page");

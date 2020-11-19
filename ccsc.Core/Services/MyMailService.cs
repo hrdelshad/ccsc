@@ -53,17 +53,17 @@ namespace ccsc.Core.Services
 
 		public async Task SendWelcomeEmailAsync(WelcomeRequest request)
 		{
-			string FilePath = Directory.GetCurrentDirectory() + "\\Templates\\WelcomeTemplate.html";
-			StreamReader str = new StreamReader(FilePath);
-			string MailText = str.ReadToEnd();
+			string filePath = Directory.GetCurrentDirectory() + "\\Templates\\WelcomeTemplate.html";
+			StreamReader str = new StreamReader(filePath);
+			string mailText = str.ReadToEnd();
 			str.Close();
-			MailText = MailText.Replace("[username]", request.UserName).Replace("[email]", request.ToEmail);
+			mailText = mailText.Replace("[username]", request.UserName).Replace("[email]", request.ToEmail);
 			var email = new MimeMessage();
 			email.Sender = MailboxAddress.Parse(_mailSettings.Mail);
 			email.To.Add(MailboxAddress.Parse(request.ToEmail));
 			email.Subject = $"Welcome {request.UserName}";
 			var builder = new BodyBuilder();
-			builder.HtmlBody = MailText;
+			builder.HtmlBody = mailText;
 			email.Body = builder.ToMessageBody();
 			using var smtp = new SmtpClient();
 			smtp.Connect(_mailSettings.Host, _mailSettings.Port, SecureSocketOptions.StartTls);
