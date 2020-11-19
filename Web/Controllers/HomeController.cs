@@ -1,6 +1,5 @@
 ﻿using System.Diagnostics;
 using ccsc.Core.DTOs;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 

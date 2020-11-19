@@ -33,7 +33,7 @@ namespace ccsc.Web.Controllers
             }
 
             var customerType = await _context.CustomerTypes
-                .FirstOrDefaultAsync(m => m.TypeId == id);
+                .FirstOrDefaultAsync(m => m.CustomerTypeId == id);
             if (customerType == null)
             {
                 return NotFound();
@@ -87,7 +87,7 @@ namespace ccsc.Web.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, [Bind("TypeId,Title")] CustomerType customerType)
         {
-            if (id != customerType.TypeId)
+            if (id != customerType.CustomerTypeId)
             {
                 return NotFound();
             }
@@ -101,7 +101,7 @@ namespace ccsc.Web.Controllers
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!CustomerTypeExists(customerType.TypeId))
+                    if (!CustomerTypeExists(customerType.CustomerTypeId))
                     {
                         return NotFound();
                     }
@@ -124,7 +124,7 @@ namespace ccsc.Web.Controllers
             }
 
             var customerType = await _context.CustomerTypes
-                .FirstOrDefaultAsync(m => m.TypeId == id);
+                .FirstOrDefaultAsync(m => m.CustomerTypeId == id);
             if (customerType == null)
             {
                 return NotFound();
@@ -146,7 +146,7 @@ namespace ccsc.Web.Controllers
 
         private bool CustomerTypeExists(int id)
         {
-            return _context.CustomerTypes.Any(e => e.TypeId == id);
+            return _context.CustomerTypes.Any(e => e.CustomerTypeId == id);
         }
     }
 }

@@ -48,9 +48,13 @@ namespace ccsc.Web.Controllers
         }
 
         // GET: Contacts/Create
-        public IActionResult Create()
+        public IActionResult Create(int? customerId)
         {
             ViewData["CustomerId"] = new SelectList(_context.Customers, "CustomerId", "Title");
+	        if (customerId != null)
+	        {
+		        ViewData["CustomerId"] = new SelectList(_context.Customers.Where(c=>c.CustomerId == customerId), "CustomerId", "Title");
+	        }
             ViewData["PostId"] = new SelectList(_context.Posts, "PostId", "Title");
             ViewData["SalutationId"] = new SelectList(_context.Salutations, "SalutationId", "Title");
             return View();

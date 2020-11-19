@@ -2,7 +2,6 @@
 using System.Threading.Tasks;
 using ccsc.Core.DTOs.Account;
 using ccsc.DataLayer.Entities.Identity;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 

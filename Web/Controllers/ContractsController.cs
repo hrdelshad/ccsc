@@ -9,7 +9,7 @@ using Microsoft.AspNetCore.Authorization;
 
 namespace ccsc.Web.Controllers
 {
-	[Authorize]
+    [Authorize]
     public class ContractsController : Controller
     {
         private readonly CcscContext _context;
@@ -19,15 +19,14 @@ namespace ccsc.Web.Controllers
             _context = context;
         }
 
-        // GET: Contracts
+        // GET: Contracts1
         public async Task<IActionResult> Index()
         {
-	        
-            var ccscContext = _context.Contracts.Include(c => c.Customer);
+            var ccscContext = _context.Contracts.Include(c => c.ContractStatus).Include(c => c.Customer);
             return View(await ccscContext.ToListAsync());
         }
 
-        // GET: Contracts/Details/5
+        // GET: Contracts1/Details/5
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -36,6 +35,7 @@ namespace ccsc.Web.Controllers
             }
 
             var contract = await _context.Contracts
+                .Include(c => c.ContractStatus)
                 .Include(c => c.Customer)
                 .FirstOrDefaultAsync(m => m.ContractId == id);
             if (contract == null)
@@ -46,19 +46,28 @@ namespace ccsc.Web.Controllers
             return View(contract);
         }
 
-        // GET: Contracts/Create
-        public IActionResult Create()
+        // GET: Contracts1/Create
+        public IActionResult Create(int? id)
         {
+            ViewData["ContractStatusId"] = new SelectList(_context.ContractStatuses, "ContractStatusId", "Title");
             ViewData["CustomerId"] = new SelectList(_context.Customers, "CustomerId", "Title");
+            if (id != null)
+            {
+	            var customer = _context.Customers.Find(id);
+	            var customerType = _context.CustomerTypes.Find(customer.CustomerTypeId);
+	            ViewData["CustomerId"] = new SelectList(_context.Customers.Where(c => c.CustomerId == id), "CustomerId", "Title");
+	            ViewData["CustomerTitle"] = customer.Title;
+	            ViewData["CustomerType"] = customerType.Title;
+            }
             return View();
         }
 
-        // POST: Contracts/Create
-        // To protect from overposting attacks, enable the specific properties you want to bind to, for 
-        // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+        // POST: Contracts1/Create
+        // To protect from overposting attacks, enable the specific properties you want to bind to.
+        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("ContractId,Title,CustomerId,StartDate,Duration,Amount,ContractStatusId,UnLimited")] Contract contract)
+        public async Task<IActionResult> Create([Bind("ContractId,Title,ContractNo,StartDate,Duration,Amount,UnLimited,ContractStatusId,CustomerId")] Contract contract)
         {
             if (ModelState.IsValid)
             {
@@ -66,11 +75,12 @@ namespace ccsc.Web.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
+            ViewData["ContractStatusId"] = new SelectList(_context.ContractStatuses, "ContractStatusId", "Title", contract.ContractStatusId);
             ViewData["CustomerId"] = new SelectList(_context.Customers, "CustomerId", "Title", contract.CustomerId);
             return View(contract);
         }
 
-        // GET: Contracts/Edit/5
+        // GET: Contracts1/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -83,16 +93,17 @@ namespace ccsc.Web.Controllers
             {
                 return NotFound();
             }
+            ViewData["ContractStatusId"] = new SelectList(_context.ContractStatuses, "ContractStatusId", "Title", contract.ContractStatusId);
             ViewData["CustomerId"] = new SelectList(_context.Customers, "CustomerId", "Title", contract.CustomerId);
             return View(contract);
         }
 
-        // POST: Contracts/Edit/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to, for 
-        // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+        // POST: Contracts1/Edit/5
+        // To protect from overposting attacks, enable the specific properties you want to bind to.
+        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("ContractId,Title,CustomerId,StartDate,Duration,Amount,ContractStatusId,UnLimited")] Contract contract)
+        public async Task<IActionResult> Edit(int id, [Bind("ContractId,Title,ContractNo,StartDate,Duration,Amount,UnLimited,ContractStatusId,CustomerId")] Contract contract)
         {
             if (id != contract.ContractId)
             {
@@ -119,11 +130,12 @@ namespace ccsc.Web.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
+            ViewData["ContractStatusId"] = new SelectList(_context.ContractStatuses, "ContractStatusId", "Title", contract.ContractStatusId);
             ViewData["CustomerId"] = new SelectList(_context.Customers, "CustomerId", "Title", contract.CustomerId);
             return View(contract);
         }
 
-        // GET: Contracts/Delete/5
+        // GET: Contracts1/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -132,6 +144,7 @@ namespace ccsc.Web.Controllers
             }
 
             var contract = await _context.Contracts
+                .Include(c => c.ContractStatus)
                 .Include(c => c.Customer)
                 .FirstOrDefaultAsync(m => m.ContractId == id);
             if (contract == null)
@@ -142,7 +155,7 @@ namespace ccsc.Web.Controllers
             return View(contract);
         }
 
-        // POST: Contracts/Delete/5
+        // POST: Contracts1/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)

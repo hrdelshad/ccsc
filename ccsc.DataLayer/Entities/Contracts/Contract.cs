@@ -20,8 +20,12 @@ namespace ccsc.DataLayer.Entities.Contracts
 
 		[Display(Name = "عنوان قرارداد")]
 		[Required(ErrorMessage = "لطفا {0} را وارد کنید")]
-		[MaxLength(200, ErrorMessage = "{0} نمیتواند بیشتر از {0} کارکتر باشد")]
+		[MaxLength(200, ErrorMessage = "{0} نمیتواند بیشتر از {1} کارکتر باشد")]
 		public string Title { get; set; }
+
+		[Display(Name = "شماره قرارداد")]
+		[MaxLength(30, ErrorMessage = "{0} نمیتواند بیشتر از {1} کارکتر باشد")]
+		public string ContractNo { get; set; }
 
 		[Display(Name = "تاریخ شروع قرارداد")]
 		[Required(ErrorMessage = "لطفا {0} را وارد کنید")]

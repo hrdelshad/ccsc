@@ -6,10 +6,7 @@ using System.Net.Http.Headers;
 using System.Threading.Tasks;
 using ccsc.Core.DTOs;
 using ccsc.Core.Services.Interfaces;
-using ccsc.DataLayer.Entities.ChangeSets;
 using Newtonsoft.Json;
-using RestSharp.Serialization.Json;
-using JsonSerializer = Newtonsoft.Json.JsonSerializer;
 
 namespace ccsc.Core.Services
 {

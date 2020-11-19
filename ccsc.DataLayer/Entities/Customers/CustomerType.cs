@@ -7,7 +7,7 @@ namespace ccsc.DataLayer.Entities.Customers
 	{
 		[Key]
 		[DatabaseGenerated(DatabaseGeneratedOption.None)]
-		public int TypeId { get; set; }
+		public int CustomerTypeId { get; set; }
 
 		[Display(Name = "نوع مشتری")]
 		[Required(ErrorMessage = "لطفا {0} را وارد کنید")]

@@ -1,60 +1,65 @@
 ﻿@model ccsc.DataLayer.Entities.Contracts.Contract
 
 @{
-    ViewData["Title"] = "Create";
-    Layout = "~/Views/Shared/_Layout.cshtml";
+	ViewData["Title"] = "ثبت قرارداد جدید";
+	Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h1>Create</h1>
-
-<h4>Contract</h4>
+<h4>@ViewData["Title"]</h4><p>@ViewData["CustomerType"] @ViewData["CustomerTitle"]</p>
 <hr />
 <div class="row">
-    <div class="col-md-4">
-        <form asp-action="Create">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <div class="form-group">
-                <label asp-for="Title" class="control-label"></label>
-                <input asp-for="Title" class="form-control" />
-                <span asp-validation-for="Title" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="CustomerId" class="control-label"></label>
-                <select asp-for="CustomerId" class ="form-control" asp-items="ViewBag.CustomerId"></select>
-            </div>
-            <div class="form-group">
-                <label asp-for="StartDate" class="control-label"></label>
-                <input asp-for="StartDate" class="form-control" />
-                <span asp-validation-for="StartDate" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Duration" class="control-label"></label>
-                <input asp-for="Duration" class="form-control" />
-                <span asp-validation-for="Duration" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Amount" class="control-label"></label>
-                <input asp-for="Amount" class="form-control" />
-                <span asp-validation-for="Amount" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="ContractStatusId" class="control-label"></label>
-                <input asp-for="ContractStatusId" class="form-control" />
-                <span asp-validation-for="ContractStatusId" class="text-danger"></span>
-            </div>
-            <div class="form-group form-check">
-                <label class="form-check-label">
-                    <input class="form-check-input" asp-for="UnLimited" /> @Html.DisplayNameFor(model => model.UnLimited)
-                </label>
-            </div>
-            <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-primary" />
-            </div>
-        </form>
-    </div>
+	<div class="col-md-4">
+		<form asp-action="Create">
+			<div asp-validation-summary="ModelOnly" class="text-danger"></div>
+			<div class="form-group">
+				<label asp-for="Title" class="control-label"></label>
+				<input asp-for="Title" class="form-control" />
+				<span asp-validation-for="Title" class="text-danger"></span>
+			</div>
+			<div class="form-group">
+				<label asp-for="ContractNo" class="control-label"></label>
+				<input asp-for="ContractNo" class="form-control" />
+				<span asp-validation-for="ContractNo" class="text-danger"></span>
+			</div>
+			<div class="form-group">
+				<label asp-for="StartDate" class="control-label"></label>
+				<input asp-for="StartDate" class="form-control" />
+				<span asp-validation-for="StartDate" class="text-danger"></span>
+			</div>
+			<div class="form-group">
+				<label asp-for="Duration" class="control-label"></label>
+				<input asp-for="Duration" class="form-control" />
+				<span asp-validation-for="Duration" class="text-danger"></span>
+			</div>
+			<div class="form-group">
+				<label asp-for="Amount" class="control-label"></label>
+				<input asp-for="Amount" class="form-control" />
+				<span asp-validation-for="Amount" class="text-danger"></span>
+			</div>
+			<div class="form-group form-check">
+				<label class="form-check-label">
+					<input class="form-check-input" asp-for="UnLimited" /> @Html.DisplayNameFor(model => model.UnLimited)
+				</label>
+			</div>
+			<div class="form-group">
+				<label asp-for="ContractStatusId" class="control-label"></label>
+				<select asp-for="ContractStatusId" class="form-control" asp-items="ViewBag.ContractStatusId"></select>
+			</div>
+			<div class="form-group">
+				<label asp-for="CustomerId" class="control-label"></label>
+				<select asp-for="CustomerId" class="form-control" asp-items="ViewBag.CustomerId"></select>
+			</div>
+			<div class="form-group">
+				<input type="submit" value="Create" class="btn btn-primary" />
+			</div>
+		</form>
+	</div>
 </div>
 
 <div>
-    <a asp-action="Index">Back to List</a>
+	<a asp-action="Index">Back to List</a>
 </div>
 
+@section Scripts {
+	@{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

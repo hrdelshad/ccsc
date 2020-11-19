@@ -18,6 +18,12 @@
             @Html.DisplayFor(model => model.Title)
         </dd>
         <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.ContractNo)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.ContractNo)
+        </dd>
+        <dt class = "col-sm-2">
             @Html.DisplayNameFor(model => model.StartDate)
         </dt>
         <dd class = "col-sm-10">
@@ -36,22 +42,22 @@
             @Html.DisplayFor(model => model.Amount)
         </dd>
         <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.ContractStatusId)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.ContractStatusId)
-        </dd>
-        <dt class = "col-sm-2">
             @Html.DisplayNameFor(model => model.UnLimited)
         </dt>
         <dd class = "col-sm-10">
             @Html.DisplayFor(model => model.UnLimited)
         </dd>
         <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.ContractStatus)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.ContractStatus.Title)
+        </dd>
+        <dt class = "col-sm-2">
             @Html.DisplayNameFor(model => model.Customer)
         </dt>
         <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Customer.Title)
+	        <a asp-controller="Customers" asp-action="Details" asp-route-id=@Model.Customer.CustomerId>@Html.DisplayFor(model => model.Customer.Title)</a>
         </dd>
     </dl>
 </div>

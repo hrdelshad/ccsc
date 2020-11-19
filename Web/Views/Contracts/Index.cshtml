@@ -1,19 +1,23 @@
 ﻿@model IEnumerable<ccsc.DataLayer.Entities.Contracts.Contract>
 
 @{
-   
+    ViewData["Title"] = "Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
-
 }
 
-<h1>@ViewData["Title"]</h1>
+<h1>Index</h1>
 
-
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
 <table class="table">
     <thead>
         <tr>
             <th>
                 @Html.DisplayNameFor(model => model.Title)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ContractNo)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.StartDate)
@@ -25,10 +29,10 @@
                 @Html.DisplayNameFor(model => model.Amount)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.ContractStatusId)
+                @Html.DisplayNameFor(model => model.UnLimited)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.UnLimited)
+                @Html.DisplayNameFor(model => model.ContractStatus)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.Customer)
@@ -43,22 +47,25 @@
                 @Html.DisplayFor(modelItem => item.Title)
             </td>
             <td>
+                @Html.DisplayFor(modelItem => item.ContractNo)
+            </td>
+            <td>
                 @Html.DisplayFor(modelItem => item.StartDate)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Duration)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Amount)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.ContractStatusId)
+	            <input asp-for="@item.Amount" asp-format="{0:0,0}" class="form-control" />
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.UnLimited)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Customer.Title)
+                @Html.DisplayFor(modelItem => item.ContractStatus.Title)
+            </td>
+            <td>
+	            <a asp-controller="Customers" asp-action="Details" asp-route-id=@item.Customer.CustomerId>@Html.DisplayFor(modelItem => item.Customer.Title)</a>
             </td>
             <td>
                 <a asp-action="Edit" asp-route-id="@item.ContractId">Edit</a> |
