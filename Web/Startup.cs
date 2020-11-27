@@ -92,6 +92,7 @@ namespace ccsc.Web
 			services.AddTransient<IMyMailService, MyMailService>();
 			services.AddTransient<ICustomerService, CustomerService>();
 			services.AddTransient<ITfsService, TfsService>();
+			services.AddTransient<IChangeSetService, ChangeSetService>();
 
 
 			#endregion

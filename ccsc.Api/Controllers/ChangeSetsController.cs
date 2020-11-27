@@ -25,12 +25,12 @@ namespace ccsc.Api.Controllers
         public async Task<ActionResult<IEnumerable<ChangeSet>>> GetChangeSets()
         {
             return await _context.ChangeSets
-	            //.Include(c => c.ChangeType)
-	            //.Include(c => c.Product)
-	            //.Include(c => c.User)
-	            //.Include(c => c.Video)
-	            .Where(c=>
-		            c.Date > DateTime.Now.AddYears(-1) &&
+				.Include(c => c.ChangeType)
+				.Include(c => c.SubSystem)
+				.Include(c => c.UserType)
+				.Include(c => c.Video)
+				.Where(c=>
+		            //c.Date > DateTime.Now.AddYears(-1) &&
                     c.IsPublish.Value
 	                      )
 	            .OrderByDescending(c => c.Date)

@@ -10,7 +10,7 @@ namespace ccsc.Core.DTOs
 		public string Url { get; set; }
 		public string Comment { get; set; }
 		public DateTime CreatedDate { get; set; }
-
+		public int AppUserId { get; set; }
 		public Guid Id { get; set; }
 
 		[ForeignKey("Id")]

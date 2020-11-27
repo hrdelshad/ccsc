@@ -1,5 +1,6 @@
 ﻿using System.Linq;
 using System.Threading.Tasks;
+using ccsc.Core.Services.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
@@ -11,10 +12,13 @@ namespace ccsc.Web.Controllers
     public class ChangeSetsController : Controller
     {
         private readonly CcscContext _context;
+        private ITfsService _service;
+        private IChangeSetService _changeSetService;
 
-        public ChangeSetsController(CcscContext context)
+        public ChangeSetsController(CcscContext context, ITfsService service)
         {
-            _context = context;
+	        _context = context;
+	        _service = service;
         }
 
         // GET: ChangeSets
@@ -127,7 +131,7 @@ namespace ccsc.Web.Controllers
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!ChangeSetExists(changeSet.ChangeSetId))
+                    if (!_changeSetService.ChangeSetExists(changeSet.ChangeSetId))
                     {
                         return NotFound();
                     }
@@ -180,9 +184,17 @@ namespace ccsc.Web.Controllers
             return RedirectToAction(nameof(Index));
         }
 
-        private bool ChangeSetExists(int id)
+        public async Task<IActionResult> TfsIndex()
         {
-            return _context.ChangeSets.Any(e => e.ChangeSetId == id);
+	        var result = await _service.GetChangeSets();
+	        var newChangeSets = result;
+
+	        return View(newChangeSets);
         }
+
+        //private bool ChangeSetExists(int id)
+        //{
+        //    return _context.ChangeSets.Any(e => e.ChangeSetId == id);
+        //}
     }
 }

@@ -43,7 +43,6 @@ namespace ccsc.Core.Services
 			}
 			catch (Exception)
 			{
-				// ReSharper disable once PossibleNullReferenceException
 				throw null;
 			}
 		}

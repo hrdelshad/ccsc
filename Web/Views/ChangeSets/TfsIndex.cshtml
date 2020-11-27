@@ -28,23 +28,27 @@
 	<tbody>
 		@foreach (var item in Model)
 		{
-		<tr>
-			<td>
-				@Html.DisplayFor(modelItem => item.ChangeSetId)
-			</td>
-			<td>
-				@Html.DisplayFor(modelItem => item.CreatedDate)
-			</td>
-			<td>
-				@Html.DisplayFor(modelItem => item.Author.DisplayName)
-			</td>
-			<td>
-				@Html.DisplayFor(modelItem => item.Comment)
-			</td>
-			<td>
-				<input type="submit" value="Add" class="btn btn-outline-dark"/>
-			</td>
-		</tr>
-		}
-	</tbody>
+			item.AppUserId = 1;
+			<form asp-action="Create">
+	<tr>
+		<td>
+			@Html.DisplayFor(modelItem => item.ChangeSetId)
+		</td>
+		<td>
+			@Html.DisplayFor(modelItem => item.CreatedDate)
+		</td>
+		<td>
+			@Html.DisplayFor(modelItem => item.Author.DisplayName)
+			@Html.DisplayFor(modelItem => item.AppUserId)
+		</td>
+		<td>
+			@Html.DisplayFor(modelItem => item.Comment)
+		</td>
+		<td>
+			<input type="submit" value="Add" class="btn btn-outline-dark" />
+		</td>
+	</tr>
+			</form>
+				}
+		</tbody>
 </table>
