@@ -1,7 +1,4 @@
-﻿using System.Linq;
-using System.Threading.Tasks;
-using ccsc.Core.DTOs;
-using ccsc.Core.Services.Interfaces;
+﻿using ccsc.Core.Services.Interfaces;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 

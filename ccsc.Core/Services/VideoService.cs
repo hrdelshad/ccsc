@@ -1,9 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
-using ccsc.Core.DTOs;
 using ccsc.Core.Services.Interfaces;
 using ccsc.DataLayer.Context;
 using ccsc.DataLayer.Entities.ChangeSets;

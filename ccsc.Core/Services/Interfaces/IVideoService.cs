@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
-using ccsc.Core.DTOs;
 using ccsc.DataLayer.Entities.ChangeSets;
 using ccsc.DataLayer.Entities.Tutorials;
 
