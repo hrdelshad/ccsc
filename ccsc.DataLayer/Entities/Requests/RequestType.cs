@@ -15,15 +15,16 @@ namespace ccsc.DataLayer.Entities.Requests
 		public string Title { get; set; }
 
 		[Display(Name = "باسخ از طریق")]
+		[Required(ErrorMessage = "لطفا {0} را وارد کنید")]
 		public ReplyByEnum ReplyByEnum { get; set; }
 	}
 
 	public enum ReplyByEnum
 	{
 		[Display(Name = "سرویس")]
-		Service,
+		Service = 1,
 
 		[Display(Name = "کار")]
-		Duty
+		Duty = 2
 	}
 }

@@ -82,6 +82,7 @@ namespace ccsc.DataLayer.Context
 					.WithMany(role => role.Users)
 					.HasForeignKey(userRole => userRole.RoleId);
 			});
+
 			builder.Entity<UserToken>(modelBuilder =>
 			{
 				modelBuilder.ToTable("UserTokens");
@@ -91,6 +92,7 @@ namespace ccsc.DataLayer.Context
 					.WithMany(user => user.Tokens)
 					.HasForeignKey(userToken => userToken.UserId);
 			});
+
 		}
 
 		#endregion
@@ -173,6 +175,6 @@ namespace ccsc.DataLayer.Context
 
 		#endregion
 
-		
+
 	}
 }

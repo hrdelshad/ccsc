@@ -93,6 +93,7 @@ namespace ccsc.Web
 			services.AddTransient<ICustomerService, CustomerService>();
 			services.AddTransient<ITfsService, TfsService>();
 			services.AddTransient<IChangeSetService, ChangeSetService>();
+			services.AddTransient<IVideoService, VideoService>();
 
 
 			#endregion

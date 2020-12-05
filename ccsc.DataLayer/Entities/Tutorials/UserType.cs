@@ -23,7 +23,7 @@ namespace ccsc.DataLayer.Entities.Tutorials
 		#region Relations
 
 		[Display(Name = "ویدیوهای مرتبط")]
-		public virtual ICollection<Video> Videos { get; set; }
+		public ICollection<Video> Videos { get; set; }
 
 		#endregion
 	}

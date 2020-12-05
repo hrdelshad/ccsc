@@ -28,7 +28,7 @@ namespace ccsc.Api.Controllers
 	            .Include(v=>v.SubSystems)
 	            .Include(v=>v.UserTypes)
 	            .ToListAsync();
-            Request.HttpContext.Response.Headers.Add("x-Count", _context.Videos.Count().ToString());
+            Request.HttpContext.Response.Headers.Add("x-New", "30");
             return result;
         }
 

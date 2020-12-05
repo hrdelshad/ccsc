@@ -1,5 +1,8 @@
-﻿using System.Linq;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
+using ccsc.Core.Services.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using ccsc.DataLayer.Context;
@@ -10,10 +13,12 @@ namespace ccsc.Web.Controllers
     public class VideosController : Controller
     {
         private readonly CcscContext _context;
+        private readonly IVideoService _videoService;
 
-        public VideosController(CcscContext context)
+        public VideosController(CcscContext context, IVideoService videoService)
         {
-            _context = context;
+	        _context = context;
+	        _videoService = videoService;
         }
 
         // GET: Videos
@@ -43,20 +48,21 @@ namespace ccsc.Web.Controllers
         // GET: Videos/Create
         public IActionResult Create()
         {
+	        ViewData["SubSystem"] = _videoService.GetSubSystems();
+	        ViewData["UserType"] = _videoService.GetUserTypes();
             return View();
         }
 
-        // POST: Videos/Create
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("VideoId,Title,Path,PosterPath,Description,PublishedOn,ModifiedOn,Publish")] Video video)
+        public async Task<IActionResult> Create([Bind("VideoId,Title,Path,PosterPath,Description,PublishedOn,ModifiedOn,Publish,SubSystems")] Video video, List<int> selectedSubSystems, List<int> selectedUserTypes)
         {
             if (ModelState.IsValid)
             {
-                _context.Add(video);
-                await _context.SaveChangesAsync();
+                _videoService.AddVideo(video, selectedSubSystems, selectedUserTypes);
+                //await _context.SaveChangesAsync();
+                //_videoService.AddSubSystemsToVideo(SelectedSubSystems, videoId);
+                //_videoService.AddUserTypesToVideo(SelectedUserTypes, videoId);
                 return RedirectToAction(nameof(Index));
             }
             return View(video);
@@ -75,16 +81,21 @@ namespace ccsc.Web.Controllers
             {
                 return NotFound();
             }
+            ViewData["SubSystem"] = _videoService.GetSubSystems();
+            ViewData["UserType"] = _videoService.GetUserTypes();
+            ViewData["SelectedSubSystem"] = _videoService.GetSubSystemsForVideo(id.Value);
+            ViewData["SelectedUserType"] = _videoService.GetUserTypesForVideo(id.Value);
             return View(video);
         }
 
-        // POST: Videos/Edit/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("VideoId,Title,Path,PosterPath,Description,PublishedOn,ModifiedOn,Publish")] Video video)
+        public async Task<IActionResult> Edit(int id, [Bind("VideoId,Title,Path,PosterPath,Description,PublishedOn,ModifiedOn,Publish")] Video video, List<int> selectedSubSystems, List<int> selectedUserTypes)
         {
+	        var updatedVideo = _context.Videos
+		                           .Include(v => v.SubSystems)
+		                           .Include(v => v.UserTypes).Single(v => v.VideoId == id) ?? throw new ArgumentNullException("_context.Videos\r\n\t\t        .Include(v => v.SubSystems)\r\n\t\t        .Include(v => v.UserTypes)\r\n\t\t        .Where(v => v.VideoId == id).Single()");
             if (id != video.VideoId)
             {
                 return NotFound();
@@ -94,8 +105,10 @@ namespace ccsc.Web.Controllers
             {
                 try
                 {
-                    _context.Update(video);
-                    await _context.SaveChangesAsync();
+					await _videoService.RemoveVideoRelatedAsync(updatedVideo);
+					await _videoService.UpdateVideoAsync(updatedVideo, selectedSubSystems, selectedUserTypes);
+                    //_context.Update(video);
+                    //await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {

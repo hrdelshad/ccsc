@@ -1,4 +1,5 @@
-﻿@model ccsc.DataLayer.Entities.Requests.RequestType
+﻿@using ccsc.DataLayer.Entities.Requests
+@model ccsc.DataLayer.Entities.Requests.RequestType
 
 @{
     ViewData["Title"] = "Edit";
@@ -18,6 +19,13 @@
                 <label asp-for="Title" class="control-label"></label>
                 <input asp-for="Title" class="form-control" />
                 <span asp-validation-for="Title" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ReplyByEnum" class="control-label"></label>
+	            <select asp-for="ReplyByEnum" class="form-control"
+	            asp-items="Html.GetEnumSelectList<ReplyByEnum>()">
+	            </select>
+                <span asp-validation-for="ReplyByEnum" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <input type="submit" value="Save" class="btn btn-primary" />

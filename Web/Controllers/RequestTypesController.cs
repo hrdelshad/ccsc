@@ -1,14 +1,15 @@
-﻿using System.Linq;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using ccsc.DataLayer.Context;
 using ccsc.DataLayer.Entities.Requests;
-using Microsoft.AspNetCore.Authorization;
 
 namespace ccsc.Web.Controllers
 {
-	[Authorize]
     public class RequestTypesController : Controller
     {
         private readonly CcscContext _context;
@@ -49,11 +50,11 @@ namespace ccsc.Web.Controllers
         }
 
         // POST: RequestTypes/Create
-        // To protect from overposting attacks, enable the specific properties you want to bind to, for 
-        // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+        // To protect from overposting attacks, enable the specific properties you want to bind to.
+        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("RequestTypeId,Title")] RequestType requestType)
+        public async Task<IActionResult> Create([Bind("RequestTypeId,Title,ReplyByEnum")] RequestType requestType)
         {
             if (ModelState.IsValid)
             {
@@ -81,11 +82,11 @@ namespace ccsc.Web.Controllers
         }
 
         // POST: RequestTypes/Edit/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to, for 
-        // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+        // To protect from overposting attacks, enable the specific properties you want to bind to.
+        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("RequestTypeId,Title")] RequestType requestType)
+        public async Task<IActionResult> Edit(int id, [Bind("RequestTypeId,Title,ReplyByEnum")] RequestType requestType)
         {
             if (id != requestType.RequestTypeId)
             {

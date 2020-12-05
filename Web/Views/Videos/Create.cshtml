@@ -1,64 +1,111 @@
-﻿@model ccsc.DataLayer.Entities.Tutorials.Video
+﻿@using ccsc.DataLayer.Entities.ChangeSets
+@using ccsc.DataLayer.Entities.Tutorials
+@model ccsc.DataLayer.Entities.Tutorials.Video
 
 @{
-    ViewData["Title"] = "Create";
-    Layout = "~/Views/Shared/_Layout.cshtml";
+	ViewData["Title"] = "اضافه کردن ویدیو جدید";
+	Layout = "~/Views/Shared/_Layout.cshtml";
+	List<SubSystem> subSystems = ViewData["SubSystem"] as List<SubSystem>;
+	List<UserType> userTypes = ViewData["UserType"] as List<UserType>;
 }
 
-<h1>Create</h1>
-
-<h4>Video</h4>
+<h4>@ViewData["Title"]</h4>
 <hr />
 <div class="row">
-    <div class="col-md-4">
-        <form asp-action="Create">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <div class="form-group">
-                <label asp-for="Title" class="control-label"></label>
-                <input asp-for="Title" class="form-control" />
-                <span asp-validation-for="Title" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Path" class="control-label"></label>
-                <input asp-for="Path" class="form-control" />
-                <span asp-validation-for="Path" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="PosterPath" class="control-label"></label>
-                <input asp-for="PosterPath" class="form-control" />
-                <span asp-validation-for="PosterPath" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Description" class="control-label"></label>
-                <input asp-for="Description" class="form-control" />
-                <span asp-validation-for="Description" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="PublishedOn" class="control-label"></label>
-                <input asp-for="PublishedOn" class="form-control" />
-                <span asp-validation-for="PublishedOn" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="ModifiedOn" class="control-label"></label>
-                <input asp-for="ModifiedOn" class="form-control" />
-                <span asp-validation-for="ModifiedOn" class="text-danger"></span>
-            </div>
-            <div class="form-group form-check">
-                <label class="form-check-label">
-                    <input class="form-check-input" asp-for="Publish" /> @Html.DisplayNameFor(model => model.Publish)
-                </label>
-            </div>
-            <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-primary" />
-            </div>
-        </form>
-    </div>
+	<form asp-action="Create" enctype="multipart/form-data">
+		<div class="row">
+			<div class="col-md-5">
+				<div asp-validation-summary="ModelOnly" class="text-danger"></div>
+				<div class="form-group">
+					<label asp-for="Title" class="control-label"></label>
+					<input asp-for="Title" class="form-control" />
+					<span asp-validation-for="Title" class="text-danger"></span>
+				</div>
+				<div class="form-group">
+					<label asp-for="Path" class="control-label"></label>
+					<input asp-for="Path" class="form-control" />
+					<span asp-validation-for="Path" class="text-danger"></span>
+				</div>
+				<img id="imgPoster" class="img-thumbnail" src="~/UpLoad/Images/VideoPoster/default.png" />
+				<div class="form-group">
+					<label>انتخاب پوستر</label>
+					<input type="file" asp-for="PosterPath" class="form-control" />
+				</div>
+				<div class="form-group">
+					<label asp-for="Description" class="control-label"></label>
+					<input asp-for="Description" class="form-control" />
+					<span asp-validation-for="Description" class="text-danger"></span>
+				</div>
+				<div class="form-group">
+					<label asp-for="PublishedOn" class="control-label"></label>
+					<input asp-for="PublishedOn" class="form-control" />
+					<span asp-validation-for="PublishedOn" class="text-danger"></span>
+				</div>
+				<div class="form-group form-check">
+					<label class="form-check-label">
+						<input class="form-check-input" asp-for="Publish" /> @Html.DisplayNameFor(model => model.Publish)
+					</label>
+				</div>
+
+			</div>
+			<div class="col-md-4">
+				<div>محصولات مرتبط</div>
+				<hr />
+				<div class="form-group form-check">
+					@foreach (var item in subSystems)
+					{
+						<div class="form-check">
+							<label class="form-check-label">
+								<input type="checkbox" name="SelectedSubSystems" class="form-check-input" value="@item.SubSystemId" /> @item.Title
+							</label>
+						</div>
+					}
+				</div>
+			</div>
+			<div class="col-md-3">
+				<div>مخاطبان</div>
+				<hr />
+				<div class="form-group form-check">
+					@foreach (var item in userTypes)
+					{
+						<div class="form-check">
+							<label class="form-check-label">
+								<input type="checkbox" name="SelectedUserTypes" class="form-check-input" value="@item.UserTypeId"/> @item.Title
+							</label>
+						</div>
+					}
+				</div>
+			</div>
+		</div>
+		<div class="form-group">
+	<input type="submit" value="ثبت" class="btn btn-primary" />
+</div>
+	</form>
+
 </div>
 
 <div>
-    <a asp-action="Index">Back to List</a>
+	<a asp-action="Index">برگشت به لیست</a>
 </div>
 
 @section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+	@{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+	<script>
+		function readURL(input) {
+
+			if (input.files && input.files[0]) {
+				var reader = new FileReader();
+
+				reader.onload = function (e) {
+					$('#imgPoster').attr('src', e.target.result);
+				}
+
+				reader.readAsDataURL(input.files[0]);
+			}
+		}
+
+		$("#PosterPath").change(function () {
+			readURL(this);
+		});
+	</script>
 }

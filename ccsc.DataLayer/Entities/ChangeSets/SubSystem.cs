@@ -29,6 +29,7 @@ namespace ccsc.DataLayer.Entities.ChangeSets
 
 		[Display(Name = "ویدیو(ها)")]
 		public ICollection<Video> Videos { get; set; }
+		//public ICollection<SubSystemVideo> SubSystemVideos { get; set; }
 
 		[Display(Name = "قرارداد(ها)")]
 		public ICollection<Contract> Contracts { get; set; }
