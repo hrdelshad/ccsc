@@ -10,6 +10,7 @@ using ccsc.DataLayer.Entities.Requests;
 
 namespace ccsc.Web.Controllers
 {
+	[Authorize]
     public class RequestTypesController : Controller
     {
         private readonly CcscContext _context;
