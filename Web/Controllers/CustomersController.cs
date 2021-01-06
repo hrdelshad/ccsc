@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using ccsc.Core.Services.Interfaces;
@@ -51,11 +52,11 @@ namespace ccsc.Web.Controllers
 
 			var customer = await _context.Customers
 				.Include(c => c.CustomerType)
-				.Include(c=>c.Servers).ThenInclude(s=>s.ServerType)
-				.Include(c=>c.Contracts).ThenInclude(c=>c.ContractStatus)
-				.Include(c=>c.Contacts)
-				.Include(c=>c.Services)
-				.Include(c=>c.Requests).ThenInclude(r=>r.RequestType)
+				.Include(c => c.Servers).ThenInclude(s => s.ServerType)
+				.Include(c => c.Contracts).ThenInclude(c => c.ContractStatus)
+				.Include(c => c.Contacts)
+				.Include(c => c.Services)
+				.Include(c => c.Requests).ThenInclude(r => r.RequestType)
 
 				.FirstOrDefaultAsync(m => m.CustomerId == id);
 			if (customer == null)
@@ -69,7 +70,7 @@ namespace ccsc.Web.Controllers
 		// GET: Customers/Create
 		public IActionResult Create()
 		{
-			ViewData["CustomerTypeId"] = new SelectList(_context.CustomerTypes, "TypeId", "Title");
+			ViewData["CustomerTypeId"] = new SelectList(_context.CustomerTypes, "CustomerTypeId", "Title");
 			return View();
 		}
 
@@ -78,7 +79,7 @@ namespace ccsc.Web.Controllers
 		// more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
 		[HttpPost]
 		[ValidateAntiForgeryToken]
-		public async Task<IActionResult> Create([Bind("CustomerId,Title,CustomerTypeId,Url,Version,VersionCheckDate,SMSUser,SMSPass,SMSCredit,MinSMSCredit,SMSCreditCheckDate,IsActiveSms,AfterXDay,SendSmsDate,UniversityId")] Customer customer)
+		public async Task<IActionResult> Create([Bind("CustomerId,Title,CustomerTypeId,Url,Version,VersionCheckDate,SMSUser,SMSPass,SMSCredit,MinSMSCredit,SMSCreditCheckDate,IsActiveSms,AfterXDay,SendSmsDate,UniversityId,CustomerTypeId")] Customer customer)
 		{
 			if (ModelState.IsValid)
 			{
@@ -86,7 +87,7 @@ namespace ccsc.Web.Controllers
 				await _context.SaveChangesAsync();
 				return RedirectToAction(nameof(Index));
 			}
-			ViewData["CustomerTypeId"] = new SelectList(_context.CustomerTypes, "TypeId", "Title", customer.CustomerTypeId);
+			ViewData["CustomerTypeId"] = new SelectList(_context.CustomerTypes, "CustomerTypeId", "Title", customer.CustomerTypeId);
 			return View(customer);
 		}
 
@@ -103,7 +104,7 @@ namespace ccsc.Web.Controllers
 			{
 				return NotFound();
 			}
-			ViewData["CustomerTypeId"] = new SelectList(_context.CustomerTypes, "TypeId", "Title", customer.CustomerTypeId);
+			ViewData["CustomerTypeId"] = new SelectList(_context.CustomerTypes, "CustomerTypeId", "Title", customer.CustomerTypeId);
 			return View(customer);
 		}
 
@@ -139,7 +140,7 @@ namespace ccsc.Web.Controllers
 				}
 				return RedirectToAction(nameof(Index));
 			}
-			ViewData["CustomerTypeId"] = new SelectList(_context.CustomerTypes, "TypeId", "Title", customer.CustomerTypeId);
+			ViewData["CustomerTypeId"] = new SelectList(_context.CustomerTypes, "CustomerTypeId", "Title", customer.CustomerTypeId);
 			return View(customer);
 		}
 
@@ -208,24 +209,31 @@ namespace ccsc.Web.Controllers
 			}
 
 
-			var customer = await  _context.Customers.FindAsync(id);
-				try
-				{
-					var version = _service.GetVersion(customer.Url);
+			var customer = await _context.Customers.FindAsync(id);
+			try
+			{
+				var version = _service.GetVersion(customer.Url);
 
-					customer.Version = version;
-					customer.VersionCheckDate = DateTime.Now;
-					_context.Update(customer);
+				customer.Version = version;
+				customer.VersionCheckDate = DateTime.Now;
+				_context.Update(customer);
 
-				}
-				catch (Exception)
-				{
-					// ignored
-				}
+			}
+			catch (Exception)
+			{
+				// ignored
+			}
 
-				await _context.SaveChangesAsync();
-				var url = "../Details/" + id.Value.ToString();
+			await _context.SaveChangesAsync();
+			var url = "../Details/" + id.Value.ToString();
 			return Redirect(url);
+		}
+
+		public async Task<IActionResult> GetContactsOfCustomer(int id)
+		{
+			var contacts = _service.GetContactOfCustomerListItems(id, true);
+			var res = Json(contacts);
+			return res;
 		}
 	}
 }

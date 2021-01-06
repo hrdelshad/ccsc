@@ -1,8 +1,8 @@
 ﻿@model ccsc.DataLayer.Entities.Requests.Request
 
 @{
-    ViewData["Title"] = "Create";
-    Layout = "~/Views/Shared/_Layout.cshtml";
+	ViewData["Title"] = "Create";
+	Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
 <h1>Create</h1>
@@ -10,55 +10,76 @@
 <h4>Request</h4>
 <hr />
 <div class="row">
-    <div class="col-md-4">
-        <form asp-action="Create">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <div class="form-group">
-                <label asp-for="ContactId" class="control-label"></label>
-                <select asp-for="ContactId" class ="form-control" asp-items="ViewBag.ContactId"></select>
-            </div>
-            <div class="form-group">
-                <label asp-for="RequestTime" class="control-label"></label>
-                <input asp-for="RequestTime" class="form-control" />
-                <span asp-validation-for="RequestTime" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="RequestChanelId" class="control-label"></label>
-                <select asp-for="RequestChanelId" class ="form-control" asp-items="ViewBag.RequestChanelId"></select>
-            </div>
-            <div class="form-group">
-                <label asp-for="RequestTypeId" class="control-label"></label>
-                <select asp-for="RequestTypeId" class ="form-control" asp-items="ViewBag.RequestTypeId"></select>
-            </div>
-            <div class="form-group">
-                <label asp-for="SubSystemId" class="control-label"></label>
-                <select asp-for="SubSystemId" class ="form-control" asp-items="ViewBag.SubSystemId"></select>
-            </div>
-            <div class="form-group">
-                <label asp-for="RequestStatusId" class="control-label"></label>
-                <select asp-for="RequestStatusId" class ="form-control" asp-items="ViewBag.RequestStatusId"></select>
-            </div>
-            <div class="form-group">
-                <label asp-for="Title" class="control-label"></label>
-                <input asp-for="Title" class="form-control" />
-                <span asp-validation-for="Title" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Text" class="control-label"></label>
-                <input asp-for="Text" class="form-control" />
-                <span asp-validation-for="Text" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-primary" />
-            </div>
-        </form>
-    </div>
+	<div class="col-md-4">
+		<form asp-action="Create">
+			<div asp-validation-summary="ModelOnly" class="text-danger"></div>
+			<div class="form-group">
+				<label asp-for="CustomerId" class="control-label"></label>
+				<select asp-for="CustomerId" class="form-control" asp-items="ViewBag.CustomerId"></select>
+			</div>
+			<div class="form-group">
+				<label asp-for="ContactId" class="control-label"></label>
+				<select asp-for="ContactId" class="form-control" asp-items="ViewBag.ContactId"></select>
+			</div>
+			<div class="form-group">
+				<label asp-for="RequestTime" class="control-label"></label>
+				<input asp-for="RequestTime" class="form-control" />
+				<span asp-validation-for="RequestTime" class="text-danger"></span>
+			</div>
+			<div class="form-group">
+				<label asp-for="RequestChanelId" class="control-label"></label>
+				<select asp-for="RequestChanelId" class="form-control" asp-items="ViewBag.RequestChanelId"></select>
+			</div>
+			<div class="form-group">
+				<label asp-for="RequestTypeId" class="control-label"></label>
+				<select asp-for="RequestTypeId" class="form-control" asp-items="ViewBag.RequestTypeId"></select>
+			</div>
+			<div class="form-group">
+				<label asp-for="SubSystemId" class="control-label"></label>
+				<select asp-for="SubSystemId" class="form-control" asp-items="ViewBag.SubSystemId"></select>
+			</div>
+			<div class="form-group">
+				<label asp-for="RequestStatusId" class="control-label"></label>
+				<select asp-for="RequestStatusId" class="form-control" asp-items="ViewBag.RequestStatusId"></select>
+			</div>
+			<div class="form-group">
+				<label asp-for="Title" class="control-label"></label>
+				<input asp-for="Title" class="form-control" />
+				<span asp-validation-for="Title" class="text-danger"></span>
+			</div>
+			<div class="form-group">
+				<label asp-for="Text" class="control-label"></label>
+				<input asp-for="Text" class="form-control" />
+				<span asp-validation-for="Text" class="text-danger"></span>
+			</div>
+			<div class="form-group">
+				<input type="submit" value="Create" class="btn btn-primary" />
+			</div>
+		</form>
+	</div>
 </div>
 
 <div>
-    <a asp-action="Index">Back to List</a>
+	<a asp-action="Index">Back to List</a>
 </div>
 
 @section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+	@{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+<script>
+	$("#CustomerId").change(function () {
+
+		$("#ContactId").empty();
+		//alert("../Customers/GetContactsOfCustomer/" + $("#CustomerId :selected").val());
+		$.getJSON("../Customers/GetContactsOfCustomer/" + $("#CustomerId :selected").val(),
+			function (data) {
+				$.each(data,
+					function () {
+						$("#ContactId").append('<option value=' + this.Value + '>' + this.Text + '</option>'
+						);
+					}
+				);
+			});
+	})
+</script>
 }
+

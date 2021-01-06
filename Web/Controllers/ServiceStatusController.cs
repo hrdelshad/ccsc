@@ -1,14 +1,15 @@
-﻿using System.Linq;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using ccsc.DataLayer.Context;
 using ccsc.DataLayer.Entities.Services;
-using Microsoft.AspNetCore.Authorization;
 
 namespace ccsc.Web.Controllers
 {
-	[Authorize]
     public class ServiceStatusController : Controller
     {
         private readonly CcscContext _context;
@@ -49,11 +50,11 @@ namespace ccsc.Web.Controllers
         }
 
         // POST: ServiceStatus/Create
-        // To protect from overposting attacks, enable the specific properties you want to bind to, for 
-        // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+        // To protect from overposting attacks, enable the specific properties you want to bind to.
+        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("ServiceStatusId,title")] ServiceStatus serviceStatus)
+        public async Task<IActionResult> Create([Bind("ServiceStatusId,title,IsOk")] ServiceStatus serviceStatus)
         {
             if (ModelState.IsValid)
             {
@@ -81,11 +82,11 @@ namespace ccsc.Web.Controllers
         }
 
         // POST: ServiceStatus/Edit/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to, for 
-        // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+        // To protect from overposting attacks, enable the specific properties you want to bind to.
+        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("ServiceStatusId,title")] ServiceStatus serviceStatus)
+        public async Task<IActionResult> Edit(int id, [Bind("ServiceStatusId,title,IsOk")] ServiceStatus serviceStatus)
         {
             if (id != serviceStatus.ServiceStatusId)
             {

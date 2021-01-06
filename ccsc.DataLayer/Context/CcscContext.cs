@@ -140,6 +140,8 @@ namespace ccsc.DataLayer.Context
 		public DbSet<Server> Servers { get; set; }
 		public DbSet<Os> Oses { get; set; }
 
+		public DbSet<SqlVersion> SqlVersions { get; set; }
+
 		#endregion
 
 		#region Requests

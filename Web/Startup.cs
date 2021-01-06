@@ -102,8 +102,11 @@ namespace ccsc.Web
 		}
 
 		// This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-		public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+		public void Configure(IApplicationBuilder app, IWebHostEnvironment env, CcscContext dataContext)
 		{
+			// migrate any database changes on startup (includes initial db creation)
+			dataContext.Database.Migrate();
+
 			app.UseDeveloperExceptionPage();
 			//if (env.IsDevelopment())
 			//{

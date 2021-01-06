@@ -48,13 +48,13 @@
 					@Html.DisplayNameFor(model => model.Url)
 				</dt>
 				<dd class="col-sm-10">
-					<a href=@Html.DisplayFor(model => model.Url)>@Html.DisplayFor(model => model.Url)</a>
+					<a href=@Html.DisplayFor(model => model.Url) target="_blank">@Html.DisplayFor(model => model.Url)</a>
 				</dd>
 				<dt class="col-sm-2 text-left">
 					@Html.DisplayNameFor(model => model.Version)
 				</dt>
 				<dd class="col-sm-10">
-					<a asp-controller="Customers" asp-action="Version" asp-route-id="@id">@Html.DisplayFor(model => model.Version)</a>
+					<a asp-controller="Customers" asp-action="Version" asp-route-id="@id" >@Html.DisplayFor(model => model.Version)</a>
 				</dd>
 				<dt class="col-sm-2 text-left">
 					@Html.DisplayNameFor(model => model.VersionCheckDate)
@@ -259,7 +259,54 @@
 			</div>
 		</div>
 		<div class="tab-pane fade p-3" id="pills-service" role="tabpanel" aria-labelledby="pills-service-tab">
-			خدمات
+			<div class="col-sm-10">
+				@if (Model.Services != null)
+				{
+					<table class="table">
+						<thead>
+						<tr>
+							<th>عنوان</th>
+							<th>شماره قرارداد</th>
+							<th>تاریخ شروع</th>
+							<th>مدت</th>
+							<th>مبلغ</th>
+							<th>وضعیت</th>
+						</tr>
+						</thead>
+						<tbody>
+						@foreach (var service in Model.Services)
+						{
+							<tr>
+								<td>
+									<a asp-controller="Contracts" asp-action="Details" asp-route-id="@service.ServiceId">@Html.DisplayFor(modelItem => service.ServiceType.Title)</a>
+								</td>
+								<td>
+									@Html.DisplayFor(modelItem => service.ServiceStatus.title)
+								</td>
+								<td>
+									@Html.DisplayFor(modelItem => service.Request.SubSystem.Title)
+								</td>
+								<td>
+									@Html.DisplayFor(modelItem => service.Request.RequestChanel.Title)
+								</td>
+								<td>
+									
+								</td>
+								<td>
+									@Html.DisplayFor(modelItem => service.text)
+								</td>
+							</tr>
+						}
+						</tbody>
+					</table>
+				}
+				else
+				{
+					<p>هیچ خدمتی ثبت نشده است</p>
+				}
+				<a asp-controller="Services" asp-action="Create" asp-route-id="@Model.CustomerId">ثبت خدمت</a>
+
+			</div>
 		</div>
 		<div class="tab-pane fade p-3" id="pills-request" role="tabpanel" aria-labelledby="pills-service-tab">
 			درخواست‌ها

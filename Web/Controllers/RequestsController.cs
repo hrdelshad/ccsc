@@ -1,28 +1,31 @@
-﻿using System.Linq;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
+using ccsc.Core.Services.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using ccsc.DataLayer.Context;
 using ccsc.DataLayer.Entities.Requests;
-using Microsoft.AspNetCore.Authorization;
 
 namespace ccsc.Web.Controllers
 {
-	[Authorize]
     public class RequestsController : Controller
     {
+	    private ICustomerService _customerService;
         private readonly CcscContext _context;
 
-        public RequestsController(CcscContext context)
+        public RequestsController(CcscContext context, ICustomerService customerService)
         {
-            _context = context;
+	        _context = context;
+	        _customerService = customerService;
         }
 
         // GET: Requests
         public async Task<IActionResult> Index()
         {
-            var ccscContext = _context.Requests.Include(r => r.Contact).Include(r => r.RequestChanel).Include(r => r.RequestStatus).Include(r => r.RequestType).Include(r => r.SubSystem);
+            var ccscContext = _context.Requests.Include(r => r.Contact).Include(r => r.Customer).Include(r => r.RequestChanel).Include(r => r.RequestStatus).Include(r => r.RequestType).Include(r => r.SubSystem);
             return View(await ccscContext.ToListAsync());
         }
 
@@ -36,6 +39,7 @@ namespace ccsc.Web.Controllers
 
             var request = await _context.Requests
                 .Include(r => r.Contact)
+                .Include(r => r.Customer)
                 .Include(r => r.RequestChanel)
                 .Include(r => r.RequestStatus)
                 .Include(r => r.RequestType)
@@ -52,7 +56,10 @@ namespace ccsc.Web.Controllers
         // GET: Requests/Create
         public IActionResult Create()
         {
-            ViewData["ContactId"] = new SelectList(_context.Contacts, "ContactId", "Email");
+	        var customers = _customerService.GetCustomerListItems();
+            ViewData["CustomerId"] = _customerService.GetCustomerListItems();
+            ViewData["ContactId"] = _customerService.GetContactOfCustomerListItems(int.Parse(customers.First().Value),true);
+            //ViewData["ContactId"] = _customerService.GetContactOfCustomerListItems(int.Parse(customers.First().Value));
             ViewData["RequestChanelId"] = new SelectList(_context.RequestChannels, "RequestChannelId", "Title");
             ViewData["RequestStatusId"] = new SelectList(_context.RequestStatuses, "RequestStatusId", "Title");
             ViewData["RequestTypeId"] = new SelectList(_context.RequestTypes, "RequestTypeId", "Title");
@@ -65,7 +72,7 @@ namespace ccsc.Web.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("RequestId,ContactId,RequestTime,RequestChanelId,RequestTypeId,SubSystemId,RequestStatusId,Title,Text")] Request request)
+        public async Task<IActionResult> Create([Bind("RequestId,CustomerId,ContactId,RequestTime,RequestChanelId,RequestTypeId,SubSystemId,RequestStatusId,Title,Text")] Request request)
         {
             if (ModelState.IsValid)
             {
@@ -74,6 +81,7 @@ namespace ccsc.Web.Controllers
                 return RedirectToAction(nameof(Index));
             }
             ViewData["ContactId"] = new SelectList(_context.Contacts, "ContactId", "Email", request.ContactId);
+            ViewData["CustomerId"] = new SelectList(_context.Customers, "CustomerId", "Title", request.CustomerId);
             ViewData["RequestChanelId"] = new SelectList(_context.RequestChannels, "RequestChannelId", "Title", request.RequestChanelId);
             ViewData["RequestStatusId"] = new SelectList(_context.RequestStatuses, "RequestStatusId", "Title", request.RequestStatusId);
             ViewData["RequestTypeId"] = new SelectList(_context.RequestTypes, "RequestTypeId", "Title", request.RequestTypeId);
@@ -95,6 +103,7 @@ namespace ccsc.Web.Controllers
                 return NotFound();
             }
             ViewData["ContactId"] = new SelectList(_context.Contacts, "ContactId", "Email", request.ContactId);
+            ViewData["CustomerId"] = new SelectList(_context.Customers, "CustomerId", "Title", request.CustomerId);
             ViewData["RequestChanelId"] = new SelectList(_context.RequestChannels, "RequestChannelId", "Title", request.RequestChanelId);
             ViewData["RequestStatusId"] = new SelectList(_context.RequestStatuses, "RequestStatusId", "Title", request.RequestStatusId);
             ViewData["RequestTypeId"] = new SelectList(_context.RequestTypes, "RequestTypeId", "Title", request.RequestTypeId);
@@ -107,7 +116,7 @@ namespace ccsc.Web.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("RequestId,ContactId,RequestTime,RequestChanelId,RequestTypeId,SubSystemId,RequestStatusId,Title,Text")] Request request)
+        public async Task<IActionResult> Edit(int id, [Bind("RequestId,CustomerId,ContactId,RequestTime,RequestChanelId,RequestTypeId,SubSystemId,RequestStatusId,Title,Text")] Request request)
         {
             if (id != request.RequestId)
             {
@@ -135,6 +144,7 @@ namespace ccsc.Web.Controllers
                 return RedirectToAction(nameof(Index));
             }
             ViewData["ContactId"] = new SelectList(_context.Contacts, "ContactId", "Email", request.ContactId);
+            ViewData["CustomerId"] = new SelectList(_context.Customers, "CustomerId", "Title", request.CustomerId);
             ViewData["RequestChanelId"] = new SelectList(_context.RequestChannels, "RequestChannelId", "Title", request.RequestChanelId);
             ViewData["RequestStatusId"] = new SelectList(_context.RequestStatuses, "RequestStatusId", "Title", request.RequestStatusId);
             ViewData["RequestTypeId"] = new SelectList(_context.RequestTypes, "RequestTypeId", "Title", request.RequestTypeId);
@@ -152,6 +162,7 @@ namespace ccsc.Web.Controllers
 
             var request = await _context.Requests
                 .Include(r => r.Contact)
+                .Include(r => r.Customer)
                 .Include(r => r.RequestChanel)
                 .Include(r => r.RequestStatus)
                 .Include(r => r.RequestType)
@@ -180,5 +191,7 @@ namespace ccsc.Web.Controllers
         {
             return _context.Requests.Any(e => e.RequestId == id);
         }
+
+       
     }
 }

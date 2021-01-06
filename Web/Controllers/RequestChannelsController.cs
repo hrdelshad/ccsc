@@ -1,14 +1,15 @@
-﻿using System.Linq;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using ccsc.DataLayer.Context;
 using ccsc.DataLayer.Entities.Requests;
-using Microsoft.AspNetCore.Authorization;
 
 namespace ccsc.Web.Controllers
 {
-    [Authorize]
     public class RequestChannelsController : Controller
     {
         private readonly CcscContext _context;
@@ -49,8 +50,8 @@ namespace ccsc.Web.Controllers
         }
 
         // POST: RequestChannels/Create
-        // To protect from overposting attacks, enable the specific properties you want to bind to, for 
-        // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+        // To protect from overposting attacks, enable the specific properties you want to bind to.
+        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("RequestChannelId,Title")] RequestChannel requestChannel)
@@ -81,8 +82,8 @@ namespace ccsc.Web.Controllers
         }
 
         // POST: RequestChannels/Edit/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to, for 
-        // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+        // To protect from overposting attacks, enable the specific properties you want to bind to.
+        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, [Bind("RequestChannelId,Title")] RequestChannel requestChannel)

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using ccsc.DataLayer.Entities.ChangeSets;
 using ccsc.DataLayer.Entities.Contacts;
+using ccsc.DataLayer.Entities.Customers;
 using ccsc.DataLayer.Entities.Services;
 
 namespace ccsc.DataLayer.Entities.Requests
@@ -12,12 +13,16 @@ namespace ccsc.DataLayer.Entities.Requests
 		[Key]
 		public int RequestId { get; set; }
 
-		[Display(Name = "درخواست کننده")]
+		[Display(Name = "مشتری")]
 		[Required(ErrorMessage = "لطفا {0} را وارد کنید")]
-		public int ContactId { get; set; }
+		public int CustomerId { get; set; }
+
+		[Display(Name = "درخواست کننده")]
+		public int? ContactId { get; set; }
 
 		[Display(Name = "تاریخ درخواست")]
 		[Required(ErrorMessage = "لطفا {0} را وارد کنید")]
+		[DataType(DataType.DateTime)]
 		public DateTime RequestTime { get; set; }
 
 		[Display(Name = "کانال درخواست")]
@@ -46,6 +51,9 @@ namespace ccsc.DataLayer.Entities.Requests
 		public string Text { get; set; }
 
 		#region Relations
+
+		[Display(Name = "مشتری")]
+		public virtual Customer Customer { get; set; }
 
 		[Display(Name = "درخواست کننده")]
 		public virtual Contact Contact { get; set; }

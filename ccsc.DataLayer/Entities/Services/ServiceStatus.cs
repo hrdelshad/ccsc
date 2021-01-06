@@ -12,5 +12,7 @@ namespace ccsc.DataLayer.Entities.Services
 		[MaxLength(50, ErrorMessage = "{0} نمیتواند بیشتر از {1} کارکتر باشد")]
 		public string title { get; set; }
 
+		[Display(Name = "فعال")]
+		public bool IsOk { get; set; }
 	}
 }

@@ -46,6 +46,9 @@ namespace ccsc.DataLayer.Entities.Customers
 		[Required(ErrorMessage = "لطفا {0} را وارد کنید")]
 		public int CustomerId { get; set; }
 
+		[Display(Name = "اس کیو ال")]
+		public int? SqlVersionId { get; set; }
+
 		#region Relations
 
 		[Display(Name = "نوع سرور")]
@@ -56,6 +59,9 @@ namespace ccsc.DataLayer.Entities.Customers
 
 		[Display(Name = "سیستم عامل")]
 		public virtual Os Os { get; set; }
+
+		[Display(Name = "اس کیو ال")]
+		public virtual SqlVersion SqlVersion { get; set; }
 
 		#endregion
 

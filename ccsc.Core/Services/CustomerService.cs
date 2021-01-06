@@ -1,10 +1,13 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
 using System.Text.RegularExpressions;
 using ccsc.Core.Convertors;
 using ccsc.Core.Services.Interfaces;
 using ccsc.DataLayer.Context;
+using ccsc.DataLayer.Entities.Contacts;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace ccsc.Core.Services
 {
@@ -20,6 +23,64 @@ namespace ccsc.Core.Services
 		public bool CustomerExists(int id)
 		{
 			return _context.Customers.Any(e => e.CustomerId == id);
+		}
+
+		public List<SelectListItem> GetCustomerListItems()
+		{
+			return _context.Customers.Select(c => new SelectListItem()
+			{
+				Value = c.CustomerId.ToString(),
+				Text = c.CustomerType.Title +" " + c.Title
+			}).ToList();
+		}
+
+		public List<SelectListItem> GetContactOfCustomerListItems(int customerId)
+		{
+			return _context.Contacts.Where(c => c.CustomerId == customerId)
+				.Select(c => new SelectListItem()
+				{
+					Value = c.ContactId.ToString(),
+					Text = c.FirstName + " " + c.LastName
+				}).ToList();
+		}
+
+		public List<SelectListItem> GetContactOfCustomerListItems(int customerId, bool option)
+		{
+			if (!option)
+			{
+				return GetContactOfCustomerListItems(customerId);
+
+			}
+			List<SelectListItem> listItems = new List<SelectListItem>()
+			{
+				new SelectListItem() {Text = "انتخاب کنید", Value = ""}
+			};
+			listItems.AddRange(GetContactOfCustomerListItems(customerId));
+			return listItems;
+		}
+		public List<SelectListItem> GetContactListItems()
+		{
+			return _context.Contacts
+				.Select(c => new SelectListItem()
+				{
+					Value = c.ContactId.ToString(),
+					Text = c.FirstName + " " + c.LastName
+				}).ToList();
+		}
+
+		public List<Contact> GetContactsOfCustomer()
+		{
+			return _context.Contacts.ToList();
+		}
+
+		public List<Contact> GetContactsOfCustomer(int customerId)
+		{
+			return _context.Contacts.Where(c => c.CustomerId == customerId).ToList();
+		}
+
+		public List<Contact> GetContactOfCustomer(int customerId)
+		{
+			return _context.Contacts.Where(c => c.CustomerId == customerId).ToList();
 		}
 
 		public string GetVersionAsync(string url)

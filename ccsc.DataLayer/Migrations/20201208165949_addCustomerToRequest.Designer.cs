@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using ccsc.DataLayer.Context;
 
 namespace ccsc.DataLayer.Migrations
 {
     [DbContext(typeof(CcscContext))]
-    partial class CcscContextModelSnapshot : ModelSnapshot
+    [Migration("20201208165949_addCustomerToRequest")]
+    partial class addCustomerToRequest
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -521,9 +523,6 @@ namespace ccsc.DataLayer.Migrations
                     b.Property<int>("ServerTypeId")
                         .HasColumnType("int");
 
-                    b.Property<int?>("SqlVersionId")
-                        .HasColumnType("int");
-
                     b.Property<string>("Url")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -544,8 +543,6 @@ namespace ccsc.DataLayer.Migrations
 
                     b.HasIndex("ServerTypeId");
 
-                    b.HasIndex("SqlVersionId");
-
                     b.ToTable("Servers");
                 });
 
@@ -562,21 +559,6 @@ namespace ccsc.DataLayer.Migrations
                     b.HasKey("ServerTypeId");
 
                     b.ToTable("ServerTypes");
-                });
-
-            modelBuilder.Entity("ccsc.DataLayer.Entities.Customers.SqlVersion", b =>
-                {
-                    b.Property<int>("SqlVersionId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Title")
-                        .IsRequired()
-                        .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)");
-
-                    b.HasKey("SqlVersionId");
-
-                    b.ToTable("SqlVersions");
                 });
 
             modelBuilder.Entity("ccsc.DataLayer.Entities.Identity.Role", b =>
@@ -824,7 +806,7 @@ namespace ccsc.DataLayer.Migrations
                     b.Property<int?>("ContactId")
                         .HasColumnType("int");
 
-                    b.Property<int>("CustomerId")
+                    b.Property<int?>("CustomerId")
                         .HasColumnType("int");
 
                     b.Property<int>("RequestChanelId")
@@ -1409,17 +1391,11 @@ namespace ccsc.DataLayer.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("ccsc.DataLayer.Entities.Customers.SqlVersion", "SqlVersion")
-                        .WithMany()
-                        .HasForeignKey("SqlVersionId");
-
                     b.Navigation("Customer");
 
                     b.Navigation("Os");
 
                     b.Navigation("ServerType");
-
-                    b.Navigation("SqlVersion");
                 });
 
             modelBuilder.Entity("ccsc.DataLayer.Entities.Identity.RoleClaim", b =>
@@ -1493,9 +1469,7 @@ namespace ccsc.DataLayer.Migrations
 
                     b.HasOne("ccsc.DataLayer.Entities.Customers.Customer", "Customer")
                         .WithMany("Requests")
-                        .HasForeignKey("CustomerId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("CustomerId");
 
                     b.HasOne("ccsc.DataLayer.Entities.Requests.RequestChannel", "RequestChanel")
                         .WithMany()
