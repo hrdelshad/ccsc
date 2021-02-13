@@ -27,6 +27,8 @@ namespace ccsc.DataLayer.Context
 		{
 			base.OnModelCreating(builder);
 
+			#region Identity
+
 			builder.Entity<Role>(modelBuilder =>
 			{
 				modelBuilder.ToTable("Roles");
@@ -41,7 +43,6 @@ namespace ccsc.DataLayer.Context
 					.WithMany(role => role.Claims)
 					.HasForeignKey(roleClaim => roleClaim.RoleId);
 			});
-
 
 			builder.Entity<User>(modelBuilder =>
 			{
@@ -93,6 +94,16 @@ namespace ccsc.DataLayer.Context
 					.HasForeignKey(userToken => userToken.UserId);
 			});
 
+			#endregion
+
+			#region Services
+
+			builder.Entity<ServiceType>()
+				.HasIndex(e => e.Title)
+				.IsUnique();
+
+			#endregion
+			
 		}
 
 		#endregion
@@ -161,6 +172,7 @@ namespace ccsc.DataLayer.Context
 		public DbSet<Service> Services { get; set; }
 		public DbSet<ServiceStatus> ServiceStatuses { get; set; }
 		public DbSet<ServiceType> ServiceTypes { get; set; }
+
 
 		#endregion
 

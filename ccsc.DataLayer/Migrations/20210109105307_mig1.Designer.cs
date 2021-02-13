@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using ccsc.DataLayer.Context;
 
 namespace ccsc.DataLayer.Migrations
 {
     [DbContext(typeof(CcscContext))]
-    partial class CcscContextModelSnapshot : ModelSnapshot
+    [Migration("20210109105307_mig1")]
+    partial class mig1
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -1093,6 +1095,9 @@ namespace ccsc.DataLayer.Migrations
                         .HasColumnType("int")
                         .UseIdentityColumn();
 
+                    b.Property<int?>("ParentServiceTypeId")
+                        .HasColumnType("int");
+
                     b.Property<string>("Title")
                         .IsRequired()
                         .HasMaxLength(200)
@@ -1100,8 +1105,7 @@ namespace ccsc.DataLayer.Migrations
 
                     b.HasKey("ServiceTypeId");
 
-                    b.HasIndex("Title")
-                        .IsUnique();
+                    b.HasIndex("ParentServiceTypeId");
 
                     b.ToTable("ServiceTypes");
                 });
@@ -1609,6 +1613,15 @@ namespace ccsc.DataLayer.Migrations
                     b.Navigation("ServiceStatus");
 
                     b.Navigation("ServiceType");
+                });
+
+            modelBuilder.Entity("ccsc.DataLayer.Entities.Services.ServiceType", b =>
+                {
+                    b.HasOne("ccsc.DataLayer.Entities.Services.ServiceType", "ParentServiceType")
+                        .WithMany()
+                        .HasForeignKey("ParentServiceTypeId");
+
+                    b.Navigation("ParentServiceType");
                 });
 
             modelBuilder.Entity("ccsc.DataLayer.Entities.Customers.Customer", b =>
