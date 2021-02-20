@@ -6,28 +6,28 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using ccsc.DataLayer.Context;
-using ccsc.DataLayer.Entities.Services;
+using ccsc.DataLayer.Entities.Customers;
 using Microsoft.AspNetCore.Authorization;
 
 namespace ccsc.Web.Controllers
 {
     [Authorize]
-    public class ServiceStatusController : Controller
+    public class SqlVersionsController : Controller
     {
         private readonly CcscContext _context;
 
-        public ServiceStatusController(CcscContext context)
+        public SqlVersionsController(CcscContext context)
         {
             _context = context;
         }
 
-        // GET: ServiceStatus
+        // GET: SqlVersions
         public async Task<IActionResult> Index()
         {
-            return View(await _context.ServiceStatuses.ToListAsync());
+            return View(await _context.SqlVersions.ToListAsync());
         }
 
-        // GET: ServiceStatus/Details/5
+        // GET: SqlVersions/Details/5
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -35,39 +35,39 @@ namespace ccsc.Web.Controllers
                 return NotFound();
             }
 
-            var serviceStatus = await _context.ServiceStatuses
-                .FirstOrDefaultAsync(m => m.ServiceStatusId == id);
-            if (serviceStatus == null)
+            var sqlVersion = await _context.SqlVersions
+                .FirstOrDefaultAsync(m => m.SqlVersionId == id);
+            if (sqlVersion == null)
             {
                 return NotFound();
             }
 
-            return View(serviceStatus);
+            return View(sqlVersion);
         }
 
-        // GET: ServiceStatus/Create
+        // GET: SqlVersions/Create
         public IActionResult Create()
         {
             return View();
         }
 
-        // POST: ServiceStatus/Create
+        // POST: SqlVersions/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("ServiceStatusId,title,IsOk")] ServiceStatus serviceStatus)
+        public async Task<IActionResult> Create([Bind("SqlVersionId,Title")] SqlVersion sqlVersion)
         {
             if (ModelState.IsValid)
             {
-                _context.Add(serviceStatus);
+                _context.Add(sqlVersion);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            return View(serviceStatus);
+            return View(sqlVersion);
         }
 
-        // GET: ServiceStatus/Edit/5
+        // GET: SqlVersions/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -75,22 +75,22 @@ namespace ccsc.Web.Controllers
                 return NotFound();
             }
 
-            var serviceStatus = await _context.ServiceStatuses.FindAsync(id);
-            if (serviceStatus == null)
+            var sqlVersion = await _context.SqlVersions.FindAsync(id);
+            if (sqlVersion == null)
             {
                 return NotFound();
             }
-            return View(serviceStatus);
+            return View(sqlVersion);
         }
 
-        // POST: ServiceStatus/Edit/5
+        // POST: SqlVersions/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("ServiceStatusId,title,IsOk")] ServiceStatus serviceStatus)
+        public async Task<IActionResult> Edit(int id, [Bind("SqlVersionId,Title")] SqlVersion sqlVersion)
         {
-            if (id != serviceStatus.ServiceStatusId)
+            if (id != sqlVersion.SqlVersionId)
             {
                 return NotFound();
             }
@@ -99,12 +99,12 @@ namespace ccsc.Web.Controllers
             {
                 try
                 {
-                    _context.Update(serviceStatus);
+                    _context.Update(sqlVersion);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!ServiceStatusExists(serviceStatus.ServiceStatusId))
+                    if (!SqlVersionExists(sqlVersion.SqlVersionId))
                     {
                         return NotFound();
                     }
@@ -115,10 +115,10 @@ namespace ccsc.Web.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            return View(serviceStatus);
+            return View(sqlVersion);
         }
 
-        // GET: ServiceStatus/Delete/5
+        // GET: SqlVersions/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -126,30 +126,30 @@ namespace ccsc.Web.Controllers
                 return NotFound();
             }
 
-            var serviceStatus = await _context.ServiceStatuses
-                .FirstOrDefaultAsync(m => m.ServiceStatusId == id);
-            if (serviceStatus == null)
+            var sqlVersion = await _context.SqlVersions
+                .FirstOrDefaultAsync(m => m.SqlVersionId == id);
+            if (sqlVersion == null)
             {
                 return NotFound();
             }
 
-            return View(serviceStatus);
+            return View(sqlVersion);
         }
 
-        // POST: ServiceStatus/Delete/5
+        // POST: SqlVersions/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var serviceStatus = await _context.ServiceStatuses.FindAsync(id);
-            _context.ServiceStatuses.Remove(serviceStatus);
+            var sqlVersion = await _context.SqlVersions.FindAsync(id);
+            _context.SqlVersions.Remove(sqlVersion);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
-        private bool ServiceStatusExists(int id)
+        private bool SqlVersionExists(int id)
         {
-            return _context.ServiceStatuses.Any(e => e.ServiceStatusId == id);
+            return _context.SqlVersions.Any(e => e.SqlVersionId == id);
         }
     }
 }
