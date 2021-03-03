@@ -1,8 +1,8 @@
-﻿using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using ccsc.DataLayer.Entities.ChangeSets;
+﻿using ccsc.DataLayer.Entities.ChangeSets;
 using ccsc.DataLayer.Entities.Tutorials;
 using Microsoft.AspNetCore.Http;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 namespace ccsc.Core.DTOs
 {

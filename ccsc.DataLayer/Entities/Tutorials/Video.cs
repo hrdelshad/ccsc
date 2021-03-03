@@ -1,7 +1,7 @@
-﻿using System;
+﻿using ccsc.DataLayer.Entities.ChangeSets;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using ccsc.DataLayer.Entities.ChangeSets;
 
 namespace ccsc.DataLayer.Entities.Tutorials
 {

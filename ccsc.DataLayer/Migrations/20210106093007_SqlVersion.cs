@@ -2,7 +2,7 @@
 
 namespace ccsc.DataLayer.Migrations
 {
-    public partial class SqlVersion : Migration
+	public partial class SqlVersion : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {

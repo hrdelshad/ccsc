@@ -1,9 +1,9 @@
-﻿using System;
+﻿using ccsc.DataLayer.Entities.ChangeSets;
+using ccsc.DataLayer.Entities.Customers;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using ccsc.DataLayer.Entities.ChangeSets;
-using ccsc.DataLayer.Entities.Customers;
 
 namespace ccsc.DataLayer.Entities.Contracts
 {

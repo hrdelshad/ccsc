@@ -2,7 +2,7 @@
 
 namespace ccsc.DataLayer.Migrations
 {
-    public partial class addCustomerToRequest : Migration
+	public partial class addCustomerToRequest : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {

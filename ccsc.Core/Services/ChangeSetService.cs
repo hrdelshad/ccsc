@@ -1,6 +1,6 @@
-﻿using System.Linq;
-using ccsc.Core.Services.Interfaces;
+﻿using ccsc.Core.Services.Interfaces;
 using ccsc.DataLayer.Context;
+using System.Linq;
 
 namespace ccsc.Core.Services
 {

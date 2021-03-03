@@ -1,5 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using ccsc.Core.Services.Interfaces;
+﻿using ccsc.Core.Services.Interfaces;
+using Microsoft.AspNetCore.Mvc;
 
 namespace ccsc.Web.Controllers
 {

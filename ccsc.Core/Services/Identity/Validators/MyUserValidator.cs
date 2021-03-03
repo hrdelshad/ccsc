@@ -1,8 +1,8 @@
-﻿using System.Collections.Generic;
+﻿using ccsc.DataLayer.Entities.Identity;
+using Microsoft.AspNetCore.Identity;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using ccsc.DataLayer.Entities.Identity;
-using Microsoft.AspNetCore.Identity;
 
 namespace ccsc.Core.Services.Identity.Validators
 {

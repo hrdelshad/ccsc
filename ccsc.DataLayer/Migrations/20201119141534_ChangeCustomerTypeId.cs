@@ -2,7 +2,7 @@
 
 namespace ccsc.DataLayer.Migrations
 {
-    public partial class ChangeCustomerTypeId : Migration
+	public partial class ChangeCustomerTypeId : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {

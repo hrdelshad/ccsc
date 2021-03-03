@@ -1,6 +1,6 @@
-﻿using System;
-using Newtonsoft.Json.Linq;
+﻿using Newtonsoft.Json.Linq;
 using RestSharp;
+using System;
 
 namespace ccsc.Core.Services
 {

@@ -2,7 +2,7 @@
 
 namespace ccsc.DataLayer.Migrations
 {
-    public partial class mig0 : Migration
+	public partial class mig0 : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {

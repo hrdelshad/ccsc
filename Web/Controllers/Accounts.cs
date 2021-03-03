@@ -1,9 +1,9 @@
-﻿using System;
-using System.Threading.Tasks;
-using ccsc.Core.DTOs.Account;
+﻿using ccsc.Core.DTOs.Account;
 using ccsc.DataLayer.Entities.Identity;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using System;
+using System.Threading.Tasks;
 
 namespace ccsc.Web.Controllers
 {

@@ -1,6 +1,6 @@
-﻿using System.Linq;
+﻿using ccsc.Core.DTOs;
+using System.Linq;
 using System.Threading.Tasks;
-using ccsc.Core.DTOs;
 
 namespace ccsc.Core.Services.Interfaces
 {

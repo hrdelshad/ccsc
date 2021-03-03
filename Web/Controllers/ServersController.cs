@@ -1,15 +1,15 @@
-﻿using System.Linq;
-using System.Threading.Tasks;
+﻿using ccsc.DataLayer.Context;
+using ccsc.DataLayer.Entities.Customers;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
-using ccsc.DataLayer.Context;
-using ccsc.DataLayer.Entities.Customers;
-using Microsoft.AspNetCore.Authorization;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace ccsc.Web.Controllers
 {
-    [Authorize]
+	[Authorize]
     public class ServersController : Controller
     {
         private readonly CcscContext _context;

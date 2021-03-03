@@ -1,8 +1,8 @@
-﻿using System.Collections.Generic;
+﻿using ccsc.DataLayer.Entities.Contracts;
+using ccsc.DataLayer.Entities.Tutorials;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using ccsc.DataLayer.Entities.Contracts;
-using ccsc.DataLayer.Entities.Tutorials;
 
 namespace ccsc.DataLayer.Entities.ChangeSets
 {

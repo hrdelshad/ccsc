@@ -1,6 +1,6 @@
-﻿using System.Collections.Generic;
-using ccsc.DataLayer.Entities.Contacts;
+﻿using ccsc.DataLayer.Entities.Contacts;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using System.Collections.Generic;
 
 namespace ccsc.Core.Services.Interfaces
 {

@@ -1,6 +1,6 @@
-﻿using System.ComponentModel.DataAnnotations;
-using ccsc.DataLayer.Entities.ChangeSets;
+﻿using ccsc.DataLayer.Entities.ChangeSets;
 using ccsc.DataLayer.Entities.Tutorials;
+using System.ComponentModel.DataAnnotations;
 
 namespace ccsc.DataLayer.Entities.Services
 {

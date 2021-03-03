@@ -1,6 +1,6 @@
-﻿using System;
+﻿using ccsc.DataLayer.Entities.Requests;
+using System;
 using System.ComponentModel.DataAnnotations;
-using ccsc.DataLayer.Entities.Requests;
 
 namespace ccsc.DataLayer.Entities.Services
 {

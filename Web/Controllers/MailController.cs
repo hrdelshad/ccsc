@@ -1,9 +1,9 @@
-﻿using System;
-using System.Threading.Tasks;
-using ccsc.Core.Services.Interfaces;
+﻿using ccsc.Core.Services.Interfaces;
 using ccsc.DataLayer.Entities.Messages;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System;
+using System.Threading.Tasks;
 
 namespace ccsc.Web.Controllers
 {

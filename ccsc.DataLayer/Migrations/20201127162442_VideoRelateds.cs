@@ -1,9 +1,9 @@
-﻿using System;
-using Microsoft.EntityFrameworkCore.Migrations;
+﻿using Microsoft.EntityFrameworkCore.Migrations;
+using System;
 
 namespace ccsc.DataLayer.Migrations
 {
-    public partial class VideoRelateds : Migration
+	public partial class VideoRelateds : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {

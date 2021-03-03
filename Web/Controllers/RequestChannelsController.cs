@@ -1,17 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
-using Microsoft.EntityFrameworkCore;
-using ccsc.DataLayer.Context;
+﻿using ccsc.DataLayer.Context;
 using ccsc.DataLayer.Entities.Requests;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace ccsc.Web.Controllers
 {
-    [Authorize]
+	[Authorize]
     public class RequestChannelsController : Controller
     {
         private readonly CcscContext _context;

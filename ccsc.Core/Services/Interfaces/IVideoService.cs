@@ -1,7 +1,7 @@
-﻿using System.Collections.Generic;
-using System.Threading.Tasks;
-using ccsc.DataLayer.Entities.ChangeSets;
+﻿using ccsc.DataLayer.Entities.ChangeSets;
 using ccsc.DataLayer.Entities.Tutorials;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace ccsc.Core.Services.Interfaces
 {

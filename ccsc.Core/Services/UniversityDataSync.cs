@@ -1,8 +1,8 @@
-﻿using System;
+﻿using ccsc.Core.Convertors;
+using System;
 using System.Linq;
 using System.Net.Http;
 using System.Text.RegularExpressions;
-using ccsc.Core.Convertors;
 
 namespace ccsc.Core.Services
 {

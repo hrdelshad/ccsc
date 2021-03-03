@@ -1,6 +1,6 @@
-﻿using System.Threading.Tasks;
-using ccsc.DataLayer.Entities.Identity;
+﻿using ccsc.DataLayer.Entities.Identity;
 using Microsoft.AspNetCore.Identity;
+using System.Threading.Tasks;
 
 namespace ccsc.Core.Services.Identity.Validators
 {

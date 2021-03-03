@@ -1,5 +1,5 @@
-﻿using System.Threading.Tasks;
-using ccsc.DataLayer.Entities.Messages;
+﻿using ccsc.DataLayer.Entities.Messages;
+using System.Threading.Tasks;
 
 namespace ccsc.Core.Services.Interfaces
 {

@@ -1,14 +1,14 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using ccsc.DataLayer.Context;
+using ccsc.DataLayer.Entities.Customers;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using ccsc.DataLayer.Context;
-using ccsc.DataLayer.Entities.Customers;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace ccsc.Api.Controllers
 {
-    [Route("[controller]")]
+	[Route("[controller]")]
     [ApiController]
     public class CustomersController : ControllerBase
     {

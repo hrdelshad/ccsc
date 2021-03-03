@@ -2,7 +2,7 @@
 
 namespace ccsc.DataLayer.Migrations
 {
-    public partial class editServiceStatus : Migration
+	public partial class editServiceStatus : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {

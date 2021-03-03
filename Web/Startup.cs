@@ -1,6 +1,4 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using Newtonsoft.Json.Serialization;
-using ccsc.Core.Services;
+﻿using ccsc.Core.Services;
 using ccsc.Core.Services.Identity;
 using ccsc.Core.Services.Identity.Stores;
 using ccsc.Core.Services.Identity.Validators;
@@ -11,10 +9,12 @@ using ccsc.DataLayer.Entities.Messages;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Serialization;
 
 namespace ccsc.Web
 {

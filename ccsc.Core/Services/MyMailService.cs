@@ -1,11 +1,11 @@
-﻿using System.IO;
-using System.Threading.Tasks;
-using ccsc.Core.Services.Interfaces;
+﻿using ccsc.Core.Services.Interfaces;
 using ccsc.DataLayer.Entities.Messages;
 using MailKit.Net.Smtp;
 using MailKit.Security;
 using Microsoft.Extensions.Options;
 using MimeKit;
+using System.IO;
+using System.Threading.Tasks;
 
 
 namespace ccsc.Core.Services

@@ -1,6 +1,6 @@
-﻿using System.Diagnostics;
-using ccsc.Core.DTOs;
+﻿using ccsc.Core.DTOs;
 using Microsoft.AspNetCore.Mvc;
+using System.Diagnostics;
 
 namespace ccsc.Web.Controllers
 {
