@@ -1,38 +1,39 @@
-﻿using ccsc.Core.Services.Interfaces;
-using ccsc.DataLayer.Context;
-using ccsc.DataLayer.Entities.ChangeSets;
-using Microsoft.AspNetCore.Authorization;
+﻿using System.Linq;
+using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
-using System.Linq;
-using System.Threading.Tasks;
+using ccsc.DataLayer.Context;
+using ccsc.DataLayer.Entities.ChangeSets;
+using Microsoft.AspNetCore.Authorization;
+using ccsc.Core.Services.Interfaces;
 
 namespace ccsc.Web.Controllers
 {
-	[Authorize]
+    [Authorize]
     public class ChangeSetsController : Controller
     {
         private readonly CcscContext _context;
         private ITfsService _service;
         private IChangeSetService _changeSetService;
 
-        public ChangeSetsController(CcscContext context, ITfsService service)
-        {
-	        _context = context;
-	        _service = service;
-        }
+		public ChangeSetsController(CcscContext context, ITfsService service, IChangeSetService changeSetService)
+		{
+			_context = context;
+			_service = service;
+			_changeSetService = changeSetService;
+		}
 
-        // GET: ChangeSets
-        public async Task<IActionResult> Index()
+
+
+		// GET: ChangeSets
+		public async Task<IActionResult> Index()
         {
             var ccscContext = _context.ChangeSets
-	            .Include(c => c.AppUser)
-	            .Include(c => c.ChangeType)
-	            .Include(c => c.SubSystem)
-	            .Include(c => c.UserType)
-	            .Include(c => c.Video)
-	            .OrderByDescending(c=>c.ChangeSetId);
+                .Include(c => c.AppUser)
+                .Include(c => c.ChangeType)
+                .Include(c => c.Video)
+                .OrderByDescending(c=>c.ChangeSetId);
             return View(await ccscContext.ToListAsync());
         }
 
@@ -47,8 +48,6 @@ namespace ccsc.Web.Controllers
             var changeSet = await _context.ChangeSets
                 .Include(c => c.AppUser)
                 .Include(c => c.ChangeType)
-                .Include(c => c.SubSystem)
-                .Include(c => c.UserType)
                 .Include(c => c.Video)
                 .FirstOrDefaultAsync(m => m.ChangeSetId == id);
             if (changeSet == null)
@@ -63,10 +62,9 @@ namespace ccsc.Web.Controllers
         public IActionResult Create()
         {
             ViewData["AppUserId"] = new SelectList(_context.AppUsers, "AppUserId", "DisplayName");
-            ViewData["ChangeTypeId"] = new SelectList(_context.ChangeTypes, "ChangeTypeId", "Description");
-            ViewData["SubSystemId"] = new SelectList(_context.SubSystems, "SubSystemId", "Title");
-            ViewData["UserTypeId"] = new SelectList(_context.UserTypes, "UserTypeId", "Title");
-            ViewData["VideoId"] = new SelectList(_context.Videos, "VideoId", "Description");
+            ViewData["ChangeTypeId"] = new SelectList(_context.ChangeTypes, "ChangeTypeId", "Title");
+            ViewData["VideoId"] = new SelectList(_context.Videos, "VideoId", "Title");
+
             return View();
         }
 
@@ -75,7 +73,7 @@ namespace ccsc.Web.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("ChangeSetId,AppUserId,Date,Comment,Title,Description,Version,IsPublish,Quarter,UserTypeId,ChangeTypeId,SubSystemId,VideoId")] ChangeSet changeSet)
+        public async Task<IActionResult> Create([Bind("ChangeSetId,AppUserId,Date,Comment,Title,Description,Version,IsPublish,Quarter,ChangeTypeId,VideoId")] ChangeSet changeSet)
         {
             if (ModelState.IsValid)
             {
@@ -84,10 +82,8 @@ namespace ccsc.Web.Controllers
                 return RedirectToAction(nameof(Index));
             }
             ViewData["AppUserId"] = new SelectList(_context.AppUsers, "AppUserId", "DisplayName", changeSet.AppUserId);
-            ViewData["ChangeTypeId"] = new SelectList(_context.ChangeTypes, "ChangeTypeId", "Description", changeSet.ChangeTypeId);
-            ViewData["SubSystemId"] = new SelectList(_context.SubSystems, "SubSystemId", "Title", changeSet.SubSystemId);
-            ViewData["UserTypeId"] = new SelectList(_context.UserTypes, "UserTypeId", "Title", changeSet.UserTypeId);
-            ViewData["VideoId"] = new SelectList(_context.Videos, "VideoId", "Description", changeSet.VideoId);
+            ViewData["ChangeTypeId"] = new SelectList(_context.ChangeTypes, "ChangeTypeId", "Title", changeSet.ChangeTypeId);
+            ViewData["VideoId"] = new SelectList(_context.Videos, "VideoId", "Title", changeSet.VideoId);
             return View(changeSet);
         }
 
@@ -105,10 +101,8 @@ namespace ccsc.Web.Controllers
                 return NotFound();
             }
             ViewData["AppUserId"] = new SelectList(_context.AppUsers, "AppUserId", "DisplayName", changeSet.AppUserId);
-            ViewData["ChangeTypeId"] = new SelectList(_context.ChangeTypes, "ChangeTypeId", "Description", changeSet.ChangeTypeId);
-            ViewData["SubSystemId"] = new SelectList(_context.SubSystems, "SubSystemId", "Title", changeSet.SubSystemId);
-            ViewData["UserTypeId"] = new SelectList(_context.UserTypes, "UserTypeId", "Title", changeSet.UserTypeId);
-            ViewData["VideoId"] = new SelectList(_context.Videos, "VideoId", "Description", changeSet.VideoId);
+            ViewData["ChangeTypeId"] = new SelectList(_context.ChangeTypes, "ChangeTypeId", "Title", changeSet.ChangeTypeId);
+            ViewData["VideoId"] = new SelectList(_context.Videos, "VideoId", "Title", changeSet.VideoId);
             return View(changeSet);
         }
 
@@ -117,7 +111,7 @@ namespace ccsc.Web.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("ChangeSetId,AppUserId,Date,Comment,Title,Description,Version,IsPublish,Quarter,UserTypeId,ChangeTypeId,SubSystemId,VideoId")] ChangeSet changeSet)
+        public async Task<IActionResult> Edit(int id, [Bind("ChangeSetId,AppUserId,Date,Comment,Title,Description,Version,IsPublish,Quarter,ChangeTypeId,VideoId")] ChangeSet changeSet)
         {
             if (id != changeSet.ChangeSetId)
             {
@@ -145,10 +139,8 @@ namespace ccsc.Web.Controllers
                 return RedirectToAction(nameof(Index));
             }
             ViewData["AppUserId"] = new SelectList(_context.AppUsers, "AppUserId", "DisplayName", changeSet.AppUserId);
-            ViewData["ChangeTypeId"] = new SelectList(_context.ChangeTypes, "ChangeTypeId", "Description", changeSet.ChangeTypeId);
-            ViewData["SubSystemId"] = new SelectList(_context.SubSystems, "SubSystemId", "Title", changeSet.SubSystemId);
-            ViewData["UserTypeId"] = new SelectList(_context.UserTypes, "UserTypeId", "Title", changeSet.UserTypeId);
-            ViewData["VideoId"] = new SelectList(_context.Videos, "VideoId", "Description", changeSet.VideoId);
+            ViewData["ChangeTypeId"] = new SelectList(_context.ChangeTypes, "ChangeTypeId", "Title", changeSet.ChangeTypeId);
+            ViewData["VideoId"] = new SelectList(_context.Videos, "VideoId", "Title", changeSet.VideoId);
             return View(changeSet);
         }
 
@@ -163,8 +155,6 @@ namespace ccsc.Web.Controllers
             var changeSet = await _context.ChangeSets
                 .Include(c => c.AppUser)
                 .Include(c => c.ChangeType)
-                .Include(c => c.SubSystem)
-                .Include(c => c.UserType)
                 .Include(c => c.Video)
                 .FirstOrDefaultAsync(m => m.ChangeSetId == id);
             if (changeSet == null)
@@ -186,17 +176,24 @@ namespace ccsc.Web.Controllers
             return RedirectToAction(nameof(Index));
         }
 
-        public async Task<IActionResult> TfsIndex()
-        {
-	        var result = await _service.GetChangeSets();
-	        var newChangeSets = result;
-
-	        return View(newChangeSets);
-        }
-
         //private bool ChangeSetExists(int id)
         //{
         //    return _context.ChangeSets.Any(e => e.ChangeSetId == id);
         //}
+
+        public async Task<IActionResult> TfsIndex()
+        {
+            var result = await _service.GetChangeSets();
+            var newChangeSets = result;
+			foreach (var item in newChangeSets)
+			{
+				//if (!_changeSetService.ChangeSetExists(item.ChangeSetId))
+				//{
+					_changeSetService.AddChangeSetFromTfs(item);
+				//}
+			}
+
+            return View(newChangeSets);
+        }
     }
 }

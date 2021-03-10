@@ -16,6 +16,5 @@ namespace ccsc.Core.DTOs
 		[ForeignKey("Id")]
 		public AuthorViewModel Author { get; set; }
 
-
 	}
 }

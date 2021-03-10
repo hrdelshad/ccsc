@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using ccsc.DataLayer.Entities.ChangeSets;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
@@ -24,6 +25,9 @@ namespace ccsc.DataLayer.Entities.Tutorials
 
 		[Display(Name = "ویدیوهای مرتبط")]
 		public ICollection<Video> Videos { get; set; }
+
+		[Display(Name = "تغییرات مرتبط")]
+		public ICollection<ChangeSet> ChangeSets { get; set; }
 
 		#endregion
 	}

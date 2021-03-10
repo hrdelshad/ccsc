@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
+using System;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -20,9 +21,18 @@ namespace ccsc.Web.Controllers
         }
 
         // GET: Contacts
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(string searchString)
         {
             var ccscContext = _context.Contacts.Include(c => c.Customer).Include(c => c.Post).Include(c => c.Salutation);
+            if (!String.IsNullOrEmpty(searchString))
+            {
+                ccscContext = _context.Contacts.Where(c => c.Customer.Title.Contains(searchString) 
+                || c.FirstName.Contains(searchString)
+                || c.LastName.Contains(searchString)
+                || c.Mobile.Contains(searchString)
+                || c.Email.Contains(searchString)
+                || c.Phone.Contains(searchString)).Include(c => c.Customer).Include(c => c.Post).Include(c => c.Salutation);
+            }
             return View(await ccscContext.ToListAsync());
         }
 

@@ -17,7 +17,7 @@ namespace ccsc.Core.Services.Interfaces
 
 		List<SubSystem> GetSubSystems();
 		List<SubSystem> GetSubSystemsByIds(List<int> subSystemIds);
-		List<SubSystem> GetSubSystemsForVideo(int id);
+		List<SubSystem> GetSubSystemsOfVideo(int videoId);
 		SubSystem GetSubSystemById(int id);
 
 		List<UserType> GetUserTypes();

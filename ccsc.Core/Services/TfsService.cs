@@ -18,7 +18,12 @@ namespace ccsc.Core.Services
 
 			try
 			{
-				var personalaccesstoken = "ycdd5i5fnweercq7ruhjn6llw53fvybmuh4urpcptuzezwu5ordq";
+				// تاریخ انقضا توکن: 2022/3/8
+				// قبل از پایان باید توکن جدید دریافت کرد.
+				// برای ساخت توکن از این آدرس زیر استفاده کرد:
+				// https://residency.visualstudio.com/_usersSettings/tokens
+
+				var personalaccesstoken = "3k2vagp3o4ljrgxtvsxo74zc3z25jbqm5h4jhf4pxwa3ymmj4xva";
 
 				using (HttpClient client = new HttpClient())
 				{

@@ -28,27 +28,37 @@
 	<tbody>
 		@foreach (var item in Model)
 		{
-			item.AppUserId = 1;
-			<form asp-action="Create">
-	<tr>
-		<td>
-			@Html.DisplayFor(modelItem => item.ChangeSetId)
-		</td>
-		<td>
-			@Html.DisplayFor(modelItem => item.CreatedDate)
-		</td>
-		<td>
-			@Html.DisplayFor(modelItem => item.Author.DisplayName)
-			@Html.DisplayFor(modelItem => item.AppUserId)
-		</td>
-		<td>
-			@Html.DisplayFor(modelItem => item.Comment)
-		</td>
-		<td>
-			<input type="submit" value="Add" class="btn btn-outline-dark" />
-		</td>
-	</tr>
-			</form>
-				}
-		</tbody>
+			//item.AppUserId = 1;
+			var changhSet = new ccsc.DataLayer.Entities.ChangeSets.ChangeSet();
+			changhSet.ChangeSetId = item.ChangeSetId;
+			changhSet.AppUserId = item.AppUserId;
+			changhSet.Date = item.CreatedDate;
+			changhSet.Comment = item.Comment;
+			<tr>
+				<td>
+					@Html.DisplayFor(modelItem => item.ChangeSetId)
+				</td>
+				<td>
+					@Html.DisplayFor(modelItem => item.CreatedDate)
+				</td>
+				<td>
+					@Html.DisplayFor(modelItem => item.Author.DisplayName)
+					@Html.DisplayFor(modelItem => item.AppUserId)
+				</td>
+				<td>
+					@Html.DisplayFor(modelItem => item.Comment)
+				</td>
+				<td>
+					<form asp-action="Create" asp-controller="ChangeSets">
+						<input asp-for="@changhSet.ChangeSetId" class="form-control" />
+						<input asp-for="@changhSet.AppUserId" class="form-control" />
+						<input asp-for="@changhSet.Date" class="form-control" />
+						<input asp-for="@changhSet.Comment" class="form-control" />
+						<input type="submit" value="Add" class="btn btn-outline-dark" />
+					</form>
+				</td>
+			</tr>
+
+		}
+	</tbody>
 </table>

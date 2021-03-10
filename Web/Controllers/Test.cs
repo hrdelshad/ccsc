@@ -18,7 +18,7 @@ namespace ccsc.Web.Controllers
 
 		public IActionResult VideoSubSystems(int id)
 		{
-			_videoService.GetSubSystemsForVideo(id);
+			_videoService.GetSubSystemsOfVideo(id);
 			return (Ok());
 		}
 	}

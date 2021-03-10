@@ -85,7 +85,7 @@ namespace ccsc.Web.Controllers
 			}
 			ViewData["SubSystem"] = _videoService.GetSubSystems();
 			ViewData["UserType"] = _videoService.GetUserTypes();
-			ViewData["SelectedSubSystem"] = _videoService.GetSubSystemsForVideo(id.Value);
+			ViewData["SelectedSubSystem"] = _videoService.GetSubSystemsOfVideo(id.Value);
 			ViewData["SelectedUserType"] = _videoService.GetUserTypesForVideo(id.Value);
 			return View(video);
 		}

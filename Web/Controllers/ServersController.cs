@@ -6,6 +6,8 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using System.Linq;
 using System.Threading.Tasks;
+using ccsc.Core.Services.Interfaces;
+using System;
 
 namespace ccsc.Web.Controllers
 {
@@ -20,10 +22,14 @@ namespace ccsc.Web.Controllers
         }
 
         // GET: Servers
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(string searchString)
         {
             var ccscContext = _context.Servers.Include(s => s.Customer).Include(s => s.Os).Include(s => s.ServerType).Include(s => s.SqlVersion);
-            return View(await ccscContext.ToListAsync());
+            if (!String.IsNullOrEmpty(searchString))
+            {
+                ccscContext = _context.Servers.Where(c => c.Customer.Title.Contains(searchString)).Include(s => s.Customer).Include(s => s.Os).Include(s => s.ServerType).Include(s => s.SqlVersion);
+            }
+                return View(await ccscContext.ToListAsync());
         }
 
         // GET: Servers/Details/5

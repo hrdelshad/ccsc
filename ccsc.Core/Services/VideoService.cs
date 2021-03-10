@@ -39,7 +39,7 @@ namespace ccsc.Core.Services
 		public async Task RemoveVideoRelatedAsync(Video video)
 		{
 
-			var subSystems = GetSubSystemsForVideo(video.VideoId);
+			var subSystems = GetSubSystemsOfVideo(video.VideoId);
 			var userTypes = GetUserTypesForVideo(video.VideoId);
 			
 			if (subSystems.Any())
@@ -89,7 +89,7 @@ namespace ccsc.Core.Services
 			return subSystems;
 		}
 
-		public List<SubSystem> GetSubSystemsForVideo(int id)
+		public List<SubSystem> GetSubSystemsOfVideo(int id)
 		{
 			List<SubSystem> videoSubSystems = new List<SubSystem>();
 			videoSubSystems = _context.SubSystems

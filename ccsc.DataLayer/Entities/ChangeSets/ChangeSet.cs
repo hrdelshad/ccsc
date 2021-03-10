@@ -1,6 +1,7 @@
 ﻿using ccsc.DataLayer.Entities.Tutorials;
 using ccsc.DataLayer.Entities.Users;
 using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
@@ -50,31 +51,27 @@ namespace ccsc.DataLayer.Entities.ChangeSets
 
 		#region Relations
 
-		[Display(Name = "کد مخاطب")]
-		public int? UserTypeId { get; set; }
+		
 
-		[Display(Name = "مخاطب")]
-		public UserType UserType { get; set; }
-
-
-		[Display(Name = "کد نوع تغییر")]
+		[Display(Name = "نوع تغییر")]
 		public int? ChangeTypeId { get; set; }
 		[Display(Name = "نوع تغییر")]
 		public ChangeType ChangeType { get; set; }
 
 
-		[Display(Name = "کد محصول مرتبط")]
-		public int? SubSystemId { get; set; }
-
-		[Display(Name = "محصول مرتبط")]
-		public SubSystem SubSystem { get; set; }
-
-
-		[Display(Name = "کد ویدیو مرتبط")]
+		[Display(Name = "ویدیو مرتبط")]
 		public int? VideoId { get; set; }
 
 		[Display(Name = "ویدیو مرتبط")]
 		public Video Video { get; set; }
+
+
+		[Display(Name = "مخاطبان")]
+		public ICollection<UserType> UserTypes { get; set; }
+
+		[Display(Name = "سامانه(ها)")]
+		public ICollection<SubSystem> SubSystems { get; set; }
+
 
 		#endregion
 
