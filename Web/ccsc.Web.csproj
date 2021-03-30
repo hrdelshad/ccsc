@@ -31,6 +31,7 @@
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Contracts" Version="5.0.2" />
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="5.0.2" />
     <PackageReference Include="MimeKit" Version="2.10.1" />
+    <PackageReference Include="Quartz" Version="3.2.4" />
     <PackageReference Include="TinyMCE" Version="5.7.0" />
   </ItemGroup>
   <ItemGroup>

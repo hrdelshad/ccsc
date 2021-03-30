@@ -3,6 +3,7 @@ using ccsc.Core.Services.Identity;
 using ccsc.Core.Services.Identity.Stores;
 using ccsc.Core.Services.Identity.Validators;
 using ccsc.Core.Services.Interfaces;
+using ccsc.Core.Services.Jobs;
 using ccsc.DataLayer.Context;
 using ccsc.DataLayer.Entities.Identity;
 using ccsc.DataLayer.Entities.Messages;
@@ -15,6 +16,9 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
+using Quartz;
+using Quartz.Impl;
+using Quartz.Spi;
 
 namespace ccsc.Web
 {
@@ -30,9 +34,21 @@ namespace ccsc.Web
 		// This method gets called by the runtime. Use this method to add services to the container.
 		public void ConfigureServices(IServiceCollection services)
 		{
-            // Add framework services.
-            services
-                .AddControllersWithViews()
+
+			#region Quartz
+			services.AddSingleton<IJobFactory, SingletonJobFactory>();
+			services.AddSingleton<ISchedulerFactory, StdSchedulerFactory>();
+
+			services.AddSingleton<CheckCustomerInfo>();
+			services.AddSingleton(new JobSchedule(jobType: typeof(CheckCustomerInfo), cronExpression:
+				"0 16 02 * * ?"
+				));
+
+			services.AddHostedService<QuartzHostedService>();
+			#endregion
+			// Add framework services.
+			services
+				.AddControllersWithViews()
 				// نمایش تغییرات در ویو بدون نیاز به کامپایل
 				//install the NuGET package: Microsoft.AspNetCore.Mvc.Razor.RuntimeCompilation
 				.AddRazorRuntimeCompilation()
@@ -94,6 +110,7 @@ namespace ccsc.Web
 			services.AddTransient<ITfsService, TfsService>();
 			services.AddTransient<IChangeSetService, ChangeSetService>();
 			services.AddTransient<IVideoService, VideoService>();
+			services.AddTransient<ISmsService, SmsService>();
 
 
 			#endregion

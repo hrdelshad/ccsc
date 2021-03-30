@@ -23,7 +23,8 @@ namespace ccsc.Core.Services
 				// برای ساخت توکن از این آدرس زیر استفاده کرد:
 				// https://residency.visualstudio.com/_usersSettings/tokens
 
-				var personalaccesstoken = "3k2vagp3o4ljrgxtvsxo74zc3z25jbqm5h4jhf4pxwa3ymmj4xva";
+				//var personalaccesstoken = "3k2vagp3o4ljrgxtvsxo74zc3z25jbqm5h4jhf4pxwa3ymmj4xva";
+				var personalaccesstoken = "3tp2ob3aw6svd2hdlyzoepffyeu2pmev7keft5gwsg3em36xwnlq";
 
 				using (HttpClient client = new HttpClient())
 				{
@@ -46,7 +47,7 @@ namespace ccsc.Core.Services
 					}
 				}
 			}
-			catch (Exception)
+			catch (Exception e)
 			{
 				throw null;
 			}

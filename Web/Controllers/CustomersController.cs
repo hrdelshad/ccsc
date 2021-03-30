@@ -26,13 +26,17 @@ namespace ccsc.Web.Controllers
 		// GET: Customers
 		public async Task<IActionResult> Index(string searchString)
 		{
-			var ccscContext = _context.Customers.Include(c => c.CustomerType);
+			var ccscContext = _context.Customers
+				.Include(c => c.CustomerType)
+				.ToListAsync();
 			if (!String.IsNullOrEmpty(searchString))
 			{
-				ccscContext = _context.Customers.Where(c => c.Title.Contains(searchString)).Include(c => c.CustomerType);
+				ccscContext = _context.Customers
+					.Where(c => c.Title.Contains(searchString))
+					.Include(c => c.CustomerType).OrderBy(c=>c.Title).ToListAsync();
 			}
 
-			return View(await ccscContext.ToListAsync());
+			return View(await ccscContext);
 		}
 
 		[HttpPost]

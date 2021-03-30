@@ -1,11 +1,20 @@
-﻿using Newtonsoft.Json.Linq;
+﻿using ccsc.Core.Services.Interfaces;
+using ccsc.DataLayer.Context;
+using Newtonsoft.Json.Linq;
 using RestSharp;
 using System;
 
 namespace ccsc.Core.Services
 {
-	public class SmsService
+	public class SmsService : ISmsService
 	{
+		private CcscContext _context;
+
+		public SmsService(CcscContext context)
+		{
+			_context = context;
+		}
+
 		public decimal GetSMSCredit(string sMSUser, string sMSPass)
 		{
 			try
@@ -28,7 +37,7 @@ namespace ccsc.Core.Services
 			}
 		}
 
-		public static void SendSMS(string message, string[] to)
+		public void SendSMS(string message, string[] to)
 		{
 			var messageObject = new
 			{
@@ -41,7 +50,7 @@ namespace ccsc.Core.Services
 			};
 			string jsonString = Newtonsoft.Json.JsonConvert.SerializeObject(messageObject);
 
-			var client = new RestClient("http://37.130.202.188/api/select");
+			var client = new RestClient("http://ippanel.com/api/select");
 			var request = new RestRequest(Method.POST);
 			request.AddHeader("cache-control", "no-cache");
 			request.AddHeader("Content-Type", "application/json");
@@ -49,5 +58,6 @@ namespace ccsc.Core.Services
 			request.AddParameter("undefined", jsonString, ParameterType.RequestBody);
 			IRestResponse response = client.Execute(request);
 		}
+		
 	}
 }

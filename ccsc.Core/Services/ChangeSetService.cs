@@ -11,6 +11,11 @@ namespace ccsc.Core.Services
 	{
 		private CcscContext _context;
 
+		public ChangeSetService(CcscContext context)
+		{
+			_context = context;
+		}
+
 		public void AddChangeSet(ChangeSet newChangeSet)
 		{
 			_context.AddRange(
@@ -57,8 +62,21 @@ namespace ccsc.Core.Services
 
 		public int GetAppUserId(string displayName)
 		{
-			var appUserId = _context.AppUsers.Where(u => u.DisplayName == displayName).FirstOrDefault().AppUserId;
-			return appUserId;
+			var userList = _context.AppUsers.ToList();
+			var user = userList.Where(item => SimplifyString(item.DisplayName) == SimplifyString(displayName)).FirstOrDefault();
+			if(user == null)
+			{
+				return 0;
+			}
+			else
+			{
+				return user.AppUserId;
+			}
+		}
+
+		private string SimplifyString(string input)
+		{
+			return input.ToLower().Replace(" ", "").Replace("‌", "");
 		}
 	}
 }

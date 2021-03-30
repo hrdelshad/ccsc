@@ -18,6 +18,7 @@ namespace ccsc.Core.Services.Interfaces
 
 		List<Contact> GetContactsOfCustomer();
 		List<Contact> GetContactsOfCustomer(int customerId);
+
 	}
 
 	

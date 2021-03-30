@@ -10,6 +10,8 @@ using ccsc.DataLayer.Entities.Tutorials;
 using ccsc.DataLayer.Entities.Users;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
+using System;
+using System.Threading.Tasks;
 
 namespace ccsc.DataLayer.Context
 {
@@ -186,6 +188,11 @@ namespace ccsc.DataLayer.Context
 		#region User
 
 		public DbSet<AppUser> AppUsers { get; set; }
+
+		public Task<Customer> SingleOrDefaultAsync(Func<object, bool> p)
+		{
+			throw new NotImplementedException();
+		}
 
 		#endregion
 
