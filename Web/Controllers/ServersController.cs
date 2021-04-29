@@ -24,7 +24,11 @@ namespace ccsc.Web.Controllers
         // GET: Servers
         public async Task<IActionResult> Index(string searchString)
         {
-            var ccscContext = _context.Servers.Include(s => s.Customer).Include(s => s.Os).Include(s => s.ServerType).Include(s => s.SqlVersion);
+            var ccscContext = _context.Servers
+	            .Include(s => s.Customer)
+	            .Include(s => s.Os)
+	            .Include(s => s.ServerType)
+	            .Include(s => s.SqlVersion);
             if (!String.IsNullOrEmpty(searchString))
             {
                 ccscContext = _context.Servers.Where(c => c.Customer.Title.Contains(searchString)).Include(s => s.Customer).Include(s => s.Os).Include(s => s.ServerType).Include(s => s.SqlVersion);

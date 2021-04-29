@@ -5,7 +5,7 @@
 	Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<table class="table">
+<table class="table table-light table-striped">
 	<thead>
 		<tr>
 			<th>
@@ -15,13 +15,13 @@
 				@Html.DisplayNameFor(model => model.Url)
 			</th>
 			<th>
-				@Html.DisplayNameFor(model => model.Version)
+				<a asp-action="Versions">@Html.DisplayNameFor(model => model.Version)</a>
 			</th>
 			<th>
 				@Html.DisplayNameFor(model => model.VersionCheckDate)
 			</th>
 			<th>
-				@Html.DisplayNameFor(model => model.SmsCredit)
+				<a asp-action="SmsCredits">@Html.DisplayNameFor(model => model.SmsCredit)</a>
 			</th>
 			<th>
 				@Html.DisplayNameFor(model => model.SmsCreditCheckDate)
@@ -40,7 +40,12 @@
 	<tbody>
 		@foreach (var item in Model)
 		{
-			<tr>
+			var c = "";
+			if (item.HasUnSupportedContract)
+			{
+				c = "table-danger";
+			}
+			<tr class=@c>
 				<td>
 					<a asp-action="Details" asp-route-id="@item.CustomerId">@Html.DisplayFor(modelItem => item.Title)</a>
 				</td>
@@ -48,13 +53,13 @@
 					<a href="@item.Url" target="_blank">@Html.DisplayFor(modelItem => item.Url)</a>
 				</td>
 				<td>
-					@Html.DisplayFor(modelItem => item.Version)
+					@Html.DisplayFor(modelItem => item.Version )
 				</td>
 				<td>
 					@Html.DisplayFor(modelItem => item.VersionCheckDate)
 				</td>
 				<td>
-					@Html.DisplayFor(modelItem => item.SmsCredit)
+					 @item.SmsCredit.ToString("0,0")
 				</td>
 				<td>
 					@Html.DisplayFor(modelItem => item.SmsCreditCheckDate)

@@ -1,8 +1,8 @@
 ﻿@model ccsc.DataLayer.Entities.Customers.Customer
 
 @{
-    ViewData["Title"] = "Edit";
-    Layout = "~/Views/Shared/_Layout.cshtml";
+	ViewData["Title"] = "Edit";
+	Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
 <h1>Edit</h1>
@@ -10,88 +10,101 @@
 <h4>Customer</h4>
 <hr />
 <div class="row">
-    <div class="col-md-4">
-        <form asp-action="Edit">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <input type="hidden" asp-for="CustomerId" />
-            <div class="form-group">
-                <label asp-for="Title" class="control-label"></label>
-                <input asp-for="Title" class="form-control" />
-                <span asp-validation-for="Title" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="CustomerTypeId" class="control-label"></label>
-                <select asp-for="CustomerTypeId" class="form-control" asp-items="ViewBag.CustomerTypeId"></select>
-                <span asp-validation-for="CustomerTypeId" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Url" class="control-label"></label>
-                <input asp-for="Url" class="form-control" />
-                <span asp-validation-for="Url" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Version" class="control-label"></label>
-                <input asp-for="Version" class="form-control" />
-                <span asp-validation-for="Version" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="VersionCheckDate" class="control-label"></label>
-                <input asp-for="VersionCheckDate" class="form-control" />
-                <span asp-validation-for="VersionCheckDate" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="SmsUser" class="control-label"></label>
-                <input asp-for="SmsUser" class="form-control" />
-                <span asp-validation-for="SmsUser" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="SmsPass" class="control-label"></label>
-                <input asp-for="SmsPass" class="form-control" />
-                <span asp-validation-for="SmsPass" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="SmsCredit" class="control-label"></label>
-                <input asp-for="SmsCredit" class="form-control" />
-                <span asp-validation-for="SmsCredit" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="MinSmsCredit" class="control-label"></label>
-                <input asp-for="MinSmsCredit" class="form-control" />
-                <span asp-validation-for="MinSmsCredit" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="SmsCreditCheckDate" class="control-label"></label>
-                <input asp-for="SmsCreditCheckDate" class="form-control" />
-                <span asp-validation-for="SmsCreditCheckDate" class="text-danger"></span>
-            </div>
-            <div class="form-group form-check">
-                <label class="form-check-label">
-                    <input class="form-check-input" asp-for="IsActiveSms" /> @Html.DisplayNameFor(model => model.IsActiveSms)
-                </label>
-            </div>
-            <div class="form-group">
-                <label asp-for="AfterXDay" class="control-label"></label>
-                <input asp-for="AfterXDay" class="form-control" />
-                <span asp-validation-for="AfterXDay" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="SendSmsDate" class="control-label"></label>
-                <input asp-for="SendSmsDate" class="form-control" />
-                <span asp-validation-for="SendSmsDate" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="UniversityId" class="control-label"></label>
-                <input asp-for="UniversityId" class="form-control" />
-                <span asp-validation-for="UniversityId" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <input type="submit" value="Save" class="btn btn-primary" />
-            </div>
-        </form>
-    </div>
+	<div class="col-md-4">
+		<form asp-action="Edit">
+			<div asp-validation-summary="ModelOnly" class="text-danger"></div>
+			<input type="hidden" asp-for="CustomerId" />
+			<div class="form-group">
+				<label asp-for="Title" class="control-label"></label>
+				<input asp-for="Title" class="form-control" />
+				<span asp-validation-for="Title" class="text-danger"></span>
+			</div>
+			<div class="form-group">
+				<label asp-for="Url" class="control-label"></label>
+				<input asp-for="Url" class="form-control" />
+				<span asp-validation-for="Url" class="text-danger"></span>
+			</div>
+			<div class="form-group">
+				<label asp-for="Version" class="control-label"></label>
+				<input asp-for="Version" class="form-control" />
+				<span asp-validation-for="Version" class="text-danger"></span>
+			</div>
+			<div class="form-group">
+				<label asp-for="VersionCheckDate" class="control-label"></label>
+				<input asp-for="VersionCheckDate" class="form-control" />
+				<span asp-validation-for="VersionCheckDate" class="text-danger"></span>
+			</div>
+			<div class="form-group">
+				<label asp-for="SmsUser" class="control-label"></label>
+				<input asp-for="SmsUser" class="form-control" />
+				<span asp-validation-for="SmsUser" class="text-danger"></span>
+			</div>
+			<div class="form-group">
+				<label asp-for="SmsPass" class="control-label"></label>
+				<input asp-for="SmsPass" class="form-control" />
+				<span asp-validation-for="SmsPass" class="text-danger"></span>
+			</div>
+			<div class="form-group">
+				<label asp-for="SmsCredit" class="control-label"></label>
+				<input asp-for="SmsCredit" class="form-control" />
+				<span asp-validation-for="SmsCredit" class="text-danger"></span>
+			</div>
+			<div class="form-group">
+				<label asp-for="MinSmsCredit" class="control-label"></label>
+				<input asp-for="MinSmsCredit" class="form-control" />
+				<span asp-validation-for="MinSmsCredit" class="text-danger"></span>
+			</div>
+			<div class="form-group">
+				<label asp-for="SmsCreditCheckDate" class="control-label"></label>
+				<input asp-for="SmsCreditCheckDate" class="form-control" />
+				<span asp-validation-for="SmsCreditCheckDate" class="text-danger"></span>
+			</div>
+			<div class="form-group form-check">
+				<label class="form-check-label">
+					<input class="form-check-input" asp-for="IsActiveSms" /> @Html.DisplayNameFor(model => model.IsActiveSms)
+				</label>
+			</div>
+			<div class="form-group">
+				<label asp-for="AfterXDay" class="control-label"></label>
+				<input asp-for="AfterXDay" class="form-control" />
+				<span asp-validation-for="AfterXDay" class="text-danger"></span>
+			</div>
+			<div class="form-group">
+				<label asp-for="SendSmsDate" class="control-label"></label>
+				<input asp-for="SendSmsDate" class="form-control" />
+				<span asp-validation-for="SendSmsDate" class="text-danger"></span>
+			</div>
+			<div class="form-group">
+				<label asp-for="UniversityId" class="control-label"></label>
+				<input asp-for="UniversityId" class="form-control" />
+				<span asp-validation-for="UniversityId" class="text-danger"></span>
+			</div>
+			<div class="form-group form-check">
+				<label class="form-check-label">
+					<input class="form-check-input" asp-for="HasUnSupportedContract" /> @Html.DisplayNameFor(model => model.HasUnSupportedContract)
+				</label>
+			</div>
+			<div class="form-group">
+				<label asp-for="CustomerStatusId" class="control-label"></label>
+				<select asp-for="CustomerStatusId" class="form-control" asp-items="ViewBag.CustomerStatusId"></select>
+				<span asp-validation-for="CustomerStatusId" class="text-danger"></span>
+			</div>
+			<div class="form-group">
+				<label asp-for="CustomerTypeId" class="control-label"></label>
+				<select asp-for="CustomerTypeId" class="form-control" asp-items="ViewBag.CustomerTypeId"></select>
+				<span asp-validation-for="CustomerTypeId" class="text-danger"></span>
+			</div>
+			<div class="form-group">
+				<input type="submit" value="Save" class="btn btn-primary" />
+			</div>
+		</form>
+	</div>
 </div>
 
 <div>
-    <a asp-action="Index">Back to List</a>
+	<a asp-action="Index">Back to List</a>
 </div>
 
+@section Scripts {
+	@{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

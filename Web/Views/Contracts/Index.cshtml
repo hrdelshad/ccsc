@@ -1,78 +1,85 @@
 ﻿@model IEnumerable<ccsc.DataLayer.Entities.Contracts.Contract>
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "قراردادها";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h1>Index</h1>
-
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
-<table class="table">
+<table class="table table-striped">
     <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.Title)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.ContractNo)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.StartDate)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Duration)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Amount)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.UnLimited)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.ContractStatus)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Customer)
-            </th>
-            <th></th>
-        </tr>
+    <tr>
+	    <th>
+		    @Html.DisplayNameFor(model => model.Customer)
+	    </th>
+	    <th>
+		    @Html.DisplayNameFor(model => model.Title)
+	    </th>
+	    <th>
+		    @Html.DisplayNameFor(model => model.ContractNo)
+	    </th>
+	    <th>
+		    @Html.DisplayNameFor(model => model.StartDate)
+	    </th>
+	    <th>
+		    @Html.DisplayNameFor(model => model.Duration)
+	    </th>
+	    <th>
+		    @Html.DisplayNameFor(model => model.Amount)
+	    </th>
+	    <th>
+		    @Html.DisplayNameFor(model => model.UnLimited)
+	    </th>
+	    <th>
+		    @Html.DisplayNameFor(model => model.ContractStatus)
+	    </th>
+
+	    <th></th>
+    </tr>
     </thead>
     <tbody>
 @foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Title)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.ContractNo)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.StartDate)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Duration)
-            </td>
-            <td>
-	            <input asp-for="@item.Amount" asp-format="{0:0,0}" class="form-control" />
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.UnLimited)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.ContractStatus.Title)
-            </td>
-            <td>
-	            <a asp-controller="Customers" asp-action="Details" asp-route-id=@item.Customer.CustomerId>@Html.DisplayFor(modelItem => item.Customer.Title)</a>
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.ContractId">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.ContractId">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.ContractId">Delete</a>
-            </td>
-        </tr>
+	var remainingDays = (item.StartDate.AddMonths(item.Duration) - DateTime.Now).Days;
+	var myClass = "";
+	var contractStatus = "";
+	if (remainingDays > 70) { myClass = "table-success"; contractStatus = "فعال";}
+	if (69 >= remainingDays && remainingDays >= 50) { myClass = "table-primary"; contractStatus = "یادآوری"; }
+	if (49 >= remainingDays && remainingDays >= 20) { myClass = "table-info"; contractStatus = "اقدام به پیگیری"; }
+	if (19 >= remainingDays && remainingDays >= 0) { myClass = "table-warning"; contractStatus = "درآستانه انتقصا"; }
+	if (0 > remainingDays && remainingDays >= -30) { myClass = "table-danger"; contractStatus = "پشتیبانی موقت"; }
+	if (remainingDays < -31) { myClass = "table-dark"; contractStatus = "عدم پشتیبانی"; }
+	<tr class="@myClass">
+		<td>
+			<a asp-controller="Customers" asp-action="Details" asp-route-id=@item.Customer.CustomerId>@Html.DisplayFor(modelItem => item.Customer.Title)</a>
+		</td>
+		<td>
+			@Html.DisplayFor(modelItem => item.Title)
+		</td>
+		<td>
+			@Html.DisplayFor(modelItem => item.ContractNo)
+		</td>
+		<td>
+			@Html.DisplayFor(modelItem => item.StartDate)
+		</td>
+		<td>
+			@Html.DisplayFor(modelItem => item.Duration)
+		</td>
+		<td>
+			<input asp-for="@item.Amount" asp-format="{0:0,0}" class="form-control"/>
+		</td>
+		<td>
+			@Html.DisplayFor(modelItem => item.UnLimited)
+		</td>
+		<td>
+			@contractStatus
+			@*@Html.DisplayFor(modelItem => item.ContractStatus.Title)*@
+		</td>
+
+		<td>
+			<a asp-action="Edit" asp-route-id="@item.ContractId">Edit</a> |
+			<a asp-action="Details" asp-route-id="@item.ContractId">Details</a> |
+			<a asp-action="Delete" asp-route-id="@item.ContractId">Delete</a>
+		</td>
+	</tr>
 }
     </tbody>
 </table>

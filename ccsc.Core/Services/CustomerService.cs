@@ -2,6 +2,7 @@
 using ccsc.Core.Services.Interfaces;
 using ccsc.DataLayer.Context;
 using ccsc.DataLayer.Entities.Contacts;
+using ccsc.DataLayer.Entities.Contracts;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using System;
 using System.Collections.Generic;
@@ -77,6 +78,8 @@ namespace ccsc.Core.Services
 		{
 			return _context.Contacts.Where(c => c.CustomerId == customerId).ToList();
 		}
+
+		
 
 		public List<Contact> GetContactOfCustomer(int customerId)
 		{
@@ -169,6 +172,40 @@ namespace ccsc.Core.Services
 		public string TabibVersion(string url)
 		{
 			throw new NotImplementedException();
+		}
+
+		public List<Contract> GetContractsOfCustomer(int customerId)
+		{
+			return _context.Contracts.Where(c => c.CustomerId == customerId).ToList();
+		}
+		public List<SelectListItem> GetContractOfCustomerListItems(int customerId)
+		{
+			return _context.Contracts.Where(c => c.CustomerId == customerId)
+				.Select(c => new SelectListItem()
+				{
+					Value = c.ContractId.ToString(),
+					Text = c.ContractNo + "|" + c.Title + "|" + c.ContractStatus.Title
+				}).ToList();
+		}
+
+		public List<SelectListItem> GetContractOfCustomerListItems(int customerId, bool option)
+		{
+			if (!option)
+			{
+				return GetContractOfCustomerListItems(customerId);
+
+			}
+			List<SelectListItem> listItems = new List<SelectListItem>()
+			{
+				new SelectListItem() {Text = "انتخاب کنید", Value = ""}
+			};
+			listItems.AddRange(GetContractOfCustomerListItems(customerId));
+			return listItems;
+		}
+
+		public bool HasUnSupportedContract(int customerId)
+		{
+			return GetContractsOfCustomer(customerId).Any(c => c.StartDate.AddMonths(c.Duration) < DateTime.Now);
 		}
 	}
 }

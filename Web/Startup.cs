@@ -39,10 +39,10 @@ namespace ccsc.Web
 			services.AddSingleton<IJobFactory, SingletonJobFactory>();
 			services.AddSingleton<ISchedulerFactory, StdSchedulerFactory>();
 
-			services.AddSingleton<CheckCustomerInfo>();
-			services.AddSingleton(new JobSchedule(jobType: typeof(CheckCustomerInfo), cronExpression:
-				"0 16 02 * * ?"
-				));
+			//services.AddSingleton<CheckCustomerInfo>();
+			//services.AddSingleton(new JobSchedule(jobType: typeof(CheckCustomerInfo), cronExpression:
+			//	"0 16 02 * * ?"
+			//	));
 
 			services.AddHostedService<QuartzHostedService>();
 			#endregion

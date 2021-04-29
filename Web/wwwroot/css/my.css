@@ -29,3 +29,15 @@
 	font-size: 28px; /* Increased text to enable scrolling */
 	padding: 0px 10px;
 }
+
+.un-support{
+	color: #fff !important;
+}
+
+.un-support table tr td a {
+	color: #fff !important;
+}
+
+.del-bg-dark {
+	background-color: cadetblue !important;
+}

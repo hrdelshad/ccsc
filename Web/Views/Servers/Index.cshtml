@@ -5,87 +5,93 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<table class="table">
-    <thead class="bg-dark text-light">
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.Ram)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Cpu)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Hard)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Url)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.UserName)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Password)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Vpn)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.ServerType)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Customer)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Os)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.SqlVersion)
-            </th>
-            <th></th>
-        </tr>
+<table class="table table-light table-striped">
+    <thead>
+    <tr>
+	    <th>
+		    @Html.DisplayNameFor(model => model.Customer)
+	    </th>
+	    <th>
+		    @Html.DisplayNameFor(model => model.Ram)
+	    </th>
+	    <th>
+		    @Html.DisplayNameFor(model => model.Cpu)
+	    </th>
+	    <th>
+		    @Html.DisplayNameFor(model => model.Hard)
+	    </th>
+	    <th>
+		    @Html.DisplayNameFor(model => model.Url)
+	    </th>
+	    <th>
+		    @Html.DisplayNameFor(model => model.UserName)
+	    </th>
+	    <th>
+		    @Html.DisplayNameFor(model => model.Password)
+	    </th>
+	    <th>
+		    @Html.DisplayNameFor(model => model.Vpn)
+	    </th>
+	    <th>
+		    @Html.DisplayNameFor(model => model.ServerType)
+	    </th>
+	    <th>
+		    @Html.DisplayNameFor(model => model.Os)
+	    </th>
+	    <th>
+		    @Html.DisplayNameFor(model => model.SqlVersion)
+	    </th>
+	    <th></th>
+    </tr>
     </thead>
     <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Ram)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Cpu)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Hard)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Url)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.UserName)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Password)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Vpn)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.ServerType.Title)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Customer.Title)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Os.Title)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.SqlVersion.Title)
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.ServerId">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.ServerId">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.ServerId">Delete</a>
-            </td>
-        </tr>
+@foreach (var item in Model)
+{
+	var shortOsTitle = item.Os.Title.Replace("Windows Server ", "");
+	var myClass = "";
+	if (item.Customer.HasUnSupportedContract)
+	{
+		myClass = "table-danger";
+	}
+	<tr class="@myClass">
+		<td>
+			<a asp-controller="Customers" asp-action="Details" asp-route-id="@item.CustomerId">@Html.DisplayFor(modelItem => item.Customer.Title)</a>
+		</td>
+		<td>
+			@Html.DisplayFor(modelItem => item.Ram)
+		</td>
+		<td>
+			@Html.DisplayFor(modelItem => item.Cpu)
+		</td>
+		<td>
+			@Html.DisplayFor(modelItem => item.Hard)
+		</td>
+		<td>
+			<a asp-action="Details" asp-route-id="@item.ServerId">@Html.DisplayFor(modelItem => item.Url)</a>
+		</td>
+		<td>
+			@Html.DisplayFor(modelItem => item.UserName)
+		</td>
+		<td>
+			@Html.DisplayFor(modelItem => item.Password)
+		</td>
+		<td>
+			@Html.DisplayFor(modelItem => item.Vpn)
+		</td>
+		<td>
+			@Html.DisplayFor(modelItem => item.ServerType.Title)
+		</td>
+		<td>
+			@shortOsTitle
+		</td>
+		<td>
+			@Html.DisplayFor(modelItem => item.SqlVersion.Title)
+		</td>
+		<td>
+			<a asp-action="Edit" asp-route-id="@item.ServerId">ویرایش</a> |
+			<a asp-action="Delete" asp-route-id="@item.ServerId">حذف</a>
+		</td>
+	</tr>
 }
     </tbody>
 </table>

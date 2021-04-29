@@ -50,6 +50,7 @@ namespace ccsc.DataLayer.Entities.Contracts
 		public ContractStatus ContractStatus { get; set; }
 
 		[Display(Name = "مشتری")]
+		[Required(ErrorMessage = "لطفا {0} را وارد کنید")]
 		public int CustomerId { get; set; }
 
 		[Display(Name = "مشتری")]

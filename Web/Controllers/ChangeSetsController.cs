@@ -29,10 +29,7 @@ namespace ccsc.Web.Controllers
 		// GET: ChangeSets
 		public async Task<IActionResult> Index()
         {
-            var ccscContext = _context.ChangeSets
-                .Include(c => c.AppUser)
-                .Include(c => c.ChangeType)
-                .Include(c => c.Video)
+            var ccscContext = _changeSetService.GetChangeSets()
                 .OrderByDescending(c=>c.ChangeSetId);
             return View(await ccscContext.ToListAsync());
         }
@@ -176,21 +173,21 @@ namespace ccsc.Web.Controllers
             return RedirectToAction(nameof(Index));
         }
 
-        //private bool ChangeSetExists(int id)
-        //{
-        //    return _context.ChangeSets.Any(e => e.ChangeSetId == id);
-        //}
+		//private bool ChangeSetExists(int id)
+		//{
+		//	return _context.ChangeSets.Any(e => e.ChangeSetId == id);
+		//}
 
-        public async Task<IActionResult> TfsIndex()
+		public async Task<IActionResult> TfsIndex()
         {
             var result = await _service.GetChangeSets();
             var newChangeSets = result;
 			foreach (var item in newChangeSets)
 			{
-				//if (!_changeSetService.ChangeSetExists(item.ChangeSetId))
-				//{
+				if (!_changeSetService.ChangeSetExists(item.ChangeSetId))
+				{
 					_changeSetService.AddChangeSetFromTfs(item);
-				//}
+				}
 			}
 
             return View(newChangeSets);

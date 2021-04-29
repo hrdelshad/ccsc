@@ -1,106 +1,118 @@
 ﻿@model ccsc.DataLayer.Entities.Customers.Customer
 
 @{
-    ViewData["Title"] = "Delete";
-    Layout = "~/Views/Shared/_Layout.cshtml";
+	ViewData["Title"] = "Delete";
+	Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
 <h1>Delete</h1>
 
 <h3>Are you sure you want to delete this?</h3>
 <div>
-    <h4>Customer</h4>
-    <hr />
-    <dl class="row">
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Title)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Title)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Url)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Url)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Version)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Version)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.VersionCheckDate)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.VersionCheckDate)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.SmsUser)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.SmsUser)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.SmsPass)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.SmsPass)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.SmsCredit)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.SmsCredit)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.MinSmsCredit)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.MinSmsCredit)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.SmsCreditCheckDate)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.SmsCreditCheckDate)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.IsActiveSms)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.IsActiveSms)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.AfterXDay)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.AfterXDay)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.SendSmsDate)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.SendSmsDate)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.UniversityId)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.UniversityId)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.CustomerType)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.CustomerType.Title)
-        </dd class>
-    </dl>
-    
-    <form asp-action="Delete">
-        <input type="hidden" asp-for="CustomerId" />
-        <input type="submit" value="Delete" class="btn btn-danger" /> |
-        <a asp-action="Index">Back to List</a>
-    </form>
+	<h4>Customer</h4>
+	<hr />
+	<dl class="row">
+		<dt class="col-sm-2">
+			@Html.DisplayNameFor(model => model.Title)
+		</dt>
+		<dd class="col-sm-10">
+			@Html.DisplayFor(model => model.Title)
+		</dd>
+		<dt class="col-sm-2">
+			@Html.DisplayNameFor(model => model.Url)
+		</dt>
+		<dd class="col-sm-10">
+			@Html.DisplayFor(model => model.Url)
+		</dd>
+		<dt class="col-sm-2">
+			@Html.DisplayNameFor(model => model.Version)
+		</dt>
+		<dd class="col-sm-10">
+			@Html.DisplayFor(model => model.Version)
+		</dd>
+		<dt class="col-sm-2">
+			@Html.DisplayNameFor(model => model.VersionCheckDate)
+		</dt>
+		<dd class="col-sm-10">
+			@Html.DisplayFor(model => model.VersionCheckDate)
+		</dd>
+		<dt class="col-sm-2">
+			@Html.DisplayNameFor(model => model.SmsUser)
+		</dt>
+		<dd class="col-sm-10">
+			@Html.DisplayFor(model => model.SmsUser)
+		</dd>
+		<dt class="col-sm-2">
+			@Html.DisplayNameFor(model => model.SmsPass)
+		</dt>
+		<dd class="col-sm-10">
+			@Html.DisplayFor(model => model.SmsPass)
+		</dd>
+		<dt class="col-sm-2">
+			@Html.DisplayNameFor(model => model.SmsCredit)
+		</dt>
+		<dd class="col-sm-10">
+			@Html.DisplayFor(model => model.SmsCredit)
+		</dd>
+		<dt class="col-sm-2">
+			@Html.DisplayNameFor(model => model.MinSmsCredit)
+		</dt>
+		<dd class="col-sm-10">
+			@Html.DisplayFor(model => model.MinSmsCredit)
+		</dd>
+		<dt class="col-sm-2">
+			@Html.DisplayNameFor(model => model.SmsCreditCheckDate)
+		</dt>
+		<dd class="col-sm-10">
+			@Html.DisplayFor(model => model.SmsCreditCheckDate)
+		</dd>
+		<dt class="col-sm-2">
+			@Html.DisplayNameFor(model => model.IsActiveSms)
+		</dt>
+		<dd class="col-sm-10">
+			@Html.DisplayFor(model => model.IsActiveSms)
+		</dd>
+		<dt class="col-sm-2">
+			@Html.DisplayNameFor(model => model.AfterXDay)
+		</dt>
+		<dd class="col-sm-10">
+			@Html.DisplayFor(model => model.AfterXDay)
+		</dd>
+		<dt class="col-sm-2">
+			@Html.DisplayNameFor(model => model.SendSmsDate)
+		</dt>
+		<dd class="col-sm-10">
+			@Html.DisplayFor(model => model.SendSmsDate)
+		</dd>
+		<dt class="col-sm-2">
+			@Html.DisplayNameFor(model => model.UniversityId)
+		</dt>
+		<dd class="col-sm-10">
+			@Html.DisplayFor(model => model.UniversityId)
+		</dd>
+		<dt class="col-sm-2">
+			@Html.DisplayNameFor(model => model.HasUnSupportedContract)
+		</dt>
+		<dd class="col-sm-10">
+			@Html.DisplayFor(model => model.HasUnSupportedContract)
+		</dd>
+		<dt class="col-sm-2">
+			@Html.DisplayNameFor(model => model.CustomerStatus)
+		</dt>
+		<dd class="col-sm-10">
+			@Html.DisplayFor(model => model.CustomerStatus.Title)
+		</dd>
+		<dt class="col-sm-2">
+			@Html.DisplayNameFor(model => model.CustomerType)
+		</dt>
+		<dd class="col-sm-10">
+			@Html.DisplayFor(model => model.CustomerType.Title)
+		</dd>
+	</dl>
+
+	<form asp-action="Delete">
+		<input type="hidden" asp-for="CustomerId" />
+		<input type="submit" value="Delete" class="btn btn-danger" /> |
+		<a asp-action="Index">Back to List</a>
+	</form>
 </div>

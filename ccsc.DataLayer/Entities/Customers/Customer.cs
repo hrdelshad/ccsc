@@ -62,8 +62,18 @@ namespace ccsc.DataLayer.Entities.Customers
 		[Display(Name = "کد")]
 		public int? UniversityId { get; set; }
 
+		[Display(Name = "قرارداد پشتیبانی نشده")]
+		public bool HasUnSupportedContract { get; set; }
+
 
 		#region Relations
+
+		[Display(Name = "وضعیت")]
+		//[Required(ErrorMessage = "لطفا {0} را وارد کنید")]
+		public int CustomerStatusId { get; set; }
+
+		[Display(Name = "وضعیت")]
+		public CustomerStatus CustomerStatus { get; set; }
 
 		[Display(Name = "نوع")]
 		[Required(ErrorMessage = "لطفا {0} را وارد کنید")]

@@ -24,11 +24,11 @@ namespace ccsc.Api.Controllers
         public async Task<ActionResult<IEnumerable<ChangeSet>>> GetChangeSets()
         {
             var result = await _context.ChangeSets
-                .Where(v => v.IsPublish == true)
-                .Include(v => v.SubSystems)
-                .Include(v => v.UserTypes)
+                //.Where(v => v.IsPublish == true)
+                //.Include(v => v.SubSystems)
+                //.Include(v => v.UserTypes)
                 .ToListAsync();
-            //Request.HttpContext.Response.Headers.Add("x-New", "30");
+            Request.HttpContext.Response.Headers.Add("x-New", "30");
             return result;
         }
 

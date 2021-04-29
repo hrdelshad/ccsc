@@ -16,7 +16,7 @@ namespace ccsc.DataLayer.Migrations
 #pragma warning disable 612, 618
             modelBuilder
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
-                .HasAnnotation("ProductVersion", "5.0.3")
+                .HasAnnotation("ProductVersion", "5.0.4")
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
             modelBuilder.Entity("ChangeSetSubSystem", b =>
@@ -429,8 +429,14 @@ namespace ccsc.DataLayer.Migrations
                     b.Property<int>("AfterXDay")
                         .HasColumnType("int");
 
+                    b.Property<int>("CustomerStatusId")
+                        .HasColumnType("int");
+
                     b.Property<int>("CustomerTypeId")
                         .HasColumnType("int");
+
+                    b.Property<bool>("HasUnSupportedContract")
+                        .HasColumnType("bit");
 
                     b.Property<bool>("IsActiveSms")
                         .HasColumnType("bit");
@@ -476,9 +482,29 @@ namespace ccsc.DataLayer.Migrations
 
                     b.HasKey("CustomerId");
 
+                    b.HasIndex("CustomerStatusId");
+
                     b.HasIndex("CustomerTypeId");
 
                     b.ToTable("Customers");
+                });
+
+            modelBuilder.Entity("ccsc.DataLayer.Entities.Customers.CustomerStatus", b =>
+                {
+                    b.Property<int>("CustomerStatusId")
+                        .HasColumnType("int");
+
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("Title")
+                        .IsRequired()
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)");
+
+                    b.HasKey("CustomerStatusId");
+
+                    b.ToTable("CustomerStatuses");
                 });
 
             modelBuilder.Entity("ccsc.DataLayer.Entities.Customers.CustomerType", b =>
@@ -1416,11 +1442,19 @@ namespace ccsc.DataLayer.Migrations
 
             modelBuilder.Entity("ccsc.DataLayer.Entities.Customers.Customer", b =>
                 {
+                    b.HasOne("ccsc.DataLayer.Entities.Customers.CustomerStatus", "CustomerStatus")
+                        .WithMany()
+                        .HasForeignKey("CustomerStatusId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.HasOne("ccsc.DataLayer.Entities.Customers.CustomerType", "CustomerType")
                         .WithMany()
                         .HasForeignKey("CustomerTypeId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.Navigation("CustomerStatus");
 
                     b.Navigation("CustomerType");
                 });

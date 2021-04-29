@@ -14,11 +14,14 @@ namespace ccsc.Web.Controllers
 	[Authorize]
 	public class CustomersController : Controller
 	{
+		private ISmsService _smsService;
+
 		private ICustomerService _service;
 		private readonly CcscContext _context;
 
-		public CustomersController(ICustomerService service, CcscContext context)
+		public CustomersController(ISmsService smsService, ICustomerService service, CcscContext context)
 		{
+			_smsService = smsService;
 			_service = service;
 			_context = context;
 		}
@@ -27,13 +30,21 @@ namespace ccsc.Web.Controllers
 		public async Task<IActionResult> Index(string searchString)
 		{
 			var ccscContext = _context.Customers
+				.Include(c => c.CustomerStatus)
 				.Include(c => c.CustomerType)
+				.OrderByDescending(c => c.HasUnSupportedContract)
+				.ThenBy(c => c.Title)
 				.ToListAsync();
+
 			if (!String.IsNullOrEmpty(searchString))
 			{
 				ccscContext = _context.Customers
 					.Where(c => c.Title.Contains(searchString))
-					.Include(c => c.CustomerType).OrderBy(c=>c.Title).ToListAsync();
+					.Include(c => c.CustomerStatus)
+					.Include(c => c.CustomerType)
+					.OrderByDescending(c => c.HasUnSupportedContract)
+					.ThenBy(c => c.Title)
+					.ToListAsync();
 			}
 
 			return View(await ccscContext);
@@ -73,6 +84,7 @@ namespace ccsc.Web.Controllers
 		// GET: Customers/Create
 		public IActionResult Create()
 		{
+            ViewData["CustomerStatusId"] = new SelectList(_context.CustomerStatuses, "CustomerStatusId", "Title");
 			ViewData["CustomerTypeId"] = new SelectList(_context.CustomerTypes, "CustomerTypeId", "Title");
 			return View();
 		}
@@ -82,7 +94,7 @@ namespace ccsc.Web.Controllers
 		// more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
 		[HttpPost]
 		[ValidateAntiForgeryToken]
-		public async Task<IActionResult> Create([Bind("CustomerId,Title,CustomerTypeId,Url,Version,VersionCheckDate,SMSUser,SMSPass,SMSCredit,MinSMSCredit,SMSCreditCheckDate,IsActiveSms,AfterXDay,SendSmsDate,UniversityId,CustomerTypeId")] Customer customer)
+		public async Task<IActionResult> Create([Bind("CustomerId,Title,Url,Version,VersionCheckDate,SmsUser,SmsPass,SmsCredit,MinSmsCredit,SmsCreditCheckDate,IsActiveSms,AfterXDay,SendSmsDate,UniversityId,HasUnSupportedContract,CustomerStatusId,CustomerTypeId")] Customer customer)
 		{
 			if (ModelState.IsValid)
 			{
@@ -90,6 +102,7 @@ namespace ccsc.Web.Controllers
 				await _context.SaveChangesAsync();
 				return RedirectToAction(nameof(Index));
 			}
+			ViewData["CustomerStatusId"] = new SelectList(_context.CustomerStatuses, "CustomerStatusId", "Title", customer.CustomerStatusId);
 			ViewData["CustomerTypeId"] = new SelectList(_context.CustomerTypes, "CustomerTypeId", "Title", customer.CustomerTypeId);
 			return View(customer);
 		}
@@ -108,6 +121,7 @@ namespace ccsc.Web.Controllers
 				return NotFound();
 			}
 			ViewData["CustomerTypeId"] = new SelectList(_context.CustomerTypes, "CustomerTypeId", "Title", customer.CustomerTypeId);
+			ViewData["CustomerStatusId"] = new SelectList(_context.CustomerStatuses, "CustomerStatusId", "Title", customer.CustomerStatusId);
 			return View(customer);
 		}
 
@@ -116,7 +130,7 @@ namespace ccsc.Web.Controllers
 		// more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
 		[HttpPost]
 		[ValidateAntiForgeryToken]
-		public async Task<IActionResult> Edit(int id, [Bind("CustomerId,Title,CustomerTypeId,Url,Version,VersionCheckDate,SMSUser,SMSPass,SMSCredit,MinSMSCredit,SMSCreditCheckDate,IsActiveSms,AfterXDay,SendSmsDate,UniversityId")] Customer customer)
+		public async Task<IActionResult> Edit(int id, [Bind("CustomerId,Title,Url,Version,VersionCheckDate,SmsUser,SmsPass,SmsCredit,MinSmsCredit,SmsCreditCheckDate,IsActiveSms,AfterXDay,SendSmsDate,UniversityId,HasUnSupportedContract,CustomerStatusId,CustomerTypeId")] Customer customer)
 		{
 			if (id != customer.CustomerId)
 			{
@@ -144,6 +158,7 @@ namespace ccsc.Web.Controllers
 				return RedirectToAction(nameof(Index));
 			}
 			ViewData["CustomerTypeId"] = new SelectList(_context.CustomerTypes, "CustomerTypeId", "Title", customer.CustomerTypeId);
+			ViewData["CustomerStatuses"] = new SelectList(_context.CustomerStatuses, "CustomerStatusId", "Title", customer.CustomerStatusId);
 			return View(customer);
 		}
 
@@ -156,6 +171,7 @@ namespace ccsc.Web.Controllers
 			}
 
 			var customer = await _context.Customers
+				.Include(c => c.CustomerStatus)
 				.Include(c => c.CustomerType)
 				.FirstOrDefaultAsync(m => m.CustomerId == id);
 			if (customer == null)
@@ -230,6 +246,61 @@ namespace ccsc.Web.Controllers
 			await _context.SaveChangesAsync();
 			var url = "../Details/" + id.Value.ToString();
 			return Redirect(url);
+		}
+
+		public async Task<IActionResult> SmsCredit(int? id)
+		{
+			if (id == null)
+			{
+				return NotFound();
+			}
+
+
+			var customer = await _context.Customers.FindAsync(id);
+			try
+			{
+				var smsCredit = _smsService.GetSMSCredit(customer.SmsUser, customer.SmsPass);
+
+				customer.SmsCredit = smsCredit;
+				customer.SmsCreditCheckDate = DateTime.Now;
+				_context.Update(customer);
+
+			}
+			catch (Exception)
+			{
+				// ignored
+			}
+
+			await _context.SaveChangesAsync();
+			var url = "../Details/" + id.Value.ToString();
+			return Redirect(url);
+		}
+
+
+		public async Task<IActionResult> SmsCredits()
+		{
+
+			var ccscContext = _context.Customers
+				.Include(c => c.CustomerType)
+				.Where(c=>c.IsActiveSms);
+			foreach (Customer customer in ccscContext)
+				try
+				{
+					var smsCredit = _smsService.GetSMSCredit(customer.SmsUser, customer.SmsPass);
+
+					customer.SmsCredit = smsCredit;
+					customer.SmsCreditCheckDate = DateTime.Now;
+					_context.Update(customer);
+
+				}
+				catch
+				{
+					// ignored
+				}
+
+			await _context.SaveChangesAsync();
+
+			return RedirectToAction(nameof(Index));
 		}
 
 		public async Task<IActionResult> GetContactsOfCustomer(int id)

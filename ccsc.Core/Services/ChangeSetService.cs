@@ -2,6 +2,7 @@
 using ccsc.Core.Services.Interfaces;
 using ccsc.DataLayer.Context;
 using ccsc.DataLayer.Entities.ChangeSets;
+using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -14,6 +15,15 @@ namespace ccsc.Core.Services
 		public ChangeSetService(CcscContext context)
 		{
 			_context = context;
+		}
+
+		public IQueryable<ChangeSet> GetChangeSets() 
+		{
+			var result = _context.ChangeSets
+				.Include(c => c.AppUser)
+				.Include(c => c.ChangeType)
+				.Include(c => c.Video);
+			return result;
 		}
 
 		public void AddChangeSet(ChangeSet newChangeSet)

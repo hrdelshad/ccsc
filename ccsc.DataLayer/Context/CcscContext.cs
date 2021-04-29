@@ -148,7 +148,7 @@ namespace ccsc.DataLayer.Context
 
 		public DbSet<CustomerType> CustomerTypes { get; set; }
 		public DbSet<Customer> Customers { get; set; }
-
+		public DbSet<CustomerStatus> CustomerStatuses { get; set; }
 		public DbSet<ServerType> ServerTypes { get; set; }
 		public DbSet<Server> Servers { get; set; }
 		public DbSet<Os> Oses { get; set; }
