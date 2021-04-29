@@ -81,7 +81,7 @@ namespace ccsc.Web.Controllers
 		}
 
 		[HttpPost("login", Name = "PostLogin")]
-		public async Task<IActionResult> Login(LoginViewModel model, string returnUrl = null)
+		public async Task<IActionResult> Login(LoginViewModel model, string returnUrl)
 		{
 			if (_signInManager.IsSignedIn(User))
 				return !string.IsNullOrEmpty(returnUrl)
