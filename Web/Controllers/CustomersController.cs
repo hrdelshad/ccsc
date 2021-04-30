@@ -303,6 +303,28 @@ namespace ccsc.Web.Controllers
 			return RedirectToAction(nameof(Index));
 		}
 
+		public async Task<IActionResult> SetSupportStatus()
+		{
+
+			var ccscContext = _context.Customers;
+			foreach (Customer customer in ccscContext)
+				try
+				{
+					var supportStatus = _service.HasUnSupportedContract(customer.CustomerId);
+
+					customer.HasUnSupportedContract = supportStatus;
+					_context.Update(customer);
+
+				}
+				catch
+				{
+					// ignored
+				}
+
+			await _context.SaveChangesAsync();
+
+			return RedirectToAction(nameof(Index));
+		}
 		public async Task<IActionResult> GetContactsOfCustomer(int id)
 		{
 			var contacts = _service.GetContactOfCustomerListItems(id, true);

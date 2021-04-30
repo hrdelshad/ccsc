@@ -41,6 +41,8 @@
 	var remainingDays = (item.StartDate.AddMonths(item.Duration) - DateTime.Now).Days;
 	var myClass = "";
 	var contractStatus = "";
+	var amount = item.Amount.ToString("0,0");
+	var startDate = item.StartDate.PersianDate();
 	if (remainingDays > 70) { myClass = "table-success"; contractStatus = "فعال";}
 	if (69 >= remainingDays && remainingDays >= 50) { myClass = "table-primary"; contractStatus = "یادآوری"; }
 	if (49 >= remainingDays && remainingDays >= 20) { myClass = "table-info"; contractStatus = "اقدام به پیگیری"; }
@@ -58,13 +60,13 @@
 			@Html.DisplayFor(modelItem => item.ContractNo)
 		</td>
 		<td>
-			@Html.DisplayFor(modelItem => item.StartDate)
+			@startDate
 		</td>
 		<td>
 			@Html.DisplayFor(modelItem => item.Duration)
 		</td>
 		<td>
-			<input asp-for="@item.Amount" asp-format="{0:0,0}" class="form-control"/>
+			@amount
 		</td>
 		<td>
 			@Html.DisplayFor(modelItem => item.UnLimited)

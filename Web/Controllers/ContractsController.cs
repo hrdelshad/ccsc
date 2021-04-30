@@ -26,7 +26,10 @@ namespace ccsc.Web.Controllers
 		// GET: Contracts1
 		public async Task<IActionResult> Index()
 		{
-			var ccscContext = _context.Contracts.Include(c => c.ContractStatus).Include(c => c.Customer);
+			var ccscContext = _context.Contracts
+				.Include(c => c.ContractStatus)
+				.Include(c => c.Customer)
+				.OrderBy(c=>c.StartDate.AddMonths(c.Duration));
 			return View(await ccscContext.ToListAsync());
 		}
 
@@ -51,18 +54,19 @@ namespace ccsc.Web.Controllers
 		}
 
 		// GET: Contracts1/Create
-		public IActionResult Create(int? customerId)
+		public IActionResult Create(int? id)
 		{
 
 			ViewData["ContractStatusId"] = new SelectList(_context.ContractStatuses, "ContractStatusId", "Title");
 			ViewData["CustomerId"] = new SelectList(_context.Customers, "CustomerId", "Title");
-			if (customerId != null)
+			if (id != null)
 			{
-				var customer = _context.Customers.Find(customerId);
+				var customer = _context.Customers.Find(id);
 				var customerType = _context.CustomerTypes.Find(customer.CustomerTypeId);
-				ViewData["CustomerId"] = new SelectList(_context.Customers.Where(c => c.CustomerId == customerId), "CustomerId", "Title");
+				ViewData["CustomerId"] = new SelectList(_context.Customers.Where(c => c.CustomerId == id), "CustomerId", "Title");
 				ViewData["CustomerTitle"] = customer.Title;
 				ViewData["CustomerType"] = customerType.Title;
+				TempData["CId"] = customer.CustomerId;
 			}
 			return View();
 		}

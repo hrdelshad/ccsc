@@ -29,7 +29,7 @@ namespace ccsc.DataLayer.Entities.Customers
 		public string Version { get; set; }
 
 		[Display(Name = "ت. بررسی ورژن")]
-		public DateTime? VersionCheckDate { get; set; }
+		public DateTime VersionCheckDate { get; set; }
 
 		[Display(Name = "کاربری پیامک")]
 		[MaxLength(50, ErrorMessage = "{0} نمیتواند بیشتر از {0} کارکتر باشد")]
@@ -47,8 +47,8 @@ namespace ccsc.DataLayer.Entities.Customers
 		[Column(TypeName = "decimal(18, 0)")]
 		public decimal MinSmsCredit { get; set; }
 
-		[Display(Name = "زمان بررسی اعتبار پیامک")]
-		public DateTime? SmsCreditCheckDate { get; set; }
+		[Display(Name = "بررسی پیامک")]
+		public DateTime SmsCreditCheckDate { get; set; }
 
 		[Display(Name = "پیامک؟")]
 		public bool IsActiveSms { get; set; }

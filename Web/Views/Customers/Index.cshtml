@@ -9,7 +9,7 @@
 	<thead>
 		<tr>
 			<th>
-				@Html.DisplayNameFor(model => model.Title)
+				<a asp-action="SetSupportStatus">@Html.DisplayNameFor(model => model.Title)</a>
 			</th>
 			<th>
 				@Html.DisplayNameFor(model => model.Url)
@@ -40,12 +40,21 @@
 	<tbody>
 		@foreach (var item in Model)
 		{
-			var c = "";
+			var customerStatusClass = "";
+			var smsCreditClass = "";
+			var smsCreditCheckDate = item.SmsCreditCheckDate;
+			var versionCheckDate = item.VersionCheckDate;
+
+
 			if (item.HasUnSupportedContract)
 			{
-				c = "table-danger";
+				customerStatusClass = "table-danger";
 			}
-			<tr class=@c>
+			if (item.SmsCredit < item.MinSmsCredit && item.IsActiveSms)
+			{
+				smsCreditClass = "text-danger";
+			}
+			<tr class=@customerStatusClass>
 				<td>
 					<a asp-action="Details" asp-route-id="@item.CustomerId">@Html.DisplayFor(modelItem => item.Title)</a>
 				</td>
@@ -53,16 +62,16 @@
 					<a href="@item.Url" target="_blank">@Html.DisplayFor(modelItem => item.Url)</a>
 				</td>
 				<td>
-					@Html.DisplayFor(modelItem => item.Version )
+					@Html.DisplayFor(modelItem => item.Version)
 				</td>
 				<td>
-					@Html.DisplayFor(modelItem => item.VersionCheckDate)
+					@versionCheckDate.PersianDateTime()
+				</td>
+				<td class=@smsCreditClass>
+					@item.SmsCredit.ToString("0,0")
 				</td>
 				<td>
-					 @item.SmsCredit.ToString("0,0")
-				</td>
-				<td>
-					@Html.DisplayFor(modelItem => item.SmsCreditCheckDate)
+					@smsCreditCheckDate.PersianDateTime()
 				</td>
 				<td>
 					@Html.DisplayFor(modelItem => item.IsActiveSms)
@@ -75,5 +84,6 @@
 				</td>
 			</tr>
 		}
+
 	</tbody>
 </table>

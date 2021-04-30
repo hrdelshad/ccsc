@@ -26,7 +26,7 @@
 			<div class="container-fluid">
 				@if (SignInManager.IsSignedIn(User))
 				{
-					<form class="form-inline my-2 my-lg-0" asp-area="" asp-controller="Accounts" asp-action="Logout" method="post">
+					<form class="navbar-brand m-1" asp-area="" asp-controller="Accounts" asp-action="Logout" method="post">
 						<button class="btn btn-outline-danger my-2 my-sm-0 material-icons" type="submit">power_settings_new</button>
 					</form>
 

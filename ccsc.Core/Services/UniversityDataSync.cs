@@ -87,7 +87,7 @@ namespace ccsc.Core.Services
 			}
 			catch (Exception ex)
 			{
-				return "سرور در دسترس نیست.";
+				return "Not Responding";
 			}
 
 		}

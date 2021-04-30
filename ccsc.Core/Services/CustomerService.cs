@@ -113,7 +113,7 @@ namespace ccsc.Core.Services
 			}
 			catch (Exception)
 			{
-				return "سرور در دسترس نیست.";
+				return "Not Responding";
 			}
 
 		}
@@ -141,7 +141,7 @@ namespace ccsc.Core.Services
 			}
 			catch (Exception)
 			{
-				return "سرور در دسترس نیست.";
+				return "Not Responding";
 			}
 
 		}
