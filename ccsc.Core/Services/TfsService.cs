@@ -22,9 +22,9 @@ namespace ccsc.Core.Services
 				// قبل از پایان باید توکن جدید دریافت کرد.
 				// برای ساخت توکن از این آدرس زیر استفاده کرد:
 				// https://residency.visualstudio.com/_usersSettings/tokens
-				// token name: ccsc-20220417
-				// Expires Date: 2022-04-17
-				var personalaccesstoken = "772huxvwvpjfa5x6fya2x5a5ci3d3pgegxhjjnblnpjdqpl5zp6a";
+				// 
+				// Expires Date: 2022-05-1
+				var personalaccesstoken = "jl36ubrbhwiglz7ej4xrtopd5kwj23xq3v756wwe3aztr7nph4xa";
 
 				using (HttpClient client = new HttpClient())
 				{

@@ -2,7 +2,7 @@
 using ccsc.DataLayer.Entities.Tutorials;
 using System.ComponentModel.DataAnnotations;
 
-namespace ccsc.DataLayer.Entities.Services
+namespace ccsc.DataLayer.Entities.Tutorials
 {
 	public class Faq
 	{
@@ -18,6 +18,9 @@ namespace ccsc.DataLayer.Entities.Services
 		[Required(ErrorMessage = "لطفا {0} را وارد کنید")]
 		[MaxLength(2000, ErrorMessage = "{0} نمیتواند بیشتر از {1} کارکتر باشد")]
 		public string Answer { get; set; }
+
+		[Display(Name = "فعال؟")]
+		public bool IsActive { get; set; }
 
 		#region Relations
 

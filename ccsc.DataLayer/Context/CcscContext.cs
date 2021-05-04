@@ -12,6 +12,7 @@ using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Threading.Tasks;
+using Faq = ccsc.DataLayer.Entities.Tutorials.Faq;
 
 namespace ccsc.DataLayer.Context
 {
@@ -170,7 +171,6 @@ namespace ccsc.DataLayer.Context
 
 		public DbSet<Duty> Duties { get; set; }
 		public DbSet<DutyStatus> DutyStatuses { get; set; }
-		public DbSet<Faq> Faqs { get; set; }
 		public DbSet<Service> Services { get; set; }
 		public DbSet<ServiceStatus> ServiceStatuses { get; set; }
 		public DbSet<ServiceType> ServiceTypes { get; set; }
@@ -180,6 +180,7 @@ namespace ccsc.DataLayer.Context
 
 		#region Tutorials
 
+		public DbSet<Faq> Faqs { get; set; }
 		public DbSet<UserType> UserTypes { get; set; }
 		public DbSet<Video> Videos { get; set; }
 

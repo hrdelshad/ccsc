@@ -11,8 +11,8 @@
 		Model.Version = "بروزرسانی";
 	}
 	var smsCredit = Model.SmsCredit.ToString("0,0");
-	var smsCheckDate = Model.SmsCreditCheckDate.PersianDateTime();
-	var versionCheckDate = Model.VersionCheckDate.PersianDateTime();
+	//var smsCheckDate = Model.SmsCreditCheckDate.PersianDateTime();
+	//var versionCheckDate = Model.VersionCheckDate.PersianDateTime();
 }
 
 <h6>@fullName</h6>
@@ -65,7 +65,7 @@
 					@Html.DisplayNameFor(model => model.VersionCheckDate)
 				</dt>
 				<dd class="col-sm-10">
-					@versionCheckDate
+					@Html.DisplayFor(model => model.VersionCheckDate)
 				</dd>
 				<dt class="col-sm-2 text-left">
 					@Html.DisplayNameFor(model => model.SmsUser)
@@ -83,7 +83,7 @@
 					<a asp-controller="Customers" asp-action="SmsCredit" asp-route-id="@id">@Html.DisplayNameFor(model => model.SmsCredit)</a>
 				</dt>
 				<dd class="col-sm-10">
-					@smsCredit
+					@Html.DisplayFor(model => model.SmsCredit)
 				</dd>
 				<dt class="col-sm-2 text-left">
 					@Html.DisplayNameFor(model => model.MinSmsCredit)
@@ -95,7 +95,8 @@
 					@Html.DisplayNameFor(model => model.SmsCreditCheckDate)
 				</dt>
 				<dd class="col-sm-10">
-					@smsCheckDate
+					@Html.DisplayFor(model => model.SmsCreditCheckDate)
+					@*@smsCheckDate*@
 				</dd>
 				<dt class="col-sm-2 text-left">
 					@Html.DisplayNameFor(model => model.IsActiveSms)

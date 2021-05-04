@@ -11,7 +11,7 @@
 	<link rel="stylesheet" href="~/lib/bootstrap/bootstrap-5.0.0-beta3-dist/css/bootstrap.rtl.min.css" />
 	<link rel="stylesheet" href="~/css/site.css" />
 	<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
-
+	<link href="~/Assets/persian_fonts_override.css" rel="stylesheet" />
 	<link href="https://kendo.cdn.telerik.com/2020.2.513/styles/kendo.bootstrap-v4.min.css" rel="stylesheet" type="text/css" />
 	<link href="https://kendo.cdn.telerik.com/2020.2.513/styles/kendo.rtl.min.css" rel="stylesheet" type="text/css" />
 	<script src="https://kendo.cdn.telerik.com/2020.2.513/js/jquery.min.js"></script>
@@ -47,8 +47,8 @@
 						{
 
 							@*<li class="nav-item">
-						<a class="nav-link text-light" asp-area="" asp-controller="Accounts" asp-action="Register">عضویت</a>
-					</li>*@
+									<a class="nav-link text-light" asp-area="" asp-controller="Accounts" asp-action="Register">عضویت</a>
+								</li>*@
 							<li class="nav-item">
 								<a class="nav-link text-light material-icons" asp-area="" asp-controller="Accounts" asp-action="Login">input</a>
 							</li>
@@ -140,6 +140,7 @@
 								<div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
 									<a class="dropdown-item" asp-area="" asp-controller="Videos" asp-action="Index">ویدیوها</a>
 									<a class="dropdown-item" asp-area="" asp-controller="ChangeSets" asp-action="Index">تغییرات</a>
+									<a class="dropdown-item" asp-area="" asp-controller="Faqs" asp-action="Index">تغییرات</a>
 								</div>
 							</li>
 						}
@@ -169,5 +170,10 @@
 	<script src="https://cdn.tiny.cloud/1/no-api-key/tinymce/5/tinymce.min.js" referrerpolicy="origin"></script>
 
 	@RenderSection("Scripts", required: false)
+	<script type="text/ecmascript">
+		$(document).ready(function() {
+			   $('input[type=datetime-local]').datepicker({ dateFormat: "yy/mm/dd", isRTL: true, showButtonPanel: true });
+		   });
+	</script>
 </body>
 </html>

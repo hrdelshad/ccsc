@@ -2,6 +2,7 @@
 using ccsc.DataLayer.Entities.Contracts;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using System.Collections.Generic;
+using ccsc.DataLayer.Entities.Customers;
 
 namespace ccsc.Core.Services.Interfaces
 {
@@ -11,6 +12,8 @@ namespace ccsc.Core.Services.Interfaces
 		string TabibVersion(string url);
 
 		bool CustomerExists(int customerId);
+
+		List<Customer> getCustomers();
 
 		List<SelectListItem> GetCustomerListItems();
 		List<SelectListItem> GetContactOfCustomerListItems(int customerId);

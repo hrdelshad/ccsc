@@ -24,6 +24,8 @@ namespace ccsc.DataLayer.Entities.Contracts
 
 		[Display(Name = "تاریخ شروع قرارداد")]
 		[Required(ErrorMessage = "لطفا {0} را وارد کنید")]
+		//[DisplayFormat(DataFormatString = "{0:yyyy/MM/dd}", ApplyFormatInEditMode = true)]
+		[DataType(DataType.Date)]
 		public DateTime StartDate { get; set; }
 
 		[Display(Name = "مدت قرارداد(ماه)")]
@@ -33,6 +35,8 @@ namespace ccsc.DataLayer.Entities.Contracts
 		[Display(Name = "مبلغ")]
 		[Required(ErrorMessage = "لطفا {0} را وارد کنید")]
 		[Column(TypeName = "decimal(18, 0)")]
+		[DisplayFormat(DataFormatString = "{0:n}", ApplyFormatInEditMode = false)]
+		//[DataType(DataType.Currency)]
 		public decimal Amount { get; set; }
 
 		[Display(Name = "نامحدود")]

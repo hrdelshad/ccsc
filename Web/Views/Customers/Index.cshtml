@@ -54,35 +54,38 @@
 			{
 				smsCreditClass = "text-danger";
 			}
-			<tr class=@customerStatusClass>
-				<td>
-					<a asp-action="Details" asp-route-id="@item.CustomerId">@Html.DisplayFor(modelItem => item.Title)</a>
-				</td>
-				<td>
-					<a href="@item.Url" target="_blank">@Html.DisplayFor(modelItem => item.Url)</a>
-				</td>
-				<td>
-					@Html.DisplayFor(modelItem => item.Version)
-				</td>
-				<td>
-					@versionCheckDate.PersianDateTime()
-				</td>
-				<td class=@smsCreditClass>
-					@item.SmsCredit.ToString("0,0")
-				</td>
-				<td>
-					@smsCreditCheckDate.PersianDateTime()
-				</td>
-				<td>
-					@Html.DisplayFor(modelItem => item.IsActiveSms)
-				</td>
-				<td>
-					@Html.DisplayFor(modelItem => item.CustomerType.Title)
-				</td>
-				<td>
-					<a asp-action="Delete" asp-route-id="@item.CustomerId">حذف</a>
-				</td>
-			</tr>
+		<tr class=@customerStatusClass>
+			<td>
+				<a asp-action="Details" asp-route-id="@item.CustomerId">@Html.DisplayFor(modelItem => item.Title)</a>
+			</td>
+			<td>
+				<a href="@item.Url" target="_blank">@Html.DisplayFor(modelItem => item.Url)</a>
+			</td>
+			<td>
+				@Html.DisplayFor(modelItem => item.Version)
+			</td>
+			<td>
+				@Html.DisplayFor(modelItem => item.VersionCheckDate)
+				@*@versionCheckDate.PersianDateTime()*@
+			</td>
+			<td class=@smsCreditClass>
+				@*@item.SmsCredit.ToString("0,0")*@
+				@Html.DisplayFor(modelItem => item.SmsCredit)
+			</td>
+			<td>
+				@*@smsCreditCheckDate.PersianDateTime()*@
+				@Html.DisplayFor(modelItem => item.SmsCreditCheckDate)
+			</td>
+			<td>
+				@Html.DisplayFor(modelItem => item.IsActiveSms)
+			</td>
+			<td>
+				@Html.DisplayFor(modelItem => item.CustomerType.Title)
+			</td>
+			<td>
+				<a asp-action="Delete" asp-route-id="@item.CustomerId">حذف</a>
+			</td>
+		</tr>
 		}
 
 	</tbody>

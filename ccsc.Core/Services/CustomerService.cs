@@ -9,6 +9,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
 using System.Text.RegularExpressions;
+using System.Threading.Tasks;
+using ccsc.DataLayer.Entities.Customers;
+using Microsoft.EntityFrameworkCore;
 
 namespace ccsc.Core.Services
 {
@@ -24,6 +27,14 @@ namespace ccsc.Core.Services
 		public bool CustomerExists(int id)
 		{
 			return _context.Customers.Any(e => e.CustomerId == id);
+		}
+
+		public List<Customer> getCustomers()
+		{
+			var  customers = _context.Customers
+				.Include(c => c.CustomerStatus)
+				.Include(c => c.CustomerType);
+			return customers.ToList();
 		}
 
 		public List<SelectListItem> GetCustomerListItems()

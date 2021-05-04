@@ -29,7 +29,9 @@ namespace ccsc.DataLayer.Entities.Customers
 		public string Version { get; set; }
 
 		[Display(Name = "ت. بررسی ورژن")]
-		public DateTime VersionCheckDate { get; set; }
+		[DataType(DataType.Date)]
+		[DisplayFormat(DataFormatString = "{0:H:mm yyyy/MM/dd}", ApplyFormatInEditMode = false)]
+		public DateTime? VersionCheckDate { get; set; }
 
 		[Display(Name = "کاربری پیامک")]
 		[MaxLength(50, ErrorMessage = "{0} نمیتواند بیشتر از {0} کارکتر باشد")]
@@ -41,14 +43,18 @@ namespace ccsc.DataLayer.Entities.Customers
 
 		[Display(Name = "اعتبار پیامک")]
 		[Column(TypeName = "decimal(18, 0)")]
+		[DisplayFormat(DataFormatString = "{0:N}", ApplyFormatInEditMode = false)]
 		public decimal SmsCredit { get; set; }
 
 		[Display(Name = "کف اعتبار")]
 		[Column(TypeName = "decimal(18, 0)")]
+		[DisplayFormat(DataFormatString = "{0:N}", ApplyFormatInEditMode = false)]
 		public decimal MinSmsCredit { get; set; }
 
 		[Display(Name = "بررسی پیامک")]
-		public DateTime SmsCreditCheckDate { get; set; }
+		[DataType(DataType.DateTime)]
+		[DisplayFormat(DataFormatString = "{0:H:mm yyyy/MM/dd}", ApplyFormatInEditMode = false)]
+		public DateTime? SmsCreditCheckDate { get; set; }
 
 		[Display(Name = "پیامک؟")]
 		public bool IsActiveSms { get; set; }
@@ -57,6 +63,7 @@ namespace ccsc.DataLayer.Entities.Customers
 		public int AfterXDay { get; set; }
 
 		[Display(Name = "ت. ارسال پیامک")]
+		[DataType(DataType.Date)]
 		public DateTime? SendSmsDate { get; set; }
 
 		[Display(Name = "کد")]

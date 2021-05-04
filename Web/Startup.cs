@@ -1,4 +1,6 @@
-﻿using ccsc.Core.Services;
+﻿using System.Globalization;
+using ccsc.Core.Convertors;
+using ccsc.Core.Services;
 using ccsc.Core.Services.Identity;
 using ccsc.Core.Services.Identity.Stores;
 using ccsc.Core.Services.Identity.Validators;
@@ -34,6 +36,11 @@ namespace ccsc.Web
 		// This method gets called by the runtime. Use this method to add services to the container.
 		public void ConfigureServices(IServiceCollection services)
 		{
+
+
+			CultureInfo.DefaultThreadCurrentCulture
+				= CultureInfo.DefaultThreadCurrentUICulture
+					= PersianDateExtensions.GetPersianCulture();
 
 			#region Quartz
 			services.AddSingleton<IJobFactory, SingletonJobFactory>();

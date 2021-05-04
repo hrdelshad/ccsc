@@ -45,6 +45,15 @@
     <Folder Include="Views\Configs\" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="wwwroot\Assets\persian_fonts\sahel\Sahel-Black-FD.woff2" />
+    <None Include="wwwroot\Assets\persian_fonts\sahel\Sahel-Bold-FD.woff2" />
+    <None Include="wwwroot\Assets\persian_fonts\sahel\Sahel-FD.woff2" />
+    <None Include="wwwroot\Assets\persian_fonts\vazir\Vazir-Black-FD.woff2" />
+    <None Include="wwwroot\Assets\persian_fonts\vazir\Vazir-Bold-FD.woff2" />
+    <None Include="wwwroot\Assets\persian_fonts\vazir\Vazir-FD.woff2" />
+    <None Include="wwwroot\Assets\persian_fonts\vazir\Vazir-Light-FD.woff2" />
+    <None Include="wwwroot\Assets\persian_fonts\vazir\Vazir-Medium-FD.woff2" />
+    <None Include="wwwroot\Assets\persian_fonts\vazir\Vazir-Thin-FD.woff2" />
     <None Include="wwwroot\lib\bootstrap\bootstrap-5.0.0-beta3-dist\css\bootstrap-grid.css.map" />
     <None Include="wwwroot\lib\bootstrap\bootstrap-5.0.0-beta3-dist\css\bootstrap-grid.min.css.map" />
     <None Include="wwwroot\lib\bootstrap\bootstrap-5.0.0-beta3-dist\css\bootstrap-grid.rtl.css.map" />

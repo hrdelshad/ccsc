@@ -69,13 +69,18 @@ namespace ccsc.Web.Controllers
 		}
 
 		[HttpGet("login", Name = "GetLogin")]
-		public IActionResult Login(string returnUrl = null)
+		public IActionResult Login(string returnUrl)
 		{
 			if (_signInManager.IsSignedIn(User))
-				return string.IsNullOrEmpty(returnUrl)
-					? RedirectToLocal(returnUrl)
+			{
+				return string.IsNullOrEmpty(returnUrl) 
+					? RedirectToLocal(returnUrl) 
 					: RedirectToAction("Index", "Home");
-
+			}
+			if (string.IsNullOrEmpty(returnUrl))
+			{
+				returnUrl = "~/home/index";
+			}
 			ViewData["returnUrl"] = returnUrl;
 			return View();
 		}

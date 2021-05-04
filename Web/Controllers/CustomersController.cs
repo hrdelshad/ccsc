@@ -14,9 +14,8 @@ namespace ccsc.Web.Controllers
 	[Authorize]
 	public class CustomersController : Controller
 	{
-		private ISmsService _smsService;
-
-		private ICustomerService _service;
+		private readonly ISmsService _smsService;
+		private readonly ICustomerService _service;
 		private readonly CcscContext _context;
 
 		public CustomersController(ISmsService smsService, ICustomerService service, CcscContext context)
@@ -29,25 +28,19 @@ namespace ccsc.Web.Controllers
 		// GET: Customers
 		public async Task<IActionResult> Index(string searchString)
 		{
-			var ccscContext = _context.Customers
-				.Include(c => c.CustomerStatus)
-				.Include(c => c.CustomerType)
+			var customers = _service.getCustomers()
 				.OrderByDescending(c => c.HasUnSupportedContract)
-				.ThenBy(c => c.Title)
-				.ToListAsync();
+				.ThenBy(c => c.Title);
 
 			if (!String.IsNullOrEmpty(searchString))
 			{
-				ccscContext = _context.Customers
+				customers = _service.getCustomers()
 					.Where(c => c.Title.Contains(searchString))
-					.Include(c => c.CustomerStatus)
-					.Include(c => c.CustomerType)
 					.OrderByDescending(c => c.HasUnSupportedContract)
-					.ThenBy(c => c.Title)
-					.ToListAsync();
+					.ThenBy(c => c.Title);
 			}
 
-			return View(await ccscContext);
+			return View (customers);
 		}
 
 		[HttpPost]

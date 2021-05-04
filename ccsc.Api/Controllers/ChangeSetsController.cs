@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using ccsc.Core.Services.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using ccsc.DataLayer.Context;
@@ -13,22 +14,29 @@ namespace ccsc.Api.Controllers
     public class ChangeSetsController : ControllerBase
     {
         private readonly CcscContext _context;
+        //private readonly IChangeSetService _changeSetService;
+
 
         public ChangeSetsController(CcscContext context)
         {
-            _context = context;
+	        _context = context;
         }
 
         // GET: api/ChangeSets
         [HttpGet]
         public async Task<ActionResult<IEnumerable<ChangeSet>>> GetChangeSets()
         {
-            var result = await _context.ChangeSets
-                //.Where(v => v.IsPublish == true)
-                //.Include(v => v.SubSystems)
-                //.Include(v => v.UserTypes)
-                .ToListAsync();
-            Request.HttpContext.Response.Headers.Add("x-New", "30");
+	        var result = //await _changeSetService.GetChangeSets().ToListAsync();
+				await _context.ChangeSets
+				.Where(v => v.IsPublish == true)
+				//.Include(v => v.SubSystems)
+				//.Include(v => v.UserTypes)
+				.Include(c => c.AppUser)
+				.Include(c => c.ChangeType)
+				//.Include(c => c.Video)
+				.ToListAsync();
+
+			Request.HttpContext.Response.Headers.Add("x-New", "30");
             return result;
         }
 
