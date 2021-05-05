@@ -1,15 +1,11 @@
 ﻿@model IEnumerable<ccsc.DataLayer.Entities.Tutorials.Faq>
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "پرسشهای پر تکرار";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h1>Index</h1>
-
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
+<h4>@ViewData["Title"]</h4>
 <table class="table">
     <thead>
         <tr>
@@ -23,37 +19,31 @@
                 @Html.DisplayNameFor(model => model.IsActive)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.UserType)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.SubSystem)
-            </th>
-            <th>
                 @Html.DisplayNameFor(model => model.Video)
             </th>
             <th></th>
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model) {
+@foreach (var item in Model)
+{
+	var shortAnswer = "";
+	@if (item.Answer.Length > 100)
+	{
+		shortAnswer = item.Answer.Substring(0, 100) + " ...";
+	}
         <tr>
             <td>
                 @Html.DisplayFor(modelItem => item.Question)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Answer)
+                @shortAnswer
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.IsActive)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.UserType.Title)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.SubSystem.Title)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Video.Description)
+                @Html.DisplayFor(modelItem => item.Video.Title)
             </td>
             <td>
                 <a asp-action="Edit" asp-route-id="@item.FaqId">Edit</a> |

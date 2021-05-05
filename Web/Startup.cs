@@ -112,12 +112,13 @@ namespace ccsc.Web
 
 			#region DI
 
-			services.AddTransient<IMyMailService, MyMailService>();
-			services.AddTransient<ICustomerService, CustomerService>();
-			services.AddTransient<ITfsService, TfsService>();
 			services.AddTransient<IChangeSetService, ChangeSetService>();
-			services.AddTransient<IVideoService, VideoService>();
+			services.AddTransient<ICustomerService, CustomerService>();
+			services.AddTransient<IFaqService, FaqService>();
+			services.AddTransient<IMyMailService, MyMailService>();
 			services.AddTransient<ISmsService, SmsService>();
+			services.AddTransient<ITfsService, TfsService>();
+			services.AddTransient<IVideoService, VideoService>();
 
 
 			#endregion

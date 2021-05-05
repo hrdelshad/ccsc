@@ -29,6 +29,9 @@ namespace ccsc.DataLayer.Entities.Tutorials
 		[Display(Name = "تغییرات مرتبط")]
 		public ICollection<ChangeSet> ChangeSets { get; set; }
 
+		[Display(Name = "سوالات")]
+		public ICollection<Faq> Faqs { get; set; }
+
 		#endregion
 	}
 }

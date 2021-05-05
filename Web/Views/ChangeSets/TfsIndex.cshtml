@@ -1,12 +1,11 @@
 ﻿@model IEnumerable<TfsChangeSetViewModel>
 
 @{
-	ViewData["Title"] = "تغییرات";
+	ViewData["Title"] = "آخرین تغییرات تی اف اس";
 	Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h3>فهرست آخرین تغییرات</h3>
-<p>@DateTime.Now.PersianDateDayOfWeek()</p>
+<h3>@ViewData["Title"]</h3>
 <table class="table">
 	<thead>
 		<tr>
@@ -43,22 +42,11 @@
 				</td>
 				<td>
 					@Html.DisplayFor(modelItem => item.Author.DisplayName)
-					@Html.DisplayFor(modelItem => item.AppUserId)
 				</td>
 				<td>
 					@Html.DisplayFor(modelItem => item.Comment)
 				</td>
-				<td>
-					<form asp-action="Create" asp-controller="ChangeSets">
-						<input asp-for="@changhSet.ChangeSetId" class="form-control" />
-						<input asp-for="@changhSet.AppUserId" class="form-control" />
-						<input asp-for="@changhSet.Date" class="form-control" />
-						<input asp-for="@changhSet.Comment" class="form-control" />
-						<input type="submit" value="Add" class="btn btn-outline-dark" />
-					</form>
-				</td>
 			</tr>
-
 		}
 	</tbody>
 </table>

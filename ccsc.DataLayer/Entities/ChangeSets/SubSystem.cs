@@ -36,6 +36,9 @@ namespace ccsc.DataLayer.Entities.ChangeSets
 		[Display(Name = "قرارداد(ها)")]
 		public ICollection<Contract> Contracts { get; set; }
 
+		[Display(Name = "سوالات")]
+		public ICollection<Faq> Faqs { get; set; }
+
 		#endregion
 
 	}

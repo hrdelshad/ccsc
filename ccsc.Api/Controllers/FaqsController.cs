@@ -1,6 +1,8 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using ccsc.DataLayer.Context;
@@ -8,7 +10,7 @@ using ccsc.DataLayer.Entities.Tutorials;
 
 namespace ccsc.Api.Controllers
 {
-	[Route("[controller]")]
+    [Route("[controller]")]
     [ApiController]
     public class FaqsController : ControllerBase
     {
@@ -23,13 +25,13 @@ namespace ccsc.Api.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Faq>>> GetFaqs()
         {
-	        var faqs = await _context.Faqs
-		        .Include(f=>f.SubSystem)
-		        .Include(f=>f.UserType)
-		        .Include(f=>f.Video)
-                .ToListAsync();
+	        var result = await _context.Faqs
+		        .Where(f => f.IsActive)
+		        .Include(v => v.SubSystems)
+		        .Include(v => v.UserTypes)
+		        .ToListAsync();
 	        Request.HttpContext.Response.Headers.Add("x-New", "30");
-            return faqs;
+	        return result;
         }
 
         // GET: api/Faqs/5

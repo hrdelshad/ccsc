@@ -1,56 +1,113 @@
 ﻿@model ccsc.DataLayer.Entities.Tutorials.Faq
+@using ccsc.DataLayer.Entities.ChangeSets
+@using ccsc.DataLayer.Entities.Tutorials
 
 @{
-    ViewData["Title"] = "Create";
-    Layout = "~/Views/Shared/_Layout.cshtml";
+	ViewData["Title"] = "ثبت پرسش پر تکرار";
+	Layout = "~/Views/Shared/_Layout.cshtml";
+	List<SubSystem> subSystems = ViewData["SubSystem"] as List<SubSystem>;
+	List<UserType> userTypes = ViewData["UserType"] as List<UserType>;
 }
 
-<h1>Create</h1>
-
-<h4>Faq</h4>
+<h4>@ViewData["Title"]</h4>
 <hr />
+@*<div class="row">
+	<div class="col-md-4">
+		<form asp-action="Create">
+			<div asp-validation-summary="ModelOnly" class="text-danger"></div>
+			<div class="form-group">
+				<label asp-for="Question" class="control-label"></label>
+				<input asp-for="Question" class="form-control" />
+				<span asp-validation-for="Question" class="text-danger"></span>
+			</div>
+			<div class="form-group">
+				<label asp-for="Answer" class="control-label"></label>
+				<input asp-for="Answer" class="form-control" />
+				<span asp-validation-for="Answer" class="text-danger"></span>
+			</div>
+			<div class="form-group form-check">
+				<label class="form-check-label">
+					<input class="form-check-input" asp-for="IsActive" /> @Html.DisplayNameFor(model => model.IsActive)
+				</label>
+			</div>
+			<div class="form-group">
+				<label asp-for="VideoId" class="control-label"></label>
+				<select asp-for="VideoId" class="form-control" asp-items="ViewBag.VideoId"></select>
+			</div>
+			<div class="form-group">
+				<input type="submit" value="Create" class="btn btn-primary" />
+			</div>
+		</form>
+	</div>
+</div>*@
+
 <div class="row">
-    <div class="col-md-4">
-        <form asp-action="Create">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <div class="form-group">
-                <label asp-for="Question" class="control-label"></label>
-                <input asp-for="Question" class="form-control" />
-                <span asp-validation-for="Question" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Answer" class="control-label"></label>
-                <input asp-for="Answer" class="form-control" />
-                <span asp-validation-for="Answer" class="text-danger"></span>
-            </div>
-            <div class="form-group form-check">
-                <label class="form-check-label">
-                    <input class="form-check-input" asp-for="IsActive" /> @Html.DisplayNameFor(model => model.IsActive)
-                </label>
-            </div>
-            <div class="form-group">
-                <label asp-for="UserTypeId" class="control-label"></label>
-                <select asp-for="UserTypeId" class ="form-control" asp-items="ViewBag.UserTypeId"></select>
-            </div>
-            <div class="form-group">
-                <label asp-for="SubSystemId" class="control-label"></label>
-                <select asp-for="SubSystemId" class ="form-control" asp-items="ViewBag.SubSystemId"></select>
-            </div>
-            <div class="form-group">
-                <label asp-for="VideoId" class="control-label"></label>
-                <select asp-for="VideoId" class ="form-control" asp-items="ViewBag.VideoId"></select>
-            </div>
-            <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-primary" />
-            </div>
-        </form>
-    </div>
+	<form asp-action="Create" enctype="multipart/form-data">
+		<div class="row">
+			<div class="col-md-5">
+				<div asp-validation-summary="ModelOnly" class="text-danger"></div>
+				<div class="form-group">
+					<label asp-for="Question" class="control-label"></label>
+					<input asp-for="Question" class="form-control" />
+					<span asp-validation-for="Question" class="text-danger"></span>
+				</div>
+				<div class="form-group">
+					<label asp-for="Answer" class="control-label"></label>
+					<input asp-for="Answer" class="form-control" />
+					<span asp-validation-for="Answer" class="text-danger"></span>
+				</div>
+				<div class="form-group form-check">
+					<label class="form-check-label">
+						<input class="form-check-input" asp-for="IsActive" /> @Html.DisplayNameFor(model => model.IsActive)
+					</label>
+				</div>
+				<div class="form-group">
+					<label asp-for="VideoId" class="control-label"></label>
+					<select asp-for="VideoId" class="form-control" asp-items="ViewBag.VideoId">
+						
+					</select>
+				</div>
+			</div>
+			<div class="col-md-4">
+				<div>محصولات مرتبط</div>
+				<hr />
+				<div class="form-group form-check">
+					@foreach (var item in subSystems)
+					{
+						<div class="form-check">
+							<label class="form-check-label">
+								<input type="checkbox" name="SelectedSubSystems" class="form-check-input" value="@item.SubSystemId" /> @item.Title
+							</label>
+						</div>
+					}
+				</div>
+			</div>
+			<div class="col-md-3">
+				<div>مخاطبان</div>
+				<hr />
+				<div class="form-group form-check">
+					@foreach (var item in userTypes)
+					{
+						<div class="form-check">
+							<label class="form-check-label">
+								<input type="checkbox" name="SelectedUserTypes" class="form-check-input" value="@item.UserTypeId" /> @item.Title
+							</label>
+						</div>
+					}
+				</div>
+			</div>
+		</div>
+		<div class="form-group">
+			<input type="submit" value="ثبت" class="btn btn-primary" />
+		</div>
+	</form>
+
 </div>
 
 <div>
-    <a asp-action="Index">Back to List</a>
+	<a asp-action="Index">Back to List</a>
 </div>
 
 @section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+	@{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
 }
