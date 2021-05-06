@@ -3,8 +3,10 @@ using System.ComponentModel.DataAnnotations;
 
 namespace ccsc.DataLayer.Entities.Contacts
 {
+	[Display(Name = "قرارداد")]
 	public class Contact
 	{
+		
 		public Contact()
 		{
 
