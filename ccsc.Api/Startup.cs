@@ -25,7 +25,7 @@ namespace ccsc.Api
 			services
 				.AddControllers()
 				.SetCompatibilityVersion(CompatibilityVersion.Version_3_0);
-
+			services.AddResponseCaching();
 			#region Database Contexts
 
 			services.AddDbContext<CcscContext>(options =>
@@ -65,6 +65,8 @@ namespace ccsc.Api
 			{
 				endpoints.MapControllers();
 			});
+
+			app.UseResponseCaching();
 		}
 	}
 }

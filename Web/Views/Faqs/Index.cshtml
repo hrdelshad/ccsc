@@ -1,56 +1,61 @@
 ﻿@model IEnumerable<ccsc.DataLayer.Entities.Tutorials.Faq>
 
 @{
-    ViewData["Title"] = "پرسشهای پر تکرار";
-    
+	ViewData["Title"] = "فهرست پرسشهای پر تکرار";
 }
 
-<h4>@ViewData["Title"]</h4>
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.Question)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Answer)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.IsActive)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Video)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-@foreach (var item in Model)
-{
-	var shortAnswer = "";
-	@if (item.Answer.Length > 100)
-	{
-		shortAnswer = item.Answer.Substring(0, 100) + " ...";
-	}
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Question)
-            </td>
-            <td>
-                @shortAnswer
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.IsActive)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Video.Title)
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.FaqId">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.FaqId">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.FaqId">Delete</a>
-            </td>
-        </tr>
-}
-    </tbody>
+<h3>@ViewData["Title"]</h3>
+
+<table class="table table-light table-striped">
+	<thead>
+		<tr>
+			<th>
+				@Html.DisplayNameFor(model => model.Question)
+			</th>
+			<th>
+				@Html.DisplayNameFor(model => model.Answer)
+			</th>
+			<th>
+				@Html.DisplayNameFor(model => model.IsActive)
+			</th>
+			<th>
+				@Html.DisplayNameFor(model => model.Customer)
+			</th>
+			<th>
+				@Html.DisplayNameFor(model => model.Video)
+			</th>
+			<th></th>
+		</tr>
+	</thead>
+	<tbody>
+		@foreach (var item in Model)
+		{
+			var shortAnswer = item.Answer;
+			if (item.Answer.Length > 100)
+			{
+				shortAnswer = item.Answer.Substring(0, 100) + " ...";
+			}
+			<tr>
+				<td>
+					@Html.DisplayFor(modelItem => item.Question)
+				</td>
+				<td>
+					@shortAnswer
+				</td>
+				<td>
+					@Html.DisplayFor(modelItem => item.IsActive)
+				</td>
+				<td>
+					@Html.DisplayFor(modelItem => item.Customer.Title)
+				</td>
+				<td>
+					@Html.DisplayFor(modelItem => item.Video.Title)
+				</td>
+				<td>
+					<a class="btn btn-outline-info" asp-action="Edit" asp-route-id="@item.FaqId">ویرایش</a>
+					<a class="btn btn-outline-danger" asp-action="Delete" asp-route-id="@item.FaqId">حذف</a>
+				</td>
+			</tr>
+		}
+	</tbody>
 </table>

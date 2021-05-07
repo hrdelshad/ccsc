@@ -1,11 +1,12 @@
 ﻿using System.Collections.Generic;
 using ccsc.DataLayer.Entities.ChangeSets;
-using ccsc.DataLayer.Entities.Tutorials;
 using System.ComponentModel.DataAnnotations;
+using ccsc.DataLayer.Entities.Common;
+using ccsc.DataLayer.Entities.Customers;
 
 namespace ccsc.DataLayer.Entities.Tutorials
 {
-	public class Faq
+	public class Faq : BaseEntity
 	{
 		[Key]
 		public int FaqId { get; set; }
@@ -24,6 +25,15 @@ namespace ccsc.DataLayer.Entities.Tutorials
 		public bool IsActive { get; set; }
 
 		#region Relations
+
+		[Display(Name = "کد دانشگاه")]
+		public int? UniversityId { get; set; }
+
+		[Display(Name = "کد مشتری مرتبط")]
+		public int? CustomerId { get; set; }
+
+		[Display(Name = "مشتری مرتبط")]
+		public Customer Customer { get; set; }
 
 		[Display(Name = "کد ویدیو مرتبط")]
 		public int? VideoId { get; set; }
