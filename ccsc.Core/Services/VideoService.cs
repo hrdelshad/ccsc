@@ -11,11 +11,21 @@ namespace ccsc.Core.Services
 {
 	public class VideoService : IVideoService
 	{
-		private CcscContext _context;
+		private readonly CcscContext _context;
+		private readonly ISubSystemService _subSystemService;
+		private IUserTypeService _userTypeService;
 
-		public VideoService(CcscContext context)
+		public VideoService(CcscContext context, ISubSystemService subSystemService, IUserTypeService userTypeService)
 		{
 			_context = context;
+			_subSystemService = subSystemService;
+			_userTypeService = userTypeService;
+		}
+
+		public async Task<List<Video>> GetAllVideos()
+		{
+			var videos = await _context.Videos.ToListAsync();
+			return videos;
 		}
 
 		public int AddVideo(Video video)
@@ -27,10 +37,8 @@ namespace ccsc.Core.Services
 
 		public async Task UpdateVideoAsync(Video updatedVideo, List<int> subSystemIds, List<int> userTypeIds)
 		{
-			//updatedVideo.SubSystems = null;
-			//updatedVideo.UserTypes = null;
-			updatedVideo.SubSystems = GetSubSystemsByIds(subSystemIds);
-			updatedVideo.UserTypes = GetUserTypesByIds(userTypeIds);
+			updatedVideo.SubSystems = await _subSystemService.GetSubSystemsByIds(subSystemIds);
+			updatedVideo.UserTypes = await _userTypeService.GetUserTypesByIds(userTypeIds);
 
 			_context.Update(updatedVideo);
 			await _context.SaveChangesAsync();
@@ -72,23 +80,6 @@ namespace ccsc.Core.Services
 			_context.SaveChanges();
 		}
 
-		public List<SubSystem> GetSubSystems()
-		{
-			return _context.SubSystems.ToList();
-		}
-
-		public List<SubSystem> GetSubSystemsByIds(List<int> subSystemIds)
-		{
-			List<SubSystem> subSystems = new List<SubSystem>();
-			foreach (int id in subSystemIds)
-			{
-				var ss = GetSubSystemById(id);
-				subSystems.Add(ss);
-			}
-
-			return subSystems;
-		}
-
 		public List<SubSystem> GetSubSystemsOfVideo(int id)
 		{
 			List<SubSystem> videoSubSystems = new List<SubSystem>();
@@ -98,28 +89,6 @@ namespace ccsc.Core.Services
 				.ToList();
 
 			return videoSubSystems;
-		}
-
-		public SubSystem GetSubSystemById(int id)
-		{
-			return _context.SubSystems.Find(id);
-		}
-
-		public List<UserType> GetUserTypes()
-		{
-			return _context.UserTypes.ToList();
-		}
-
-		public List<UserType> GetUserTypesByIds(List<int> userTypeIds)
-		{
-			List<UserType> userTypes = new List<UserType>();
-			foreach (int id in userTypeIds)
-			{
-				var ut = GetUserTypeById(id);
-				userTypes.Add(ut);
-			}
-
-			return userTypes;
 		}
 
 		public List<UserType> GetUserTypesForVideo(int id)
@@ -133,12 +102,8 @@ namespace ccsc.Core.Services
 			return videoUserTypes;
 		}
 
-		public UserType GetUserTypeById(int id)
-		{
-			return _context.UserTypes.Find(id);
-		}
-
-		public void AddVideo(Video newVideo, List<int> subSystemIds, List<int> userTypeIds)
+		
+		public async Task AddVideo(Video newVideo, List<int> subSystemIds, List<int> userTypeIds)
 		{
 			_context.AddRange(
 				new Video
@@ -150,10 +115,10 @@ namespace ccsc.Core.Services
 					ModifiedOn = newVideo.PublishedOn,
 					Description = newVideo.Description,
 					Publish = newVideo.Publish,
-					SubSystems = GetSubSystemsByIds(subSystemIds),
-					UserTypes = GetUserTypesByIds(userTypeIds)
+					SubSystems = await _subSystemService.GetSubSystemsByIds(subSystemIds),
+					UserTypes = await _userTypeService.GetUserTypesByIds(userTypeIds)
 				}
-			);
+			); 
 			_context.SaveChanges();
 		}
 

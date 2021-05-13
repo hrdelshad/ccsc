@@ -1,10 +1,10 @@
-﻿#nullable enable
-using ccsc.DataLayer.Entities.Tutorials;
+﻿using ccsc.DataLayer.Entities.Tutorials;
 using ccsc.DataLayer.Entities.Users;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using ccsc.DataLayer.Entities.Common;
 
 namespace ccsc.DataLayer.Entities.ChangeSets
 {
@@ -40,8 +40,7 @@ namespace ccsc.DataLayer.Entities.ChangeSets
 		public string? Description { get; set; }
 
 		[Display(Name = "ورژن")]
-		[MaxLength(30, ErrorMessage = "{0} نمیتواند بیشتر از {1} کارکتر باشد")]
-		public string? Version { get; set; }
+		public int? Version { get; set; }
 
 
 		[Display(Name = "انتشار")] 
@@ -63,10 +62,10 @@ namespace ccsc.DataLayer.Entities.ChangeSets
 		public int? VideoId { get; set; }
 
 		[Display(Name = "ویدیو مرتبط")]
-		public Video? Video { get; set; }
+		public Video Video { get; set; }
 
 
-		[Display(Name = "مخاطبان")]
+		[Display(Name = "مخاطب(ها)")]
 		public ICollection<UserType> UserTypes { get; set; }
 
 		[Display(Name = "سامانه(ها)")]

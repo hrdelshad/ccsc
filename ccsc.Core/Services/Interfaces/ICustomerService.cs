@@ -2,7 +2,9 @@
 using ccsc.DataLayer.Entities.Contracts;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using System.Collections.Generic;
+using ccsc.DataLayer.Entities.ChangeSets;
 using ccsc.DataLayer.Entities.Customers;
+using ccsc.DataLayer.Entities.Tutorials;
 
 namespace ccsc.Core.Services.Interfaces
 {

@@ -1,13 +1,23 @@
-﻿@model IEnumerable<ccsc.DataLayer.Entities.Customers.Customer>
+﻿@using Microsoft.TeamFoundation.Common
+@model IEnumerable<ccsc.DataLayer.Entities.Customers.Customer>
 
 @{
 	ViewData["Title"] = "دانشگاه ها";
-	
+	int minVersion = 9999;
+	int version = 9999;
+	var tempVersion = TempData["MinVersion"].ToString();
+	var tempVersionDesc = TempData["MinVersionDesc"].ToString();
+	if (!tempVersion.IsNullOrEmpty())
+	{
+		minVersion = int.Parse(tempVersion);
+	}
 }
-
 <table class="table table-light table-striped">
 	<thead>
 		<tr>
+			<th>
+				کد
+			</th>
 			<th>
 				<a asp-action="SetSupportStatus">@Html.DisplayNameFor(model => model.Title)</a>
 			</th>
@@ -42,9 +52,15 @@
 		{
 			var customerStatusClass = "";
 			var smsCreditClass = "";
+			var versionClass = "";
+			var versionTitle = "";
 			var smsCreditCheckDate = item.SmsCreditCheckDate;
 			var versionCheckDate = item.VersionCheckDate;
-
+			if (!item.Version.IsNullOrEmpty())
+			{
+				var versionStr = item.Version.Substring(4, 4);
+				version = int.Parse(versionStr);
+			}
 
 			if (item.HasUnSupportedContract)
 			{
@@ -54,14 +70,21 @@
 			{
 				smsCreditClass = "text-danger";
 			}
+			if (version < minVersion)
+			{
+				versionClass = "text-danger";
+				versionTitle = tempVersionDesc;
+			}
 			<tr class=@customerStatusClass>
+
+				<td>@Html.DisplayFor(modelItem => item.UniversityCode)</td>
 				<td>
 					<a asp-action="Details" asp-route-id="@item.CustomerId">@Html.DisplayFor(modelItem => item.Title)</a>
 				</td>
 				<td>
 					<a href="@item.Url" target="_blank">@Html.DisplayFor(modelItem => item.Url)</a>
 				</td>
-				<td>
+				<td class="@versionClass" title="@versionTitle">
 					@Html.DisplayFor(modelItem => item.Version)
 				</td>
 				<td>

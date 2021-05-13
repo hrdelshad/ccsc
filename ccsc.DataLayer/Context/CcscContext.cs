@@ -12,6 +12,7 @@ using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Threading.Tasks;
+using ccsc.DataLayer.Entities.Common;
 using Faq = ccsc.DataLayer.Entities.Tutorials.Faq;
 
 namespace ccsc.DataLayer.Context
@@ -116,6 +117,12 @@ namespace ccsc.DataLayer.Context
 		public DbSet<ChangeSet> ChangeSets { get; set; }
 		public DbSet<ChangeType> ChangeTypes { get; set; }
 		public DbSet<SubSystem> SubSystems { get; set; }
+
+		#endregion
+
+		#region Common
+
+		public DbSet<Config> Configs { get; set; }
 
 		#endregion
 

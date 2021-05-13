@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using ccsc.DataLayer.Context;
 using ccsc.DataLayer.Entities.Contracts;
 using Microsoft.AspNetCore.Authorization;
@@ -14,16 +15,18 @@ namespace ccsc.Web.Controllers
 	[Authorize]
 	public class ContractsController : Controller
 	{
-		private readonly ICustomerService _customerService;
 		private readonly CcscContext _context;
+		private readonly IContractService _contractService;
+		private ISubSystemService _subSystemService;
 
-		public ContractsController(ICustomerService customerService, CcscContext context)
+		public ContractsController(CcscContext context, IContractService contractService, ISubSystemService subSystemService)
 		{
-			_customerService = customerService;
 			_context = context;
+			_contractService = contractService;
+			_subSystemService = subSystemService;
 		}
 
-		// GET: Contracts1
+		// GET: Contracts
 		public async Task<IActionResult> Index()
 		{
 			var ccscContext = _context.Contracts
@@ -33,7 +36,7 @@ namespace ccsc.Web.Controllers
 			return View(await ccscContext.ToListAsync());
 		}
 
-		// GET: Contracts1/Details/5
+		// GET: Contracts/Details/5
 		public async Task<IActionResult> Details(int? id)
 		{
 			if (id == null)
@@ -53,10 +56,11 @@ namespace ccsc.Web.Controllers
 			return View(contract);
 		}
 
-		// GET: Contracts1/Create
+		// GET: Contracts/Create
 		public IActionResult Create(int? id)
 		{
 
+			ViewData["SubSystem"] = _subSystemService.GetSubSystems();
 			ViewData["ContractStatusId"] = new SelectList(_context.ContractStatuses, "ContractStatusId", "Title");
 			ViewData["CustomerId"] = new SelectList(_context.Customers, "CustomerId", "Title");
 			if (id != null)
@@ -71,16 +75,16 @@ namespace ccsc.Web.Controllers
 			return View();
 		}
 
-		// POST: Contracts1/Create
+		// POST: Contracts/Create
 		// To protect from overposting attacks, enable the specific properties you want to bind to.
 		// For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
 		[HttpPost]
 		[ValidateAntiForgeryToken]
-		public async Task<IActionResult> Create([Bind("ContractId,Title,ContractNo,StartDate,Duration,Amount,UnLimited,ContractStatusId,CustomerId")] Contract contract)
+		public async Task<IActionResult> Create([Bind("ContractId,Title,ContractNo,StartDate,Duration,Amount,UnLimited,ContractStatusId,CustomerId")] Contract contract, List<int> selectedSubSystems)
 		{
 			if (ModelState.IsValid)
 			{
-				_context.Add(contract);
+				await _contractService.AddContract(contract, selectedSubSystems);
 				await _context.SaveChangesAsync();
 				return RedirectToAction(nameof(Index));
 			}
@@ -89,7 +93,7 @@ namespace ccsc.Web.Controllers
 			return View(contract);
 		}
 
-		// GET: Contracts1/Edit/5
+		// GET: Contracts/Edit/5
 		public async Task<IActionResult> Edit(int? id)
 		{
 			if (id == null)
@@ -104,27 +108,45 @@ namespace ccsc.Web.Controllers
 			}
 			ViewData["ContractStatusId"] = new SelectList(_context.ContractStatuses, "ContractStatusId", "Title", contract.ContractStatusId);
 			ViewData["CustomerId"] = new SelectList(_context.Customers, "CustomerId", "Title", contract.CustomerId);
+
+			ViewData["SubSystem"] = _subSystemService.GetSubSystems();
+			ViewData["SelectedSubSystem"] = _contractService.GetSubSystemsOfContract(id.Value);
 			return View(contract);
 		}
 
-		// POST: Contracts1/Edit/5
+		// POST: Contracts/Edit/5
 		// To protect from overposting attacks, enable the specific properties you want to bind to.
 		// For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
 		[HttpPost]
 		[ValidateAntiForgeryToken]
-		public async Task<IActionResult> Edit(int id, [Bind("ContractId,Title,ContractNo,StartDate,Duration,Amount,UnLimited,ContractStatusId,CustomerId")] Contract contract)
+		public async Task<IActionResult> Edit(int id, [Bind("ContractId,Title,ContractNo,StartDate,Duration,Amount,UnLimited,ContractStatusId,CustomerId")] Contract inputContract, List<int> selectedSubSystems)
 		{
-			if (id != contract.ContractId)
+			if (id != inputContract.ContractId)
 			{
 				return NotFound();
 			}
+
+			var contract = _context.Contracts
+				.Include(f => f.SubSystems)
+				.Single(e => e.ContractId == id) ?? throw new ArgumentNullException("_context.Contracts\r\n\t\t        .Include(i => i.SubSystems)\r\n\t\t        .Where(i => i.ContractId == id).Single()");
+			contract.Title = inputContract.Title;
+			contract.ContractNo = inputContract.ContractNo;
+			contract.StartDate = inputContract.StartDate;
+			contract.Duration = inputContract.Duration;
+			contract.Amount = inputContract.Amount;
+			contract.UnLimited = inputContract.UnLimited;
+			contract.ContractStatusId = inputContract.ContractStatusId;
+			contract.CustomerId = inputContract.CustomerId;
 
 			if (ModelState.IsValid)
 			{
 				try
 				{
-					_context.Update(contract);
-					await _context.SaveChangesAsync();
+					
+					
+					await _contractService.RemoveContractRelatedAsync(contract);
+					await _contractService.UpdateContractAsync(contract, selectedSubSystems);
+
 					var customer = _context.Customers.Find(contract.CustomerId);
 					if (contract.StartDate.AddMonths(contract.Duration) < DateTime.Now)
 					{
@@ -148,10 +170,12 @@ namespace ccsc.Web.Controllers
 			}
 			ViewData["ContractStatusId"] = new SelectList(_context.ContractStatuses, "ContractStatusId", "Title", contract.ContractStatusId);
 			ViewData["CustomerId"] = new SelectList(_context.Customers, "CustomerId", "Title", contract.CustomerId);
+
+
 			return View(contract);
 		}
 
-		// GET: Contracts1/Delete/5
+		// GET: Contracts/Delete/5
 		public async Task<IActionResult> Delete(int? id)
 		{
 			if (id == null)
@@ -171,7 +195,7 @@ namespace ccsc.Web.Controllers
 			return View(contract);
 		}
 
-		// POST: Contracts1/Delete/5
+		// POST: Contracts/Delete/5
 		[HttpPost, ActionName("Delete")]
 		[ValidateAntiForgeryToken]
 		public async Task<IActionResult> DeleteConfirmed(int id)

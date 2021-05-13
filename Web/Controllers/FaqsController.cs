@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using ccsc.Core.Services.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
@@ -15,10 +16,16 @@ namespace ccsc.Web.Controllers
 	public class FaqsController : Controller
 	{
 		private readonly CcscContext _context;
+		private readonly IFaqService _faqService;
+		private readonly ISubSystemService _subSystemService;
+		private readonly IUserTypeService _userTypeService;
 
-		public FaqsController(CcscContext context)
+		public FaqsController(CcscContext context, IFaqService faqService, ISubSystemService subSystemService, IUserTypeService userTypeService)
 		{
 			_context = context;
+			_faqService = faqService;
+			_subSystemService = subSystemService;
+			_userTypeService = userTypeService;
 		}
 
 		// GET: Faqs
@@ -55,6 +62,8 @@ namespace ccsc.Web.Controllers
 		{
 			ViewData["CustomerId"] = new SelectList(_context.Customers, "CustomerId", "Title");
 			ViewData["VideoId"] = new SelectList(_context.Videos, "VideoId", "Description");
+			ViewData["SubSystem"] = _subSystemService.GetSubSystems();
+			ViewData["UserType"] = _userTypeService.GetUserTypes();
 			return View();
 		}
 
@@ -63,16 +72,17 @@ namespace ccsc.Web.Controllers
 		// For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
 		[HttpPost]
 		[ValidateAntiForgeryToken]
-		public async Task<IActionResult> Create([Bind("FaqId,Question,Answer,IsActive,CustomerId,VideoId")] Faq faq)
+		public async Task<IActionResult> Create([Bind("FaqId,Question,Answer,IsActive,CustomerId,VideoId")] Faq faq, List<int> selectedSubSystems, List<int> selectedUserTypes)
 		{
 			if (ModelState.IsValid)
 			{
-				_context.Add(faq);
-				await _context.SaveChangesAsync();
+				await _faqService.AddFaqAsync(faq, selectedSubSystems, selectedUserTypes);
 				return RedirectToAction(nameof(Index));
 			}
 			ViewData["CustomerId"] = new SelectList(_context.Customers, "CustomerId", "Title", faq.CustomerId);
 			ViewData["VideoId"] = new SelectList(_context.Videos, "VideoId", "Title", faq.VideoId);
+			
+		
 			return View(faq);
 		}
 
@@ -97,6 +107,11 @@ namespace ccsc.Web.Controllers
 
 			ViewData["CustomerId"] = new SelectList(_context.Customers, "CustomerId", "Title", faq.CustomerId);
 			ViewData["VideoId"] = new SelectList(_context.Videos, "VideoId", "Title", faq.VideoId);
+
+			ViewData["SubSystem"] = await _subSystemService.GetSubSystems();
+			ViewData["UserType"] = await _userTypeService.GetUserTypes();
+			ViewData["SelectedSubSystem"] = await _subSystemService.GetSubSystemsOfFaq(id.Value);
+			ViewData["SelectedUserType"] = await _userTypeService.GetUserTypesForFaq(id.Value);
 			return View(faq);
 		}
 
@@ -105,8 +120,23 @@ namespace ccsc.Web.Controllers
 		// For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
 		[HttpPost]
 		[ValidateAntiForgeryToken]
-		public async Task<IActionResult> Edit(int id, [Bind("FaqId,Question,Answer,IsActive,CustomerId,VideoId")] Faq faq)
+		public async Task<IActionResult> Edit(int id, [Bind("FaqId,Question,Answer,IsActive,CustomerId,VideoId")] Faq faq, List<int> selectedSubSystems, List<int> selectedUserTypes)
 		{
+
+			var updatedInput = _context.Faqs
+				.Include(f => f.SubSystems)
+				.Include(f => f.UserTypes)
+				.Single(f => f.FaqId == id) ?? throw new ArgumentNullException("_context.Faqs\r\n\t\t        .Include(i => i.SubSystems)\r\n\t\t        .Include(i => i.UserTypes)\r\n\t\t        .Where(i => i.FqqId == id).Single()");
+
+			updatedInput.Question = faq.Question;
+			updatedInput.ModifiedOn = DateTime.Now;
+			updatedInput.Answer = faq.Answer;
+			updatedInput.IsActive = faq.IsActive;
+			updatedInput.Publish = faq.Publish;
+			updatedInput.CustomerId = faq.CustomerId;
+			updatedInput.Version = faq.Version;
+			updatedInput.VideoId = faq.VideoId;
+
 			if (id != faq.FaqId)
 			{
 				return NotFound();
@@ -122,8 +152,10 @@ namespace ccsc.Web.Controllers
 			{
 				try
 				{
-					_context.Update(faq);
-					await _context.SaveChangesAsync();
+					await _faqService.RemoveFaqRelatedAsync(updatedInput);
+
+					await _faqService.UpdateFaqAsync(updatedInput, selectedSubSystems, selectedUserTypes);
+
 				}
 				catch (DbUpdateConcurrencyException)
 				{

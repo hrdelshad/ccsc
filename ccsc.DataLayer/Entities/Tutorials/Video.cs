@@ -40,6 +40,9 @@ namespace ccsc.DataLayer.Entities.Tutorials
 		[Display(Name = "انتشار")]
 		public bool Publish { get; set; }
 
+		[Display(Name = "ورژن")]
+		public int? Version { get; set; }
+
 		#region Relations
 
 		[Display(Name = "مخاطبان")]

@@ -156,9 +156,8 @@ namespace ccsc.DataLayer.Migrations
                         .HasMaxLength(400)
                         .HasColumnType("nvarchar(400)");
 
-                    b.Property<string>("Version")
-                        .HasMaxLength(30)
-                        .HasColumnType("nvarchar(30)");
+                    b.Property<int?>("Version")
+                        .HasColumnType("int");
 
                     b.Property<int?>("VideoId")
                         .HasColumnType("int");
@@ -210,6 +209,33 @@ namespace ccsc.DataLayer.Migrations
                     b.HasKey("SubSystemId");
 
                     b.ToTable("SubSystems");
+                });
+
+            modelBuilder.Entity("ccsc.DataLayer.Entities.Common.Config", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasMaxLength(2000)
+                        .HasColumnType("nvarchar(2000)");
+
+                    b.Property<string>("Key")
+                        .IsRequired()
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)");
+
+                    b.Property<string>("Value")
+                        .IsRequired()
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Configs");
                 });
 
             modelBuilder.Entity("ccsc.DataLayer.Entities.Contacts.Contact", b =>
@@ -495,6 +521,9 @@ namespace ccsc.DataLayer.Migrations
                         .IsRequired()
                         .HasMaxLength(200)
                         .HasColumnType("nvarchar(200)");
+
+                    b.Property<int?>("UniversityCode")
+                        .HasColumnType("int");
 
                     b.Property<int?>("UniversityId")
                         .HasColumnType("int");
@@ -1172,12 +1201,18 @@ namespace ccsc.DataLayer.Migrations
                     b.Property<DateTime?>("ModifiedOn")
                         .HasColumnType("datetime2");
 
+                    b.Property<bool>("Publish")
+                        .HasColumnType("bit");
+
                     b.Property<string>("Question")
                         .IsRequired()
                         .HasMaxLength(200)
                         .HasColumnType("nvarchar(200)");
 
                     b.Property<int?>("UniversityId")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("Version")
                         .HasColumnType("int");
 
                     b.Property<int?>("VideoId")
@@ -1245,6 +1280,9 @@ namespace ccsc.DataLayer.Migrations
                         .IsRequired()
                         .HasMaxLength(60)
                         .HasColumnType("nvarchar(60)");
+
+                    b.Property<int?>("Version")
+                        .HasColumnType("int");
 
                     b.HasKey("VideoId");
 

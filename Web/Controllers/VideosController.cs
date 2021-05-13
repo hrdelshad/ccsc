@@ -16,17 +16,22 @@ namespace ccsc.Web.Controllers
 	{
 		private readonly CcscContext _context;
 		private readonly IVideoService _videoService;
+		private readonly ISubSystemService _subSystemService;
+		private readonly IUserTypeService _userTypeService;
 
-		public VideosController(CcscContext context, IVideoService videoService)
+		public VideosController(CcscContext context, IVideoService videoService, ISubSystemService subSystemService, IUserTypeService userTypeService)
 		{
 			_context = context;
 			_videoService = videoService;
+			_subSystemService = subSystemService;
+			_userTypeService = userTypeService;
 		}
 
 		// GET: Videos
 		public async Task<IActionResult> Index()
 		{
-			return View(await _context.Videos.ToListAsync());
+			var videos = await _videoService.GetAllVideos();
+			return View(videos);
 		}
 
 		// GET: Videos/Details/5
@@ -48,10 +53,10 @@ namespace ccsc.Web.Controllers
 		}
 
 		// GET: Videos/Create
-		public IActionResult Create()
+		public async Task<IActionResult> Create()
 		{
-			ViewData["SubSystem"] = _videoService.GetSubSystems();
-			ViewData["UserType"] = _videoService.GetUserTypes();
+			ViewData["SubSystem"] = await _subSystemService.GetSubSystems();
+			ViewData["UserType"] = await _userTypeService.GetUserTypes();
 			return View();
 		}
 
@@ -59,15 +64,9 @@ namespace ccsc.Web.Controllers
 		[ValidateAntiForgeryToken]
 		public async Task<IActionResult> Create([Bind("VideoId,Title,Path,PosterPath,Description,PublishedOn,ModifiedOn,Publish,SubSystems")] Video video, List<int> selectedSubSystems, List<int> selectedUserTypes)
 		{
-			if (ModelState.IsValid)
-			{
-				_videoService.AddVideo(video, selectedSubSystems, selectedUserTypes);
-				//await _context.SaveChangesAsync();
-				//_videoService.AddSubSystemsToVideo(SelectedSubSystems, videoId);
-				//_videoService.AddUserTypesToVideo(SelectedUserTypes, videoId);
-				return RedirectToAction(nameof(Index));
-			}
-			return View(video);
+			if (!ModelState.IsValid) return View(video);
+			await _videoService.AddVideo(video, selectedSubSystems, selectedUserTypes);
+			return RedirectToAction(nameof(Index));
 		}
 
 		// GET: Videos/Edit/5
@@ -83,8 +82,8 @@ namespace ccsc.Web.Controllers
 			{
 				return NotFound();
 			}
-			ViewData["SubSystem"] = _videoService.GetSubSystems();
-			ViewData["UserType"] = _videoService.GetUserTypes();
+			ViewData["SubSystem"] = await _subSystemService.GetSubSystems();
+			ViewData["UserType"] = await _userTypeService.GetUserTypes();
 			ViewData["SelectedSubSystem"] = _videoService.GetSubSystemsOfVideo(id.Value);
 			ViewData["SelectedUserType"] = _videoService.GetUserTypesForVideo(id.Value);
 			return View(video);
@@ -107,6 +106,7 @@ namespace ccsc.Web.Controllers
 				updatedVideo.Publish = video.Publish;
 				updatedVideo.PublishedOn = video.PublishedOn;
 				updatedVideo.Title = video.Title;
+			
 
 			if (id != video.VideoId)
 			{

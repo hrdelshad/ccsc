@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -14,24 +15,28 @@ namespace ccsc.Web.Controllers
     public class ChangeSetsController : Controller
     {
         private readonly CcscContext _context;
-        private ITfsService _service;
-        private IChangeSetService _changeSetService;
+        private readonly ITfsService _service;
+        private readonly IChangeSetService _changeSetService;
+        private readonly ISubSystemService _subSystemService;
+        private readonly IUserTypeService _userTypeService;
 
-		public ChangeSetsController(CcscContext context, ITfsService service, IChangeSetService changeSetService)
-		{
-			_context = context;
-			_service = service;
-			_changeSetService = changeSetService;
-		}
+        public ChangeSetsController(CcscContext context, ITfsService service, IChangeSetService changeSetService, ISubSystemService subSystemService, IUserTypeService userTypeService)
+        {
+	        _context = context;
+	        _service = service;
+	        _changeSetService = changeSetService;
+	        _subSystemService = subSystemService;
+	        _userTypeService = userTypeService;
+        }
 
 
 
 		// GET: ChangeSets
 		public async Task<IActionResult> Index()
         {
-            var ccscContext = _changeSetService.GetChangeSets()
-                .OrderByDescending(c=>c.ChangeSetId);
-            return View(await ccscContext.ToListAsync());
+            var changeSets = await _changeSetService.GetChangeSets()
+                .OrderByDescending(c=>c.ChangeSetId).ToListAsync();
+            return View(changeSets);
         }
 
         // GET: ChangeSets/Details/5
@@ -56,12 +61,12 @@ namespace ccsc.Web.Controllers
         }
 
         // GET: ChangeSets/Create
-        public IActionResult Create()
+        public async Task<IActionResult> Create()
         {
-            ViewData["AppUserId"] = new SelectList(_context.AppUsers, "AppUserId", "DisplayName");
-            ViewData["ChangeTypeId"] = new SelectList(_context.ChangeTypes, "ChangeTypeId", "Title");
             ViewData["VideoId"] = new SelectList(_context.Videos, "VideoId", "Title");
-
+            ViewData["SubSystem"] = await _subSystemService.GetSubSystems();
+            ViewData["UserType"] = await _userTypeService.GetUserTypes();
+          
             return View();
         }
 
@@ -78,6 +83,7 @@ namespace ccsc.Web.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
+            
             ViewData["AppUserId"] = new SelectList(_context.AppUsers, "AppUserId", "DisplayName", changeSet.AppUserId);
             ViewData["ChangeTypeId"] = new SelectList(_context.ChangeTypes, "ChangeTypeId", "Title", changeSet.ChangeTypeId);
             ViewData["VideoId"] = new SelectList(_context.Videos, "VideoId", "Title", changeSet.VideoId);
@@ -97,9 +103,14 @@ namespace ccsc.Web.Controllers
             {
                 return NotFound();
             }
+          
             ViewData["AppUserId"] = new SelectList(_context.AppUsers, "AppUserId", "DisplayName", changeSet.AppUserId);
             ViewData["ChangeTypeId"] = new SelectList(_context.ChangeTypes, "ChangeTypeId", "Title", changeSet.ChangeTypeId);
             ViewData["VideoId"] = new SelectList(_context.Videos, "VideoId", "Title", changeSet.VideoId);
+            ViewData["SubSystem"] = await _subSystemService.GetSubSystems();
+            ViewData["UserType"] = await _userTypeService.GetUserTypes();
+            ViewData["SelectedSubSystem"] = await _subSystemService.GetCurrentSubSystems("ChangeSet",id.Value);
+            ViewData["SelectedUserType"] = await _userTypeService.GetCurrentUserTypes("ChangeSet", id.Value);
             return View(changeSet);
         }
 
@@ -108,23 +119,39 @@ namespace ccsc.Web.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("ChangeSetId,AppUserId,Date,Comment,Title,Description,Version,IsPublish,Quarter,ChangeTypeId,VideoId")] ChangeSet changeSet)
+        public async Task<IActionResult> Edit(int id, [Bind("ChangeSetId,AppUserId,Date,Comment,Title,Description,Version,IsPublish,Quarter,ChangeTypeId,VideoId")] ChangeSet inputChangeSet, List<int> selectedSubSystems, List<int> selectedUserTypes)
         {
-            if (id != changeSet.ChangeSetId)
+            if (id != inputChangeSet.ChangeSetId)
             {
                 return NotFound();
             }
+
+            var changeSet =  _changeSetService.GetChangeSets()
+	            .Where(e=>e.ChangeSetId == id)
+	            .Include(e=>e.SubSystems)
+	            .Include(e=>e.UserTypes)
+	            .Single(e=>e.ChangeSetId == id);
+
+            changeSet.Date = inputChangeSet.Date;
+            changeSet.Title = inputChangeSet.Title;
+            changeSet.Description = inputChangeSet.Description;
+            changeSet.Version = inputChangeSet.Version;
+            changeSet.IsPublish = inputChangeSet.IsPublish;
+            changeSet.Quarter = inputChangeSet.Quarter;
+            changeSet.ChangeTypeId = inputChangeSet.ChangeTypeId;
+            changeSet.VideoId = inputChangeSet.VideoId;
 
             if (ModelState.IsValid)
             {
                 try
                 {
-                    _context.Update(changeSet);
-                    await _context.SaveChangesAsync();
+	                await _changeSetService.RemoveRelatedAsync(changeSet);
+
+	                await _changeSetService.UpdateAsync(changeSet, selectedSubSystems, selectedUserTypes);
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!_changeSetService.ChangeSetExists(changeSet.ChangeSetId))
+                    if (!_changeSetService.ChangeSetExists(id))
                     {
                         return NotFound();
                     }
@@ -138,6 +165,10 @@ namespace ccsc.Web.Controllers
             ViewData["AppUserId"] = new SelectList(_context.AppUsers, "AppUserId", "DisplayName", changeSet.AppUserId);
             ViewData["ChangeTypeId"] = new SelectList(_context.ChangeTypes, "ChangeTypeId", "Title", changeSet.ChangeTypeId);
             ViewData["VideoId"] = new SelectList(_context.Videos, "VideoId", "Title", changeSet.VideoId);
+            ViewData["SubSystem"] = await _subSystemService.GetSubSystems();
+            ViewData["UserType"] = await _userTypeService.GetUserTypes();
+            ViewData["SelectedSubSystem"] = await _subSystemService.GetSubSystemsOfFaq(id);
+            ViewData["SelectedUserType"] = await _userTypeService.GetUserTypesForFaq(id);
             return View(changeSet);
         }
 

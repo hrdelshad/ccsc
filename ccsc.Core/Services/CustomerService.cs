@@ -10,7 +10,9 @@ using System.Linq;
 using System.Net.Http;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
+using ccsc.DataLayer.Entities.ChangeSets;
 using ccsc.DataLayer.Entities.Customers;
+using ccsc.DataLayer.Entities.Tutorials;
 using Microsoft.EntityFrameworkCore;
 
 namespace ccsc.Core.Services
@@ -31,7 +33,7 @@ namespace ccsc.Core.Services
 
 		public List<Customer> getCustomers()
 		{
-			var  customers = _context.Customers
+			var customers = _context.Customers
 				.Include(c => c.CustomerStatus)
 				.Include(c => c.CustomerType);
 			return customers.ToList();
@@ -42,7 +44,7 @@ namespace ccsc.Core.Services
 			return _context.Customers.Select(c => new SelectListItem()
 			{
 				Value = c.CustomerId.ToString(),
-				Text = c.CustomerType.Title +" " + c.Title
+				Text = c.CustomerType.Title + " " + c.Title
 			}).ToList();
 		}
 
@@ -63,6 +65,7 @@ namespace ccsc.Core.Services
 				return GetContactOfCustomerListItems(customerId);
 
 			}
+
 			List<SelectListItem> listItems = new List<SelectListItem>()
 			{
 				new SelectListItem() {Text = "انتخاب کنید", Value = ""}
@@ -70,6 +73,7 @@ namespace ccsc.Core.Services
 			listItems.AddRange(GetContactOfCustomerListItems(customerId));
 			return listItems;
 		}
+
 		public List<SelectListItem> GetContactListItems()
 		{
 			return _context.Contacts
@@ -90,7 +94,7 @@ namespace ccsc.Core.Services
 			return _context.Contacts.Where(c => c.CustomerId == customerId).ToList();
 		}
 
-		
+
 
 		public List<Contact> GetContactOfCustomer(int customerId)
 		{
@@ -156,6 +160,7 @@ namespace ccsc.Core.Services
 			}
 
 		}
+
 		public string GetVersionFromMainPage(string universityUrl)
 		{
 			universityUrl = TextFixer.Url(universityUrl);
@@ -174,6 +179,7 @@ namespace ccsc.Core.Services
 				{
 					throw new ApplicationException("Version Not Found in Login Page");
 				}
+
 				return version.Groups[1].Value.Trim();
 			}
 
@@ -189,6 +195,7 @@ namespace ccsc.Core.Services
 		{
 			return _context.Contracts.Where(c => c.CustomerId == customerId).ToList();
 		}
+
 		public List<SelectListItem> GetContractOfCustomerListItems(int customerId)
 		{
 			return _context.Contracts.Where(c => c.CustomerId == customerId)
@@ -206,6 +213,7 @@ namespace ccsc.Core.Services
 				return GetContractOfCustomerListItems(customerId);
 
 			}
+
 			List<SelectListItem> listItems = new List<SelectListItem>()
 			{
 				new SelectListItem() {Text = "انتخاب کنید", Value = ""}

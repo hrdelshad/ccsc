@@ -4,6 +4,7 @@ using ccsc.DataLayer.Entities.Requests;
 using ccsc.DataLayer.Entities.Services;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
@@ -29,7 +30,7 @@ namespace ccsc.DataLayer.Entities.Customers
 		public string Version { get; set; }
 
 		[Display(Name = "ت. بررسی ورژن")]
-		[DataType(DataType.Date)]
+		[DataType(DataType.DateTime)]
 		[DisplayFormat(DataFormatString = "{0:H:mm yyyy/MM/dd}", ApplyFormatInEditMode = false)]
 		public DateTime? VersionCheckDate { get; set; }
 
@@ -44,27 +45,33 @@ namespace ccsc.DataLayer.Entities.Customers
 		[Display(Name = "اعتبار پیامک")]
 		[Column(TypeName = "decimal(18, 0)")]
 		[DisplayFormat(DataFormatString = "{0:N}", ApplyFormatInEditMode = false)]
+		[DefaultValue("0")]
 		public decimal SmsCredit { get; set; }
 
 		[Display(Name = "کف اعتبار")]
 		[Column(TypeName = "decimal(18, 0)")]
 		[DisplayFormat(DataFormatString = "{0:N}", ApplyFormatInEditMode = false)]
+		[DefaultValue("1000000")]
 		public decimal MinSmsCredit { get; set; }
 
 		[Display(Name = "بررسی پیامک")]
 		[DataType(DataType.DateTime)]
-		[DisplayFormat(DataFormatString = "{0:H:mm yyyy/MM/dd}", ApplyFormatInEditMode = false)]
+		[DisplayFormat(DataFormatString = "{0:H:mm yyyy/MM/dd}", ApplyFormatInEditMode = true)]
 		public DateTime? SmsCreditCheckDate { get; set; }
 
 		[Display(Name = "پیامک؟")]
 		public bool IsActiveSms { get; set; }
 
 		[Display(Name = "ارسال پس از")]
+		[DefaultValue("3")]
 		public int AfterXDay { get; set; }
 
 		[Display(Name = "ت. ارسال پیامک")]
 		[DataType(DataType.Date)]
 		public DateTime? SendSmsDate { get; set; }
+
+		[Display(Name = "شسناسه")]
+		public int? UniversityCode { get; set; }
 
 		[Display(Name = "کد")]
 		public int? UniversityId { get; set; }

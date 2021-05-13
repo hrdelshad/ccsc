@@ -42,9 +42,6 @@
     <PackageReference Include="Telerik.UI.for.AspNet.Core" Version="2020.2.513" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Views\Configs\" />
-  </ItemGroup>
-  <ItemGroup>
     <None Include="wwwroot\Assets\persian_fonts\sahel\Sahel-Black-FD.woff2" />
     <None Include="wwwroot\Assets\persian_fonts\sahel\Sahel-Bold-FD.woff2" />
     <None Include="wwwroot\Assets\persian_fonts\sahel\Sahel-FD.woff2" />

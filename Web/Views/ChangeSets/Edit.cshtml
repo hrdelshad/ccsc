@@ -1,82 +1,122 @@
-﻿@model ccsc.DataLayer.Entities.ChangeSets.ChangeSet
+﻿@using ccsc.DataLayer.Entities.ChangeSets
+@using ccsc.DataLayer.Entities.Tutorials
+@model ccsc.DataLayer.Entities.ChangeSets.ChangeSet
 
 @{
-    ViewData["Title"] = "ویرایش تغییر";
-    
+	ViewData["Title"] = "ویرایش تغییر";
+	var subSystems = ViewData["SubSystem"] as List<SubSystem>;
+	var userTypes = ViewData["UserType"] as List<UserType>;
+
+	var selectedSubSystems = ViewData["SelectedSubSystem"] as List<SubSystem>;
+	var selectedUserTypes = ViewData["SelectedUserType"] as List<UserType>;
+
 }
 
 <h4>@ViewData["Title"]</h4>
 <hr />
-<div class="row">
-    <div class="col-md-4">
-        <form asp-action="Edit">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <input type="hidden" asp-for="ChangeSetId" />
-            <div class="form-group">
-                <label asp-for="AppUserId" class="control-label"></label>
-                <select asp-for="AppUserId" class="form-control" asp-items="ViewBag.AppUserId"></select>
-                <span asp-validation-for="AppUserId" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Date" class="control-label"></label>
-                <input asp-for="Date" class="form-control" />
-                <span asp-validation-for="Date" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Comment" class="control-label"></label>
-                <input asp-for="Comment" class="form-control" />
-                <span asp-validation-for="Comment" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Title" class="control-label"></label>
-                <input asp-for="Title" class="form-control" />
-                <span asp-validation-for="Title" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Description" class="control-label"></label>
-	            <textarea asp-for="Description" class="form-control" ></textarea>
-                <span asp-validation-for="Description" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Version" class="control-label"></label>
-                <input asp-for="Version" class="form-control" />
-                <span asp-validation-for="Version" class="text-danger"></span>
-            </div>
-            <div class="form-check form-switch mb-3">
-	            <input asp-for="IsPublish" class="form-check-input" type="checkbox" id="flexSwitchCheckChecked">
-	            <label asp-for="IsPublish" class="control-label"></label>
-	            <span asp-validation-for="IsPublish" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Quarter" class="control-label"></label>
-                <input asp-for="Quarter" class="form-control" />
-                <span asp-validation-for="Quarter" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="ChangeTypeId" class="control-label"></label>
-	            <select asp-for="ChangeTypeId" class="form-control" asp-items="ViewBag.ChangeTypeId">
-					<option selected>--- SELECT ---</option>
-	            </select>
-                <span asp-validation-for="ChangeTypeId" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="VideoId" class="control-label"></label>
-	            <select asp-for="VideoId" class="form-control" asp-items="ViewBag.VideoId">
-					<option selected></option>
-	            </select>
-                <span asp-validation-for="VideoId" class="text-danger"></span>
-            </div>
-            <div class="form-group mt-3">
-                <input type="submit" value="ذخیره" class="btn btn-primary" />
-            </div>
-        </form>
-    </div>
+<div class="text-danger">
+	@Html.ValidationSummary(false)
 </div>
+<form asp-action="Edit">
+	<div class="row">
+
+		<div class="col-md-5">
+			<div asp-validation-summary="ModelOnly" class="text-danger"></div>
+			<input type="hidden" asp-for="ChangeSetId" />
+			<div class="form-group">
+				<label asp-for="AppUserId" class="control-label"></label>
+				<select asp-for="AppUserId" class="form-control" asp-items="ViewBag.AppUserId"></select>
+				<span asp-validation-for="AppUserId" class="text-danger"></span>
+			</div>
+			<div class="form-group">
+				<label asp-for="Date" class="control-label"></label>
+				<input asp-for="Date" class="form-control" />
+				<span asp-validation-for="Date" class="text-danger"></span>
+			</div>
+			<div class="form-group">
+				<label asp-for="Comment" class="control-label"></label>
+				<input asp-for="Comment" class="form-control" />
+				<span asp-validation-for="Comment" class="text-danger"></span>
+			</div>
+			<div class="form-group">
+				<label asp-for="Title" class="control-label"></label>
+				<input asp-for="Title" class="form-control" />
+				<span asp-validation-for="Title" class="text-danger"></span>
+			</div>
+			<div class="form-group">
+				<label asp-for="Description" class="control-label"></label>
+				<textarea asp-for="Description" class="form-control"></textarea>
+				<span asp-validation-for="Description" class="text-danger"></span>
+			</div>
+			<div class="form-group">
+				<label asp-for="Version" class="control-label"></label>
+				<input asp-for="Version" class="form-control" />
+				<span asp-validation-for="Version" class="text-danger"></span>
+			</div>
+			<div class="form-check form-switch mb-3">
+				<input asp-for="IsPublish" class="form-check-input" type="checkbox" id="flexSwitchCheckChecked">
+				<label asp-for="IsPublish" class="control-label"></label>
+				<span asp-validation-for="IsPublish" class="text-danger"></span>
+			</div>
+			<div class="form-group">
+				<label asp-for="Quarter" class="control-label"></label>
+				<input asp-for="Quarter" class="form-control" />
+				<span asp-validation-for="Quarter" class="text-danger"></span>
+			</div>
+			<div class="form-group">
+				<label asp-for="ChangeTypeId" class="control-label"></label>
+				<select asp-for="ChangeTypeId" class="form-control" asp-items="ViewBag.ChangeTypeId">
+					<option selected value="">-- انتخاب کنید --</option>
+				</select>
+				<span asp-validation-for="ChangeTypeId" class="text-danger"></span>
+			</div>
+			<div class="form-group">
+				<label asp-for="VideoId" class="control-label"></label>
+				<select asp-for="VideoId" class="form-control" asp-items="ViewBag.VideoId">
+					<option selected value="">-- انتخاب کنید --</option>
+				</select>
+				<span asp-validation-for="VideoId" class="text-danger"></span>
+			</div>
+			
+		</div>
+		<div class="col-md-4">
+			<div>محصولات مرتبط</div>
+			<hr />
+			<div class="form-group form-check">
+				@foreach (var item in subSystems)
+				{
+					<div class="form-check">
+						<label class="form-check-label">
+							<input type="checkbox" name="SelectedSubSystems" class="form-check-input" @(selectedSubSystems != null && selectedSubSystems.Any(s => s.SubSystemId == item.SubSystemId) ? "checked" : "") value="@item.SubSystemId" /> @item.Title
+						</label>
+					</div>
+				}
+			</div>
+		</div>
+		<div class="col-md-3">
+			<div>مخاطبان</div>
+			<hr />
+			<div class="form-group form-check">
+				@foreach (var item in userTypes)
+				{
+					<div class="form-check">
+						<label class="form-check-label">
+							<input type="checkbox" name="SelectedUserTypes" class="form-check-input" @(selectedUserTypes != null && selectedUserTypes.Any(s => s.UserTypeId == item.UserTypeId) ? "checked" : "") value="@item.UserTypeId" /> @item.Title
+						</label>
+					</div>
+				}
+			</div>
+		</div>
+		<div class="form-group mt-3">
+	<input type="submit" value="ذخیره" class="btn btn-primary" />
+</div>
+	</div>
+</form>
 
 <div>
-    <a asp-action="Index">برگشت به فهرست تغیرات</a>
+	<a asp-action="Index">برگشت به فهرست تغیرات</a>
 </div>
 
 @section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+	@{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
 }

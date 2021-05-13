@@ -12,10 +12,14 @@ namespace ccsc.Core.Services
 	public class FaqService : IFaqService
 	{
 		private CcscContext _context;
+		private ISubSystemService _subSystemService;
+		private IUserTypeService _userTypeService;
 
-		public FaqService(CcscContext context)
+		public FaqService(CcscContext context, IUserTypeService userTypeService, ISubSystemService subSystemService)
 		{
 			_context = context;
+			_userTypeService = userTypeService;
+			_subSystemService = subSystemService;
 		}
 
 		public int AddFaq(Faq faq)
@@ -27,10 +31,8 @@ namespace ccsc.Core.Services
 
 		public async Task UpdateFaqAsync(Faq updatedFaq, List<int> subSystemIds, List<int> userTypeIds)
 		{
-			//updatedFaq.SubSystems = null;
-			//updatedFaq.UserTypes = null;
-			updatedFaq.SubSystems = GetSubSystemsByIds(subSystemIds);
-			updatedFaq.UserTypes = GetUserTypesByIds(userTypeIds);
+			updatedFaq.SubSystems = await _subSystemService.GetSubSystemsByIds(subSystemIds);
+			updatedFaq.UserTypes = await _userTypeService.GetUserTypesByIds(userTypeIds);
 
 			_context.Update(updatedFaq);
 			await _context.SaveChangesAsync();
@@ -39,8 +41,8 @@ namespace ccsc.Core.Services
 		public async Task RemoveFaqRelatedAsync(Faq faq)
 		{
 
-			var subSystems = GetSubSystemsOfFaq(faq.FaqId);
-			var userTypes = GetUserTypesForFaq(faq.FaqId);
+			var subSystems = await _subSystemService.GetSubSystemsOfFaq(faq.FaqId);
+			var userTypes = await _userTypeService.GetUserTypesForFaq(faq.FaqId);
 			
 			if (subSystems.Any())
 			{
@@ -72,73 +74,7 @@ namespace ccsc.Core.Services
 			_context.SaveChanges();
 		}
 
-		public List<SubSystem> GetSubSystems()
-		{
-			return _context.SubSystems.ToList();
-		}
-
-		public List<SubSystem> GetSubSystemsByIds(List<int> subSystemIds)
-		{
-			List<SubSystem> subSystems = new List<SubSystem>();
-			foreach (int id in subSystemIds)
-			{
-				var ss = GetSubSystemById(id);
-				subSystems.Add(ss);
-			}
-
-			return subSystems;
-		}
-
-		public List<SubSystem> GetSubSystemsOfFaq(int id)
-		{
-			List<SubSystem> faqSubSystems = new List<SubSystem>();
-			faqSubSystems = _context.SubSystems
-				.Include(s => s.Faqs)
-				.Where(s => s.Faqs.Any(v => v.FaqId == id))
-				.ToList();
-
-			return faqSubSystems;
-		}
-
-		public SubSystem GetSubSystemById(int id)
-		{
-			return _context.SubSystems.Find(id);
-		}
-
-		public List<UserType> GetUserTypes()
-		{
-			return _context.UserTypes.ToList();
-		}
-
-		public List<UserType> GetUserTypesByIds(List<int> userTypeIds)
-		{
-			List<UserType> userTypes = new List<UserType>();
-			foreach (int id in userTypeIds)
-			{
-				var ut = GetUserTypeById(id);
-				userTypes.Add(ut);
-			}
-
-			return userTypes;
-		}
-
-		public List<UserType> GetUserTypesForFaq(int id)
-		{
-			List<UserType> faqUserTypes = new List<UserType>();
-			faqUserTypes = _context.UserTypes
-				.Include(u => u.Faqs)
-				.Where(u => u.Faqs.Any(v => v.FaqId == id))
-				.ToList();
-
-			return faqUserTypes;
-		}
-
-		public UserType GetUserTypeById(int id)
-		{
-			return _context.UserTypes.Find(id);
-		}
-
-		public void AddFaq(Faq newFaq, List<int> subSystemIds, List<int> userTypeIds)
+		public async Task AddFaqAsync(Faq newFaq, List<int> subSystemIds, List<int> userTypeIds)
 		{
 			_context.AddRange(
 				new Faq
@@ -147,11 +83,11 @@ namespace ccsc.Core.Services
 					Answer = newFaq.Answer,
 					IsActive = newFaq.IsActive,
 					VideoId = newFaq.VideoId,
-					SubSystems = GetSubSystemsByIds(subSystemIds),
-					UserTypes = GetUserTypesByIds(userTypeIds)
+					SubSystems = await _subSystemService.GetSubSystemsByIds(subSystemIds),
+					UserTypes = await _userTypeService.GetUserTypesByIds(userTypeIds)
 				}
 			);
-			_context.SaveChanges();
+			await _context.SaveChangesAsync();
 		}
 
 	}

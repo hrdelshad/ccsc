@@ -1,15 +1,10 @@
 ﻿@model IEnumerable<ccsc.DataLayer.Entities.Services.Duty>
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "فهرست";
     
 }
 
-<h1>Index</h1>
-
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
 <table class="table">
     <thead>
         <tr>
@@ -62,9 +57,9 @@
                 @Html.DisplayFor(modelItem => item.DutyStatus.Title)
             </td>
             <td>
-                <a asp-action="Edit" asp-route-id="@item.DutyId">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.DutyId">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.DutyId">Delete</a>
+                <a asp-action="Edit" asp-route-id="@item.DutyId">ویرایش</a> |
+                <a asp-action="Details" asp-route-id="@item.DutyId">جزئیات</a> |
+                <a asp-action="Delete" asp-route-id="@item.DutyId">حذف</a>
             </td>
         </tr>
 }

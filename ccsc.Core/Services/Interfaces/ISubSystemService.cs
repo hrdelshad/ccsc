@@ -7,11 +7,13 @@ using System.Threading.Tasks;
 
 namespace ccsc.Core.Services.Interfaces
 {
-	interface ISubSystemService
+	public interface ISubSystemService
 	{
-		List<SubSystem> GetSubSystems();
-		List<SubSystem> GetSubSystemsByIds(List<int> subSystemIds);
-		List<SubSystem> GetSubSystemsForChangeSet(int id);
-		SubSystem GetSubSystemById(int id);
+		Task<List<SubSystem>> GetSubSystems();
+		Task<List<SubSystem>> GetSubSystemsByIds(List<int> subSystemIds);
+		Task<SubSystem> GetSubSystemById(int id);
+
+		Task<List<SubSystem>> GetSubSystemsOfFaq(int faqId);
+		Task<List<SubSystem>> GetCurrentSubSystems(string entity, int id);
 	}
 }

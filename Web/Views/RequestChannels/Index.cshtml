@@ -1,15 +1,10 @@
 ﻿@model IEnumerable<ccsc.DataLayer.Entities.Requests.RequestChannel>
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "فهرست";
     
 }
 
-<h1>Index</h1>
-
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
 <table class="table">
     <thead>
         <tr>
@@ -26,9 +21,9 @@
                 @Html.DisplayFor(modelItem => item.Title)
             </td>
             <td>
-                <a asp-action="Edit" asp-route-id="@item.RequestChannelId">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.RequestChannelId">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.RequestChannelId">Delete</a>
+                <a asp-action="Edit" asp-route-id="@item.RequestChannelId">ویرایش</a> |
+                <a asp-action="Details" asp-route-id="@item.RequestChannelId">جزئیات</a> |
+                <a asp-action="Delete" asp-route-id="@item.RequestChannelId">حذف</a>
             </td>
         </tr>
 }

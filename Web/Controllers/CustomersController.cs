@@ -17,17 +17,22 @@ namespace ccsc.Web.Controllers
 		private readonly ISmsService _smsService;
 		private readonly ICustomerService _service;
 		private readonly CcscContext _context;
+		private IConfigService _config;
 
-		public CustomersController(ISmsService smsService, ICustomerService service, CcscContext context)
+		public CustomersController(ISmsService smsService, ICustomerService service, CcscContext context, IConfigService config)
 		{
 			_smsService = smsService;
 			_service = service;
 			_context = context;
+			_config = config;
 		}
 
 		// GET: Customers
 		public async Task<IActionResult> Index(string searchString)
 		{
+			TempData["MinVersion"] = _config.GetConfigValue("MinVersion");
+			TempData["MinVersionDesc"] = _config.GetConfigDescription("MinVersion");
+			 
 			var customers = _service.getCustomers()
 				.OrderByDescending(c => c.HasUnSupportedContract)
 				.ThenBy(c => c.Title);
@@ -87,7 +92,7 @@ namespace ccsc.Web.Controllers
 		// more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
 		[HttpPost]
 		[ValidateAntiForgeryToken]
-		public async Task<IActionResult> Create([Bind("CustomerId,Title,Url,Version,VersionCheckDate,SmsUser,SmsPass,SmsCredit,MinSmsCredit,SmsCreditCheckDate,IsActiveSms,AfterXDay,SendSmsDate,UniversityId,HasUnSupportedContract,CustomerStatusId,CustomerTypeId")] Customer customer)
+		public async Task<IActionResult> Create([Bind("CustomerId,Title,Url,Version,VersionCheckDate,SmsUser,SmsPass,SmsCredit,MinSmsCredit,SmsCreditCheckDate,IsActiveSms,AfterXDay,SendSmsDate,UniversityId,HasUnSupportedContract,CustomerStatusId,CustomerTypeId,UniversityCode")] Customer customer)
 		{
 			if (ModelState.IsValid)
 			{
@@ -123,7 +128,7 @@ namespace ccsc.Web.Controllers
 		// more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
 		[HttpPost]
 		[ValidateAntiForgeryToken]
-		public async Task<IActionResult> Edit(int id, [Bind("CustomerId,Title,Url,Version,VersionCheckDate,SmsUser,SmsPass,SmsCredit,MinSmsCredit,SmsCreditCheckDate,IsActiveSms,AfterXDay,SendSmsDate,UniversityId,HasUnSupportedContract,CustomerStatusId,CustomerTypeId")] Customer customer)
+		public async Task<IActionResult> Edit(int id, [Bind("CustomerId,Title,Url,Version,VersionCheckDate,SmsUser,SmsPass,SmsCredit,MinSmsCredit,SmsCreditCheckDate,IsActiveSms,AfterXDay,SendSmsDate,UniversityId,HasUnSupportedContract,CustomerStatusId,CustomerTypeId,UniversityCode")] Customer customer)
 		{
 			if (id != customer.CustomerId)
 			{

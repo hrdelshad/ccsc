@@ -21,8 +21,15 @@ namespace ccsc.DataLayer.Entities.Tutorials
 		[MaxLength(2000, ErrorMessage = "{0} نمیتواند بیشتر از {1} کارکتر باشد")]
 		public string Answer { get; set; }
 
-		[Display(Name = "فعال؟")]
+		[Display(Name = "فعال")]
 		public bool IsActive { get; set; }
+
+		[Display(Name = "انتشار")]
+		public bool Publish { get; set; }
+
+
+		[Display(Name = "ورژن")]
+		public int? Version { get; set; }
 
 		#region Relations
 

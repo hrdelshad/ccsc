@@ -24,7 +24,7 @@ namespace ccsc.Core.Services
 				// https://residency.visualstudio.com/_usersSettings/tokens
 				// 
 				// Expires Date: 2022-05-1
-				var personalaccesstoken = "jl36ubrbhwiglz7ej4xrtopd5kwj23xq3v756wwe3aztr7nph4xa";
+				var personalaccesstoken = "quzjgi3r7lswuiucqgy4m5l72dhysa2s5u7mxfmgb272nydpxsba";
 
 				using (HttpClient client = new HttpClient())
 				{

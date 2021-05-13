@@ -5,8 +5,8 @@
 @{
 	ViewData["Title"] = "اضافه کردن ویدیو جدید";
 	
-	List<SubSystem> subSystems = ViewData["SubSystem"] as List<SubSystem>;
-	List<UserType> userTypes = ViewData["UserType"] as List<UserType>;
+	var subSystems = ViewData["SubSystem"] as List<SubSystem>;
+	var userTypes = ViewData["UserType"] as List<UserType>;
 }
 
 <h4>@ViewData["Title"]</h4>

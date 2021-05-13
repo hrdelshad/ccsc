@@ -1,27 +1,32 @@
-﻿@model ccsc.DataLayer.Entities.Contracts.Contract
+﻿@using ccsc.DataLayer.Entities.ChangeSets
+@model ccsc.DataLayer.Entities.Contracts.Contract
 
 @{
 	ViewData["Title"] = "ثبت قرارداد جدید";
-	
+
 	if (TempData["CId"] != null)
 	{
 		var cId = TempData["CId"].ToString();
 	}
 	var cTitle = ViewData["CustomerTitle"];
 	var cType = ViewData["CustomerType"];
+	List<SubSystem> subSystems = ViewData["SubSystem"] as List<SubSystem>;
+
+	List<SubSystem> selectedSubSystems = ViewData["SelectedSubSystem"] as List<SubSystem>;
 }
 
 
 <h4>@ViewData["Title"]</h4>
-@if(TempData["CId"] != null)
+@if (TempData["CId"] != null)
 {
 	var cId = TempData["CId"].ToString();
-<p>@cType  <a asp-controller="Customers" asp-action="Details" asp-route-id="@cId">@cTitle</a></p>
+	<p>@cType  <a asp-controller="Customers" asp-action="Details" asp-route-id="@cId">@cTitle</a></p>
 }
 <hr />
-<div class="row">
-	<div class="col-md-4">
-		<form asp-action="Create">
+<form asp-action="Create">
+	<div class="row">
+		<div class="col-md-4">
+
 			<div asp-validation-summary="ModelOnly" class="text-danger"></div>
 			<div class="form-group">
 				<label asp-for="Title" class="control-label"></label>
@@ -35,8 +40,8 @@
 			</div>
 			<div class="form-group">
 				@*<label asp-for="StartDate" class="control-label"></label>
-				<input asp-for="StartDate" class="form-control" />
-				<span asp-validation-for="StartDate" class="text-danger"></span>*@
+					<input asp-for="StartDate" class="form-control" />
+					<span asp-validation-for="StartDate" class="text-danger"></span>*@
 				<label asp-for="StartDate" class="control-label"></label>
 				<input asp-for="StartDate" class="form-control" />
 				<span asp-validation-for="StartDate" class="text-danger"></span>
@@ -71,15 +76,30 @@
 				</select>
 
 			</div>
-			<div class="form-group">
-				<input type="submit" value="Create" class="btn btn-primary" />
+
+		</div>
+		<div class="col-md-4">
+			<div>محصولات مرتبط</div>
+			<hr />
+			<div class="form-group form-check">
+				@foreach (var item in subSystems)
+				{
+					<div class="form-check">
+						<label class="form-check-label">
+							<input type="checkbox" name="SelectedSubSystems" class="form-check-input" @(selectedSubSystems != null && selectedSubSystems.Any(s => s.SubSystemId == item.SubSystemId) ? "checked" : "") value="@item.SubSystemId" /> @item.Title
+						</label>
+					</div>
+				}
 			</div>
-		</form>
+		</div>
 	</div>
-</div>
+	<div class="form-group">
+		<input type="submit" value="Create" class="btn btn-primary" />
+	</div>
+</form>
 
 <div>
-	<a asp-action="Index">Back to List</a>
+	<a asp-action="Index">بازگشت به فهرست</a>
 </div>
 
 @section Scripts {

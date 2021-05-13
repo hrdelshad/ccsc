@@ -5,16 +5,31 @@ using ccsc.DataLayer.Entities.ChangeSets;
 using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
+using ccsc.DataLayer.Entities.Tutorials;
 
 namespace ccsc.Core.Services
 {
 	public class ChangeSetService : IChangeSetService
 	{
 		private CcscContext _context;
+		private ISubSystemService _subSystemService;
+		private IUserTypeService _userTypeService;
 
-		public ChangeSetService(CcscContext context)
+		public ChangeSetService(CcscContext context, IUserTypeService userTypeService, ISubSystemService subSystemService)
 		{
 			_context = context;
+			_userTypeService = userTypeService;
+			_subSystemService = subSystemService;
+		}
+
+		public async Task UpdateAsync(ChangeSet input, List<int> subSystemIds, List<int> userTypeIds)
+		{
+			input.SubSystems = await _subSystemService.GetSubSystemsByIds(subSystemIds);
+			input.UserTypes = await _userTypeService.GetUserTypesByIds(userTypeIds);
+
+			_context.Update(input);
+			await _context.SaveChangesAsync();
 		}
 
 		public IQueryable<ChangeSet> GetChangeSets() 
@@ -22,7 +37,7 @@ namespace ccsc.Core.Services
 			var result = _context.ChangeSets
 				.Include(c => c.AppUser)
 				.Include(c => c.ChangeType)
-				.Include(c => c.Video);
+				.Include(e=>e.Video);
 			return result;
 		}
 
@@ -73,7 +88,7 @@ namespace ccsc.Core.Services
 		public int GetAppUserId(string displayName)
 		{
 			var userList = _context.AppUsers.ToList();
-			var user = userList.Where(item => SimplifyString(item.DisplayName) == SimplifyString(displayName)).FirstOrDefault();
+			var user = userList.FirstOrDefault(item => SimplifyString(item.DisplayName) == SimplifyString(displayName));
 			if(user == null)
 			{
 				return 0;
@@ -82,6 +97,56 @@ namespace ccsc.Core.Services
 			{
 				return user.AppUserId;
 			}
+		}
+
+		public async Task RemoveRelatedAsync(ChangeSet changeSet)
+		{
+
+			var subSystems = GetSubSystemsOfChangeSet(changeSet.ChangeSetId);
+			var userTypes = GetUserTypesForChangeSet(changeSet.ChangeSetId);
+
+			if (subSystems.Any())
+			{
+				foreach (var ss in subSystems)
+				{
+					changeSet.SubSystems.Remove(ss);
+					_context.Update(changeSet);
+					await _context.SaveChangesAsync();
+				}
+			}
+
+			if (userTypes.Any())
+			{
+				foreach (var ut in userTypes)
+				{
+					changeSet.UserTypes.Remove(ut);
+					_context.Update(changeSet);
+					await _context.SaveChangesAsync();
+				}
+			}
+		}
+
+
+		public List<SubSystem> GetSubSystemsOfChangeSet(int id)
+		{
+			List<SubSystem> changeSetSubSystems = new List<SubSystem>();
+			changeSetSubSystems = _context.SubSystems
+				.Include(s => s.ChangeSets)
+				.Where(s => s.ChangeSets.Any(v => v.ChangeSetId == id))
+				.ToList();
+
+			return changeSetSubSystems;
+		}
+
+		public List<UserType> GetUserTypesForChangeSet(int id)
+		{
+			List<UserType> changeSetUserTypes = new List<UserType>();
+			changeSetUserTypes = _context.UserTypes
+				.Include(u => u.ChangeSets)
+				.Where(u => u.ChangeSets.Any(v => v.ChangeSetId == id))
+				.ToList();
+
+			return changeSetUserTypes;
 		}
 
 		private string SimplifyString(string input)

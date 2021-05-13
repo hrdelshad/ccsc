@@ -29,11 +29,12 @@ namespace ccsc.Api.Controllers
 	        var result = //await _changeSetService.GetChangeSets().ToListAsync();
 				await _context.ChangeSets
 				.Where(v => v.IsPublish == true)
-				//.Include(v => v.SubSystems)
-				//.Include(v => v.UserTypes)
+				.Include(v => v.SubSystems)
+				.Include(v => v.UserTypes)
 				.Include(c => c.AppUser)
 				.Include(c => c.ChangeType)
-				//.Include(c => c.Video)
+				.Include(c => c.Video)
+				.OrderByDescending(c=>c.Date)
 				.ToListAsync();
 
 			Request.HttpContext.Response.Headers.Add("x-New", "30");

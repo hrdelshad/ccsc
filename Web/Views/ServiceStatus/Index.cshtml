@@ -1,15 +1,10 @@
 ﻿@model IEnumerable<ccsc.DataLayer.Entities.Services.ServiceStatus>
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "فهرست";
     
 }
 
-<h1>Index</h1>
-
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
 <table class="table">
     <thead>
         <tr>
@@ -32,9 +27,9 @@
                 @Html.DisplayFor(modelItem => item.IsOk)
             </td>
             <td>
-                <a asp-action="Edit" asp-route-id="@item.ServiceStatusId">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.ServiceStatusId">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.ServiceStatusId">Delete</a>
+                <a asp-action="Edit" asp-route-id="@item.ServiceStatusId">ویرایش</a> |
+                <a asp-action="Details" asp-route-id="@item.ServiceStatusId">جزئیات</a> |
+                <a asp-action="Delete" asp-route-id="@item.ServiceStatusId">حذف</a>
             </td>
         </tr>
 }

@@ -1,70 +1,92 @@
-﻿@model ccsc.DataLayer.Entities.Contracts.Contract
+﻿@using ccsc.DataLayer.Entities.ChangeSets
+@model ccsc.DataLayer.Entities.Contracts.Contract
 
 @{
-    ViewData["Title"] = "Edit";
-    
+	ViewData["Title"] = "Edit";
+	List<SubSystem> subSystems = ViewData["SubSystem"] as List<SubSystem>;
+
+	List<SubSystem> selectedSubSystems = ViewData["SelectedSubSystem"] as List<SubSystem>;
+
 }
 
 
 
 <h4>Contract</h4>
 <hr />
-<div class="row">
-    <div class="col-md-4">
-        <form asp-action="Edit">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <input type="hidden" asp-for="ContractId" />
-            <div class="form-group">
-                <label asp-for="Title" class="control-label"></label>
-                <input asp-for="Title" class="form-control" />
-                <span asp-validation-for="Title" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="ContractNo" class="control-label"></label>
-                <input asp-for="ContractNo" class="form-control" />
-                <span asp-validation-for="ContractNo" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="StartDate" class="control-label"></label>
-                <input asp-for="StartDate" class="form-control" />
-                <span asp-validation-for="StartDate" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Duration" class="control-label"></label>
-                <input asp-for="Duration" class="form-control" />
-                <span asp-validation-for="Duration" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Amount" class="control-label"></label>
-                <input asp-for="Amount" class="form-control" />
-                <span asp-validation-for="Amount" class="text-danger"></span>
-            </div>
-            <div class="form-check form-switch">
-	            <input asp-for="UnLimited" class="form-check-input" type="checkbox" id="flexSwitchCheckChecked">
-	            <label class="form-check-label" for="flexSwitchCheckChecked"> @Html.DisplayNameFor(model => model.UnLimited)
-	            </label>
-            </div>
-            <div class="form-group">
-                <label asp-for="ContractStatusId" class="control-label"></label>
-                <select asp-for="ContractStatusId" class="form-control" asp-items="ViewBag.ContractStatusId"></select>
-                <span asp-validation-for="ContractStatusId" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="CustomerId" class="control-label"></label>
-                <select asp-for="CustomerId" class="form-control" asp-items="ViewBag.CustomerId"></select>
-                <span asp-validation-for="CustomerId" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <input type="submit" value="Save" class="btn btn-primary" />
-            </div>
-        </form>
-    </div>
-</div>
+<form asp-action="Edit">
+	<div class="row">
+		<div class="col-md-4">
+
+			<div asp-validation-summary="ModelOnly" class="text-danger"></div>
+			<input type="hidden" asp-for="ContractId" />
+			<div class="form-group">
+				<label asp-for="Title" class="control-label"></label>
+				<input asp-for="Title" class="form-control" />
+				<span asp-validation-for="Title" class="text-danger"></span>
+			</div>
+			<div class="form-group">
+				<label asp-for="ContractNo" class="control-label"></label>
+				<input asp-for="ContractNo" class="form-control" />
+				<span asp-validation-for="ContractNo" class="text-danger"></span>
+			</div>
+			<div class="form-group">
+				<label asp-for="StartDate" class="control-label"></label>
+				<input asp-for="StartDate" class="form-control" />
+				<span asp-validation-for="StartDate" class="text-danger"></span>
+			</div>
+			<div class="form-group">
+				<label asp-for="Duration" class="control-label"></label>
+				<input asp-for="Duration" class="form-control" />
+				<span asp-validation-for="Duration" class="text-danger"></span>
+			</div>
+			<div class="form-group">
+				<label asp-for="Amount" class="control-label"></label>
+				<input asp-for="Amount" class="form-control" />
+				<span asp-validation-for="Amount" class="text-danger"></span>
+			</div>
+			<div class="form-check form-switch">
+				<input asp-for="UnLimited" class="form-check-input" type="checkbox" id="flexSwitchCheckChecked">
+				<label class="form-check-label" for="flexSwitchCheckChecked">
+					@Html.DisplayNameFor(model => model.UnLimited)
+				</label>
+			</div>
+			<div class="form-group">
+				<label asp-for="ContractStatusId" class="control-label"></label>
+				<select asp-for="ContractStatusId" class="form-control" asp-items="ViewBag.ContractStatusId"></select>
+				<span asp-validation-for="ContractStatusId" class="text-danger"></span>
+			</div>
+			<div class="form-group">
+				<label asp-for="CustomerId" class="control-label"></label>
+				<select asp-for="CustomerId" class="form-control" asp-items="ViewBag.CustomerId"></select>
+				<span asp-validation-for="CustomerId" class="text-danger"></span>
+			</div>
+
+		</div>
+		<div class="col-md-4">
+			<div>محصولات مرتبط</div>
+			<hr />
+			<div class="form-group form-check">
+				@foreach (var item in subSystems)
+				{
+					<div class="form-check">
+						<label class="form-check-label">
+							<input type="checkbox" name="SelectedSubSystems" class="form-check-input" @(selectedSubSystems != null && selectedSubSystems.Any(s => s.SubSystemId == item.SubSystemId) ? "checked" : "") value="@item.SubSystemId" /> @item.Title
+						</label>
+					</div>
+				}
+			</div>
+		</div>
+	</div>	
+	<div class="form-group">
+		<input type="submit" value="Save" class="btn btn-primary" />
+	</div>
+</form>
+
 
 <div>
-    <a asp-action="Index">Back to List</a>
+	<a asp-action="Index">بازگشت به فهرست</a>
 </div>
 
 @section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+	@{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
 }
