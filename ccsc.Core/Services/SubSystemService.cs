@@ -76,6 +76,11 @@ namespace ccsc.Core.Services
 							.Include(s => s.Faqs)
 							.Where(s => s.Faqs.Any(e => e.FaqId == id))
 							.ToListAsync();
+					case "contract":
+						return await _context.SubSystems
+							.Include(s => s.Contracts)
+							.Where(s => s.Contracts.Any(e => e.ContractId == id))
+							.ToListAsync();
 					default:
 						break;
 				}

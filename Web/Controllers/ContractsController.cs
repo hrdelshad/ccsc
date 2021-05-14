@@ -52,6 +52,7 @@ namespace ccsc.Web.Controllers
 			{
 				return NotFound();
 			}
+			ViewData["SelectedSubSystem"] = await _subSystemService.GetCurrentSubSystems("Contract", id.Value);
 
 			return View(contract);
 		}
@@ -109,8 +110,8 @@ namespace ccsc.Web.Controllers
 			ViewData["ContractStatusId"] = new SelectList(_context.ContractStatuses, "ContractStatusId", "Title", contract.ContractStatusId);
 			ViewData["CustomerId"] = new SelectList(_context.Customers, "CustomerId", "Title", contract.CustomerId);
 
-			ViewData["SubSystem"] = _subSystemService.GetSubSystems();
-			ViewData["SelectedSubSystem"] = _contractService.GetSubSystemsOfContract(id.Value);
+			ViewData["SubSystem"] = await _subSystemService.GetSubSystems();
+			ViewData["SelectedSubSystem"] = await _subSystemService.GetCurrentSubSystems("Contract", id.Value);
 			return View(contract);
 		}
 

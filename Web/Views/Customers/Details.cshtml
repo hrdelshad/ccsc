@@ -3,7 +3,7 @@
 
 @{
 	ViewData["Title"] = "جزئیات";
-	
+
 	var fullName = Model.CustomerType.Title + " " + Model.Title;
 	var id = Model.CustomerId;
 	if (Model.Version == null)
@@ -184,32 +184,36 @@
 						<thead>
 							<tr>
 								<th>عنوان</th>
-								<th>تاریخ شروع</th>
-								<th>مدت</th>
-								<th>مبلغ</th>
-								<th>وضعیت</th>
+								<th>تاریخ قرارداد</th>
+								<th>قرارداد مربوطه</th>
+								<th>شماره قرارداد</th>
 							</tr>
 						</thead>
 						<tbody>
 							@foreach (var contract in Model.Contracts)
 							{
-								<tr>
-									<td>
-										<a asp-controller="Contracts" asp-action="Details" asp-route-id="@contract.ContractId">@Html.DisplayFor(modelItem => contract.Title)</a>
-									</td>
-									<td>
-										@Html.DisplayFor(modelItem => contract.StartDate)
-									</td>
-									<td>
-										@Html.DisplayFor(modelItem => contract.Duration)
-									</td>
-									<td>
-										@Html.DisplayFor(modelItem => contract.Amount)
-									</td>
-									<td>
-										@Html.DisplayFor((modelItem => contract.ContractStatus.Title))
-									</td>
-								</tr>
+								@if (contract.SubSystems.Count > 0)
+								{
+
+									@foreach (var ss in contract.SubSystems.OrderBy(s=>s.Title))
+									{
+										<tr>
+											<td>
+												@ss.Title
+											</td>
+											<td>
+												@Html.DisplayFor(modelItem => contract.StartDate)
+											</td>
+											<td>
+												@Html.DisplayFor(modelItem => contract.Title)
+											</td>
+											<td>
+												<a asp-controller="Contracts" asp-action="Details" asp-route-id="@contract.ContractId">@Html.DisplayFor(modelItem => contract.ContractNo)</a>
+											</td>
+										</tr>
+									}
+								}
+
 							}
 						</tbody>
 					</table>

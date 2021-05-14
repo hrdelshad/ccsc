@@ -65,11 +65,11 @@ namespace ccsc.Web.Controllers
 			var customer = await _context.Customers
 				.Include(c => c.CustomerType)
 				.Include(c => c.Servers).ThenInclude(s => s.ServerType)
+				.Include(c => c.Contracts).ThenInclude(c=>c.SubSystems)
 				.Include(c => c.Contracts).ThenInclude(c => c.ContractStatus)
 				.Include(c => c.Contacts)
 				.Include(c => c.Services)
 				.Include(c => c.Requests).ThenInclude(r => r.RequestType)
-
 				.FirstOrDefaultAsync(m => m.CustomerId == id);
 			if (customer == null)
 			{

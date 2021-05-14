@@ -1,65 +1,89 @@
-﻿@model ccsc.DataLayer.Entities.Contracts.Contract
+﻿@using ccsc.DataLayer.Entities.ChangeSets
+@model ccsc.DataLayer.Entities.Contracts.Contract
 
 @{
     ViewData["Title"] = "جزئیات";
-    
+	var selectedSubSystems = ViewData["SelectedSubSystem"] as List<SubSystem>;
+
 }
 
 
 
 <div>
     <h4>Contract</h4>
-    <hr />
-    <dl class="row">
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Title)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Title)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.ContractNo)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.ContractNo)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.StartDate)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.StartDate)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Duration)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Duration)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Amount)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Amount)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.UnLimited)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.UnLimited)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.ContractStatus)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.ContractStatus.Title)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Customer)
-        </dt>
-        <dd class = "col-sm-10">
-	        <a asp-controller="Customers" asp-action="Details" asp-route-id=@Model.Customer.CustomerId>@Html.DisplayFor(model => model.Customer.Title)</a>
-        </dd>
-    </dl>
+	<hr />
+	<div class="row">
+		<div class="col-6">
+			<dl class="row">
+				<dt class="col-sm-4">
+					@Html.DisplayNameFor(model => model.Title)
+				</dt>
+				<dd class="col-sm-8">
+					@Html.DisplayFor(model => model.Title)
+				</dd>
+				<dt class="col-sm-4">
+					@Html.DisplayNameFor(model => model.ContractNo)
+				</dt>
+				<dd class="col-sm-8">
+					@Html.DisplayFor(model => model.ContractNo)
+				</dd>
+				<dt class="col-sm-4">
+					@Html.DisplayNameFor(model => model.StartDate)
+				</dt>
+				<dd class="col-sm-8">
+					@Html.DisplayFor(model => model.StartDate)
+				</dd>
+				<dt class="col-sm-4">
+					@Html.DisplayNameFor(model => model.Duration)
+				</dt>
+				<dd class="col-sm-8">
+					@Html.DisplayFor(model => model.Duration)
+				</dd>
+				<dt class="col-sm-4">
+					@Html.DisplayNameFor(model => model.Amount)
+				</dt>
+				<dd class="col-sm-8">
+					@Html.DisplayFor(model => model.Amount)
+				</dd>
+				<dt class="col-sm-4">
+					@Html.DisplayNameFor(model => model.UnLimited)
+				</dt>
+				<dd class="col-sm-8">
+					@Html.DisplayFor(model => model.UnLimited)
+				</dd>
+				<dt class="col-sm-4">
+					@Html.DisplayNameFor(model => model.ContractStatus)
+				</dt>
+				<dd class="col-sm-8">
+					@Html.DisplayFor(model => model.ContractStatus.Title)
+				</dd>
+				<dt class="col-sm-4">
+					@Html.DisplayNameFor(model => model.Customer)
+				</dt>
+				<dd class="col-sm-8">
+					<a asp-controller="Customers" asp-action="Details" asp-route-id=@Model.Customer.CustomerId>@Html.DisplayFor(model => model.Customer.Title)</a>
+				</dd>
+			</dl>
+		</div>
+		<div class="col-4">
+			<div>محصولات مرتبط</div>
+			<hr />
+			<div class="form-group form-check">
+
+				@{
+					System.Diagnostics.Debug.Assert(selectedSubSystems != null, nameof(selectedSubSystems) + " != null");
+				}
+				@foreach (var item in selectedSubSystems)
+				{
+					<div class="form-check">
+						<label class="form-check-label">
+							<input type="checkbox" name="SelectedSubSystems" class="form-check-input" @(selectedSubSystems != null && selectedSubSystems.Any(s => s.SubSystemId == item.SubSystemId) ? "checked" : "") value="@item.SubSystemId" /> @item.Title
+						</label>
+					</div>
+				}
+			</div>
+		</div>
+	</div>
 </div>
 <div>
     <a asp-action="Edit" asp-route-id="@Model.ContractId">ویرایش</a> |
