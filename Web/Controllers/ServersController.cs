@@ -33,7 +33,7 @@ namespace ccsc.Web.Controllers
             {
                 ccscContext = _context.Servers.Where(c => c.Customer.Title.Contains(searchString)).Include(s => s.Customer).Include(s => s.Os).Include(s => s.ServerType).Include(s => s.SqlVersion);
             }
-                return View(await ccscContext.ToListAsync());
+                return View(await ccscContext.OrderBy(e=>e.Customer.Title).ToListAsync());
         }
 
         // GET: Servers/Details/5

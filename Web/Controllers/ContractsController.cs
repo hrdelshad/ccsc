@@ -17,7 +17,7 @@ namespace ccsc.Web.Controllers
 	{
 		private readonly CcscContext _context;
 		private readonly IContractService _contractService;
-		private ISubSystemService _subSystemService;
+		private readonly ISubSystemService _subSystemService;
 
 		public ContractsController(CcscContext context, IContractService contractService, ISubSystemService subSystemService)
 		{
@@ -58,10 +58,10 @@ namespace ccsc.Web.Controllers
 		}
 
 		// GET: Contracts/Create
-		public IActionResult Create(int? id)
+		public async Task<IActionResult> Create(int? id)
 		{
 
-			ViewData["SubSystem"] = _subSystemService.GetSubSystems();
+			ViewData["SubSystem"] = await _subSystemService.GetSubSystems();
 			ViewData["ContractStatusId"] = new SelectList(_context.ContractStatuses, "ContractStatusId", "Title");
 			ViewData["CustomerId"] = new SelectList(_context.Customers, "CustomerId", "Title");
 			if (id != null)
