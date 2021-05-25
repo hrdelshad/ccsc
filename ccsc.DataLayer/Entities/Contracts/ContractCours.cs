@@ -22,8 +22,8 @@ namespace ccsc.DataLayer.Entities.Contracts
 		[Display(Name = "قرارداد")]
 		public virtual Contract Contract { get; set; }
 
-		[Display(Name = "رشته")]
-		public virtual Course Course { get; set; }
+		//[Display(Name = "رشته")]
+		//public virtual Course Course { get; set; }
 
 
 		#endregion

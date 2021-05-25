@@ -6,7 +6,7 @@
 	int minVersion = 9999;
 	int version = 9999;
 	var tempVersion = TempData["MinVersion"].ToString();
-	var tempVersionDesc = TempData["MinVersionDesc"].ToString();
+	var tempVersionDescription = TempData["MinVersionDescription"].ToString();
 	if (!tempVersion.IsNullOrEmpty())
 	{
 		minVersion = int.Parse(tempVersion);
@@ -56,10 +56,14 @@
 			var versionTitle = "";
 			var smsCreditCheckDate = item.SmsCreditCheckDate;
 			var versionCheckDate = item.VersionCheckDate;
-			if (!item.Version.IsNullOrEmpty())
+
+
+			var versionDate = DateTime.Now.Date;
+			if (!item.Version.IsNullOrEmpty() && item.Version.Length > 4 && int.TryParse(item.Version.Substring(4, 4), out var n))
 			{
 				var versionStr = item.Version.Substring(4, 4);
 				version = int.Parse(versionStr);
+				versionDate = new DateTime(2000, 01, 01).AddDays(version);
 			}
 
 			if (item.HasUnSupportedContract)
@@ -73,7 +77,7 @@
 			if (version < minVersion)
 			{
 				versionClass = "text-danger";
-				versionTitle = tempVersionDesc;
+				versionTitle = tempVersionDescription;
 			}
 			<tr class=@customerStatusClass>
 
@@ -85,18 +89,15 @@
 					<a href="@item.Url" target="_blank">@Html.DisplayFor(modelItem => item.Url)</a>
 				</td>
 				<td class="@versionClass" title="@versionTitle">
-					@Html.DisplayFor(modelItem => item.Version)
+					@versionDate.ToShortDateString() <br/> @item.Version
 				</td>
 				<td>
 					@Html.DisplayFor(modelItem => item.VersionCheckDate)
-					@*@versionCheckDate.PersianDateTime()*@
 				</td>
 				<td class=@smsCreditClass>
-					@*@item.SmsCredit.ToString("0,0")*@
 					@Html.DisplayFor(modelItem => item.SmsCredit)
 				</td>
 				<td>
-					@*@smsCreditCheckDate.PersianDateTime()*@
 					@Html.DisplayFor(modelItem => item.SmsCreditCheckDate)
 				</td>
 				<td>

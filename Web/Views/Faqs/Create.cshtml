@@ -5,16 +5,14 @@
 @{
     ViewData["Title"] = "جدید";
     Layout = "~/Views/Shared/_Layout.cshtml";
-	List<SubSystem> subSystems = ViewData["SubSystem"] as List<SubSystem>;
-	List<UserType> userTypes = ViewData["UserType"] as List<UserType>;
+	var subSystems = ViewData["SubSystem"] as List<SubSystem>;
+	var userTypes = ViewData["UserType"] as List<UserType>;
 
-	List<SubSystem> selectedSubSystems = ViewData["SelectedSubSystem"] as List<SubSystem>;
-	List<UserType> selectedUserTypes = ViewData["SelectedUserType"] as List<UserType>;
+	var selectedSubSystems = ViewData["SelectedSubSystem"] as List<SubSystem>;
+	var selectedUserTypes = ViewData["SelectedUserType"] as List<UserType>;
 }
 
-<h1>Create</h1>
-
-<h4>Faq</h4>
+<h4>ثبت پرسش جدید</h4>
 <hr />
 <div class="row">
 

@@ -226,5 +226,23 @@ namespace ccsc.Core.Services
 		{
 			return GetContractsOfCustomer(customerId).Any(c => c.StartDate.AddMonths(c.Duration) < DateTime.Now);
 		}
+
+		public DateTime VersionDate(string universityUrl)
+		{
+			universityUrl = TextFixer.Url(universityUrl);
+
+			try
+			{
+				var substring = GetVersion(universityUrl).Substring(4, 4);
+				var shortVersion = Int32.Parse(substring);
+				var versionDate = new DateTime(2000, 01, 01).AddDays(shortVersion * -1);
+				return versionDate.Date;
+
+			}
+			catch (Exception)
+			{
+				return DateTime.Now.Date;
+			}
+		}
 	}
 }

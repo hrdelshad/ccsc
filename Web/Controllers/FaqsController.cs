@@ -58,12 +58,12 @@ namespace ccsc.Web.Controllers
 		}
 
 		// GET: Faqs/Create
-		public IActionResult Create()
+		public async Task<IActionResult> Create()
 		{
 			ViewData["CustomerId"] = new SelectList(_context.Customers, "CustomerId", "Title");
-			ViewData["VideoId"] = new SelectList(_context.Videos, "VideoId", "Description");
-			ViewData["SubSystem"] = _subSystemService.GetSubSystems();
-			ViewData["UserType"] = _userTypeService.GetUserTypes();
+			ViewData["VideoId"] = new SelectList(_context.Videos, "VideoId", "Title");
+			ViewData["SubSystem"] = await _subSystemService.GetSubSystems();
+			ViewData["UserType"] = await _userTypeService.GetUserTypes();
 			return View();
 		}
 

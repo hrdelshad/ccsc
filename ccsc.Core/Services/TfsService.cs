@@ -12,20 +12,23 @@ namespace ccsc.Core.Services
 {
 	public class TfsService : ITfsService
 	{
+		private readonly IConfigService _configService;
+
+		public TfsService(IConfigService configService)
+		{
+			_configService = configService;
+		}
+
 		async Task<IQueryable<TfsChangeSetViewModel>> ITfsService.GetChangeSets()
 		{
 			string apiUrl = "https://residency.visualstudio.com/residents/_apis/tfvc/changesets?api-version=6.0";
 
 			try
 			{
-				// تاریخ انقضا توکن: 2022/3/8
-				// قبل از پایان باید توکن جدید دریافت کرد.
 				// برای ساخت توکن از این آدرس زیر استفاده کرد:
 				// https://residency.visualstudio.com/_usersSettings/tokens
-				// 
-				// Expires Date: 2022-05-1
-				var personalaccesstoken = "quzjgi3r7lswuiucqgy4m5l72dhysa2s5u7mxfmgb272nydpxsba";
-
+				
+				var tfsToken = _configService.GetConfigValue("tfsToken");
 				using (HttpClient client = new HttpClient())
 				{
 					client.DefaultRequestHeaders.Accept.Add(
@@ -34,7 +37,7 @@ namespace ccsc.Core.Services
 					client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Basic",
 						Convert.ToBase64String(
 							System.Text.Encoding.ASCII.GetBytes(
-								string.Format("{0}:{1}", "", personalaccesstoken))));
+								string.Format("{0}:{1}", "", tfsToken))));
 
 					using (HttpResponseMessage response = client.GetAsync(apiUrl).Result)
 					{

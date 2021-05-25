@@ -107,7 +107,13 @@ namespace ccsc.DataLayer.Context
 				.IsUnique();
 
 			#endregion
-			
+
+			#region Seeding
+
+			//builder.Entity<Config>().HasData(new Config { Key = "MinVersion", Value = "7455", Description = "نسخه‌های کمتر از این باید آپدیت شوند." });
+
+			#endregion
+
 		}
 
 		#endregion
@@ -122,6 +128,7 @@ namespace ccsc.DataLayer.Context
 
 		#region Common
 
+		public DbSet<Comment> Comments { get; set; }
 		public DbSet<Config> Configs { get; set; }
 
 		#endregion
@@ -139,7 +146,7 @@ namespace ccsc.DataLayer.Context
 		#region Contracts
 
 		public DbSet<Contract> Contracts { get; set; }
-		public DbSet<ContractCours> ContractCourses { get; set; }
+		//public DbSet<ContractCours> ContractCourses { get; set; }
 		public DbSet<ContractStatus> ContractStatuses { get; set; }
 		public DbSet<ContractType> ContractTypes { get; set; }
 
@@ -147,7 +154,7 @@ namespace ccsc.DataLayer.Context
 
 		#region Courses
 
-		public DbSet<Course> Courses { get; set; }
+		//public DbSet<Course> Courses { get; set; }
 		public DbSet<CourseLevel> CourseLevels { get; set; }
 
 		#endregion

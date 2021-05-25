@@ -110,7 +110,7 @@
 								<div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
 									<a class="dropdown-item" asp-area="" asp-controller="Contracts" asp-action="Index">قراردادها</a>
 									@*<a class="dropdown-item" asp-area="" asp-controller="ContractProducts" asp-action="Index">محصولات قرارداد</a>*@
-									<a class="dropdown-item" asp-area="" asp-controller="ContractCours" asp-action="Index">رشته های قرارداد</a>
+									@*<a class="dropdown-item" asp-area="" asp-controller="ContractCours" asp-action="Index">رشته های قرارداد</a>*@
 								</div>
 							</li>
 							<li class="nav-item dropdown">
@@ -139,7 +139,9 @@
 								</div>
 
 							</li>
-						
+							<li class="nav-item">
+								<a class="nav-link text-light" asp-area="" asp-controller="Configs" asp-action="Index">تنظیمات</a>
+							</li>
 						}
 					</ul>
 

@@ -1,6 +1,8 @@
 ﻿using ccsc.DataLayer.Entities.Requests;
 using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using ccsc.DataLayer.Entities.Common;
 
 namespace ccsc.DataLayer.Entities.Services
 {
@@ -47,6 +49,8 @@ namespace ccsc.DataLayer.Entities.Services
 		[Display(Name = "وضعیت")]
 		public virtual DutyStatus DutyStatus { get; set; }
 
+		[Display(Name = "توضیحات")]
+		public ICollection<Comment> Comments { get; set; }
 		#endregion
 
 	}

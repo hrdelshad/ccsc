@@ -8,12 +8,12 @@ using System.Threading.Tasks;
 namespace ccsc.Web.Controllers
 {
 	[Route("account")]
-	public class Accounts : Controller
+	public class AccountsController : Controller
 	{
-		private UserManager<User> _userManager;
-		private SignInManager<User> _signInManager;
+		private readonly UserManager<User> _userManager;
+		private readonly SignInManager<User> _signInManager;
 
-		public Accounts(UserManager<User> userManager, SignInManager<User> signInManager)
+		public AccountsController(UserManager<User> userManager, SignInManager<User> signInManager)
 		{
 			_userManager = userManager;
 			_signInManager = signInManager;

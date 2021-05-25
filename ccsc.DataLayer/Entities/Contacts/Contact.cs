@@ -1,5 +1,7 @@
-﻿using ccsc.DataLayer.Entities.Customers;
+﻿using System.Collections.Generic;
+using ccsc.DataLayer.Entities.Customers;
 using System.ComponentModel.DataAnnotations;
+using ccsc.DataLayer.Entities.Common;
 
 namespace ccsc.DataLayer.Entities.Contacts
 {
@@ -69,6 +71,8 @@ namespace ccsc.DataLayer.Entities.Contacts
 		[Display(Name = "عنوان")]
 		public virtual Salutation Salutation { get; set; }
 
+		[Display(Name = "توضیحات")]
+		public ICollection<Comment> Comments { get; set; }
 		#endregion
 
 

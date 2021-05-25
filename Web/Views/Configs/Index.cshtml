@@ -1,7 +1,7 @@
 ﻿@model IEnumerable<ccsc.DataLayer.Entities.Common.Config>
 
 @{
-	ViewData["Title"] = "پبکربندی";
+	ViewData["Title"] = "تنظیمات";
 }
 
 <!DOCTYPE html>
@@ -9,12 +9,10 @@
 <html>
 <head>
     <meta name="viewport" content="width=device-width" />
-    <title>Index</title>
+    <title>@ViewData["Title"]</title>
 </head>
 <body>
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
+
 <table class="table">
     <thead>
         <tr>
@@ -44,8 +42,7 @@
             </td>
             <td>
                 <a asp-action="Edit" asp-route-id="@item.Id">ویرایش</a> |
-                <a asp-action="Details" asp-route-id="@item.Id">جزئیات</a> |
-                <a asp-action="Delete" asp-route-id="@item.Id">حذف</a>
+                <a asp-action="Details" asp-route-id="@item.Id">جزئیات</a>
             </td>
         </tr>
 }

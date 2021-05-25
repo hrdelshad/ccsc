@@ -5,6 +5,7 @@ using ccsc.DataLayer.Entities.Services;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using ccsc.DataLayer.Entities.Common;
 
 namespace ccsc.DataLayer.Entities.Requests
 {
@@ -76,6 +77,8 @@ namespace ccsc.DataLayer.Entities.Requests
 		[Display(Name = "فهرست کارها")]
 		public virtual ICollection<Duty> Duties { get; set; }
 
+		[Display(Name = "توضیحات")]
+		public ICollection<Comment> Comments { get; set; }
 		#endregion
 	}
 }

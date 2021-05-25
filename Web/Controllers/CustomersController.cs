@@ -31,7 +31,7 @@ namespace ccsc.Web.Controllers
 		public async Task<IActionResult> Index(string searchString)
 		{
 			TempData["MinVersion"] = _config.GetConfigValue("MinVersion");
-			TempData["MinVersionDesc"] = _config.GetConfigDescription("MinVersion");
+			TempData["MinVersionDescription"] = _config.GetConfigDescription("MinVersion");
 			 
 			var customers = _service.getCustomers()
 				.OrderByDescending(c => c.HasUnSupportedContract)
