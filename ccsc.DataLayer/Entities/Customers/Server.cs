@@ -65,8 +65,6 @@ namespace ccsc.DataLayer.Entities.Customers
 		[Display(Name = "اس کیو ال")]
 		public virtual SqlVersion SqlVersion { get; set; }
 
-		[Display(Name = "توضیحات")]
-		public ICollection<Comment> Comments { get; set; }
 		#endregion
 
 

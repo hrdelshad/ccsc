@@ -108,10 +108,6 @@ namespace ccsc.DataLayer.Entities.Customers
 
 		public ICollection<Contact> Contacts { get; set; }
 
-
-		[Display(Name = "توضیحات")]
-		public ICollection<Comment> Comments { get; set; }
-
 		#endregion
 
 	}

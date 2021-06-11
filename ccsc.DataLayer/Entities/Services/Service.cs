@@ -44,8 +44,6 @@ namespace ccsc.DataLayer.Entities.Services
 		[Display(Name = "درخواست")]
 		public virtual Request Request { get; set; }
 
-		[Display(Name = "توضیحات")]
-		public ICollection<Comment> Comments { get; set; }
 		#endregion
 
 

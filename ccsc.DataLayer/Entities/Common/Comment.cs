@@ -19,7 +19,7 @@ namespace ccsc.DataLayer.Entities.Common
 		public CommentTypeEnum CommentType { get; set; }
 
 
-		[ForeignKey("User"), Column("Id")]
+		//[ForeignKey("User"), Column("Id")]
 		public int UserId { get; set; }
 		public User User { get; set; }
 
@@ -27,10 +27,10 @@ namespace ccsc.DataLayer.Entities.Common
 
 	public enum CommentTypeEnum
 	{
-		[Display(Name = "شخصی")]
-		Private,
-		
 		[Display(Name = "اشتراکی")]
-		Share
+		Share,
+
+		[Display(Name = "شخصی")]
+		Private
 	}
 }

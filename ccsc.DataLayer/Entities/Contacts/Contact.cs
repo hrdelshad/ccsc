@@ -71,8 +71,6 @@ namespace ccsc.DataLayer.Entities.Contacts
 		[Display(Name = "عنوان")]
 		public virtual Salutation Salutation { get; set; }
 
-		[Display(Name = "توضیحات")]
-		public ICollection<Comment> Comments { get; set; }
 		#endregion
 
 

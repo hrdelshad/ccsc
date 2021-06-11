@@ -77,8 +77,6 @@ namespace ccsc.DataLayer.Entities.Requests
 		[Display(Name = "فهرست کارها")]
 		public virtual ICollection<Duty> Duties { get; set; }
 
-		[Display(Name = "توضیحات")]
-		public ICollection<Comment> Comments { get; set; }
 		#endregion
 	}
 }

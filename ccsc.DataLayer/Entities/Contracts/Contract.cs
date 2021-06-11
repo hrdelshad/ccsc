@@ -64,8 +64,6 @@ namespace ccsc.DataLayer.Entities.Contracts
 		[Display(Name = "محصولات")]
 		public ICollection<SubSystem> SubSystems { get; set; }
 
-		[Display(Name = "توضیحات")]
-		public ICollection<Comment> Comments { get; set; }
 
 		#endregion
 	}

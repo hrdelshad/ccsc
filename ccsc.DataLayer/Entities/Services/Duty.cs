@@ -49,8 +49,6 @@ namespace ccsc.DataLayer.Entities.Services
 		[Display(Name = "وضعیت")]
 		public virtual DutyStatus DutyStatus { get; set; }
 
-		[Display(Name = "توضیحات")]
-		public ICollection<Comment> Comments { get; set; }
 		#endregion
 
 	}
