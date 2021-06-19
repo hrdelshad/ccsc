@@ -16,6 +16,8 @@ $(document).ready(function () {
     var url = $(location).attr("hostname");
     if (url.indexOf("localhost") >= 0) {
 	    url = "http://localhost/ccsc/";
+    } else {
+	    url = "http://my.enico.ir/";
     }
     if (editors.length > 0) {
         $.getScript(url+"js/ckeditor.js", function (data, textStatus, jqxhr) {
