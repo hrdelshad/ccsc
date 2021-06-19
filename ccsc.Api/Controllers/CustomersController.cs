@@ -1,5 +1,6 @@
 ﻿using ccsc.DataLayer.Context;
 using ccsc.DataLayer.Entities.Customers;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
@@ -10,6 +11,7 @@ namespace ccsc.Api.Controllers
 {
 	[Route("[controller]")]
     [ApiController]
+    [Authorize]
     public class CustomersController : ControllerBase
     {
         private readonly CcscContext _context;

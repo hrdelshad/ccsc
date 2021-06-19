@@ -1,4 +1,66 @@
-﻿// Please see documentation at https://docs.microsoft.com/aspnet/core/client-side/bundling-and-minification
-// for details on configuring this project to bundle and minify static web assets.
+﻿function ShowMessage(title, text, theme) {
+    window.createNotification({
+        closeOnClick: true,
+        displayCloseButton: false,
+        positionClass: "nfc-bottom-right",
+        showDuration: 4000,
+        theme: theme !== "" ? theme : "success"
+    })({
+        title: title !== "" ? title : "اعلان",
+        message: decodeURI(text)
+    });
+}
 
-// Write your JavaScript code.
+$(document).ready(function () {
+    var editors = $("[ckeditor]");
+    var url = "http://localhost/ccsc/";
+    if (editors.length > 0) {
+        $.getScript(url+"js/ckeditor.js", function (data, textStatus, jqxhr) {
+            $(editors).each(function (index, value) {
+                var id = $(value).attr("ckeditor");
+                ClassicEditor.create(document.querySelector('[ckeditor="' + id + '"]'),
+                    {
+                        toolbar: {
+                            items: [
+                                "heading",
+                                "|",
+                                "bold",
+                                "italic",
+                                "link",
+                                "|",
+                                "fontSize",
+                                "fontColor",
+                                "|",
+                                "imageUpload",
+                                "blockQuote",
+                                "insertTable",
+                                "undo",
+                                "redo",
+                                "codeBlock"
+                            ]
+                        },
+                        language: "fa",
+                        table: {
+                            contentToolbar: [
+                                "tableColumn",
+                                "tableRow",
+                                "mergeTableCells"
+                            ]
+                        },
+                        licenseKey: "",
+                        simpleUpload: {
+                            // The URL that the images are uploaded to.
+                            uploadUrl: url +"Uploader/UploadImage"
+                        }
+
+                    })
+                    .then(editor => {
+                        window.editor = editor;
+                    }).catch(err => {
+                        console.error(err);
+                    });
+            });
+        });
+    }
+});
+

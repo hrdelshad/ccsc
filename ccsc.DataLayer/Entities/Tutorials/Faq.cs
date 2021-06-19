@@ -6,8 +6,11 @@ using ccsc.DataLayer.Entities.Customers;
 
 namespace ccsc.DataLayer.Entities.Tutorials
 {
+	[Display(Name = "پرسش های پر تکرار")]
 	public class Faq : BaseEntity
 	{
+		private const string DisplayName = "پرسش های پر تکرار";
+
 		[Key]
 		public int FaqId { get; set; }
 
@@ -55,5 +58,9 @@ namespace ccsc.DataLayer.Entities.Tutorials
 		[Display(Name = "سامانه(ها)")]
 		public ICollection<SubSystem> SubSystems { get; set; }
 		#endregion
+
+		public string ClassName {
+			get { return DisplayName; }
+		}
 	}
 }

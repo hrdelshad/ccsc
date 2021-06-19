@@ -16,6 +16,7 @@
 }
 
 
+
 <h4>@ViewData["Title"]</h4>
 @if (TempData["CId"] != null)
 {
@@ -25,7 +26,7 @@
 <hr />
 <form asp-action="Create">
 	<div class="row">
-		<div class="col-md-4">
+		<div class="col-md-3">
 
 			<div asp-validation-summary="ModelOnly" class="text-danger"></div>
 			<div class="form-group">
@@ -39,9 +40,6 @@
 				<span asp-validation-for="ContractNo" class="text-danger"></span>
 			</div>
 			<div class="form-group">
-				@*<label asp-for="StartDate" class="control-label"></label>
-					<input asp-for="StartDate" class="form-control" />
-					<span asp-validation-for="StartDate" class="text-danger"></span>*@
 				<label asp-for="StartDate" class="control-label"></label>
 				<input asp-for="StartDate" class="form-control" />
 				<span asp-validation-for="StartDate" class="text-danger"></span>
@@ -78,7 +76,7 @@
 			</div>
 
 		</div>
-		<div class="col-md-4">
+		<div class="col-md-3">
 			<div>محصولات مرتبط</div>
 			<hr />
 			<div class="form-group form-check">
@@ -92,9 +90,17 @@
 				}
 			</div>
 		</div>
+		<div class="col-md-6">
+			<div class="form-group">
+				<label asp-for="Description" class="control-label"></label>
+				<hr />
+				<textarea asp-for="Description" ckeditor="1" class="form-control" rows="10"></textarea>
+				<span asp-validation-for="Description" class="text-danger"></span>
+			</div>
+		</div>
 	</div>
 	<div class="form-group">
-		<input type="submit" value="Create" class="btn btn-primary" />
+		<input type="submit" value="ثبت" class="btn btn-primary" />
 	</div>
 </form>
 

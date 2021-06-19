@@ -8,11 +8,6 @@ namespace ccsc.DataLayer.Entities.Contacts
 	[Display(Name = "قرارداد")]
 	public class Contact
 	{
-		
-		public Contact()
-		{
-
-		}
 
 		[Key]
 		public int ContactId { get; set; }
@@ -47,12 +42,8 @@ namespace ccsc.DataLayer.Entities.Contacts
 
 
 		[Display(Name = "تلفن")]
-		//[Required(ErrorMessage = "لطفا {0} را وارد کنید")]
 		[MaxLength(15, ErrorMessage = "{0} نمیتواند بیشتر از {0} کارکتر باشد")]
 		public string Phone { get; set; }
-
-		//[Display(Name = "جنسیت")]
-		//public int GenderId { get; set; }
 
 		[Display(Name = "عنوان")]
 		public int SalutationId { get; set; }
@@ -64,9 +55,6 @@ namespace ccsc.DataLayer.Entities.Contacts
 
 		[Display(Name = "پست سازمانی")]
 		public virtual Post Post { get; set; }
-
-		//[Display(Name = "جنسیت")]
-		//public Gender Gender { get; set; }
 
 		[Display(Name = "عنوان")]
 		public virtual Salutation Salutation { get; set; }

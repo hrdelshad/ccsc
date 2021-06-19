@@ -80,6 +80,8 @@ namespace ccsc.DataLayer.Entities.Customers
 		[Display(Name = "قرارداد پشتیبانی نشده")]
 		public bool HasUnSupportedContract { get; set; }
 
+		[Display(Name = "توضیحات")]
+		public string Description { get; set; }
 
 		#region Relations
 

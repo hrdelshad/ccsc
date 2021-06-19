@@ -8,6 +8,8 @@
     <Compile Remove="Services\Identity\Managers\**" />
     <EmbeddedResource Remove="Services\Identity\Managers\**" />
     <None Remove="Services\Identity\Managers\**" />
+		<PackageReference Include="LazZiya.ImageResize" Version="2.0.0" />
+		<PackageReference Include="SixLabors.ImageSharp" Version="1.0.0-beta0005" />
   </ItemGroup>
 
   <ItemGroup>

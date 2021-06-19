@@ -1,13 +1,17 @@
-﻿using ccsc.Core.Services.Interfaces;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+using ccsc.Core.Services.Interfaces;
 
 namespace ccsc.Web.Controllers
 {
-	public class Test : Controller
+	public class TestController : Controller
 	{
 		private IVideoService _videoService;
 
-		public Test(IVideoService videoService)
+		public TestController(IVideoService videoService)
 		{
 			_videoService = videoService;
 		}

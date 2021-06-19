@@ -46,87 +46,97 @@
 	<div class="tab-content" id="pills-tabContent">
 		<!-- #region اطلاعات کلی -->
 		<div class="tab-pane fade show active p-3" id="pills-home" role="tabpanel" aria-labelledby="pills-home-tab">
+			<div class="row">
+				<div class="col-md-5">
+					<dl class="row">
 
-			<dl class="row">
-
-				<dt class="col-sm-2 text-left">
-					@Html.DisplayNameFor(model => model.Url)
-				</dt>
-				<dd class="col-sm-10">
-					<a href=@Html.DisplayFor(model => model.Url) target="_blank">@Html.DisplayFor(model => model.Url)</a>
-				</dd>
-				<dt class="col-sm-2 text-left">
-					<a asp-controller="Customers" asp-action="Version" asp-route-id="@id">@Html.DisplayNameFor(model => model.Version)</a>
-				</dt>
-				<dd class="col-sm-10">
-					@Html.DisplayFor(model => model.Version)
-				</dd>
-				<dt class="col-sm-2 text-left">
-					@Html.DisplayNameFor(model => model.VersionCheckDate)
-				</dt>
-				<dd class="col-sm-10">
-					@Html.DisplayFor(model => model.VersionCheckDate)
-				</dd>
-				<dt class="col-sm-2 text-left">
-					@Html.DisplayNameFor(model => model.SmsUser)
-				</dt>
-				<dd class="col-sm-10">
-					@Html.DisplayFor(model => model.SmsUser)
-				</dd>
-				<dt class="col-sm-2 text-left">
-					@Html.DisplayNameFor(model => model.SmsPass)
-				</dt>
-				<dd class="col-sm-10">
-					@Html.DisplayFor(model => model.SmsPass)
-				</dd>
-				<dt class="col-sm-2 text-left">
-					<a asp-controller="Customers" asp-action="SmsCredit" asp-route-id="@id">@Html.DisplayNameFor(model => model.SmsCredit)</a>
-				</dt>
-				<dd class="col-sm-10">
-					@Html.DisplayFor(model => model.SmsCredit)
-				</dd>
-				<dt class="col-sm-2 text-left">
-					@Html.DisplayNameFor(model => model.MinSmsCredit)
-				</dt>
-				<dd class="col-sm-10">
-					@Html.DisplayFor(model => model.MinSmsCredit)
-				</dd>
-				<dt class="col-sm-2 text-left">
-					@Html.DisplayNameFor(model => model.SmsCreditCheckDate)
-				</dt>
-				<dd class="col-sm-10">
-					@Html.DisplayFor(model => model.SmsCreditCheckDate)
-					@*@smsCheckDate*@
-				</dd>
-				<dt class="col-sm-2 text-left">
-					@Html.DisplayNameFor(model => model.IsActiveSms)
-				</dt>
-				<dd class="col-sm-10">
-					@Html.DisplayFor(model => model.IsActiveSms)
-				</dd>
-				<dt class="col-sm-2 text-left">
-					@Html.DisplayNameFor(model => model.AfterXDay)
-				</dt>
-				<dd class="col-sm-10">
-					@Html.DisplayFor(model => model.AfterXDay)
-				</dd>
-				<dt class="col-sm-2 text-left">
-					@Html.DisplayNameFor(model => model.SendSmsDate)
-				</dt>
-				<dd class="col-sm-10">
-					@Html.DisplayFor(model => model.SendSmsDate)
-				</dd>
-				<dt class="col-sm-2 text-left">
-					@Html.DisplayNameFor(model => model.UniversityId)
-				</dt>
-				<dd class="col-sm-10">
-					@Html.DisplayFor(model => model.UniversityId)
-				</dd>
-			</dl>
-			<div>
-				<a asp-action="Edit" asp-route-id="@Model.CustomerId">ویرایش</a> |
+						<dt class="col-sm-5 text-left">
+							@Html.DisplayNameFor(model => model.Url)
+						</dt>
+						<dd class="col-sm-7">
+							<a href=@Html.DisplayFor(model => model.Url) target="_blank">@Html.DisplayFor(model => model.Url)</a>
+						</dd>
+						<dt class="col-sm-5 text-left">
+							<a asp-controller="Customers" asp-action="Version" asp-route-id="@id">@Html.DisplayNameFor(model => model.Version)</a>
+						</dt>
+						<dd class="col-sm-7">
+							@Html.DisplayFor(model => model.Version)
+						</dd>
+						<dt class="col-sm-5 text-left">
+							@Html.DisplayNameFor(model => model.VersionCheckDate)
+						</dt>
+						<dd class="col-sm-7">
+							@Html.DisplayFor(model => model.VersionCheckDate)
+						</dd>
+						<dt class="col-sm-5 text-left">
+							@Html.DisplayNameFor(model => model.SmsUser)
+						</dt>
+						<dd class="col-sm-7">
+							@Html.DisplayFor(model => model.SmsUser)
+						</dd>
+						<dt class="col-sm-5 text-left">
+							@Html.DisplayNameFor(model => model.SmsPass)
+						</dt>
+						<dd class="col-sm-7">
+							@Html.DisplayFor(model => model.SmsPass)
+						</dd>
+						<dt class="col-sm-5 text-left">
+							<a asp-controller="Customers" asp-action="SmsCredit" asp-route-id="@id">@Html.DisplayNameFor(model => model.SmsCredit)</a>
+						</dt>
+						<dd class="col-sm-7">
+							@Html.DisplayFor(model => model.SmsCredit)
+						</dd>
+						<dt class="col-sm-5 text-left">
+							@Html.DisplayNameFor(model => model.MinSmsCredit)
+						</dt>
+						<dd class="col-sm-7">
+							@Html.DisplayFor(model => model.MinSmsCredit)
+						</dd>
+						<dt class="col-sm-5 text-left">
+							@Html.DisplayNameFor(model => model.SmsCreditCheckDate)
+						</dt>
+						<dd class="col-sm-7">
+							@Html.DisplayFor(model => model.SmsCreditCheckDate)
+							@*@smsCheckDate*@
+						</dd>
+						<dt class="col-sm-5 text-left">
+							@Html.DisplayNameFor(model => model.IsActiveSms)
+						</dt>
+						<dd class="col-sm-7">
+							@Html.DisplayFor(model => model.IsActiveSms)
+						</dd>
+						<dt class="col-sm-5 text-left">
+							@Html.DisplayNameFor(model => model.AfterXDay)
+						</dt>
+						<dd class="col-sm-7">
+							@Html.DisplayFor(model => model.AfterXDay)
+						</dd>
+						<dt class="col-sm-5 text-left">
+							@Html.DisplayNameFor(model => model.SendSmsDate)
+						</dt>
+						<dd class="col-sm-7">
+							@Html.DisplayFor(model => model.SendSmsDate)
+						</dd>
+						<dt class="col-sm-5 text-left">
+							@Html.DisplayNameFor(model => model.UniversityId)
+						</dt>
+						<dd class="col-sm-7">
+							@Html.DisplayFor(model => model.UniversityId)
+						</dd>
+					</dl>
+				</div>
+					<div class="col-md-7">
+						<div>توضیحات</div>
+						<hr />
+						<div>
+							@Html.Raw(Model.Description)
+						</div>
+					</div>
+				</div>
+				<div>
+					<a asp-action="Edit" asp-route-id="@Model.CustomerId">ویرایش</a> |
+				</div>
 			</div>
-		</div>
 		<!-- #endregion -->
 		<!-- #region ریموت -->
 		<div class="tab-pane fade p-3" id="pills-remote" role="tabpanel" aria-labelledby="pills-remote-tab">

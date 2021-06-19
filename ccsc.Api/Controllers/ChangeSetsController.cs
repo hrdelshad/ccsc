@@ -6,11 +6,13 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using ccsc.DataLayer.Context;
 using ccsc.DataLayer.Entities.ChangeSets;
+using Microsoft.AspNetCore.Authorization;
 
 namespace ccsc.Api.Controllers
 {
 	[Route("[controller]")]
     [ApiController]
+    //[Authorize]
     public class ChangeSetsController : ControllerBase
     {
         private readonly CcscContext _context;

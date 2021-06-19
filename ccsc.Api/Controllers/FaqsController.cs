@@ -7,11 +7,13 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using ccsc.DataLayer.Context;
 using ccsc.DataLayer.Entities.Tutorials;
+using Microsoft.AspNetCore.Authorization;
 
 namespace ccsc.Api.Controllers
 {
 	[Route("[controller]")]
 	[ApiController]
+	//[Authorize]
 	public class FaqsController : ControllerBase
 	{
 		private readonly CcscContext _context;

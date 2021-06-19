@@ -31,9 +31,9 @@ namespace ccsc.Web.Controllers
 	            .Include(s => s.SqlVersion);
             if (!String.IsNullOrEmpty(searchString))
             {
-                ccscContext = _context.Servers.Where(c => c.Customer.Title.Contains(searchString)).Include(s => s.Customer).Include(s => s.Os).Include(s => s.ServerType).Include(s => s.SqlVersion);
+                ccscContext = _context.Servers.Where(c => c.Customer.Title.Trim().Contains(searchString)).Include(s => s.Customer).Include(s => s.Os).Include(s => s.ServerType).Include(s => s.SqlVersion);
             }
-                return View(await ccscContext.OrderBy(e=>e.Customer.Title).ToListAsync());
+                return View(await ccscContext.OrderBy(e=>e.Customer.Title.Trim()).ToListAsync());
         }
 
         // GET: Servers/Details/5

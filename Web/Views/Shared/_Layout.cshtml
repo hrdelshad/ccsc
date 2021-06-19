@@ -6,22 +6,26 @@
 	<meta charset="utf-8" />
 	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 	<title>@ViewData["Title"] - CCSC</title>
-	<link rel="stylesheet" href="~/css/my.css" type="text/css" />
-	@*<link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap-rtl.min.css" />*@
-	<link rel="stylesheet" href="~/lib/bootstrap/bootstrap-5.0.0-beta3-dist/css/bootstrap.rtl.min.css" />
-	<link rel="stylesheet" href="~/css/site.css" />
-	<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
-	<link href="~/Assets/persian_fonts_override.css" rel="stylesheet" />
-	<link href="https://kendo.cdn.telerik.com/2020.2.513/styles/kendo.bootstrap-v4.min.css" rel="stylesheet" type="text/css" />
-	<link href="https://kendo.cdn.telerik.com/2020.2.513/styles/kendo.rtl.min.css" rel="stylesheet" type="text/css" />
+
+	<link rel="stylesheet" type="text/css" href="~/css/my.css" />
+	<link rel="stylesheet" type="text/css" href="~/css/site.css" />
+	<link rel="stylesheet" type="text/css" href="~/lib/bootstrap_old/bootstrap-5.0.0-beta3-dist/css/bootstrap.rtl.min.css" />
+	<link rel="stylesheet" type="text/css" href="~/Assets/persian_fonts_override.css" />
+
+	<link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+	<link rel="stylesheet" type="text/css" href="https://kendo.cdn.telerik.com/2020.2.513/styles/kendo.bootstrap-v4.min.css" />
+	<link rel="stylesheet" type="text/css" href="https://kendo.cdn.telerik.com/2020.2.513/styles/kendo.rtl.min.css" />
+	
+
 	<script src="https://kendo.cdn.telerik.com/2020.2.513/js/jquery.min.js"></script>
+
 	<script src="https://kendo.cdn.telerik.com/2020.2.513/js/jszip.min.js"></script>
 	<script src="https://kendo.cdn.telerik.com/2020.2.513/js/kendo.all.min.js"></script>
 	<script src="https://kendo.cdn.telerik.com/2020.2.513/js/kendo.aspnetmvc.min.js"></script>
 	<script src="~/js/kendo.messages.fa-IR.js"></script>
 </head>
 <body class="pt-5 dir-right bg-light">
-	<header >
+	<header>
 		<nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
 			<div class="container-fluid">
 				@if (SignInManager.IsSignedIn(User))
@@ -95,7 +99,7 @@
 									<a class="dropdown-item" asp-area="" asp-controller="Requests" asp-action="Index">درخواست ها</a>
 									<a class="dropdown-item" asp-area="" asp-controller="Services" asp-action="Index">سرویس ها</a>
 									<a class="dropdown-item" asp-area="" asp-controller="Duties" asp-action="Index">کارها</a>
-									<hr/>
+									<hr />
 									<a class="dropdown-item" asp-area="" asp-controller="Videos" asp-action="Index">ویدیوها</a>
 									<a class="dropdown-item" asp-area="" asp-controller="ChangeSets" asp-action="Index">تغییرات</a>
 									<a class="dropdown-item" asp-area="" asp-controller="Faqs" asp-action="Index">سوالات</a>
@@ -154,7 +158,7 @@
 		</nav>
 	</header>
 	<div class="container">
-		<main role="main" class="pb-3 mt-5 flex-shrink-0">
+		<main role="main" class="pb-3 mt-5 mb-5 flex-shrink-0">
 			@RenderBody()
 		</main>
 	</div>
@@ -164,15 +168,10 @@
 			&copy; 2020 - CCSC - <a asp-area="" asp-controller="Home" asp-action="About">About</a>
 		</div>
 	</footer>
-	<script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+	<script src="~/lib/bootstrap_old/dist/js/bootstrap.bundle.min.js"></script>
+	<script src="~/lib/jquery/dist/jquery.min.js"></script>
 	<script src="~/js/site.js" asp-append-version="true"></script>
-	<script src="https://cdn.tiny.cloud/1/no-api-key/tinymce/5/tinymce.min.js" referrerpolicy="origin"></script>
 
 	@RenderSection("Scripts", required: false)
-	<script type="text/ecmascript">
-		$(document).ready(function() {
-			   $('input[type=datetime-local]').datepicker({ dateFormat: "yy/mm/dd", isRTL: true, showButtonPanel: true });
-		   });
-	</script>
 </body>
 </html>

@@ -389,6 +389,9 @@ namespace ccsc.DataLayer.Migrations
                     b.Property<int>("CustomerId")
                         .HasColumnType("int");
 
+                    b.Property<string>("Description")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<int>("Duration")
                         .HasColumnType("int");
 
@@ -477,6 +480,9 @@ namespace ccsc.DataLayer.Migrations
 
                     b.Property<int>("CustomerTypeId")
                         .HasColumnType("int");
+
+                    b.Property<string>("Description")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<bool>("HasUnSupportedContract")
                         .HasColumnType("bit");

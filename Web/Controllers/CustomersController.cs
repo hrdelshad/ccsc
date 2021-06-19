@@ -34,15 +34,13 @@ namespace ccsc.Web.Controllers
 			TempData["MinVersionDescription"] = _config.GetConfigDescription("MinVersion");
 			 
 			var customers = _service.getCustomers()
-				.OrderByDescending(c => c.HasUnSupportedContract)
-				.ThenBy(c => c.Title);
+				.OrderBy(c => c.Title.Trim());
 
 			if (!String.IsNullOrEmpty(searchString))
 			{
 				customers = _service.getCustomers()
 					.Where(c => c.Title.Contains(searchString))
-					.OrderByDescending(c => c.HasUnSupportedContract)
-					.ThenBy(c => c.Title);
+					.OrderBy(c => c.Title.Trim());
 			}
 
 			return View (customers);
@@ -92,7 +90,7 @@ namespace ccsc.Web.Controllers
 		// more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
 		[HttpPost]
 		[ValidateAntiForgeryToken]
-		public async Task<IActionResult> Create([Bind("CustomerId,Title,Url,Version,VersionCheckDate,SmsUser,SmsPass,SmsCredit,MinSmsCredit,SmsCreditCheckDate,IsActiveSms,AfterXDay,SendSmsDate,UniversityId,HasUnSupportedContract,CustomerStatusId,CustomerTypeId,UniversityCode")] Customer customer)
+		public async Task<IActionResult> Create([Bind("CustomerId,Title,Url,Version,VersionCheckDate,SmsUser,SmsPass,SmsCredit,MinSmsCredit,SmsCreditCheckDate,IsActiveSms,AfterXDay,SendSmsDate,UniversityId,HasUnSupportedContract,CustomerStatusId,CustomerTypeId,UniversityCode,Description")] Customer customer)
 		{
 			if (ModelState.IsValid)
 			{
@@ -113,7 +111,15 @@ namespace ccsc.Web.Controllers
 				return NotFound();
 			}
 
-			var customer = await _context.Customers.FindAsync(id);
+			var customer = await _context.Customers
+				.Include(c => c.CustomerType)
+				.Include(c => c.Servers).ThenInclude(s => s.ServerType)
+				.Include(c => c.Contracts).ThenInclude(c => c.SubSystems)
+				.Include(c => c.Contracts).ThenInclude(c => c.ContractStatus)
+				.Include(c => c.Contacts)
+				.Include(c => c.Services)
+				.Include(c => c.Requests).ThenInclude(r => r.RequestType)
+				.FirstOrDefaultAsync(m => m.CustomerId == id);
 			if (customer == null)
 			{
 				return NotFound();
@@ -128,7 +134,7 @@ namespace ccsc.Web.Controllers
 		// more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
 		[HttpPost]
 		[ValidateAntiForgeryToken]
-		public async Task<IActionResult> Edit(int id, [Bind("CustomerId,Title,Url,Version,VersionCheckDate,SmsUser,SmsPass,SmsCredit,MinSmsCredit,SmsCreditCheckDate,IsActiveSms,AfterXDay,SendSmsDate,UniversityId,HasUnSupportedContract,CustomerStatusId,CustomerTypeId,UniversityCode")] Customer customer)
+		public async Task<IActionResult> Edit(int id, [Bind("CustomerId,Title,Url,Version,VersionCheckDate,SmsUser,SmsPass,SmsCredit,MinSmsCredit,SmsCreditCheckDate,IsActiveSms,AfterXDay,SendSmsDate,UniversityId,HasUnSupportedContract,CustomerStatusId,CustomerTypeId,UniversityCode,Description")] Customer customer)
 		{
 			if (id != customer.CustomerId)
 			{
