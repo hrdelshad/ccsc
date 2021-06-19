@@ -60,7 +60,11 @@
 <div class="block"></div>
  
 <script>
-	var url = "https://code.jquery.com/color/jquery.color.js";
+	var pathname = window.location.pathname; // Returns path only (/path/example.html)
+	var url = $(location).attr('href');     // Returns full URL (https://example.com/path/example.html)
+	var host = $(location).attr('host');     // Returns full URL (https://example.com/path/example.html)
+	var hostname = $(location).attr('hostname');     // Returns full URL (https://example.com/path/example.html)
+	var origin   = window.location.origin; 
 	$.getScript( url, function() {
 		$( "#go" ).click(function() {
 			$( ".block" )
@@ -76,9 +80,29 @@
 					backgroundColor: "#00f"
 				}, 1000 );
 		});
-		console.log(url ); // Data returned
+		console.log(host);
+		console.log(url); 
+		console.log(hostname);
 		console.log( "Load was performed." );
 	});
+	var getUrlParameter = function getUrlParameter(sParam) {
+		var sPageURL = window.location.search.substring(1),
+			sURLVariables = sPageURL.split('&'),
+			sParameterName,
+			i;
+		
+		for (i = 0; i < sURLVariables.length; i++) {
+			sParameterName = sURLVariables[i].split('=');
+			console.log(sParameterName);
+			if (sParameterName[0] === sParam) {
+				return typeof sParameterName[1] === undefined ? true : decodeURIComponent(sParameterName[1]);
+			}
+		}
+		return false;
+	};
+	(function() {
+		alert("Ok");
+	})();
 </script>
  
 </body>

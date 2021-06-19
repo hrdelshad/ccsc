@@ -13,7 +13,10 @@
 
 $(document).ready(function () {
     var editors = $("[ckeditor]");
-    var url = "http://localhost/ccsc/";
+    var url = $(location).attr("hostname");
+    if (url.indexOf("localhost") >= 0) {
+	    url = "http://localhost/ccsc/";
+    }
     if (editors.length > 0) {
         $.getScript(url+"js/ckeditor.js", function (data, textStatus, jqxhr) {
             $(editors).each(function (index, value) {
