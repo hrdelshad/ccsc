@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using ccsc.DataLayer.Entities.Common;
+using ccsc.DataLayer.Entities.Courses;
 
 namespace ccsc.DataLayer.Entities.Contracts
 {
@@ -67,6 +68,8 @@ namespace ccsc.DataLayer.Entities.Contracts
 		[Display(Name = "محصولات")]
 		public ICollection<SubSystem> SubSystems { get; set; }
 
+		[Display(Name = "محصولات")]
+		public ICollection<Course> Courses { get; set; }
 
 		#endregion
 	}

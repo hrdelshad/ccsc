@@ -7,7 +7,6 @@
   <ItemGroup>
     <Compile Remove="Entities\ChangeSets\Product.cs" />
     <Compile Remove="Entities\Contracts\ContractCours.cs" />
-    <Compile Remove="Entities\Courses\Course.cs" />
     <Compile Remove="Entities\Tutorials\Audience.cs" />
     <Compile Remove="Entities\Tutorials\SubSystemVideo.cs" />
     <Compile Remove="Entities\Tutorials\UserTypeVideo.cs" />

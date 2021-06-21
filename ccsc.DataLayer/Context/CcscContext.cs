@@ -154,8 +154,10 @@ namespace ccsc.DataLayer.Context
 
 		#region Courses
 
-		//public DbSet<Course> Courses { get; set; }
+		public DbSet<Course> Courses { get; set; }
 		public DbSet<CourseLevel> CourseLevels { get; set; }
+		public DbSet<Faculty> Faculties { get; set; }
+		public DbSet<Group> Groups { get; set; }
 
 		#endregion
 
