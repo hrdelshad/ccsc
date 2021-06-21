@@ -66,12 +66,12 @@
 			@Html.DisplayFor(modelItem => item.Hard)
 		</td>
 		<td>
-			<a asp-action="Details" asp-route-id="@item.ServerId">@Html.DisplayFor(modelItem => item.Url)</a>
+			<a onmouseover="copyMe(this);" asp-action="Details" asp-route-id="@item.ServerId">@Html.DisplayFor(modelItem => item.Url)</a>
 		</td>
-		<td>
+		<td onclick="copyMe(this);">
 			@Html.DisplayFor(modelItem => item.UserName)
 		</td>
-		<td>
+		<td  onclick="copyMe(this);">
 			@Html.DisplayFor(modelItem => item.Password)
 		</td>
 		<td>
@@ -94,3 +94,20 @@
 }
     </tbody>
 </table>
+
+
+<script>
+	function copyMe(text)
+	{
+		var copyText = text.innerHTML.trim();
+		copyToClipboard(copyText);
+	}
+	function copyToClipboard(text) {
+		var elem = document.createElement('textarea');
+		elem.value = text;
+		document.body.appendChild(elem);
+		elem.select();
+		document.execCommand('copy');
+		document.body.removeChild(elem);
+	}
+</script>
