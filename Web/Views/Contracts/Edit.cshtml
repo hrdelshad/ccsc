@@ -3,7 +3,7 @@
 @model ccsc.DataLayer.Entities.Contracts.Contract
 
 @{
-	ViewData["Title"] = "Edit";
+	ViewData["Title"] = Model.Title;
 	var subSystems = ViewData["SubSystem"] as List<SubSystem>;
 
 	var selectedSubSystems = ViewData["SelectedSubSystem"] as List<SubSystem>;
@@ -16,7 +16,7 @@
 
 
 
-<h4>Contract</h4>
+<h4>@ViewData["Title"]</h4>
 <hr />
 <form asp-action="Edit">
 	<div class="row">
@@ -106,15 +106,12 @@
 
 		</div>
 	</div>	
-	<div class="form-group">
-		<input type="submit" value="ذخیره" class="btn btn-primary" />
+	<div class="form-group mt-2">
+		<input type="submit" value="ذخیره" class="btn btn-success" />
+		<a class="btn btn-danger" asp-action="Index">انصراف</a>
 	</div>
 </form>
 
-
-<div>
-	<a asp-action="Index">بازگشت به فهرست</a>
-</div>
 
 @section Scripts {
 	@{await Html.RenderPartialAsync("_ValidationScriptsPartial");}

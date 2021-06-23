@@ -22,6 +22,7 @@ namespace ccsc.Core.Services.Interfaces
 		List<SelectListItem> GetCustomerListItems();
 		List<SelectListItem> GetContactOfCustomerListItems(int customerId);
 		List<SelectListItem> GetContactOfCustomerListItems(int customerId, bool option);
+		List<SelectListItem> GetContactOfCustomerListItemsPlus(int customerId, bool option);
 		List<SelectListItem> GetContactListItems();
 
 		List<Contact> GetContactsOfCustomer();

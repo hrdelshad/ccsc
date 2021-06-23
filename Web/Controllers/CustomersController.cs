@@ -63,11 +63,13 @@ namespace ccsc.Web.Controllers
 			var customer = await _context.Customers
 				.Include(c => c.CustomerType)
 				.Include(c => c.Servers).ThenInclude(s => s.ServerType)
-				.Include(c => c.Contracts).ThenInclude(c=>c.SubSystems)
+				.Include(c => c.Contracts).ThenInclude(c => c.SubSystems)
 				.Include(c => c.Contracts).ThenInclude(c => c.ContractStatus)
 				.Include(c => c.Contacts)
 				.Include(c => c.Services)
 				.Include(c => c.Requests).ThenInclude(r => r.RequestType)
+				.Include(c => c.Requests).ThenInclude(r => r.RequestChanel)
+				.Include(c => c.Requests).ThenInclude(r => r.RequestStatus)
 				.FirstOrDefaultAsync(m => m.CustomerId == id);
 			if (customer == null)
 			{
@@ -332,6 +334,13 @@ namespace ccsc.Web.Controllers
 		public async Task<IActionResult> GetContactsOfCustomer(int id)
 		{
 			var contacts = _service.GetContactOfCustomerListItems(id, true);
+			var res = Json(contacts);
+			return res;
+		}
+
+		public async Task<IActionResult> GetContactsOfCustomerPlus(int id)
+		{
+			var contacts = _service.GetContactOfCustomerListItemsPlus(id, true);
 			var res = Json(contacts);
 			return res;
 		}

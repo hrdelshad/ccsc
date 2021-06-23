@@ -1,4 +1,11 @@
-﻿function ShowMessage(title, text, theme) {
+﻿function goBack() {
+	window.history.back();
+}
+function goForward() {
+	window.history.forward();
+}
+
+function ShowMessage(title, text, theme) {
     window.createNotification({
         closeOnClick: true,
         displayCloseButton: false,

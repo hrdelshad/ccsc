@@ -1,7 +1,7 @@
 ﻿@model ccsc.DataLayer.Entities.Contacts.Contact
 
 @{
-	ViewData["Title"] = "جدید";
+	ViewData["Title"] = "ثبت کاربر جدی";
 }
 
 @ViewData["Title"] 
@@ -9,7 +9,11 @@
 <div class="row">
     <div class="col-md-4">
         <form asp-action="Create">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+	        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+	        <div class="form-group">
+		        <label asp-for="SalutationId" class="control-label"></label>
+		        <select asp-for="SalutationId" class ="form-control" asp-items="ViewBag.SalutationId"></select>
+	        </div>
             <div class="form-group">
                 <label asp-for="FirstName" class="control-label"></label>
                 <input asp-for="FirstName" class="form-control" />
@@ -43,20 +47,16 @@
                 <input asp-for="Phone" class="form-control" />
                 <span asp-validation-for="Phone" class="text-danger"></span>
             </div>
-            <div class="form-group">
-                <label asp-for="SalutationId" class="control-label"></label>
-                <select asp-for="SalutationId" class ="form-control" asp-items="ViewBag.SalutationId"></select>
-            </div>
-            <div class="form-group">
-                <input type="submit" value="ثبت" class="btn btn-primary" />
-            </div>
+	        <div class="form-group mt-2">
+
+		        <input type="submit" value="ثبت" class="btn btn-primary d-inline" />
+		        <button class="btn btn-secondary" onclick="goBack()">انصراف</button>
+	        </div>
         </form>
     </div>
 </div>
 
-<div>
-    <a asp-action="Index">بازگشت به فهرست</a>
-</div>
+
 
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}

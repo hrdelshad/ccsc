@@ -144,6 +144,7 @@ namespace ccsc.Web.Controllers
 			contract.UnLimited = inputContract.UnLimited;
 			contract.ContractStatusId = inputContract.ContractStatusId;
 			contract.CustomerId = inputContract.CustomerId;
+			contract.Description = inputContract.Description;
 
 			if (ModelState.IsValid)
 			{

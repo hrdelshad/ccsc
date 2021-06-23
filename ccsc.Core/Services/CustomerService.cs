@@ -14,6 +14,7 @@ using ccsc.DataLayer.Entities.ChangeSets;
 using ccsc.DataLayer.Entities.Customers;
 using ccsc.DataLayer.Entities.Tutorials;
 using Microsoft.EntityFrameworkCore;
+using Quartz.Impl.Matchers;
 
 namespace ccsc.Core.Services
 {
@@ -71,6 +72,22 @@ namespace ccsc.Core.Services
 				new SelectListItem() {Text = "انتخاب کنید", Value = ""}
 			};
 			listItems.AddRange(GetContactOfCustomerListItems(customerId));
+			return listItems;
+		}
+
+		public List<SelectListItem> GetContactOfCustomerListItemsPlus(int customerId, bool option)
+		{
+			if (!option)
+			{
+				return GetContactOfCustomerListItems(customerId, true);
+
+			}
+
+			List<SelectListItem> listItems = new List<SelectListItem>()
+			{
+				new SelectListItem() {Text = "کاربر جدید", Value = ""}
+			};
+			listItems.AddRange(GetContactOfCustomerListItems(customerId, true));
 			return listItems;
 		}
 

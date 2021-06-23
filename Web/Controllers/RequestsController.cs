@@ -25,7 +25,13 @@ namespace ccsc.Web.Controllers
         // GET: Requests
         public async Task<IActionResult> Index()
         {
-            var ccscContext = _context.Requests.Include(r => r.Contact).Include(r => r.Customer).Include(r => r.RequestChanel).Include(r => r.RequestStatus).Include(r => r.RequestType).Include(r => r.SubSystem);
+            var ccscContext = _context.Requests
+	            .Include(r => r.Contact).ThenInclude(c => c.Salutation)
+                .Include(r => r.Customer)
+	            .Include(r => r.RequestChanel)
+	            .Include(r => r.RequestStatus)
+	            .Include(r => r.RequestType)
+	            .Include(r => r.SubSystem);
             return View(await ccscContext.ToListAsync());
         }
 
@@ -38,7 +44,7 @@ namespace ccsc.Web.Controllers
             }
 
             var request = await _context.Requests
-                .Include(r => r.Contact)
+                .Include(r => r.Contact).ThenInclude(c=>c.Salutation)
                 .Include(r => r.Customer)
                 .Include(r => r.RequestChanel)
                 .Include(r => r.RequestStatus)
@@ -54,7 +60,7 @@ namespace ccsc.Web.Controllers
         }
 
         // GET: Requests/Create
-        public IActionResult Create()
+        public IActionResult Create(int? id)
         {
 	        var customers = _customerService.GetCustomerListItems();
             ViewData["CustomerId"] = _customerService.GetCustomerListItems();
@@ -64,6 +70,18 @@ namespace ccsc.Web.Controllers
             ViewData["RequestStatusId"] = new SelectList(_context.RequestStatuses, "RequestStatusId", "Title");
             ViewData["RequestTypeId"] = new SelectList(_context.RequestTypes, "RequestTypeId", "Title");
             ViewData["SubSystemId"] = new SelectList(_context.SubSystems, "SubSystemId", "Title");
+
+            if (id != null)
+            {
+	            var customer = _context.Customers.Find(id);
+	            var customerType = _context.CustomerTypes.Find(customer.CustomerTypeId);
+	            ViewData["CustomerId"] = new SelectList(_context.Customers.Where(c => c.CustomerId == id), "CustomerId", "Title");
+	            ViewData["CustomerTitle"] = customer.Title;
+	            ViewData["CustomerType"] = customerType.Title;
+	            TempData["CId"] = customer.CustomerId;
+	            ViewData["ContactId"] = _customerService.GetContactOfCustomerListItems(id.Value, true);
+
+            }
             return View();
         }
 
@@ -80,7 +98,8 @@ namespace ccsc.Web.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["ContactId"] = new SelectList(_context.Contacts, "ContactId", "Email", request.ContactId);
+           
+            ViewData["ContactId"] = _customerService.GetContactOfCustomerListItems(request.CustomerId, true);
             ViewData["CustomerId"] = new SelectList(_context.Customers, "CustomerId", "Title", request.CustomerId);
             ViewData["RequestChanelId"] = new SelectList(_context.RequestChannels, "RequestChannelId", "Title", request.RequestChanelId);
             ViewData["RequestStatusId"] = new SelectList(_context.RequestStatuses, "RequestStatusId", "Title", request.RequestStatusId);
@@ -102,8 +121,12 @@ namespace ccsc.Web.Controllers
             {
                 return NotFound();
             }
-            ViewData["ContactId"] = new SelectList(_context.Contacts, "ContactId", "Email", request.ContactId);
-            ViewData["CustomerId"] = new SelectList(_context.Customers, "CustomerId", "Title", request.CustomerId);
+            var customers = _customerService.GetCustomerListItems();
+            //ViewData["CustomerId"] = _customerService.GetCustomerListItems();
+            ViewData["ContactId"] = _customerService.GetContactOfCustomerListItems(request.CustomerId, true);
+
+            //ViewData["ContactId"] = new SelectList(_context.Contacts, "ContactId", "Title", request.ContactId);
+            ViewData["CustomerId"] = new SelectList(_context.Customers.Where(c => c.CustomerId == request.CustomerId), "CustomerId", "Title", request.CustomerId);
             ViewData["RequestChanelId"] = new SelectList(_context.RequestChannels, "RequestChannelId", "Title", request.RequestChanelId);
             ViewData["RequestStatusId"] = new SelectList(_context.RequestStatuses, "RequestStatusId", "Title", request.RequestStatusId);
             ViewData["RequestTypeId"] = new SelectList(_context.RequestTypes, "RequestTypeId", "Title", request.RequestTypeId);

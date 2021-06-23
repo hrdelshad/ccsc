@@ -1,24 +1,38 @@
 ﻿@model ccsc.DataLayer.Entities.Requests.Request
 
 @{
-	ViewData["Title"] = "جدید";
-	
+	ViewData["Title"] = "ثبت درخواست جدید";
+	if (TempData["CId"] != null)
+	{
+		var cId = TempData["CId"].ToString();
+	}
+	var cTitle = ViewData["CustomerTitle"];
+	var cType = ViewData["CustomerType"];
 }
 
-
-
-<h4>Request</h4>
+<h4>@ViewData["Title"]</h4>
+@if (TempData["CId"] != null)
+{
+	var cId = TempData["CId"].ToString();
+	<p>@cType  <a asp-controller="Customers" asp-action="Details" asp-route-id="@cId">@cTitle</a></p>
+}
 <hr />
-<div class="row">
-	<div class="col-md-4">
-		<form asp-action="Create">
+
+<form asp-action="Create">
+	<div class="row">
+		<div class="col-md-4">
 			<div asp-validation-summary="ModelOnly" class="text-danger"></div>
 			<div class="form-group">
 				<label asp-for="CustomerId" class="control-label"></label>
-				<select asp-for="CustomerId" class="form-control" asp-items="ViewBag.CustomerId"></select>
+				<select asp-for="CustomerId" class="form-control" asp-items="ViewBag.CustomerId">
+					@if (cTitle == null)
+					{
+						<option>انتخاب کنید</option>
+					}
+				</select>
 			</div>
 			<div class="form-group">
-				<label asp-for="ContactId" class="control-label"></label>
+				<label asp-for="ContactId" class="control-label"></label><a asp-controller="Contacts" asp-action="Create"> +</a>
 				<select asp-for="ContactId" class="form-control" asp-items="ViewBag.ContactId"></select>
 			</div>
 			<div class="form-group">
@@ -42,6 +56,8 @@
 				<label asp-for="RequestStatusId" class="control-label"></label>
 				<select asp-for="RequestStatusId" class="form-control" asp-items="ViewBag.RequestStatusId"></select>
 			</div>
+		</div>
+		<div class="col-md-8">
 			<div class="form-group">
 				<label asp-for="Title" class="control-label"></label>
 				<input asp-for="Title" class="form-control" />
@@ -49,37 +65,37 @@
 			</div>
 			<div class="form-group">
 				<label asp-for="Text" class="control-label"></label>
-				<input asp-for="Text" class="form-control" />
+				<textarea asp-for="Text" class="form-control" ckeditor="1"></textarea>
 				<span asp-validation-for="Text" class="text-danger"></span>
 			</div>
-			<div class="form-group">
-				<input type="submit" value="ثبت" class="btn btn-primary" />
-			</div>
-		</form>
+		</div>
 	</div>
-</div>
+	<div class="form-group mt-2">
 
-<div>
-	<a asp-action="Index">بازگشت به فهرست</a>
-</div>
+		<input type="submit" value="ثبت" class="btn btn-primary d-inline" />
+		@*<a class="btn btn-secondary" asp-action="Index">انصراف</a>*@
+		<button class="btn btn-secondary" onclick="goBack()">انصراف</button>
+	</div>
+</form>
+
 
 @section Scripts {
 	@{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
-<script>
-	$("#CustomerId").change(function () {
+	<script>
+		$("#CustomerId").change(function() {
 
-		$("#ContactId").empty();
-		//alert("../Customers/GetContactsOfCustomer/" + $("#CustomerId :selected").val());
-		$.getJSON("../Customers/GetContactsOfCustomer/" + $("#CustomerId :selected").val(),
-			function (data) {
-				$.each(data,
-					function () {
-						$("#ContactId").append('<option value=' + this.Value + '>' + this.Text + '</option>'
-						);
-					}
-				);
-			});
-	})
-</script>
+			$("#ContactId").empty();
+			$.getJSON("../Customers/GetContactsOfCustomer/" + $("#CustomerId :selected").val(),
+				function(data) {
+					$.each(data,
+						function() {
+							$("#ContactId").append('<option value=' + this.Value + '>' + this.Text + '</option>'
+							);
+						}
+					);
+				});
+		});
+
+	</script>
 }
 

@@ -1,79 +1,75 @@
 ﻿@model IEnumerable<ccsc.DataLayer.Entities.Requests.Request>
 
 @{
-    ViewData["Title"] = "فهرست";
-    
+	ViewData["Title"] = "فهرست";
+
 }
 
 <table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.RequestTime)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Title)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Text)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Customer)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Contact)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.RequestChanel)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.RequestType)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.SubSystem)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.RequestStatus)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.RequestTime)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Title)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Text)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Customer.Title)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Contact.Email)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.RequestChanel.Title)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.RequestType.Title)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.SubSystem.Title)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.RequestStatus.Title)
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.RequestId">ویرایش</a> |
-                <a asp-action="Details" asp-route-id="@item.RequestId">جزئیات</a> |
-                <a asp-action="Delete" asp-route-id="@item.RequestId">حذف</a>
-            </td>
-        </tr>
-}
-    </tbody>
+	<thead>
+		<tr>
+			<th>
+				@Html.DisplayNameFor(model => model.RequestTime)
+			</th>
+			<th>
+				@Html.DisplayNameFor(model => model.Title)
+			</th>
+			<th>
+				@Html.DisplayNameFor(model => model.Customer)
+			</th>
+			<th>
+				@Html.DisplayNameFor(model => model.Contact)
+			</th>
+			<th>
+				@Html.DisplayNameFor(model => model.RequestChanel)
+			</th>
+			<th>
+				@Html.DisplayNameFor(model => model.RequestType)
+			</th>
+			<th>
+				@Html.DisplayNameFor(model => model.SubSystem)
+			</th>
+			<th>
+				@Html.DisplayNameFor(model => model.RequestStatus)
+			</th>
+			<th></th>
+		</tr>
+	</thead>
+	<tbody>
+		@foreach (var item in Model)
+		{
+			var fullName = item.Contact.Salutation.Title + " " + item.Contact.FirstName + " " + item.Contact.LastName;
+			<tr>
+				<td>
+					@Html.DisplayFor(modelItem => item.RequestTime)
+				</td>
+				<td>
+					@Html.DisplayFor(modelItem => item.Title)
+				</td>
+				<td>
+					@Html.DisplayFor(modelItem => item.Customer.Title)
+				</td>
+				<td>
+					@fullName
+				</td>
+				<td>
+					@Html.DisplayFor(modelItem => item.RequestChanel.Title)
+				</td>
+				<td>
+					@Html.DisplayFor(modelItem => item.RequestType.Title)
+				</td>
+				<td>
+					@Html.DisplayFor(modelItem => item.SubSystem.Title)
+				</td>
+				<td>
+					@Html.DisplayFor(modelItem => item.RequestStatus.Title)
+				</td>
+				<td>
+					<a asp-action="Edit" asp-route-id="@item.RequestId">ویرایش</a> |
+					<a asp-action="Details" asp-route-id="@item.RequestId">جزئیات</a> |
+					<a asp-action="Delete" asp-route-id="@item.RequestId">حذف</a>
+				</td>
+			</tr>
+		}
+	</tbody>
 </table>

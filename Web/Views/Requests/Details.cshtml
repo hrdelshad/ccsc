@@ -1,73 +1,75 @@
 ﻿@model ccsc.DataLayer.Entities.Requests.Request
 
 @{
-    ViewData["Title"] = "جزئیات";
-    
+	ViewData["Title"] = Model.Title;
+	var fullName = Model.Contact.FirstName + " " + Model.Contact.LastName;
 }
 
 
 
 <div>
-    <h4>Request</h4>
-    <hr />
-    <dl class="row">
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.RequestTime)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.RequestTime)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Title)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Title)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Text)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Text)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Customer)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Customer.Title)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Contact)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Contact.Email)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.RequestChanel)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.RequestChanel.Title)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.RequestType)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.RequestType.Title)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.SubSystem)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.SubSystem.Title)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.RequestStatus)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.RequestStatus.Title)
-        </dd>
-    </dl>
+	<h4>@ViewData["Title"]</h4>
+	<hr />
+	<div class="row">
+		<div class="col-md-4">
+			<dl class="row">
+				<dt class="col-sm-5">
+					@Html.DisplayNameFor(model => model.RequestTime)
+				</dt>
+				<dd class="col-sm-7">
+					@Html.DisplayFor(model => model.RequestTime)
+				</dd>
+				<dt class="col-sm-5">
+					@Html.DisplayNameFor(model => model.Customer)
+				</dt>
+				<dd class="col-sm-7">
+					@Html.DisplayFor(model => model.Customer.Title)
+				</dd>
+				<dt class="col-sm-5">
+					@Html.DisplayNameFor(model => model.Contact)
+				</dt>
+				<dd class="col-sm-7">
+					@fullName
+				</dd>
+				<dt class="col-sm-5">
+					@Html.DisplayNameFor(model => model.RequestChanel)
+				</dt>
+				<dd class="col-sm-7">
+					@Html.DisplayFor(model => model.RequestChanel.Title)
+				</dd>
+				<dt class="col-sm-5">
+					@Html.DisplayNameFor(model => model.RequestType)
+				</dt>
+				<dd class="col-sm-7">
+					@Html.DisplayFor(model => model.RequestType.Title)
+				</dd>
+				<dt class="col-sm-5">
+					@Html.DisplayNameFor(model => model.SubSystem)
+				</dt>
+				<dd class="col-sm-7">
+					@Html.DisplayFor(model => model.SubSystem.Title)
+				</dd>
+				<dt class="col-sm-5">
+					@Html.DisplayNameFor(model => model.RequestStatus)
+				</dt>
+				<dd class="col-sm-7">
+					@Html.DisplayFor(model => model.RequestStatus.Title)
+				</dd>
+			</dl>
+		</div>
+		<div class="col-md-8">
+			<dl>
+				<dt class="col-sm-5">
+					@Html.DisplayNameFor(model => model.Text)
+				</dt>
+				<dd class="col-sm-7">
+					@Html.Raw(Model.Text)
+				</dd>
+			</dl>
+		</div>
+	</div>
 </div>
 <div>
-    <a asp-action="Edit" asp-route-id="@Model.RequestId">ویرایش</a> |
-    <a asp-action="Index">بازگشت به فهرست</a>
+	<a class="btn btn-outline-primary" asp-action="Edit" asp-route-id="@Model.RequestId">ویرایش</a>
+	<a class="btn btn-outline-secondary" asp-action="Index">بازگشت به فهرست</a>
 </div>
