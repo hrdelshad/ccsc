@@ -1,4 +1,5 @@
 ﻿@using ccsc.DataLayer.Entities.ChangeSets
+@using ccsc.DataLayer.Entities.Courses
 @model ccsc.DataLayer.Entities.Contracts.Contract
 
 @{
@@ -6,6 +7,10 @@
 	var subSystems = ViewData["SubSystem"] as List<SubSystem>;
 
 	var selectedSubSystems = ViewData["SelectedSubSystem"] as List<SubSystem>;
+
+	var courses = ViewData["Courses"] as List<Course>;
+
+	var selectedCourses = ViewData["SelectedCourses"] as List<Course>;
 
 }
 
@@ -70,18 +75,35 @@
 				{
 					<div class="form-check">
 						<label class="form-check-label">
-							<input type="checkbox" name="SelectedSubSystems" class="form-check-input" @(selectedSubSystems != null && selectedSubSystems.Any(s => s.SubSystemId == item.SubSystemId) ? "checked" : "") value="@item.SubSystemId" /> @item.Title
+							<input id="checkbox-@item.SubSystemId" type="checkbox" name="SelectedSubSystems" class="form-check-input" @(selectedSubSystems != null && selectedSubSystems.Any(s => s.SubSystemId == item.SubSystemId) ? "checked" : "") value="@item.SubSystemId" /> @item.Title
 						</label>
 					</div>
 				}
 			</div>
 		</div>
 		<div class="col-md-6">
+
+			<div class="col-md" id="course">
+				<div>رشته ها</div>
+				<hr/>
+				<div class="form-group form-check">
+					@foreach (var item in courses)
+					{
+						<div class="form-check">
+							<label class="form-check-label">
+								<input type="checkbox" name="SelectedCourses" class="form-check-input" @(selectedCourses != null && selectedCourses.Any(s => s.CourseId == item.CourseId) ? "checked" : "") value="@item.CourseId"/> @item.Title
+							</label>
+						</div>
+					}
+				</div>
+			</div>
 			<div class="form-group">
 				<label asp-for="Description" class="control-label"></label>
+				<hr/>
 				<textarea asp-for="Description" ckeditor="1" class="form-control"></textarea>
 				<span asp-validation-for="Description" class="text-danger"></span>
 			</div>
+
 		</div>
 	</div>	
 	<div class="form-group">
@@ -97,3 +119,18 @@
 @section Scripts {
 	@{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
 }
+<script>
+	ShowHideCourse();
+	$("#checkbox-1").click(function() {
+		ShowHideCourse();
+	});
+
+	function ShowHideCourse() {
+		var logbookId = $("#checkbox-1");
+		if (logbookId.is(":checked")) {
+			$("#course").show(500);
+		} else {
+			$("#course").hide(500);
+		}
+	}
+</script>

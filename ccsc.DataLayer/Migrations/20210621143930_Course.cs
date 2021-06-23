@@ -20,17 +20,16 @@ namespace ccsc.DataLayer.Migrations
                 {
                     CourseId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     Title = table.Column<string>(type: "nvarchar(200)", maxLength: 200, nullable: false),
-                    CourseLevelId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     CourseCode = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     IsActive = table.Column<bool>(type: "bit", nullable: false),
-                    CourseLevelId1 = table.Column<int>(type: "int", nullable: true)
+                    CourseLevelId = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Courses", x => x.CourseId);
                     table.ForeignKey(
-                        name: "FK_Courses_CourseLevels_CourseLevelId1",
-                        column: x => x.CourseLevelId1,
+                        name: "FK_Courses_CourseLevels_CourseLevelId",
+                        column: x => x.CourseLevelId,
                         principalTable: "CourseLevels",
                         principalColumn: "CourseLevelId",
                         onDelete: ReferentialAction.Restrict);
@@ -99,9 +98,9 @@ namespace ccsc.DataLayer.Migrations
                 column: "CoursesCourseId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Courses_CourseLevelId1",
+                name: "IX_Courses_CourseLevelId",
                 table: "Courses",
-                column: "CourseLevelId1");
+                column: "CourseLevelId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Groups_FacultyId",

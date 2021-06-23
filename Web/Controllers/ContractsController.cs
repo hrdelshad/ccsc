@@ -18,12 +18,14 @@ namespace ccsc.Web.Controllers
 		private readonly CcscContext _context;
 		private readonly IContractService _contractService;
 		private readonly ISubSystemService _subSystemService;
+		private ICourseService _courseService;
 
-		public ContractsController(CcscContext context, IContractService contractService, ISubSystemService subSystemService)
+		public ContractsController(CcscContext context, IContractService contractService, ISubSystemService subSystemService, ICourseService courseService)
 		{
 			_context = context;
 			_contractService = contractService;
 			_subSystemService = subSystemService;
+			_courseService = courseService;
 		}
 
 		// GET: Contracts
@@ -112,6 +114,10 @@ namespace ccsc.Web.Controllers
 
 			ViewData["SubSystem"] = await _subSystemService.GetSubSystems();
 			ViewData["SelectedSubSystem"] = await _subSystemService.GetCurrentSubSystems("Contract", id.Value);
+
+			ViewData["Courses"] = await _courseService.GetCourses();
+			ViewData["SelectedCourses"] = await _contractService.GetCoursesOfContract(id.Value);
+
 			return View(contract);
 		}
 

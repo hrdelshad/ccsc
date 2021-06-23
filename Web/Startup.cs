@@ -115,6 +115,7 @@ namespace ccsc.Web
 			services.AddTransient<IChangeSetService, ChangeSetService>();
 			services.AddTransient<IConfigService, ConfigService>();
 			services.AddTransient<IContractService, ContractService>();
+			services.AddTransient<ICourseService, CourseService>();
 			services.AddTransient<ICustomerService, CustomerService>();
 			services.AddTransient<IFaqService, FaqService>();
 			services.AddTransient<IMyMailService, MyMailService>();

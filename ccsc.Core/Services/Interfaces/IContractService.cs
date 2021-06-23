@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using ccsc.DataLayer.Entities.ChangeSets;
 using ccsc.DataLayer.Entities.Contacts;
 using ccsc.DataLayer.Entities.Contracts;
+using ccsc.DataLayer.Entities.Courses;
 
 namespace ccsc.Core.Services.Interfaces
 {
@@ -16,5 +17,6 @@ namespace ccsc.Core.Services.Interfaces
 		Task UpdateContractAsync(Contract updatedContract, List<int> subSystemIds);
 		Task RemoveContractRelatedAsync(Contract contract);
 		List<SubSystem> GetSubSystemsOfContract(int contract);
+		Task<List<Course>> GetCoursesOfContract(int contractId);
 	}
 }

@@ -65,8 +65,8 @@
 		<td>
 			@Html.DisplayFor(modelItem => item.Hard)
 		</td>
-		<td>
-			<a onmouseover="copyMe(this);" asp-action="Details" asp-route-id="@item.ServerId">@Html.DisplayFor(modelItem => item.Url)</a>
+		<td onclick="copyMe(this);">
+			@Html.DisplayFor(modelItem => item.Url)
 		</td>
 		<td onclick="copyMe(this);">
 			@Html.DisplayFor(modelItem => item.UserName)
@@ -78,7 +78,7 @@
 			@Html.DisplayFor(modelItem => item.Vpn)
 		</td>
 		<td>
-			@Html.DisplayFor(modelItem => item.ServerType.Title)
+			<a asp-action="Details" asp-route-id="@item.ServerId">@Html.DisplayFor(modelItem => item.ServerType.Title)</a>
 		</td>
 		<td>
 			@shortOsTitle

@@ -8,6 +8,7 @@ using ccsc.DataLayer.Context;
 using ccsc.DataLayer.Entities.ChangeSets;
 using ccsc.DataLayer.Entities.Contacts;
 using ccsc.DataLayer.Entities.Contracts;
+using ccsc.DataLayer.Entities.Courses;
 using Microsoft.EntityFrameworkCore;
 
 namespace ccsc.Core.Services
@@ -15,7 +16,7 @@ namespace ccsc.Core.Services
 	public class ContractService : IContractService
 	{
 		private readonly CcscContext _context;
-		private ISubSystemService _subSystemService;
+		private readonly ISubSystemService _subSystemService;
 
 		public ContractService(CcscContext context, ISubSystemService subSystemService)
 		{
@@ -74,5 +75,16 @@ namespace ccsc.Core.Services
 			await UpdateContractAsync(newContract, selectedSubSystems);
 		}
 
+		public async Task<List<Course>> GetCoursesOfContract(int contractId)
+		{
+			List<Course> courses = new List<Course>();
+			courses = await _context.Courses
+				.Include(c => c.Contracts)
+				.Where(c => c.Contracts.Any(e => e.ContractId == contractId))
+				.Where(c => c.IsActive)
+				.ToListAsync();
+
+			return courses;
+		}
 	}
 }

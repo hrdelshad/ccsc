@@ -17,7 +17,7 @@ namespace ccsc.DataLayer.Entities.Courses
 
 		[Display(Name = "مقطع")]
 		[Required(ErrorMessage = "لطفا {0} را وارد کنید")]
-		public Guid CourseLevelId { get; set; }
+		public int CourseLevelId { get; set; }
 
 		public string CourseCode { get; set; }
 
