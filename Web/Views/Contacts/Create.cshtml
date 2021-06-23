@@ -1,10 +1,34 @@
 ﻿@model ccsc.DataLayer.Entities.Contacts.Contact
 
 @{
-	ViewData["Title"] = "ثبت کاربر جدی";
+	ViewData["Title"] = "ثبت کاربر جدید";
+	if (TempData["CId"] != null)
+	{
+		var cId = TempData["CId"].ToString();
+	}
+	var cTitle = ViewData["CustomerTitle"];
+	var cType = ViewData["CustomerType"];
 }
 
-@ViewData["Title"] 
+@if (TempData["CId"] != null)
+{
+	var cId = TempData["CId"].ToString();
+	<nav style="--bs-breadcrumb-divider: '/';" aria-label="breadcrumb">
+		<ol class="breadcrumb">
+			<li class="breadcrumb-item"><a asp-controller="Customers" asp-action="Details" asp-route-id="@cId">@cType @cTitle</a></li>
+			<li class="breadcrumb-item active" aria-current="page">@ViewData["Title"]</li>
+		</ol>
+	</nav>
+}
+else
+{
+	<nav style="--bs-breadcrumb-divider: '/';" aria-label="breadcrumb">
+		<ol class="breadcrumb">
+			<li class="breadcrumb-item"><a asp-controller="Requests" asp-action="Index">کاربران</a></li>
+			<li class="breadcrumb-item active" aria-current="page">@ViewData["Title"]</li>
+		</ol>
+	</nav>
+}
 <hr />
 <div class="row">
     <div class="col-md-4">
@@ -48,7 +72,6 @@
                 <span asp-validation-for="Phone" class="text-danger"></span>
             </div>
 	        <div class="form-group mt-2">
-
 		        <input type="submit" value="ثبت" class="btn btn-primary d-inline" />
 		        <button class="btn btn-secondary" onclick="goBack()">انصراف</button>
 	        </div>

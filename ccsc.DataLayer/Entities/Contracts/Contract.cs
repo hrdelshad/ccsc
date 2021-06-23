@@ -27,7 +27,7 @@ namespace ccsc.DataLayer.Entities.Contracts
 		[Display(Name = "تاریخ شروع قرارداد")]
 		[Required(ErrorMessage = "لطفا {0} را وارد کنید")]
 		[DataType(DataType.Date)]
-		//[DisplayFormat(DataFormatString = "{0:yyyy/MM/dd}", ApplyFormatInEditMode = true)]
+		//[DisplayFormat(DataFormatString = "{0:MM/dd/yyyy}", ApplyFormatInEditMode = true)]
 		public DateTime StartDate { get; set; }
 
 		[Display(Name = "مدت قرارداد(ماه)")]

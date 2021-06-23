@@ -116,7 +116,9 @@ namespace ccsc.Web.Controllers
                 return NotFound();
             }
 
-            var request = await _context.Requests.FindAsync(id);
+            var request = await _context.Requests
+	            .Include(r=>r.Customer).ThenInclude(c=>c.CustomerType)
+	            .Where(r=>r.RequestId == id.Value).FirstOrDefaultAsync();
             if (request == null)
             {
                 return NotFound();

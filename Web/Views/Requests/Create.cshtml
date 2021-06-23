@@ -10,15 +10,20 @@
 	var cType = ViewData["CustomerType"];
 }
 
-<h4>@ViewData["Title"]</h4>
-@if (TempData["CId"] != null)
-{
-	var cId = TempData["CId"].ToString();
-	<p>@cType  <a asp-controller="Customers" asp-action="Details" asp-route-id="@cId">@cTitle</a></p>
-}
-<hr />
 
-<form asp-action="Create">
+<nav class="border border-primary rounded p-2 shadow-sm bg-light" style="--bs-breadcrumb-divider: '/';" aria-label="breadcrumb">
+	<ol class="breadcrumb">
+		@if (TempData["CId"] != null)
+		{
+			var cId = TempData["CId"].ToString();
+			<li class="breadcrumb-item"><a asp-controller="Customers" asp-action="Details" asp-route-id="@cId">@cType @cTitle</a></li>
+		}
+		<li class="breadcrumb-item"><a asp-controller="Requests" asp-action="Index">درخواست ها</a></li>
+		<li class="breadcrumb-item active" aria-current="page">@ViewData["Title"]</li>
+	</ol>
+</nav>
+<br/>
+<form class="border border-primary rounded p-4 shadow bg-light mb-5" asp-action="Create">
 	<div class="row">
 		<div class="col-md-4">
 			<div asp-validation-summary="ModelOnly" class="text-danger"></div>
@@ -82,13 +87,13 @@
 @section Scripts {
 	@{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
 	<script>
-		$("#CustomerId").change(function() {
+		$("#CustomerId").change(function () {
 
 			$("#ContactId").empty();
 			$.getJSON("../Customers/GetContactsOfCustomer/" + $("#CustomerId :selected").val(),
-				function(data) {
+				function (data) {
 					$.each(data,
-						function() {
+						function () {
 							$("#ContactId").append('<option value=' + this.Value + '>' + this.Text + '</option>'
 							);
 						}

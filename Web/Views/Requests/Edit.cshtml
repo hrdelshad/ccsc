@@ -2,13 +2,20 @@
 
 @{
 	ViewData["Title"] = Model.Title;
-
+	var cId = Model.CustomerId;
+	var customer = Model.Customer.CustomerType.Title +" "+Model.Customer.Title;
 }
 
-<h4>@ViewData["Title"]</h4>
-<hr />
+<nav class="border border-success rounded p-2 shadow-sm bg-light" style="--bs-breadcrumb-divider: '/';" aria-label="breadcrumb">
+	<ol class="breadcrumb">
+		<li class="breadcrumb-item"><a asp-controller="Customers" asp-action="Details" asp-route-id="@cId">@customer</a></li>
+		<li class="breadcrumb-item"><a asp-controller="Requests" asp-action="Index">درخواست ها</a></li>
+		<li class="breadcrumb-item active" aria-current="page">@ViewData["Title"]</li>
+	</ol>
+</nav>
+<br />
 
-<form asp-action="Edit">
+<form asp-action="Edit" class="border border-success rounded p-4 shadow bg-light mb-5">
 	<div class="row">
 		<div class="col-md-4">
 
