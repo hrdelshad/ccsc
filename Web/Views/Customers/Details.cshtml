@@ -241,7 +241,7 @@
 				@if (Model.Contracts != null)
 				{
 					decimal totalAmount = 0;
-					string showTotal = "";
+					
 					<table class="table">
 						<caption>@*فهرست قراردادها*@</caption>
 						<thead>
@@ -446,8 +446,58 @@
 		<!-- #endregion -->
 		<!-- #region کاربران -->
 		<div class="tab-pane fade p-3" id="pills-contact" role="tabpanel" aria-labelledby="pills-contact-tab">
-			کاربران
-		</div>
+			<div class="col-sm-12">
+				@if (Model.Contacts != null)
+				{
+					<table class="table">
+						<thead>
+						<tr>
+							<th>عنوان</th>
+							<th>نام</th>
+							<th>نام خانوادگی</th>
+							<th>پست</th>
+							<th>موبایل</th>
+							<th>تلفن</th>
+							<th>ایمیل</th>
+						</tr>
+						</thead>
+						<tbody>
+						@foreach (var contact in Model.Contacts)
+						{
+							<tr>
+								<td>
+									@Html.DisplayFor(modelItem => contact.Salutation.Title)
+								</td>
+								<td>
+									<a asp-controller="Contacts" asp-action="Details" asp-route-id="@contact.ContactId">@Html.DisplayFor(modelItem => contact.FirstName)</a>
+								</td>
+								<td>
+									<a asp-controller="Contacts" asp-action="Details" asp-route-id="@contact.ContactId">@Html.DisplayFor(modelItem => contact.LastName)</a>
+								</td>
+								<td>
+									@Html.DisplayFor(modelItem => contact.Post.Title)
+								</td>
+								<td>
+									@Html.DisplayFor(modelItem => contact.Mobile)
+								</td>
+								<td>
+									@Html.DisplayFor(modelItem => contact.Phone)
+								</td>
+								<td>
+									@Html.DisplayFor(modelItem => contact.Email)
+								</td>
+							</tr>
+						}
+						</tbody>
+					</table>
+				}
+				else
+				{
+					<p>هیچ کاربری ثبت نشده است</p>
+				}
+				<a asp-controller="Contacts" asp-action="Create" asp-route-id="@Model.CustomerId">ثبت کاربر</a>
+
+			</div>		</div>
 		<!-- #endregion -->
 	</div>
 

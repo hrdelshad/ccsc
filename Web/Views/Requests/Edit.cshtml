@@ -56,7 +56,11 @@
 				<select asp-for="RequestStatusId" class="form-control" asp-items="ViewBag.RequestStatusId"></select>
 				<span asp-validation-for="RequestStatusId" class="text-danger"></span>
 			</div>
-
+			<div class="form-group">
+				<label asp-for="DoneDateTime" class="control-label"></label>
+				<input asp-for="DoneDateTime" class="form-control" />
+				<span asp-validation-for="DoneDateTime" class="text-danger"></span>
+			</div>
 		</div>
 		<div class="col-md-8">
 			<div class="form-group">

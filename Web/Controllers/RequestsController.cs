@@ -1,4 +1,5 @@
-﻿using ccsc.Core.Services.Interfaces;
+﻿using System;
+using ccsc.Core.Services.Interfaces;
 using ccsc.DataLayer.Context;
 using ccsc.DataLayer.Entities.Requests;
 using Microsoft.AspNetCore.Authorization;
@@ -141,7 +142,7 @@ namespace ccsc.Web.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("RequestId,CustomerId,ContactId,RequestTime,RequestChanelId,RequestTypeId,SubSystemId,RequestStatusId,Title,Text")] Request request)
+        public async Task<IActionResult> Edit(int id, [Bind("RequestId,CustomerId,ContactId,RequestTime,RequestChanelId,RequestTypeId,SubSystemId,RequestStatusId,Title,Text,DoneDateTime")] Request request)
         {
             if (id != request.RequestId)
             {
@@ -152,6 +153,14 @@ namespace ccsc.Web.Controllers
             {
                 try
                 {
+	                if (request.DoneDateTime.HasValue)
+	                {
+		                request.RequestStatusId = 3;
+	                }
+	                if (!request.DoneDateTime.HasValue && request.RequestStatusId == 3)
+	                {
+		                request.DoneDateTime = DateTime.Now;
+	                }
                     _context.Update(request);
                     await _context.SaveChangesAsync();
                 }

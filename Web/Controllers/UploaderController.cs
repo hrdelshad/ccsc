@@ -1,13 +1,15 @@
 ﻿using System;
 using System.IO;
 using ccsc.Core.Convertors;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 
 namespace ccsc.Web.Controllers
 {
-	public class UploaderController : Controller
+	[Authorize]
+    public class UploaderController : Controller
 	{
 
 		[HttpPost]

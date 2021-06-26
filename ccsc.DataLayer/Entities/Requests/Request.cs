@@ -51,6 +51,10 @@ namespace ccsc.DataLayer.Entities.Requests
 		[MaxLength(800, ErrorMessage = "{0} نمیتواند بیشتر از {1} کارکتر باشد")]
 		public string Text { get; set; }
 
+		[Display(Name = "تاریخ انجام")]
+		[DataType(DataType.DateTime)]
+		public DateTime? DoneDateTime { get; set; }
+
 		#region Relations
 
 		[Display(Name = "مشتری")]
