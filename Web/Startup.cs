@@ -118,6 +118,7 @@ namespace ccsc.Web
 			services.AddTransient<ICourseService, CourseService>();
 			services.AddTransient<ICustomerService, CustomerService>();
 			services.AddTransient<IFaqService, FaqService>();
+			services.AddTransient<IRequestService, RequestService>();
 			services.AddTransient<IMyMailService, MyMailService>();
 			services.AddTransient<ISmsService, SmsService>();
 			services.AddTransient<ISubSystemService, SubSystemService>();

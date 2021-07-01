@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using System.Linq;
 using System.Threading.Tasks;
+using ccsc.Core.DTOs;
 
 namespace ccsc.Web.Controllers
 {
@@ -16,11 +17,19 @@ namespace ccsc.Web.Controllers
     {
 	    private ICustomerService _customerService;
         private readonly CcscContext _context;
+        private IRequestService _requestService;
 
-        public RequestsController(CcscContext context, ICustomerService customerService)
+        public RequestsController(ICustomerService customerService, CcscContext context, IRequestService requestService)
         {
-	        _context = context;
 	        _customerService = customerService;
+	        _context = context;
+	        _requestService = requestService;
+        }
+
+        public async Task<IActionResult> FIndex(FilterRequestDTO filter)
+        {
+	        //filter.RequestStatus.IsActive = true;
+	        return View(await _requestService.FilterRequests(filter));
         }
 
         // GET: Requests
