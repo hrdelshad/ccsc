@@ -130,6 +130,7 @@ namespace ccsc.DataLayer.Context
 
 		public DbSet<Comment> Comments { get; set; }
 		public DbSet<Config> Configs { get; set; }
+		public DbSet<UseFulLink> UseFulLinks { get; set; }
 
 		#endregion
 

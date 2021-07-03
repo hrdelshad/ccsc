@@ -15,7 +15,7 @@
 	<link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/icon?family=Material+Icons">
 	<link rel="stylesheet" type="text/css" href="https://kendo.cdn.telerik.com/2020.2.513/styles/kendo.bootstrap-v4.min.css" />
 	<link rel="stylesheet" type="text/css" href="https://kendo.cdn.telerik.com/2020.2.513/styles/kendo.rtl.min.css" />
-	
+
 
 	<script src="https://kendo.cdn.telerik.com/2020.2.513/js/jquery.min.js"></script>
 
@@ -34,8 +34,16 @@
 						@*<button class="btn btn-outline-danger my-2 my-sm-0 material-icons" type="submit">power_settings_new</button>*@
 						<button class="btn btn-outline-danger my-2 my-sm-0" type="submit">خروج</button>
 					</form>
-
-					<a class="navbar-brand m-1" href="#">خوش آمدید @User.Identity.Name    | </a>
+					<ul class="navbar-nav me-auto mb-2 mb-md-0">
+						<li class="nav-item dropdown">
+							<a class="nav-link dropdown-toggle text-light" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+								خوش آمدید @User.Identity.Name
+							</a>
+							<div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+								<a class="dropdown-item" asp-area="" asp-controller="UseFulLinks" asp-action="Index">لینکهای مفید</a>
+							</div>
+						</li>
+					</ul>
 				}
 				else
 				{
@@ -52,8 +60,8 @@
 						{
 
 							@*<li class="nav-item">
-				<a class="nav-link text-light" asp-area="" asp-controller="Accounts" asp-action="Register">عضویت</a>
-			</li>*@
+									<a class="nav-link text-light" asp-area="" asp-controller="Accounts" asp-action="Register">عضویت</a>
+								</li>*@
 							<li class="nav-item">
 								<a class="nav-link text-light material-icons" asp-area="" asp-controller="Accounts" asp-action="Login">input</a>
 							</li>
@@ -61,27 +69,27 @@
 						else
 						{
 							@*<li class="nav-item">
-				<span class="material-icons">
-					<a class="nav-link text-light" asp-area="" asp-controller="Home" asp-action="Index">
-						home
-					</a>
-				</span>
-				<span class="material-icons">
-					<a class="nav-link text-light" asp-action="Create">
-						add_circle_outline
-					</a>
-				</span>
-				<span class="material-icons">
-					<a class="nav-link text-light" title="رفرش" asp-action="Index">
-						refresh
-					</a>
-				</span>
-				<span class="material-icons">
-					<a class="nav-link text-light" title="داشبورد" asp-area="" asp-controller="Home" asp-action="Dashboard">
-						analytics
-					</a>
-				</span>
-			</li>*@
+									<span class="material-icons">
+										<a class="nav-link text-light" asp-area="" asp-controller="Home" asp-action="Index">
+											home
+										</a>
+									</span>
+									<span class="material-icons">
+										<a class="nav-link text-light" asp-action="Create">
+											add_circle_outline
+										</a>
+									</span>
+									<span class="material-icons">
+										<a class="nav-link text-light" title="رفرش" asp-action="Index">
+											refresh
+										</a>
+									</span>
+									<span class="material-icons">
+										<a class="nav-link text-light" title="داشبورد" asp-area="" asp-controller="Home" asp-action="Dashboard">
+											analytics
+										</a>
+									</span>
+								</li>*@
 							<li class="nav-item">
 								<a class="nav-link text-light" asp-area="" asp-controller="Home" asp-action="Index">خانه</a>
 							</li>
