@@ -31,7 +31,8 @@
 				@if (SignInManager.IsSignedIn(User))
 				{
 					<form class="navbar-brand m-1" asp-area="" asp-controller="Accounts" asp-action="Logout" method="post">
-						<button class="btn btn-outline-danger my-2 my-sm-0 material-icons" type="submit">power_settings_new</button>
+						@*<button class="btn btn-outline-danger my-2 my-sm-0 material-icons" type="submit">power_settings_new</button>*@
+						<button class="btn btn-outline-danger my-2 my-sm-0" type="submit">خروج</button>
 					</form>
 
 					<a class="navbar-brand m-1" href="#">خوش آمدید @User.Identity.Name    | </a>
@@ -59,29 +60,34 @@
 						}
 						else
 						{
+							@*<li class="nav-item">
+				<span class="material-icons">
+					<a class="nav-link text-light" asp-area="" asp-controller="Home" asp-action="Index">
+						home
+					</a>
+				</span>
+				<span class="material-icons">
+					<a class="nav-link text-light" asp-action="Create">
+						add_circle_outline
+					</a>
+				</span>
+				<span class="material-icons">
+					<a class="nav-link text-light" title="رفرش" asp-action="Index">
+						refresh
+					</a>
+				</span>
+				<span class="material-icons">
+					<a class="nav-link text-light" title="داشبورد" asp-area="" asp-controller="Home" asp-action="Dashboard">
+						analytics
+					</a>
+				</span>
+			</li>*@
 							<li class="nav-item">
-								<span class="material-icons">
-									<a class="nav-link text-light" asp-area="" asp-controller="Home" asp-action="Index">
-										home
-									</a>
-								</span>
-								<span class="material-icons">
-									<a class="nav-link text-light" asp-action="Create">
-										add_circle_outline
-									</a>
-								</span>
-								<span class="material-icons">
-									<a class="nav-link text-light" title="رفرش" asp-action="Index">
-										refresh
-									</a>
-								</span>
-								<span class="material-icons">
-									<a class="nav-link text-light" title="داشبورد" asp-area="" asp-controller="Home" asp-action="Dashboard">
-										analytics
-									</a>
-								</span>
+								<a class="nav-link text-light" asp-area="" asp-controller="Home" asp-action="Index">خانه</a>
 							</li>
-
+							<li class="nav-item">
+								<a class="nav-link text-light" asp-area="" asp-action="Create">جدید</a>
+							</li>
 							<li class="nav-item">
 								<a class="nav-link text-light" asp-area="" asp-controller="Customers" asp-action="Index">مشتریان</a>
 							</li>

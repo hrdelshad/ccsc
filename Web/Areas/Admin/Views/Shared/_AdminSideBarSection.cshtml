@@ -1,0 +1,137 @@
+﻿<!-- Page Sidebar -->
+            <div class="page-sidebar" id="sidebar">
+                <!-- Page Sidebar Header-->
+                <div class="sidebar-header-wrapper">
+                    <input type="text" class="searchinput" />
+                    <i class="searchicon fa fa-search"></i>
+                    <div class="searchhelper">به جستجوی صفحات، گزارشات، پیام ها و ... بپردازید</div>
+                </div>
+                <!-- /Page Sidebar Header -->
+                <!-- Sidebar Menu -->
+                <ul class="nav sidebar-menu">
+                    <!--Dashboard-->
+                    <li>
+                        <a asp-area="Admin" asp-controller="Home" asp-action="Index">
+                            <i class="menu-icon glyphicon glyphicon-home"></i>
+                            <span class="menu-text"> داشبورد </span>
+                        </a>
+                    </li>
+                <!--UI Elements-->
+                    <li>
+                        <a href="#" class="menu-dropdown">
+                            <i class="menu-icon fa fa-desktop"></i>
+                            <span class="menu-text"> عناصر گرافیکی </span>
+
+                            <i class="menu-expand"></i>
+                        </a>
+
+                        <ul class="submenu">
+                            <li>
+                                <a href="elements.html">
+                                    <span class="menu-text">عناصر عمومی</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#" class="menu-dropdown">
+                                    <span class="menu-text">
+                                        آیکون ها
+                                    </span>
+                                    <i class="menu-expand"></i>
+                                </a>
+
+                                <ul class="submenu">
+                                    <li>
+                                        <a href="font-awesome.html">
+                                            <i class="menu-icon fa fa-rocket"></i>
+                                            <span class="menu-text">Font Awesome</span>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="glyph-icons.html">
+                                            <i class="menu-icon glyphicon glyphicon-stats"></i>
+                                            <span class="menu-text">Glyph Icons</span>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="typicon.html">
+                                            <i class="menu-icon typcn typcn-location-outline"></i>
+                                            <span class="menu-text"> Typicons</span>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="weather-icons.html">
+                                            <i class="menu-icon wi wi-hot"></i>
+                                            <span class="menu-text">Weather Icons</span>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </li>
+                            <li>
+                                <a href="tabs.html">
+                                    <span class="menu-text">زبانه ها و آکوردئون ها</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="alerts.html">
+                                    <span class="menu-text">هشدارها و راهنماها</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="modals.html">
+                                    <span class="menu-text">مدال و Wells</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="buttons.html">
+                                    <span class="menu-text">دکمه ها</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="nestable-list.html">
+                                    <span class="menu-text"> لیست های تو در تو</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="treeview.html">
+                                    <span class="menu-text">درخت ها</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+                    <!--اطلاعات پایه-->
+                    <li>
+                        <a href="#" class="menu-dropdown">
+                            <i class="menu-icon fa fa-table"></i>
+                            <span class="menu-text">اطلاعات پایه</span>
+	                        <i class="menu-expand"></i>
+                        </a>
+						<ul class="submenu">
+							<li><a class="dropdown-item" asp-area="" asp-controller="RequestStatus" asp-action="Index"><span class="menu-text">وضعیت درخواست</span></a></li>
+							<li><a class="dropdown-item" asp-area="" asp-controller="Os" asp-action="Index"><span class="menu-text">انواع سیستم عامل</span></a></li>
+							<li><a class="dropdown-item" asp-area="" asp-controller="CourseLevels" asp-action="Index"><span class="menu-text">مقاطع تحصیلی</span></a></li>
+							<li><a class="dropdown-item" asp-area="" asp-controller="RequestChannels" asp-action="Index"><span class="menu-text">کانال درخواست</span></a></li>
+							<li><a class="dropdown-item" asp-area="" asp-controller="RequestTypes" asp-action="Index"><span class="menu-text">نوع درخواست</span></a></li>
+							<li><a class="dropdown-item" asp-area="" asp-controller="ContractTypes" asp-action="Index"><span class="menu-text">انواع قرارداد</span></a></li>
+							<li><a class="dropdown-item" asp-area="" asp-controller="CustomerTypes" asp-action="Index"><span class="menu-text">انواع مشتری</span></a></li>
+							<li><a class="dropdown-item" asp-area="" asp-controller="ServerTypes" asp-action="Index"><span class="menu-text">انوع سرور</span></a></li>
+							<li><a class="dropdown-item" asp-area="" asp-controller="Posts" asp-action="Index"><span class="menu-text">پست ها</span></a></li>
+							<li><a class="dropdown-item" asp-area="" asp-controller="Genders" asp-action="Index"><span class="menu-text">جنسیت</span></a></li>
+							<li><a class="dropdown-item" asp-area="" asp-controller="Salutations" asp-action="Index"><span class="menu-text">القاب</span></a></li>
+							<li><a class="dropdown-item" asp-area="" asp-controller="ServiceTypes" asp-action="Index"><span class="menu-text">انواع سرویس</span></a></li>
+							<li><a class="dropdown-item" asp-area="" asp-controller="ServiceStatus" asp-action="Index"><span class="menu-text">وضعیت های سرویس</span></a></li>
+							<li><a class="dropdown-item" asp-area="" asp-controller="DutyStatus" asp-action="Index"><span class="menu-text">وضعیت کارها</span></a></li>
+						</ul>
+                    </li>
+
+                    <li>
+                        <a href="versions.html">
+                            <i class="menu-icon glyphicon glyphicon-fire themesecondary"></i>
+                            <span class="menu-text">
+                                BeyondAdmin Versions
+                            </span>
+                        </a>
+                    </li>
+                </ul>
+                <!-- /Sidebar Menu -->
+            </div>
+            <!-- /Page Sidebar -->

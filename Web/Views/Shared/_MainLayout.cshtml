@@ -1,0 +1,42 @@
+﻿@inject SignInManager<User> SignInManager;
+<!DOCTYPE html>
+<html class="no-js" lang="fa" dir="rtl">
+
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="x-ua-compatible" content="ie=edge">
+	<title>قالب Junko</title>
+	<meta name="description" content="">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<!-- Favicon -->
+	<link rel="shortcut icon" type="image/x-icon" href="~/Thems/Them1/img/favicon.ico">
+
+	<!-- CSS
+	========================= -->
+	<!-- Plugins CSS -->
+	<link rel="stylesheet" href="~/Thems/Them1/css/plugins.css">
+
+	<!-- Main Style CSS -->
+	<link rel="stylesheet" href="~/Thems/Them1/css/style.css">
+
+</head>
+
+<body>
+	@await Component.InvokeAsync("SiteHeaderComponent")
+
+	@RenderBody()
+
+@*@await Component.InvokeAsync("SiteHeaderComponent")*@
+	@await Component.InvokeAsync("SiteFooterComponent")
+	<!-- JS
+	============================================ -->
+	<!-- Plugins JS -->
+	<script src="~/Thems/Them1/js/plugins.js"></script>
+
+	<!-- Main JS -->
+<script src="~/Thems/Them1/js/main.js"></script>
+@RenderSection("Scripts", required: false)
+
+</body>
+
+</html>

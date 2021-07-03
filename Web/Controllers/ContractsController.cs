@@ -162,6 +162,12 @@ namespace ccsc.Web.Controllers
 						_context.Update(customer);
 						await _context.SaveChangesAsync();
 					}
+					else
+					{
+						customer.HasUnSupportedContract = false;
+						_context.Update(customer);
+						await _context.SaveChangesAsync();
+					}
 				}
 				catch (DbUpdateConcurrencyException)
 				{

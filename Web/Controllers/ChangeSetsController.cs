@@ -12,7 +12,7 @@ using ccsc.Core.Services.Interfaces;
 namespace ccsc.Web.Controllers
 {
     [Authorize]
-    public class ChangeSetsController : Controller
+    public class ChangeSetsController : BaseController
     {
         private readonly CcscContext _context;
         private readonly ITfsService _service;

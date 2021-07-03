@@ -11,7 +11,7 @@ namespace ccsc.Core.DTOs
 		public int? RequestChanelId { get; set; }
 		public int? RequestTypeId { get; set; }
 		public int? SubSystemId { get; set; }
-		public bool RequestState { get; set; } = true;
+		public bool RequestState { get; set; }
 		public string Title { get; set; }
 		public FilterRequestOrder OrderBy { get; set; }
 		public RequestStatus RequestStatus { get; set; }

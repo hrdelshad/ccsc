@@ -68,7 +68,7 @@ namespace ccsc.Core.Services
 
 			if (!string.IsNullOrEmpty(filter.Title))
 			{
-				query = query.Where(s =>EF.Functions.Like(s.Title,$"{filter.Title}"));
+				query = query.Where(s =>EF.Functions.Like(s.Title,$"%{filter.Title}%"));
 			}
 			#endregion
 

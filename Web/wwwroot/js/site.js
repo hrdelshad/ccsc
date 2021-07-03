@@ -27,6 +27,16 @@ function copyToClipboard(text) {
 	document.body.removeChild(elem);
 }
 
+function hostName () {
+	var url = $(location).attr("hostname");
+	if (url.indexOf("localhost") >= 0) {
+		url = "http://localhost/ccsc/";
+	} else {
+		url = "http://my.enico.ir/";
+    }
+	return url;
+}
+
 $(document).ready(function () {
     var editors = $("[ckeditor]");
     var url = $(location).attr("hostname");
