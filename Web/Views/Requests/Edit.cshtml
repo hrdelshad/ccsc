@@ -21,6 +21,7 @@
 
 			<div asp-validation-summary="ModelOnly" class="text-danger"></div>
 			<input type="hidden" asp-for="RequestId" />
+			<input type="hidden" asp-for="RequestTime" />
 			<div class="form-group">
 				<label asp-for="CustomerId" class="control-label"></label>
 				<select asp-for="CustomerId" class="form-control" asp-items="ViewBag.CustomerId"></select>
@@ -31,11 +32,11 @@
 				<select asp-for="ContactId" class="form-control" asp-items="ViewBag.ContactId"></select>
 				<span asp-validation-for="ContactId" class="text-danger"></span>
 			</div>
-			<div class="form-group">
+			@*<div class="form-group">
 				<label asp-for="RequestTime" class="control-label"></label>
 				<input asp-for="RequestTime" class="form-control" />
 				<span asp-validation-for="RequestTime" class="text-danger"></span>
-			</div>
+			</div>*@
 			<div class="form-group">
 				<label asp-for="RequestChanelId" class="control-label"></label>
 				<select asp-for="RequestChanelId" class="form-control" asp-items="ViewBag.RequestChanelId"></select>
