@@ -6,6 +6,7 @@ using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using ccsc.DataLayer.Entities.Customers;
 
 namespace ccsc.Core.Services
 {
@@ -13,13 +14,15 @@ namespace ccsc.Core.Services
 	{
 		private readonly CcscContext _context;
 		private readonly ISubSystemService _subSystemService;
-		private IUserTypeService _userTypeService;
+		private readonly IUserTypeService _userTypeService;
+		private readonly ICustomerService _customerService;
 
-		public VideoService(CcscContext context, ISubSystemService subSystemService, IUserTypeService userTypeService)
+		public VideoService(CcscContext context, ISubSystemService subSystemService, IUserTypeService userTypeService, ICustomerService customerService)
 		{
 			_context = context;
 			_subSystemService = subSystemService;
 			_userTypeService = userTypeService;
+			_customerService = customerService;
 		}
 
 		public async Task<List<Video>> GetAllVideos()
@@ -35,10 +38,11 @@ namespace ccsc.Core.Services
 			return video.VideoId;
 		}
 
-		public async Task UpdateVideoAsync(Video updatedVideo, List<int> subSystemIds, List<int> userTypeIds)
+		public async Task UpdateVideoAsync(Video updatedVideo, List<int> subSystemIds, List<int> userTypeIds, List<int> customerIds)
 		{
 			updatedVideo.SubSystems = await _subSystemService.GetSubSystemsByIds(subSystemIds);
 			updatedVideo.UserTypes = await _userTypeService.GetUserTypesByIds(userTypeIds);
+			updatedVideo.Customers = await _customerService.GetCustomersByIds(customerIds);
 
 			_context.Update(updatedVideo);
 			await _context.SaveChangesAsync();
@@ -49,6 +53,7 @@ namespace ccsc.Core.Services
 
 			var subSystems = GetSubSystemsOfVideo(video.VideoId);
 			var userTypes = GetUserTypesForVideo(video.VideoId);
+			var customers = GetCustomersForVideo(video.VideoId);
 			
 			if (subSystems.Any())
 			{
@@ -65,6 +70,15 @@ namespace ccsc.Core.Services
 				foreach (var ut in userTypes)
 				{
 					video.UserTypes.Remove(ut);
+					_context.Update(video);
+					await _context.SaveChangesAsync();
+				}
+			}
+			if (customers.Any())
+			{
+				foreach (var c in customers)
+				{
+					video.Customers.Remove(c);
 					_context.Update(video);
 					await _context.SaveChangesAsync();
 				}
@@ -102,8 +116,23 @@ namespace ccsc.Core.Services
 			return videoUserTypes;
 		}
 
-		
-		public async Task AddVideo(Video newVideo, List<int> subSystemIds, List<int> userTypeIds)
+		public List<Customer> GetCustomersForVideo(int id)
+		{
+			List<Customer> videoCustomers = new List<Customer>();
+			videoCustomers = _context.Customers
+				.Include(u => u.Videos)
+				.Where(u => u.Videos.Any(v => v.VideoId == id))
+				.ToList();
+
+			return videoCustomers;
+		}
+		public Task<List<Customer>> GetCustomersByIds(List<int> customerIds)
+		{
+			throw new System.NotImplementedException();
+		}
+
+
+		public async Task AddVideo(Video newVideo, List<int> subSystemIds, List<int> userTypeIds, List<int> universities)
 		{
 			_context.AddRange(
 				new Video
@@ -116,7 +145,8 @@ namespace ccsc.Core.Services
 					Description = newVideo.Description,
 					Publish = newVideo.Publish,
 					SubSystems = await _subSystemService.GetSubSystemsByIds(subSystemIds),
-					UserTypes = await _userTypeService.GetUserTypesByIds(userTypeIds)
+					UserTypes = await _userTypeService.GetUserTypesByIds(userTypeIds),
+					Customers = await _customerService.GetCustomersByIds(userTypeIds)
 				}
 			); 
 			_context.SaveChanges();

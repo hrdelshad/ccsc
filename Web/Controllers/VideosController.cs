@@ -18,13 +18,15 @@ namespace ccsc.Web.Controllers
 		private readonly IVideoService _videoService;
 		private readonly ISubSystemService _subSystemService;
 		private readonly IUserTypeService _userTypeService;
+		private readonly ICustomerService _customerService;
 
-		public VideosController(CcscContext context, IVideoService videoService, ISubSystemService subSystemService, IUserTypeService userTypeService)
+		public VideosController(CcscContext context, IVideoService videoService, ISubSystemService subSystemService, IUserTypeService userTypeService, ICustomerService customerService)
 		{
 			_context = context;
 			_videoService = videoService;
 			_subSystemService = subSystemService;
 			_userTypeService = userTypeService;
+			_customerService = customerService;
 		}
 
 		// GET: Videos
@@ -57,15 +59,16 @@ namespace ccsc.Web.Controllers
 		{
 			ViewData["SubSystem"] = await _subSystemService.GetSubSystems();
 			ViewData["UserType"] = await _userTypeService.GetUserTypes();
+			ViewData["Customer"] = await _customerService.GetCustomers();
 			return View();
 		}
 
 		[HttpPost]
 		[ValidateAntiForgeryToken]
-		public async Task<IActionResult> Create([Bind("VideoId,Title,Path,PosterPath,Description,PublishedOn,ModifiedOn,Publish,SubSystems")] Video video, List<int> selectedSubSystems, List<int> selectedUserTypes)
+		public async Task<IActionResult> Create([Bind("VideoId,Title,Path,PosterPath,Description,PublishedOn,ModifiedOn,Publish,SubSystems")] Video video, List<int> selectedSubSystems, List<int> selectedUserTypes, List<int> selectedUniversities)
 		{
 			if (!ModelState.IsValid) return View(video);
-			await _videoService.AddVideo(video, selectedSubSystems, selectedUserTypes);
+			await _videoService.AddVideo(video, selectedSubSystems, selectedUserTypes, selectedUniversities);
 			return RedirectToAction(nameof(Index));
 		}
 
@@ -84,20 +87,23 @@ namespace ccsc.Web.Controllers
 			}
 			ViewData["SubSystem"] = await _subSystemService.GetSubSystems();
 			ViewData["UserType"] = await _userTypeService.GetUserTypes();
+			ViewData["Customer"] = await _customerService.GetCustomers();
 			ViewData["SelectedSubSystem"] = _videoService.GetSubSystemsOfVideo(id.Value);
 			ViewData["SelectedUserType"] = _videoService.GetUserTypesForVideo(id.Value);
+			ViewData["SelectedCustomers"] = _videoService.GetCustomersForVideo(id.Value);
 			return View(video);
 		}
 
 
 		[HttpPost]
 		[ValidateAntiForgeryToken]
-		public async Task<IActionResult> Edit(int id, [Bind("VideoId,Title,Path,PosterPath,Description,PublishedOn,ModifiedOn,Publish")] Video video, List<int> selectedSubSystems, List<int> selectedUserTypes)
+		public async Task<IActionResult> Edit(int id, [Bind("VideoId,Title,Path,PosterPath,Description,PublishedOn,ModifiedOn,Publish")] Video video, List<int> selectedSubSystems, List<int> selectedUserTypes, List<int> selectedCustomers)
 		{
 			var updatedVideo = _context.Videos
 								   .Include(v => v.SubSystems)
 								   .Include(v => v.UserTypes)
-								   .Single(v => v.VideoId == id) ?? throw new ArgumentNullException("_context.Videos\r\n\t\t        .Include(v => v.SubSystems)\r\n\t\t        .Include(v => v.UserTypes)\r\n\t\t        .Where(v => v.VideoId == id).Single()");
+								   .Include(v=>v.Customers)
+								   .Single(v => v.VideoId == id) ?? throw new ArgumentNullException("_context.Videos\r\n\t\t        .Include(v => v.SubSystems)\r\n\t\t        .Include(v => v.UserTypes)\r\n\t\t        .Include(v => v.Customers)\r\n\t\t        .Where(v => v.VideoId == id).Single()");
 				
 				updatedVideo.Description = video.Description;
 				updatedVideo.ModifiedOn = DateTime.Now;
@@ -119,7 +125,7 @@ namespace ccsc.Web.Controllers
 				{
 					await _videoService.RemoveVideoRelatedAsync(updatedVideo);
 
-					await _videoService.UpdateVideoAsync(updatedVideo, selectedSubSystems, selectedUserTypes);
+					await _videoService.UpdateVideoAsync(updatedVideo, selectedSubSystems, selectedUserTypes, selectedCustomers);
 				}
 
 				catch (DbUpdateConcurrencyException)

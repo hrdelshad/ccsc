@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using ccsc.DataLayer.Entities.Customers;
 
 namespace ccsc.DataLayer.Entities.Tutorials
 {
@@ -50,6 +51,11 @@ namespace ccsc.DataLayer.Entities.Tutorials
 
 		[Display(Name = "سامانه(ها)")]
 		public ICollection<SubSystem> SubSystems { get; set; }
+
+
+		[Display(Name = "مشتری(های) مرتبط")]
+		
+		public ICollection<Customer> Customers { get; set; }
 
 		#endregion
 

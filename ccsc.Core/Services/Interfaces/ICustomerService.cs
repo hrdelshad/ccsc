@@ -3,6 +3,7 @@ using ccsc.DataLayer.Entities.Contacts;
 using ccsc.DataLayer.Entities.Contracts;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using ccsc.DataLayer.Entities.ChangeSets;
 using ccsc.DataLayer.Entities.Customers;
 using ccsc.DataLayer.Entities.Tutorials;
@@ -17,7 +18,7 @@ namespace ccsc.Core.Services.Interfaces
 		DateTime VersionDate(string url);
 		bool CustomerExists(int customerId);
 
-		List<Customer> getCustomers();
+		Task<List<Customer>> GetCustomers();
 
 		List<SelectListItem> GetCustomerListItems();
 		List<SelectListItem> GetContactOfCustomerListItems(int customerId);
@@ -35,7 +36,9 @@ namespace ccsc.Core.Services.Interfaces
 
 		bool HasUnSupportedContract(int customerId);
 
+		Task<Customer> GetCustomerById(int id);
+		Task<List<Customer>> GetCustomersByIds(List<int> customerIds);
+		Task<Customer> GetCustomerByUniversityId(int id);
+		Task<int> GetUniversityIdByCustomerId(int id);
 	}
-
-	
 }

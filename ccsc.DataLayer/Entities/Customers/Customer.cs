@@ -8,6 +8,7 @@ using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using ccsc.DataLayer.Entities.Common;
+using ccsc.DataLayer.Entities.Tutorials;
 
 namespace ccsc.DataLayer.Entities.Customers
 {
@@ -109,6 +110,9 @@ namespace ccsc.DataLayer.Entities.Customers
 		public ICollection<Request> Requests { get; set; }
 
 		public ICollection<Contact> Contacts { get; set; }
+
+		[Display(Name = "ویدیو(ها)")]
+		public ICollection<Video> Videos { get; set; }
 
 		#endregion
 

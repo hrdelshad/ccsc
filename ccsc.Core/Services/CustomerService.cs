@@ -32,12 +32,14 @@ namespace ccsc.Core.Services
 			return _context.Customers.Any(e => e.CustomerId == id);
 		}
 
-		public List<Customer> getCustomers()
+		public async Task<List<Customer>> GetCustomers()
 		{
-			var customers = _context.Customers
+			var customers = await _context.Customers
 				.Include(c => c.CustomerStatus)
-				.Include(c => c.CustomerType);
-			return customers.ToList();
+				.Include(c => c.CustomerType)
+				.OrderBy(s=>s.Title.Trim())
+				.ToListAsync();
+			return customers;
 		}
 
 		public List<SelectListItem> GetCustomerListItems()
@@ -244,6 +246,18 @@ namespace ccsc.Core.Services
 			return GetContractsOfCustomer(customerId).Any(c => c.StartDate.AddMonths(c.Duration) < DateTime.Now);
 		}
 
+		public async Task<List<Customer>> GetCustomersByIds(List<int> customerIds)
+		{
+			List<Customer> customers = new List<Customer>();
+			foreach (int id in customerIds)
+			{
+				var customer = await GetCustomerById(id);
+				customers.Add(customer);
+			}
+
+			return customers;
+		}
+
 		public DateTime VersionDate(string universityUrl)
 		{
 			universityUrl = TextFixer.Url(universityUrl);
@@ -261,5 +275,21 @@ namespace ccsc.Core.Services
 				return DateTime.Now.Date;
 			}
 		}
+
+		public async Task<Customer> GetCustomerById(int id)
+		{
+			return await _context.Customers.FindAsync(id);
+		}
+
+		public async Task<Customer> GetCustomerByUniversityId(int id)
+		{
+			return await _context.Customers.Where(s=>s.UniversityId == id).FirstOrDefaultAsync();
+		}
+
+		public async Task<int> GetUniversityIdByCustomerId(int id)
+		{
+			return await _context.Customers.Where(s => s.CustomerId == id).Select(s=>s.UniversityId.Value).FirstOrDefaultAsync();
+		}
+
 	}
 }

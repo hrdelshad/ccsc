@@ -19,13 +19,15 @@ namespace ccsc.Web.Controllers
 		private readonly IFaqService _faqService;
 		private readonly ISubSystemService _subSystemService;
 		private readonly IUserTypeService _userTypeService;
+		private readonly ICustomerService _customerService;
 
-		public FaqsController(CcscContext context, IFaqService faqService, ISubSystemService subSystemService, IUserTypeService userTypeService)
+		public FaqsController(CcscContext context, IFaqService faqService, ISubSystemService subSystemService, IUserTypeService userTypeService, ICustomerService customerService)
 		{
 			_context = context;
 			_faqService = faqService;
 			_subSystemService = subSystemService;
 			_userTypeService = userTypeService;
+			_customerService = customerService;
 		}
 
 		// GET: Faqs
@@ -72,10 +74,12 @@ namespace ccsc.Web.Controllers
 		// For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
 		[HttpPost]
 		[ValidateAntiForgeryToken]
-		public async Task<IActionResult> Create([Bind("FaqId,Question,Answer,IsActive,CustomerId,VideoId")] Faq faq, List<int> selectedSubSystems, List<int> selectedUserTypes)
+		public async Task<IActionResult> Create([Bind("FaqId,Question,Answer,IsActive,Publish,CustomerId,VideoId")] Faq faq, List<int> selectedSubSystems, List<int> selectedUserTypes)
 		{
 			if (ModelState.IsValid)
 			{
+				if (faq.CustomerId != null)
+					faq.UniversityId = await _customerService.GetUniversityIdByCustomerId(faq.CustomerId.Value);
 				await _faqService.AddFaqAsync(faq, selectedSubSystems, selectedUserTypes);
 				return RedirectToAction(nameof(Index));
 			}
@@ -120,7 +124,7 @@ namespace ccsc.Web.Controllers
 		// For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
 		[HttpPost]
 		[ValidateAntiForgeryToken]
-		public async Task<IActionResult> Edit(int id, [Bind("FaqId,Question,Answer,IsActive,CustomerId,VideoId")] Faq faq, List<int> selectedSubSystems, List<int> selectedUserTypes)
+		public async Task<IActionResult> Edit(int id, [Bind("FaqId,Question,Answer,IsActive,Publish,CustomerId,VideoId")] Faq faq, List<int> selectedSubSystems, List<int> selectedUserTypes)
 		{
 
 			var updatedInput = _context.Faqs
@@ -133,20 +137,24 @@ namespace ccsc.Web.Controllers
 			updatedInput.Answer = faq.Answer;
 			updatedInput.IsActive = faq.IsActive;
 			updatedInput.Publish = faq.Publish;
+			updatedInput.Publish = faq.Publish;
 			updatedInput.CustomerId = faq.CustomerId;
 			updatedInput.Version = faq.Version;
 			updatedInput.VideoId = faq.VideoId;
 
+			if (faq.CustomerId != null)
+				updatedInput.UniversityId = await _customerService.GetUniversityIdByCustomerId(faq.CustomerId.Value);
+			
 			if (id != faq.FaqId)
 			{
 				return NotFound();
 			}
 
-			if (faq.CustomerId != null)
-			{
-				var customer = await _context.Customers.FirstOrDefaultAsync(c => c.CustomerId == faq.CustomerId);
-				faq.UniversityId = customer.UniversityId;
-			}
+			//if (faq.CustomerId != null)
+			//{
+			//	var customer = await _context.Customers.FirstOrDefaultAsync(c => c.CustomerId == faq.CustomerId);
+			//	faq.UniversityId = customer.UniversityId;
+			//}
 
 			if (ModelState.IsValid)
 			{

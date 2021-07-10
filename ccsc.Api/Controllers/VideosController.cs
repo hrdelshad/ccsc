@@ -29,6 +29,7 @@ namespace ccsc.Api.Controllers
 	            .Where(v=>v.PublishedOn.HasValue)
 	            .Include(v=>v.SubSystems)
 	            .Include(v=>v.UserTypes)
+	            .Include(v=>v.Customers)
 	            .ToListAsync();
             Request.HttpContext.Response.Headers.Add("x-New", "30");
             return result;
@@ -55,6 +56,16 @@ namespace ccsc.Api.Controllers
 	        return result;
         }
 
+        [HttpGet("Usertype/{id}")]
+        public async Task<ActionResult<IEnumerable<Video>>> GetCustomerVideos(int id)
+        {
+	        var result = await _context.Videos
+		        .Include(v => v.Customers)
+		        .Where(v => v.Customers.Any(a => a.CustomerId == id))
+		        .ToListAsync();
+	        return result;
+        }
+        
         // GET: api/Videos/5
         [HttpGet("{id}")]
         public async Task<ActionResult<Video>> GetVideo(int id)
@@ -62,6 +73,7 @@ namespace ccsc.Api.Controllers
 	        var video = await _context.Videos.Where(v=>v.VideoId == id)
 		        .Include(v => v.SubSystems.Where(p=>p.IsActive))
 		        .Include(v => v.UserTypes)
+		        .Include(v=>v.Customers)
 		        .FirstOrDefaultAsync();
 	            //.FindAsync(id);
 

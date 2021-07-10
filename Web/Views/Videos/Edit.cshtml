@@ -1,15 +1,18 @@
 ﻿@using ccsc.DataLayer.Entities.ChangeSets
+@using ccsc.DataLayer.Entities.Customers
 @using ccsc.DataLayer.Entities.Tutorials
 @model ccsc.DataLayer.Entities.Tutorials.Video
 
 @{
 	ViewData["Title"] = "ویرایش";
-	
+
 	List<SubSystem> subSystems = ViewData["SubSystem"] as List<SubSystem>;
 	List<UserType> userTypes = ViewData["UserType"] as List<UserType>;
+	List<Customer> customers = ViewData["Customer"] as List<Customer>;
 
 	List<SubSystem> selectedSubSystems = ViewData["SelectedSubSystem"] as List<SubSystem>;
 	List<UserType> selectedUserTypes = ViewData["SelectedUserType"] as List<UserType>;
+	List<Customer> selectedCustomers = ViewData["SelectedCustomers"] as List<Customer>;
 
 }
 
@@ -18,7 +21,7 @@
 <div class="row">
 	<form asp-action="Edit" enctype="multipart/form-data">
 		<div class="row">
-			<div class="col-md-5">
+			<div class="col-md-6">
 				<div asp-validation-summary="ModelOnly" class="text-danger"></div>
 				<input type="hidden" asp-for="VideoId" />
 				<div class="form-group">
@@ -53,7 +56,7 @@
 				</div>
 
 			</div>
-			<div class="col-md-4">
+			<div class="col-md-2">
 				<div>محصولات مرتبط</div>
 				<hr />
 				<div class="form-group form-check">
@@ -61,13 +64,13 @@
 					{
 						<div class="form-check">
 							<label class="form-check-label">
-								<input type="checkbox" name="SelectedSubSystems" class="form-check-input" @(selectedSubSystems != null && selectedSubSystems.Any(s=>s.SubSystemId == item.SubSystemId) ? "checked" :"") value="@item.SubSystemId" /> @item.Title
+								<input type="checkbox" name="SelectedSubSystems" class="form-check-input" @(selectedSubSystems != null && selectedSubSystems.Any(s => s.SubSystemId == item.SubSystemId) ? "checked" : "") value="@item.SubSystemId" /> @item.Title
 							</label>
 						</div>
 					}
 				</div>
 			</div>
-			<div class="col-md-3">
+			<div class="col-md-2">
 				<div>مخاطبان</div>
 				<hr />
 				<div class="form-group form-check">
@@ -75,7 +78,21 @@
 					{
 						<div class="form-check">
 							<label class="form-check-label">
-								<input type="checkbox" name="SelectedUserTypes" class="form-check-input" @(selectedUserTypes != null && selectedUserTypes.Any(s=>s.UserTypeId == item.UserTypeId) ? "checked" :"") value="@item.UserTypeId" /> @item.Title
+								<input type="checkbox" name="SelectedUserTypes" class="form-check-input" @(selectedUserTypes != null && selectedUserTypes.Any(s => s.UserTypeId == item.UserTypeId) ? "checked" : "") value="@item.UserTypeId" /> @item.Title
+							</label>
+						</div>
+					}
+				</div>
+			</div>
+			<div class="col-md-2">
+				<div>مشتری(های) مرتبط</div>
+				<hr />
+				<div class="form-group form-check">
+					@foreach (var item in customers)
+					{
+						<div class="form-check">
+							<label class="form-check-label">
+								<input type="checkbox" name="SelectedCustomers" class="form-check-input" @(selectedCustomers != null && selectedCustomers.Any(s => s.CustomerId == item.CustomerId) ? "checked" : "") value="@item.CustomerId" /> @item.Title
 							</label>
 						</div>
 					}

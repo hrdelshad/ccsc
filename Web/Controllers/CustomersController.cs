@@ -32,15 +32,16 @@ namespace ccsc.Web.Controllers
 		{
 			TempData["MinVersion"] = _config.GetConfigValue("MinVersion");
 			TempData["MinVersionDescription"] = _config.GetConfigDescription("MinVersion");
-			 
-			var customers = _service.getCustomers()
-				.OrderBy(c => c.Title.Trim());
+
+			var customers = await _service.GetCustomers();
 
 			if (!String.IsNullOrEmpty(searchString))
 			{
-				customers = _service.getCustomers()
+				customers = await _service.GetCustomers();
+					var result = customers
 					.Where(c => c.Title.Contains(searchString))
 					.OrderBy(c => c.Title.Trim());
+					return View(result);
 			}
 
 			return View (customers);
