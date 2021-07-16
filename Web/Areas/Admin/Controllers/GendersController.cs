@@ -1,30 +1,29 @@
-﻿using ccsc.DataLayer.Context;
-using ccsc.DataLayer.Entities.Contracts;
+﻿using System.Linq;
+using System.Threading.Tasks;
+using ccsc.DataLayer.Context;
+using ccsc.DataLayer.Entities.Contacts;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using System.Linq;
-using System.Threading.Tasks;
 
-namespace ccsc.Web.Controllers
+namespace ccsc.Web.Areas.Admin.Controllers
 {
-	[Authorize]
-    public class ContractStatusController : Controller
+	public class GendersController : AdminBaseController
     {
         private readonly CcscContext _context;
 
-        public ContractStatusController(CcscContext context)
+        public GendersController(CcscContext context)
         {
             _context = context;
         }
 
-        // GET: ContractStatus
+        // GET: Genders
         public async Task<IActionResult> Index()
         {
-            return View(await _context.ContractStatuses.ToListAsync());
+            return View(await _context.Genders.ToListAsync());
         }
 
-        // GET: ContractStatus/Details/5
+        // GET: Genders/Details/5
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -32,39 +31,39 @@ namespace ccsc.Web.Controllers
                 return NotFound();
             }
 
-            var contractStatus = await _context.ContractStatuses
-                .FirstOrDefaultAsync(m => m.ContractStatusId == id);
-            if (contractStatus == null)
+            var gender = await _context.Genders
+                .FirstOrDefaultAsync(m => m.GenderId == id);
+            if (gender == null)
             {
                 return NotFound();
             }
 
-            return View(contractStatus);
+            return View(gender);
         }
 
-        // GET: ContractStatus/Create
+        // GET: Genders/Create
         public IActionResult Create()
         {
             return View();
         }
 
-        // POST: ContractStatus/Create
+        // POST: Genders/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to, for 
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("ContractStatusId,Title,IsOk")] ContractStatus contractStatus)
+        public async Task<IActionResult> Create([Bind("GenderId,Title")] Gender gender)
         {
             if (ModelState.IsValid)
             {
-                _context.Add(contractStatus);
+                _context.Add(gender);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            return View(contractStatus);
+            return View(gender);
         }
 
-        // GET: ContractStatus/Edit/5
+        // GET: Genders/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -72,22 +71,22 @@ namespace ccsc.Web.Controllers
                 return NotFound();
             }
 
-            var contractStatus = await _context.ContractStatuses.FindAsync(id);
-            if (contractStatus == null)
+            var gender = await _context.Genders.FindAsync(id);
+            if (gender == null)
             {
                 return NotFound();
             }
-            return View(contractStatus);
+            return View(gender);
         }
 
-        // POST: ContractStatus/Edit/5
+        // POST: Genders/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to, for 
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("ContractStatusId,Title,IsOk")] ContractStatus contractStatus)
+        public async Task<IActionResult> Edit(int id, [Bind("GenderId,Title")] Gender gender)
         {
-            if (id != contractStatus.ContractStatusId)
+            if (id != gender.GenderId)
             {
                 return NotFound();
             }
@@ -96,12 +95,12 @@ namespace ccsc.Web.Controllers
             {
                 try
                 {
-                    _context.Update(contractStatus);
+                    _context.Update(gender);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!ContractStatusExists(contractStatus.ContractStatusId))
+                    if (!GenderExists(gender.GenderId))
                     {
                         return NotFound();
                     }
@@ -112,10 +111,10 @@ namespace ccsc.Web.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            return View(contractStatus);
+            return View(gender);
         }
 
-        // GET: ContractStatus/Delete/5
+        // GET: Genders/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -123,30 +122,30 @@ namespace ccsc.Web.Controllers
                 return NotFound();
             }
 
-            var contractStatus = await _context.ContractStatuses
-                .FirstOrDefaultAsync(m => m.ContractStatusId == id);
-            if (contractStatus == null)
+            var gender = await _context.Genders
+                .FirstOrDefaultAsync(m => m.GenderId == id);
+            if (gender == null)
             {
                 return NotFound();
             }
 
-            return View(contractStatus);
+            return View(gender);
         }
 
-        // POST: ContractStatus/Delete/5
+        // POST: Genders/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var contractStatus = await _context.ContractStatuses.FindAsync(id);
-            _context.ContractStatuses.Remove(contractStatus);
+            var gender = await _context.Genders.FindAsync(id);
+            _context.Genders.Remove(gender);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
-        private bool ContractStatusExists(int id)
+        private bool GenderExists(int id)
         {
-            return _context.ContractStatuses.Any(e => e.ContractStatusId == id);
+            return _context.Genders.Any(e => e.GenderId == id);
         }
     }
 }

@@ -17,7 +17,7 @@
                         </a>
                     </li>
                 <!--UI Elements-->
-                    <li>
+                    @*<li>
                         <a href="#" class="menu-dropdown">
                             <i class="menu-icon fa fa-desktop"></i>
                             <span class="menu-text"> عناصر گرافیکی </span>
@@ -97,7 +97,7 @@
                                 </a>
                             </li>
                         </ul>
-                    </li>
+                    </li>*@
                     <!--اطلاعات پایه-->
                     <li>
                         <a href="#" class="menu-dropdown">
@@ -106,28 +106,28 @@
 	                        <i class="menu-expand"></i>
                         </a>
 						<ul class="submenu">
-							<li><a class="dropdown-item" asp-area="" asp-controller="RequestStatus" asp-action="Index"><span class="menu-text">وضعیت درخواست</span></a></li>
-							<li><a class="dropdown-item" asp-area="" asp-controller="Os" asp-action="Index"><span class="menu-text">انواع سیستم عامل</span></a></li>
-							<li><a class="dropdown-item" asp-area="" asp-controller="CourseLevels" asp-action="Index"><span class="menu-text">مقاطع تحصیلی</span></a></li>
-							<li><a class="dropdown-item" asp-area="" asp-controller="RequestChannels" asp-action="Index"><span class="menu-text">کانال درخواست</span></a></li>
-							<li><a class="dropdown-item" asp-area="" asp-controller="RequestTypes" asp-action="Index"><span class="menu-text">نوع درخواست</span></a></li>
-							<li><a class="dropdown-item" asp-area="" asp-controller="ContractTypes" asp-action="Index"><span class="menu-text">انواع قرارداد</span></a></li>
-							<li><a class="dropdown-item" asp-area="" asp-controller="CustomerTypes" asp-action="Index"><span class="menu-text">انواع مشتری</span></a></li>
-							<li><a class="dropdown-item" asp-area="" asp-controller="ServerTypes" asp-action="Index"><span class="menu-text">انوع سرور</span></a></li>
-							<li><a class="dropdown-item" asp-area="" asp-controller="Posts" asp-action="Index"><span class="menu-text">پست ها</span></a></li>
-							<li><a class="dropdown-item" asp-area="" asp-controller="Genders" asp-action="Index"><span class="menu-text">جنسیت</span></a></li>
-							<li><a class="dropdown-item" asp-area="" asp-controller="Salutations" asp-action="Index"><span class="menu-text">القاب</span></a></li>
-							<li><a class="dropdown-item" asp-area="" asp-controller="ServiceTypes" asp-action="Index"><span class="menu-text">انواع سرویس</span></a></li>
-							<li><a class="dropdown-item" asp-area="" asp-controller="ServiceStatus" asp-action="Index"><span class="menu-text">وضعیت های سرویس</span></a></li>
-							<li><a class="dropdown-item" asp-area="" asp-controller="DutyStatus" asp-action="Index"><span class="menu-text">وضعیت کارها</span></a></li>
+							<li><a class="dropdown-item" asp-area="Admin" asp-controller="RequestStatus" asp-action="Index"><span class="menu-text">وضعیت درخواست</span></a></li>
+							<li><a class="dropdown-item" asp-area="Admin" asp-controller="Os" asp-action="Index"><span class="menu-text">انواع سیستم عامل</span></a></li>
+							<li><a class="dropdown-item" asp-area="Admin" asp-controller="CourseLevels" asp-action="Index"><span class="menu-text">مقاطع تحصیلی</span></a></li>
+							<li><a class="dropdown-item" asp-area="Admin" asp-controller="RequestChannels" asp-action="Index"><span class="menu-text">کانال درخواست</span></a></li>
+							<li><a class="dropdown-item" asp-area="Admin" asp-controller="RequestTypes" asp-action="Index"><span class="menu-text">نوع درخواست</span></a></li>
+							<li><a class="dropdown-item" asp-area="Admin" asp-controller="ContractTypes" asp-action="Index"><span class="menu-text">انواع قرارداد</span></a></li>
+							<li><a class="dropdown-item" asp-area="Admin" asp-controller="CustomerTypes" asp-action="Index"><span class="menu-text">انواع مشتری</span></a></li>
+							<li><a class="dropdown-item" asp-area="Admin" asp-controller="ServerTypes" asp-action="Index"><span class="menu-text">انوع سرور</span></a></li>
+							<li><a class="dropdown-item" asp-area="Admin" asp-controller="Posts" asp-action="Index"><span class="menu-text">پست ها</span></a></li>
+							<li><a class="dropdown-item" asp-area="Admin" asp-controller="Genders" asp-action="Index"><span class="menu-text">جنسیت</span></a></li>
+							<li><a class="dropdown-item" asp-area="Admin" asp-controller="Salutations" asp-action="Index"><span class="menu-text">القاب</span></a></li>
+							<li><a class="dropdown-item" asp-area="Admin" asp-controller="ServiceTypes" asp-action="Index"><span class="menu-text">انواع سرویس</span></a></li>
+							<li><a class="dropdown-item" asp-area="Admin" asp-controller="ServiceStatus" asp-action="Index"><span class="menu-text">وضعیت های سرویس</span></a></li>
+							<li><a class="dropdown-item" asp-area="Admin" asp-controller="DutyStatus" asp-action="Index"><span class="menu-text">وضعیت کارها</span></a></li>
 						</ul>
                     </li>
 
                     <li>
-                        <a href="versions.html">
-                            <i class="menu-icon glyphicon glyphicon-fire themesecondary"></i>
+	                    <a asp-area="Admin" asp-controller="Configs" asp-action="Index">
+                            <i class="menu-icon glyphicon glyphicon-asterisk themesecondary"></i>
                             <span class="menu-text">
-                                BeyondAdmin Versions
+                                تنظیمات
                             </span>
                         </a>
                     </li>

@@ -1,30 +1,29 @@
-﻿using ccsc.DataLayer.Context;
+﻿using System.Linq;
+using System.Threading.Tasks;
+using ccsc.DataLayer.Context;
 using ccsc.DataLayer.Entities.Customers;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using System.Linq;
-using System.Threading.Tasks;
 
-namespace ccsc.Web.Controllers
+namespace ccsc.Web.Areas.Admin.Controllers
 {
-	[Authorize]
-    public class SqlVersionsController : Controller
+	public class OsController : AdminBaseController
     {
         private readonly CcscContext _context;
 
-        public SqlVersionsController(CcscContext context)
+        public OsController(CcscContext context)
         {
             _context = context;
         }
 
-        // GET: SqlVersions
+        // GET: Os
         public async Task<IActionResult> Index()
         {
-            return View(await _context.SqlVersions.ToListAsync());
+            return View(await _context.Oses.ToListAsync());
         }
 
-        // GET: SqlVersions/Details/5
+        // GET: Os/Details/5
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -32,39 +31,39 @@ namespace ccsc.Web.Controllers
                 return NotFound();
             }
 
-            var sqlVersion = await _context.SqlVersions
-                .FirstOrDefaultAsync(m => m.SqlVersionId == id);
-            if (sqlVersion == null)
+            var os = await _context.Oses
+                .FirstOrDefaultAsync(m => m.OsId == id);
+            if (os == null)
             {
                 return NotFound();
             }
 
-            return View(sqlVersion);
+            return View(os);
         }
 
-        // GET: SqlVersions/Create
+        // GET: Os/Create
         public IActionResult Create()
         {
             return View();
         }
 
-        // POST: SqlVersions/Create
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+        // POST: Os/Create
+        // To protect from overposting attacks, enable the specific properties you want to bind to, for 
+        // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("SqlVersionId,Title")] SqlVersion sqlVersion)
+        public async Task<IActionResult> Create([Bind("OsId,Title")] Os os)
         {
             if (ModelState.IsValid)
             {
-                _context.Add(sqlVersion);
+                _context.Add(os);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            return View(sqlVersion);
+            return View(os);
         }
 
-        // GET: SqlVersions/Edit/5
+        // GET: Os/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -72,22 +71,22 @@ namespace ccsc.Web.Controllers
                 return NotFound();
             }
 
-            var sqlVersion = await _context.SqlVersions.FindAsync(id);
-            if (sqlVersion == null)
+            var os = await _context.Oses.FindAsync(id);
+            if (os == null)
             {
                 return NotFound();
             }
-            return View(sqlVersion);
+            return View(os);
         }
 
-        // POST: SqlVersions/Edit/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+        // POST: Os/Edit/5
+        // To protect from overposting attacks, enable the specific properties you want to bind to, for 
+        // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("SqlVersionId,Title")] SqlVersion sqlVersion)
+        public async Task<IActionResult> Edit(int id, [Bind("OsId,Title")] Os os)
         {
-            if (id != sqlVersion.SqlVersionId)
+            if (id != os.OsId)
             {
                 return NotFound();
             }
@@ -96,12 +95,12 @@ namespace ccsc.Web.Controllers
             {
                 try
                 {
-                    _context.Update(sqlVersion);
+                    _context.Update(os);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!SqlVersionExists(sqlVersion.SqlVersionId))
+                    if (!OsExists(os.OsId))
                     {
                         return NotFound();
                     }
@@ -112,10 +111,10 @@ namespace ccsc.Web.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            return View(sqlVersion);
+            return View(os);
         }
 
-        // GET: SqlVersions/Delete/5
+        // GET: Os/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -123,30 +122,30 @@ namespace ccsc.Web.Controllers
                 return NotFound();
             }
 
-            var sqlVersion = await _context.SqlVersions
-                .FirstOrDefaultAsync(m => m.SqlVersionId == id);
-            if (sqlVersion == null)
+            var os = await _context.Oses
+                .FirstOrDefaultAsync(m => m.OsId == id);
+            if (os == null)
             {
                 return NotFound();
             }
 
-            return View(sqlVersion);
+            return View(os);
         }
 
-        // POST: SqlVersions/Delete/5
+        // POST: Os/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var sqlVersion = await _context.SqlVersions.FindAsync(id);
-            _context.SqlVersions.Remove(sqlVersion);
+            var os = await _context.Oses.FindAsync(id);
+            _context.Oses.Remove(os);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
-        private bool SqlVersionExists(int id)
+        private bool OsExists(int id)
         {
-            return _context.SqlVersions.Any(e => e.SqlVersionId == id);
+            return _context.Oses.Any(e => e.OsId == id);
         }
     }
 }

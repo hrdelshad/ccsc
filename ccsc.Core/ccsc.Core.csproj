@@ -5,10 +5,14 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Helpers\**" />
     <Compile Remove="Services\Identity\Managers\**" />
+    <EmbeddedResource Remove="Helpers\**" />
     <EmbeddedResource Remove="Services\Identity\Managers\**" />
+    <None Remove="Helpers\**" />
     <None Remove="Services\Identity\Managers\**" />
 		<PackageReference Include="LazZiya.ImageResize" Version="2.0.0" />
+		<PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.EntityFrameworkCore" Version="5.0.2" />
 		<PackageReference Include="SixLabors.ImageSharp" Version="1.0.0-beta0005" />
   </ItemGroup>
 

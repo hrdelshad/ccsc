@@ -1,17 +1,16 @@
-﻿using ccsc.DataLayer.Context;
+﻿using System.Linq;
+using System.Threading.Tasks;
+using ccsc.DataLayer.Context;
 using ccsc.DataLayer.Entities.Customers;
 using Kendo.Mvc.Extensions;
 using Kendo.Mvc.UI;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using System.Linq;
-using System.Threading.Tasks;
 
-namespace ccsc.Web.Controllers
+namespace ccsc.Web.Areas.Admin.Controllers
 {
-	[Authorize]
-	public class ServerTypesController : Controller
+	public class ServerTypesController : AdminBaseController
 	{
 		private readonly CcscContext _context;
 

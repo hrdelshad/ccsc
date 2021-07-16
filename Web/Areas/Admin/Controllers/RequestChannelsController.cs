@@ -1,15 +1,13 @@
-﻿using ccsc.DataLayer.Context;
+﻿using System.Linq;
+using System.Threading.Tasks;
+using ccsc.DataLayer.Context;
 using ccsc.DataLayer.Entities.Requests;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using System.Linq;
-using System.Threading.Tasks;
 
-namespace ccsc.Web.Controllers
+namespace ccsc.Web.Areas.Admin.Controllers
 {
-	[Authorize]
-    public class RequestChannelsController : Controller
+    public class RequestChannelsController : AdminBaseController
     {
         private readonly CcscContext _context;
 

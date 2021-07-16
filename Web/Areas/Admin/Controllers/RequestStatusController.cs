@@ -1,30 +1,28 @@
-﻿using ccsc.DataLayer.Context;
-using ccsc.DataLayer.Entities.Contracts;
-using Microsoft.AspNetCore.Authorization;
+﻿using System.Linq;
+using System.Threading.Tasks;
+using ccsc.DataLayer.Context;
+using ccsc.DataLayer.Entities.Requests;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using System.Linq;
-using System.Threading.Tasks;
 
-namespace ccsc.Web.Controllers
+namespace ccsc.Web.Areas.Admin.Controllers
 {
-	[Authorize]
-    public class ContractTypesController : Controller
+    public class RequestStatusController : AdminBaseController
     {
         private readonly CcscContext _context;
 
-        public ContractTypesController(CcscContext context)
+        public RequestStatusController(CcscContext context)
         {
             _context = context;
         }
 
-        // GET: ContractTypes
+        // GET: RequestStatus
         public async Task<IActionResult> Index()
         {
-            return View(await _context.ContractTypes.ToListAsync());
+            return View(await _context.RequestStatuses.ToListAsync());
         }
 
-        // GET: ContractTypes/Details/5
+        // GET: RequestStatus/Details/5
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -32,39 +30,39 @@ namespace ccsc.Web.Controllers
                 return NotFound();
             }
 
-            var contractType = await _context.ContractTypes
-                .FirstOrDefaultAsync(m => m.ContractTypeId == id);
-            if (contractType == null)
+            var requestStatus = await _context.RequestStatuses
+                .FirstOrDefaultAsync(m => m.RequestStatusId == id);
+            if (requestStatus == null)
             {
                 return NotFound();
             }
 
-            return View(contractType);
+            return View(requestStatus);
         }
 
-        // GET: ContractTypes/Create
+        // GET: RequestStatus/Create
         public IActionResult Create()
         {
             return View();
         }
 
-        // POST: ContractTypes/Create
+        // POST: RequestStatus/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to, for 
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("ContractTypeId,Title")] ContractType contractType)
+        public async Task<IActionResult> Create([Bind("RequestStatusId,Title,IsActive")] RequestStatus requestStatus)
         {
             if (ModelState.IsValid)
             {
-                _context.Add(contractType);
+                _context.Add(requestStatus);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            return View(contractType);
+            return View(requestStatus);
         }
 
-        // GET: ContractTypes/Edit/5
+        // GET: RequestStatus/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -72,22 +70,22 @@ namespace ccsc.Web.Controllers
                 return NotFound();
             }
 
-            var contractType = await _context.ContractTypes.FindAsync(id);
-            if (contractType == null)
+            var requestStatus = await _context.RequestStatuses.FindAsync(id);
+            if (requestStatus == null)
             {
                 return NotFound();
             }
-            return View(contractType);
+            return View(requestStatus);
         }
 
-        // POST: ContractTypes/Edit/5
+        // POST: RequestStatus/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to, for 
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("ContractTypeId,Title")] ContractType contractType)
+        public async Task<IActionResult> Edit(int id, [Bind("RequestStatusId,Title,IsActive")] RequestStatus requestStatus)
         {
-            if (id != contractType.ContractTypeId)
+            if (id != requestStatus.RequestStatusId)
             {
                 return NotFound();
             }
@@ -96,12 +94,12 @@ namespace ccsc.Web.Controllers
             {
                 try
                 {
-                    _context.Update(contractType);
+                    _context.Update(requestStatus);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!ContractTypeExists(contractType.ContractTypeId))
+                    if (!RequestStatusExists(requestStatus.RequestStatusId))
                     {
                         return NotFound();
                     }
@@ -112,10 +110,10 @@ namespace ccsc.Web.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            return View(contractType);
+            return View(requestStatus);
         }
 
-        // GET: ContractTypes/Delete/5
+        // GET: RequestStatus/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -123,30 +121,30 @@ namespace ccsc.Web.Controllers
                 return NotFound();
             }
 
-            var contractType = await _context.ContractTypes
-                .FirstOrDefaultAsync(m => m.ContractTypeId == id);
-            if (contractType == null)
+            var requestStatus = await _context.RequestStatuses
+                .FirstOrDefaultAsync(m => m.RequestStatusId == id);
+            if (requestStatus == null)
             {
                 return NotFound();
             }
 
-            return View(contractType);
+            return View(requestStatus);
         }
 
-        // POST: ContractTypes/Delete/5
+        // POST: RequestStatus/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var contractType = await _context.ContractTypes.FindAsync(id);
-            _context.ContractTypes.Remove(contractType);
+            var requestStatus = await _context.RequestStatuses.FindAsync(id);
+            _context.RequestStatuses.Remove(requestStatus);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
-        private bool ContractTypeExists(int id)
+        private bool RequestStatusExists(int id)
         {
-            return _context.ContractTypes.Any(e => e.ContractTypeId == id);
+            return _context.RequestStatuses.Any(e => e.RequestStatusId == id);
         }
     }
 }

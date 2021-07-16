@@ -1,30 +1,29 @@
-﻿using ccsc.DataLayer.Context;
-using ccsc.DataLayer.Entities.Services;
+﻿using System.Linq;
+using System.Threading.Tasks;
+using ccsc.DataLayer.Context;
+using ccsc.DataLayer.Entities.Contracts;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using System.Linq;
-using System.Threading.Tasks;
 
-namespace ccsc.Web.Controllers
+namespace ccsc.Web.Areas.Admin.Controllers
 {
-	[Authorize]
-    public class DutyStatusController : Controller
+	public class ContractTypesController : AdminBaseController
     {
         private readonly CcscContext _context;
 
-        public DutyStatusController(CcscContext context)
+        public ContractTypesController(CcscContext context)
         {
             _context = context;
         }
 
-        // GET: DutyStatus
+        // GET: ContractTypes
         public async Task<IActionResult> Index()
         {
-            return View(await _context.DutyStatuses.ToListAsync());
+            return View(await _context.ContractTypes.ToListAsync());
         }
 
-        // GET: DutyStatus/Details/5
+        // GET: ContractTypes/Details/5
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -32,39 +31,39 @@ namespace ccsc.Web.Controllers
                 return NotFound();
             }
 
-            var dutyStatus = await _context.DutyStatuses
-                .FirstOrDefaultAsync(m => m.DutyStatusId == id);
-            if (dutyStatus == null)
+            var contractType = await _context.ContractTypes
+                .FirstOrDefaultAsync(m => m.ContractTypeId == id);
+            if (contractType == null)
             {
                 return NotFound();
             }
 
-            return View(dutyStatus);
+            return View(contractType);
         }
 
-        // GET: DutyStatus/Create
+        // GET: ContractTypes/Create
         public IActionResult Create()
         {
             return View();
         }
 
-        // POST: DutyStatus/Create
+        // POST: ContractTypes/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to, for 
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("DutyStatusId,Title,IsOpen")] DutyStatus dutyStatus)
+        public async Task<IActionResult> Create([Bind("ContractTypeId,Title")] ContractType contractType)
         {
             if (ModelState.IsValid)
             {
-                _context.Add(dutyStatus);
+                _context.Add(contractType);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            return View(dutyStatus);
+            return View(contractType);
         }
 
-        // GET: DutyStatus/Edit/5
+        // GET: ContractTypes/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -72,22 +71,22 @@ namespace ccsc.Web.Controllers
                 return NotFound();
             }
 
-            var dutyStatus = await _context.DutyStatuses.FindAsync(id);
-            if (dutyStatus == null)
+            var contractType = await _context.ContractTypes.FindAsync(id);
+            if (contractType == null)
             {
                 return NotFound();
             }
-            return View(dutyStatus);
+            return View(contractType);
         }
 
-        // POST: DutyStatus/Edit/5
+        // POST: ContractTypes/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to, for 
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("DutyStatusId,Title,IsOpen")] DutyStatus dutyStatus)
+        public async Task<IActionResult> Edit(int id, [Bind("ContractTypeId,Title")] ContractType contractType)
         {
-            if (id != dutyStatus.DutyStatusId)
+            if (id != contractType.ContractTypeId)
             {
                 return NotFound();
             }
@@ -96,12 +95,12 @@ namespace ccsc.Web.Controllers
             {
                 try
                 {
-                    _context.Update(dutyStatus);
+                    _context.Update(contractType);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!DutyStatusExists(dutyStatus.DutyStatusId))
+                    if (!ContractTypeExists(contractType.ContractTypeId))
                     {
                         return NotFound();
                     }
@@ -112,10 +111,10 @@ namespace ccsc.Web.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            return View(dutyStatus);
+            return View(contractType);
         }
 
-        // GET: DutyStatus/Delete/5
+        // GET: ContractTypes/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -123,30 +122,30 @@ namespace ccsc.Web.Controllers
                 return NotFound();
             }
 
-            var dutyStatus = await _context.DutyStatuses
-                .FirstOrDefaultAsync(m => m.DutyStatusId == id);
-            if (dutyStatus == null)
+            var contractType = await _context.ContractTypes
+                .FirstOrDefaultAsync(m => m.ContractTypeId == id);
+            if (contractType == null)
             {
                 return NotFound();
             }
 
-            return View(dutyStatus);
+            return View(contractType);
         }
 
-        // POST: DutyStatus/Delete/5
+        // POST: ContractTypes/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var dutyStatus = await _context.DutyStatuses.FindAsync(id);
-            _context.DutyStatuses.Remove(dutyStatus);
+            var contractType = await _context.ContractTypes.FindAsync(id);
+            _context.ContractTypes.Remove(contractType);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
-        private bool DutyStatusExists(int id)
+        private bool ContractTypeExists(int id)
         {
-            return _context.DutyStatuses.Any(e => e.DutyStatusId == id);
+            return _context.ContractTypes.Any(e => e.ContractTypeId == id);
         }
     }
 }

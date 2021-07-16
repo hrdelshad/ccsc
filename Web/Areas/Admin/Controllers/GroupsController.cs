@@ -1,18 +1,15 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using ccsc.DataLayer.Context;
+using ccsc.DataLayer.Entities.Courses;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
-using ccsc.DataLayer.Context;
-using ccsc.DataLayer.Entities.Courses;
-using Microsoft.AspNetCore.Authorization;
 
-namespace ccsc.Web.Controllers
+namespace ccsc.Web.Areas.Admin.Controllers
 {
-	[Authorize]
-    public class GroupsController : Controller
+    public class GroupsController : AdminBaseController
     {
         private readonly CcscContext _context;
 

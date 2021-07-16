@@ -1,30 +1,31 @@
-﻿using ccsc.DataLayer.Context;
-using ccsc.DataLayer.Entities.Customers;
+﻿using System.Linq;
+using System.Threading.Tasks;
+using ccsc.DataLayer.Context;
+using ccsc.DataLayer.Entities.Contacts;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
-using System.Linq;
-using System.Threading.Tasks;
 
-namespace ccsc.Web.Controllers
+namespace ccsc.Web.Areas.Admin.Controllers
 {
-	[Authorize]
-    public class CustomerTypesController : Controller
+    public class SalutationsController : AdminBaseController
     {
         private readonly CcscContext _context;
 
-        public CustomerTypesController(CcscContext context)
+        public SalutationsController(CcscContext context)
         {
             _context = context;
         }
 
-        // GET: CustomerTypes
+        // GET: Salutations
         public async Task<IActionResult> Index()
         {
-            return View(await _context.CustomerTypes.ToListAsync());
+            var ccscContext = _context.Salutations.Include(s => s.Gender);
+            return View(await ccscContext.ToListAsync());
         }
 
-        // GET: CustomerTypes/Details/5
+        // GET: Salutations/Details/5
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -32,39 +33,42 @@ namespace ccsc.Web.Controllers
                 return NotFound();
             }
 
-            var customerType = await _context.CustomerTypes
-                .FirstOrDefaultAsync(m => m.CustomerTypeId == id);
-            if (customerType == null)
+            var salutation = await _context.Salutations
+                .Include(s => s.Gender)
+                .FirstOrDefaultAsync(m => m.SalutationId == id);
+            if (salutation == null)
             {
                 return NotFound();
             }
 
-            return View(customerType);
+            return View(salutation);
         }
 
-        // GET: CustomerTypes/Create
+        // GET: Salutations/Create
         public IActionResult Create()
         {
+            ViewData["GenderId"] = new SelectList(_context.Genders, "GenderId", "Title");
             return View();
         }
 
-        // POST: CustomerTypes/Create
+        // POST: Salutations/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to, for 
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("TypeId,Title")] CustomerType customerType)
+        public async Task<IActionResult> Create([Bind("SalutationId,Title,GenderId")] Salutation salutation)
         {
             if (ModelState.IsValid)
             {
-                _context.Add(customerType);
+                _context.Add(salutation);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            return View(customerType);
+            ViewData["GenderId"] = new SelectList(_context.Genders, "GenderId", "Title", salutation.GenderId);
+            return View(salutation);
         }
 
-        // GET: CustomerTypes/Edit/5
+        // GET: Salutations/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -72,22 +76,23 @@ namespace ccsc.Web.Controllers
                 return NotFound();
             }
 
-            var customerType = await _context.CustomerTypes.FindAsync(id);
-            if (customerType == null)
+            var salutation = await _context.Salutations.FindAsync(id);
+            if (salutation == null)
             {
                 return NotFound();
             }
-            return View(customerType);
+            ViewData["GenderId"] = new SelectList(_context.Genders, "GenderId", "Title", salutation.GenderId);
+            return View(salutation);
         }
 
-        // POST: CustomerTypes/Edit/5
+        // POST: Salutations/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to, for 
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("TypeId,Title")] CustomerType customerType)
+        public async Task<IActionResult> Edit(int id, [Bind("SalutationId,Title,GenderId")] Salutation salutation)
         {
-            if (id != customerType.CustomerTypeId)
+            if (id != salutation.SalutationId)
             {
                 return NotFound();
             }
@@ -96,12 +101,12 @@ namespace ccsc.Web.Controllers
             {
                 try
                 {
-                    _context.Update(customerType);
+                    _context.Update(salutation);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!CustomerTypeExists(customerType.CustomerTypeId))
+                    if (!SalutationExists(salutation.SalutationId))
                     {
                         return NotFound();
                     }
@@ -112,10 +117,11 @@ namespace ccsc.Web.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            return View(customerType);
+            ViewData["GenderId"] = new SelectList(_context.Genders, "GenderId", "Title", salutation.GenderId);
+            return View(salutation);
         }
 
-        // GET: CustomerTypes/Delete/5
+        // GET: Salutations/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -123,30 +129,31 @@ namespace ccsc.Web.Controllers
                 return NotFound();
             }
 
-            var customerType = await _context.CustomerTypes
-                .FirstOrDefaultAsync(m => m.CustomerTypeId == id);
-            if (customerType == null)
+            var salutation = await _context.Salutations
+                .Include(s => s.Gender)
+                .FirstOrDefaultAsync(m => m.SalutationId == id);
+            if (salutation == null)
             {
                 return NotFound();
             }
 
-            return View(customerType);
+            return View(salutation);
         }
 
-        // POST: CustomerTypes/Delete/5
+        // POST: Salutations/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var customerType = await _context.CustomerTypes.FindAsync(id);
-            _context.CustomerTypes.Remove(customerType);
+            var salutation = await _context.Salutations.FindAsync(id);
+            _context.Salutations.Remove(salutation);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
-        private bool CustomerTypeExists(int id)
+        private bool SalutationExists(int id)
         {
-            return _context.CustomerTypes.Any(e => e.CustomerTypeId == id);
+            return _context.Salutations.Any(e => e.SalutationId == id);
         }
     }
 }

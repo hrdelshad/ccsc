@@ -6,9 +6,13 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Remove="Models\**" />
+    <Compile Remove="wwwroot\lib\PersianDatePicker\**" />
     <Content Remove="Models\**" />
+    <Content Remove="wwwroot\lib\PersianDatePicker\**" />
     <EmbeddedResource Remove="Models\**" />
+    <EmbeddedResource Remove="wwwroot\lib\PersianDatePicker\**" />
     <None Remove="Models\**" />
+    <None Remove="wwwroot\lib\PersianDatePicker\**" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="DelApps.DelSms" Version="1.0.2" />

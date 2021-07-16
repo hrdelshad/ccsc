@@ -1,30 +1,29 @@
-﻿using ccsc.DataLayer.Context;
-using ccsc.DataLayer.Entities.Requests;
+﻿using System.Linq;
+using System.Threading.Tasks;
+using ccsc.DataLayer.Context;
+using ccsc.DataLayer.Entities.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using System.Linq;
-using System.Threading.Tasks;
 
-namespace ccsc.Web.Controllers
+namespace ccsc.Web.Areas.Admin.Controllers
 {
-	[Authorize]
-    public class RequestTypesController : Controller
+    public class ServiceStatusController : AdminBaseController
     {
         private readonly CcscContext _context;
 
-        public RequestTypesController(CcscContext context)
+        public ServiceStatusController(CcscContext context)
         {
             _context = context;
         }
 
-        // GET: RequestTypes
+        // GET: ServiceStatus
         public async Task<IActionResult> Index()
         {
-            return View(await _context.RequestTypes.ToListAsync());
+            return View(await _context.ServiceStatuses.ToListAsync());
         }
 
-        // GET: RequestTypes/Details/5
+        // GET: ServiceStatus/Details/5
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -32,39 +31,39 @@ namespace ccsc.Web.Controllers
                 return NotFound();
             }
 
-            var requestType = await _context.RequestTypes
-                .FirstOrDefaultAsync(m => m.RequestTypeId == id);
-            if (requestType == null)
+            var serviceStatus = await _context.ServiceStatuses
+                .FirstOrDefaultAsync(m => m.ServiceStatusId == id);
+            if (serviceStatus == null)
             {
                 return NotFound();
             }
 
-            return View(requestType);
+            return View(serviceStatus);
         }
 
-        // GET: RequestTypes/Create
+        // GET: ServiceStatus/Create
         public IActionResult Create()
         {
             return View();
         }
 
-        // POST: RequestTypes/Create
+        // POST: ServiceStatus/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("RequestTypeId,Title,ReplyByEnum")] RequestType requestType)
+        public async Task<IActionResult> Create([Bind("ServiceStatusId,title,IsOk")] ServiceStatus serviceStatus)
         {
             if (ModelState.IsValid)
             {
-                _context.Add(requestType);
+                _context.Add(serviceStatus);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            return View(requestType);
+            return View(serviceStatus);
         }
 
-        // GET: RequestTypes/Edit/5
+        // GET: ServiceStatus/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -72,22 +71,22 @@ namespace ccsc.Web.Controllers
                 return NotFound();
             }
 
-            var requestType = await _context.RequestTypes.FindAsync(id);
-            if (requestType == null)
+            var serviceStatus = await _context.ServiceStatuses.FindAsync(id);
+            if (serviceStatus == null)
             {
                 return NotFound();
             }
-            return View(requestType);
+            return View(serviceStatus);
         }
 
-        // POST: RequestTypes/Edit/5
+        // POST: ServiceStatus/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("RequestTypeId,Title,ReplyByEnum")] RequestType requestType)
+        public async Task<IActionResult> Edit(int id, [Bind("ServiceStatusId,title,IsOk")] ServiceStatus serviceStatus)
         {
-            if (id != requestType.RequestTypeId)
+            if (id != serviceStatus.ServiceStatusId)
             {
                 return NotFound();
             }
@@ -96,12 +95,12 @@ namespace ccsc.Web.Controllers
             {
                 try
                 {
-                    _context.Update(requestType);
+                    _context.Update(serviceStatus);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!RequestTypeExists(requestType.RequestTypeId))
+                    if (!ServiceStatusExists(serviceStatus.ServiceStatusId))
                     {
                         return NotFound();
                     }
@@ -112,10 +111,10 @@ namespace ccsc.Web.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            return View(requestType);
+            return View(serviceStatus);
         }
 
-        // GET: RequestTypes/Delete/5
+        // GET: ServiceStatus/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -123,30 +122,30 @@ namespace ccsc.Web.Controllers
                 return NotFound();
             }
 
-            var requestType = await _context.RequestTypes
-                .FirstOrDefaultAsync(m => m.RequestTypeId == id);
-            if (requestType == null)
+            var serviceStatus = await _context.ServiceStatuses
+                .FirstOrDefaultAsync(m => m.ServiceStatusId == id);
+            if (serviceStatus == null)
             {
                 return NotFound();
             }
 
-            return View(requestType);
+            return View(serviceStatus);
         }
 
-        // POST: RequestTypes/Delete/5
+        // POST: ServiceStatus/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var requestType = await _context.RequestTypes.FindAsync(id);
-            _context.RequestTypes.Remove(requestType);
+            var serviceStatus = await _context.ServiceStatuses.FindAsync(id);
+            _context.ServiceStatuses.Remove(serviceStatus);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
-        private bool RequestTypeExists(int id)
+        private bool ServiceStatusExists(int id)
         {
-            return _context.RequestTypes.Any(e => e.RequestTypeId == id);
+            return _context.ServiceStatuses.Any(e => e.ServiceStatusId == id);
         }
     }
 }

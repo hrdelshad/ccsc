@@ -1,30 +1,28 @@
-﻿using ccsc.DataLayer.Context;
-using ccsc.DataLayer.Entities.Customers;
-using Microsoft.AspNetCore.Authorization;
+﻿using System.Linq;
+using System.Threading.Tasks;
+using ccsc.DataLayer.Context;
+using ccsc.DataLayer.Entities.Contacts;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using System.Linq;
-using System.Threading.Tasks;
 
-namespace ccsc.Web.Controllers
+namespace ccsc.Web.Areas.Admin.Controllers
 {
-	[Authorize]
-    public class OsController : Controller
+    public class PostsController : AdminBaseController
     {
         private readonly CcscContext _context;
 
-        public OsController(CcscContext context)
+        public PostsController(CcscContext context)
         {
             _context = context;
         }
 
-        // GET: Os
+        // GET: Posts
         public async Task<IActionResult> Index()
         {
-            return View(await _context.Oses.ToListAsync());
+            return View(await _context.Posts.ToListAsync());
         }
 
-        // GET: Os/Details/5
+        // GET: Posts/Details/5
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -32,39 +30,39 @@ namespace ccsc.Web.Controllers
                 return NotFound();
             }
 
-            var os = await _context.Oses
-                .FirstOrDefaultAsync(m => m.OsId == id);
-            if (os == null)
+            var post = await _context.Posts
+                .FirstOrDefaultAsync(m => m.PostId == id);
+            if (post == null)
             {
                 return NotFound();
             }
 
-            return View(os);
+            return View(post);
         }
 
-        // GET: Os/Create
+        // GET: Posts/Create
         public IActionResult Create()
         {
             return View();
         }
 
-        // POST: Os/Create
+        // POST: Posts/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to, for 
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("OsId,Title")] Os os)
+        public async Task<IActionResult> Create([Bind("PostId,Title")] Post post)
         {
             if (ModelState.IsValid)
             {
-                _context.Add(os);
+                _context.Add(post);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            return View(os);
+            return View(post);
         }
 
-        // GET: Os/Edit/5
+        // GET: Posts/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -72,22 +70,22 @@ namespace ccsc.Web.Controllers
                 return NotFound();
             }
 
-            var os = await _context.Oses.FindAsync(id);
-            if (os == null)
+            var post = await _context.Posts.FindAsync(id);
+            if (post == null)
             {
                 return NotFound();
             }
-            return View(os);
+            return View(post);
         }
 
-        // POST: Os/Edit/5
+        // POST: Posts/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to, for 
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("OsId,Title")] Os os)
+        public async Task<IActionResult> Edit(int id, [Bind("PostId,Title")] Post post)
         {
-            if (id != os.OsId)
+            if (id != post.PostId)
             {
                 return NotFound();
             }
@@ -96,12 +94,12 @@ namespace ccsc.Web.Controllers
             {
                 try
                 {
-                    _context.Update(os);
+                    _context.Update(post);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!OsExists(os.OsId))
+                    if (!PostExists(post.PostId))
                     {
                         return NotFound();
                     }
@@ -112,10 +110,10 @@ namespace ccsc.Web.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            return View(os);
+            return View(post);
         }
 
-        // GET: Os/Delete/5
+        // GET: Posts/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -123,30 +121,30 @@ namespace ccsc.Web.Controllers
                 return NotFound();
             }
 
-            var os = await _context.Oses
-                .FirstOrDefaultAsync(m => m.OsId == id);
-            if (os == null)
+            var post = await _context.Posts
+                .FirstOrDefaultAsync(m => m.PostId == id);
+            if (post == null)
             {
                 return NotFound();
             }
 
-            return View(os);
+            return View(post);
         }
 
-        // POST: Os/Delete/5
+        // POST: Posts/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var os = await _context.Oses.FindAsync(id);
-            _context.Oses.Remove(os);
+            var post = await _context.Posts.FindAsync(id);
+            _context.Posts.Remove(post);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
-        private bool OsExists(int id)
+        private bool PostExists(int id)
         {
-            return _context.Oses.Any(e => e.OsId == id);
+            return _context.Posts.Any(e => e.PostId == id);
         }
     }
 }

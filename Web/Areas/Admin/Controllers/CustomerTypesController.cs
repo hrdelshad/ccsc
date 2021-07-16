@@ -1,30 +1,28 @@
-﻿using ccsc.DataLayer.Context;
-using ccsc.DataLayer.Entities.Contacts;
-using Microsoft.AspNetCore.Authorization;
+﻿using System.Linq;
+using System.Threading.Tasks;
+using ccsc.DataLayer.Context;
+using ccsc.DataLayer.Entities.Customers;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using System.Linq;
-using System.Threading.Tasks;
 
-namespace ccsc.Web.Controllers
+namespace ccsc.Web.Areas.Admin.Controllers
 {
-	[Authorize]
-    public class PostsController : Controller
+	public class CustomerTypesController : AdminBaseController
     {
         private readonly CcscContext _context;
 
-        public PostsController(CcscContext context)
+        public CustomerTypesController(CcscContext context)
         {
             _context = context;
         }
 
-        // GET: Posts
+        // GET: CustomerTypes
         public async Task<IActionResult> Index()
         {
-            return View(await _context.Posts.ToListAsync());
+            return View(await _context.CustomerTypes.ToListAsync());
         }
 
-        // GET: Posts/Details/5
+        // GET: CustomerTypes/Details/5
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -32,39 +30,39 @@ namespace ccsc.Web.Controllers
                 return NotFound();
             }
 
-            var post = await _context.Posts
-                .FirstOrDefaultAsync(m => m.PostId == id);
-            if (post == null)
+            var customerType = await _context.CustomerTypes
+                .FirstOrDefaultAsync(m => m.CustomerTypeId == id);
+            if (customerType == null)
             {
                 return NotFound();
             }
 
-            return View(post);
+            return View(customerType);
         }
 
-        // GET: Posts/Create
+        // GET: CustomerTypes/Create
         public IActionResult Create()
         {
             return View();
         }
 
-        // POST: Posts/Create
+        // POST: CustomerTypes/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to, for 
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("PostId,Title")] Post post)
+        public async Task<IActionResult> Create([Bind("TypeId,Title")] CustomerType customerType)
         {
             if (ModelState.IsValid)
             {
-                _context.Add(post);
+                _context.Add(customerType);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            return View(post);
+            return View(customerType);
         }
 
-        // GET: Posts/Edit/5
+        // GET: CustomerTypes/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -72,22 +70,22 @@ namespace ccsc.Web.Controllers
                 return NotFound();
             }
 
-            var post = await _context.Posts.FindAsync(id);
-            if (post == null)
+            var customerType = await _context.CustomerTypes.FindAsync(id);
+            if (customerType == null)
             {
                 return NotFound();
             }
-            return View(post);
+            return View(customerType);
         }
 
-        // POST: Posts/Edit/5
+        // POST: CustomerTypes/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to, for 
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("PostId,Title")] Post post)
+        public async Task<IActionResult> Edit(int id, [Bind("TypeId,Title")] CustomerType customerType)
         {
-            if (id != post.PostId)
+            if (id != customerType.CustomerTypeId)
             {
                 return NotFound();
             }
@@ -96,12 +94,12 @@ namespace ccsc.Web.Controllers
             {
                 try
                 {
-                    _context.Update(post);
+                    _context.Update(customerType);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!PostExists(post.PostId))
+                    if (!CustomerTypeExists(customerType.CustomerTypeId))
                     {
                         return NotFound();
                     }
@@ -112,10 +110,10 @@ namespace ccsc.Web.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            return View(post);
+            return View(customerType);
         }
 
-        // GET: Posts/Delete/5
+        // GET: CustomerTypes/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -123,30 +121,30 @@ namespace ccsc.Web.Controllers
                 return NotFound();
             }
 
-            var post = await _context.Posts
-                .FirstOrDefaultAsync(m => m.PostId == id);
-            if (post == null)
+            var customerType = await _context.CustomerTypes
+                .FirstOrDefaultAsync(m => m.CustomerTypeId == id);
+            if (customerType == null)
             {
                 return NotFound();
             }
 
-            return View(post);
+            return View(customerType);
         }
 
-        // POST: Posts/Delete/5
+        // POST: CustomerTypes/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var post = await _context.Posts.FindAsync(id);
-            _context.Posts.Remove(post);
+            var customerType = await _context.CustomerTypes.FindAsync(id);
+            _context.CustomerTypes.Remove(customerType);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
-        private bool PostExists(int id)
+        private bool CustomerTypeExists(int id)
         {
-            return _context.Posts.Any(e => e.PostId == id);
+            return _context.CustomerTypes.Any(e => e.CustomerTypeId == id);
         }
     }
 }

@@ -1,33 +1,31 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using ccsc.DataLayer.Context;
+using ccsc.DataLayer.Entities.Courses;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
-using ccsc.DataLayer.Context;
-using ccsc.DataLayer.Entities.Courses;
-using Microsoft.AspNetCore.Authorization;
 
-namespace ccsc.Web.Controllers
+namespace ccsc.Web.Areas.Admin.Controllers
 {
-	[Authorize]
-    public class FacultiesController : Controller
+    public class CoursesController : AdminBaseController
     {
         private readonly CcscContext _context;
 
-        public FacultiesController(CcscContext context)
+        public CoursesController(CcscContext context)
         {
             _context = context;
         }
 
-        // GET: Faculties
+        // GET: Courses
         public async Task<IActionResult> Index()
         {
-            return View(await _context.Faculties.ToListAsync());
+            var ccscContext = _context.Courses.Include(c => c.CourseLevel);
+            return View(await ccscContext.ToListAsync());
         }
 
-        // GET: Faculties/Details/5
+        // GET: Courses/Details/5
         public async Task<IActionResult> Details(Guid? id)
         {
             if (id == null)
@@ -35,40 +33,43 @@ namespace ccsc.Web.Controllers
                 return NotFound();
             }
 
-            var faculty = await _context.Faculties
-                .FirstOrDefaultAsync(m => m.FacultyId == id);
-            if (faculty == null)
+            var course = await _context.Courses
+                .Include(c => c.CourseLevel)
+                .FirstOrDefaultAsync(m => m.CourseId == id);
+            if (course == null)
             {
                 return NotFound();
             }
 
-            return View(faculty);
+            return View(course);
         }
 
-        // GET: Faculties/Create
+        // GET: Courses/Create
         public IActionResult Create()
         {
+            ViewData["CourseLevelId"] = new SelectList(_context.CourseLevels, "CourseLevelId", "Title");
             return View();
         }
 
-        // POST: Faculties/Create
+        // POST: Courses/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("FacultyId,Title")] Faculty faculty)
+        public async Task<IActionResult> Create([Bind("CourseId,Title,CourseLevelId,CourseCode,IsActive")] Course course)
         {
             if (ModelState.IsValid)
             {
-                faculty.FacultyId = Guid.NewGuid();
-                _context.Add(faculty);
+                course.CourseId = Guid.NewGuid();
+                _context.Add(course);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            return View(faculty);
+            ViewData["CourseLevelId"] = new SelectList(_context.CourseLevels, "CourseLevelId", "Title", course.CourseLevelId);
+            return View(course);
         }
 
-        // GET: Faculties/Edit/5
+        // GET: Courses/Edit/5
         public async Task<IActionResult> Edit(Guid? id)
         {
             if (id == null)
@@ -76,22 +77,23 @@ namespace ccsc.Web.Controllers
                 return NotFound();
             }
 
-            var faculty = await _context.Faculties.FindAsync(id);
-            if (faculty == null)
+            var course = await _context.Courses.FindAsync(id);
+            if (course == null)
             {
                 return NotFound();
             }
-            return View(faculty);
+            ViewData["CourseLevelId"] = new SelectList(_context.CourseLevels, "CourseLevelId", "Title", course.CourseLevelId);
+            return View(course);
         }
 
-        // POST: Faculties/Edit/5
+        // POST: Courses/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(Guid id, [Bind("FacultyId,Title")] Faculty faculty)
+        public async Task<IActionResult> Edit(Guid id, [Bind("CourseId,Title,CourseLevelId,CourseCode,IsActive")] Course course)
         {
-            if (id != faculty.FacultyId)
+            if (id != course.CourseId)
             {
                 return NotFound();
             }
@@ -100,12 +102,12 @@ namespace ccsc.Web.Controllers
             {
                 try
                 {
-                    _context.Update(faculty);
+                    _context.Update(course);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!FacultyExists(faculty.FacultyId))
+                    if (!CourseExists(course.CourseId))
                     {
                         return NotFound();
                     }
@@ -116,10 +118,11 @@ namespace ccsc.Web.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            return View(faculty);
+            ViewData["CourseLevelId"] = new SelectList(_context.CourseLevels, "CourseLevelId", "Title", course.CourseLevelId);
+            return View(course);
         }
 
-        // GET: Faculties/Delete/5
+        // GET: Courses/Delete/5
         public async Task<IActionResult> Delete(Guid? id)
         {
             if (id == null)
@@ -127,30 +130,31 @@ namespace ccsc.Web.Controllers
                 return NotFound();
             }
 
-            var faculty = await _context.Faculties
-                .FirstOrDefaultAsync(m => m.FacultyId == id);
-            if (faculty == null)
+            var course = await _context.Courses
+                .Include(c => c.CourseLevel)
+                .FirstOrDefaultAsync(m => m.CourseId == id);
+            if (course == null)
             {
                 return NotFound();
             }
 
-            return View(faculty);
+            return View(course);
         }
 
-        // POST: Faculties/Delete/5
+        // POST: Courses/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(Guid id)
         {
-            var faculty = await _context.Faculties.FindAsync(id);
-            _context.Faculties.Remove(faculty);
+            var course = await _context.Courses.FindAsync(id);
+            _context.Courses.Remove(course);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
-        private bool FacultyExists(Guid id)
+        private bool CourseExists(Guid id)
         {
-            return _context.Faculties.Any(e => e.FacultyId == id);
+            return _context.Courses.Any(e => e.CourseId == id);
         }
     }
 }

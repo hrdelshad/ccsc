@@ -1,30 +1,28 @@
-﻿using ccsc.DataLayer.Context;
-using ccsc.DataLayer.Entities.Contacts;
-using Microsoft.AspNetCore.Authorization;
+﻿using System.Linq;
+using System.Threading.Tasks;
+using ccsc.DataLayer.Context;
+using ccsc.DataLayer.Entities.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using System.Linq;
-using System.Threading.Tasks;
 
-namespace ccsc.Web.Controllers
+namespace ccsc.Web.Areas.Admin.Controllers
 {
-	[Authorize]
-    public class GendersController : Controller
+	public class DutyStatusController : AdminBaseController
     {
         private readonly CcscContext _context;
 
-        public GendersController(CcscContext context)
+        public DutyStatusController(CcscContext context)
         {
             _context = context;
         }
 
-        // GET: Genders
+        // GET: DutyStatus
         public async Task<IActionResult> Index()
         {
-            return View(await _context.Genders.ToListAsync());
+            return View(await _context.DutyStatuses.ToListAsync());
         }
 
-        // GET: Genders/Details/5
+        // GET: DutyStatus/Details/5
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -32,39 +30,39 @@ namespace ccsc.Web.Controllers
                 return NotFound();
             }
 
-            var gender = await _context.Genders
-                .FirstOrDefaultAsync(m => m.GenderId == id);
-            if (gender == null)
+            var dutyStatus = await _context.DutyStatuses
+                .FirstOrDefaultAsync(m => m.DutyStatusId == id);
+            if (dutyStatus == null)
             {
                 return NotFound();
             }
 
-            return View(gender);
+            return View(dutyStatus);
         }
 
-        // GET: Genders/Create
+        // GET: DutyStatus/Create
         public IActionResult Create()
         {
             return View();
         }
 
-        // POST: Genders/Create
+        // POST: DutyStatus/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to, for 
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("GenderId,Title")] Gender gender)
+        public async Task<IActionResult> Create([Bind("DutyStatusId,Title,IsOpen")] DutyStatus dutyStatus)
         {
             if (ModelState.IsValid)
             {
-                _context.Add(gender);
+                _context.Add(dutyStatus);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            return View(gender);
+            return View(dutyStatus);
         }
 
-        // GET: Genders/Edit/5
+        // GET: DutyStatus/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -72,22 +70,22 @@ namespace ccsc.Web.Controllers
                 return NotFound();
             }
 
-            var gender = await _context.Genders.FindAsync(id);
-            if (gender == null)
+            var dutyStatus = await _context.DutyStatuses.FindAsync(id);
+            if (dutyStatus == null)
             {
                 return NotFound();
             }
-            return View(gender);
+            return View(dutyStatus);
         }
 
-        // POST: Genders/Edit/5
+        // POST: DutyStatus/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to, for 
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("GenderId,Title")] Gender gender)
+        public async Task<IActionResult> Edit(int id, [Bind("DutyStatusId,Title,IsOpen")] DutyStatus dutyStatus)
         {
-            if (id != gender.GenderId)
+            if (id != dutyStatus.DutyStatusId)
             {
                 return NotFound();
             }
@@ -96,12 +94,12 @@ namespace ccsc.Web.Controllers
             {
                 try
                 {
-                    _context.Update(gender);
+                    _context.Update(dutyStatus);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!GenderExists(gender.GenderId))
+                    if (!DutyStatusExists(dutyStatus.DutyStatusId))
                     {
                         return NotFound();
                     }
@@ -112,10 +110,10 @@ namespace ccsc.Web.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            return View(gender);
+            return View(dutyStatus);
         }
 
-        // GET: Genders/Delete/5
+        // GET: DutyStatus/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -123,30 +121,30 @@ namespace ccsc.Web.Controllers
                 return NotFound();
             }
 
-            var gender = await _context.Genders
-                .FirstOrDefaultAsync(m => m.GenderId == id);
-            if (gender == null)
+            var dutyStatus = await _context.DutyStatuses
+                .FirstOrDefaultAsync(m => m.DutyStatusId == id);
+            if (dutyStatus == null)
             {
                 return NotFound();
             }
 
-            return View(gender);
+            return View(dutyStatus);
         }
 
-        // POST: Genders/Delete/5
+        // POST: DutyStatus/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var gender = await _context.Genders.FindAsync(id);
-            _context.Genders.Remove(gender);
+            var dutyStatus = await _context.DutyStatuses.FindAsync(id);
+            _context.DutyStatuses.Remove(dutyStatus);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
-        private bool GenderExists(int id)
+        private bool DutyStatusExists(int id)
         {
-            return _context.Genders.Any(e => e.GenderId == id);
+            return _context.DutyStatuses.Any(e => e.DutyStatusId == id);
         }
     }
 }
