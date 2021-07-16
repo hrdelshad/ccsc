@@ -12,14 +12,10 @@ namespace ccsc.Core.Extensions
 		//	return displayName;
 		//}
 
-		public static string GetEnumName(this System.Enum MyEnum)
+		public static string GetEnumName(this System.Enum myEnum)
 		{
-			var enumDisplayName = MyEnum.GetType().GetMember(MyEnum.ToString()).FirstOrDefault();
-			if(enumDisplayName != null)
-			{
-				return enumDisplayName.GetCustomAttribute<DisplayAttribute>()?.GetName();
-			}
-			return "";
+			var enumDisplayName = myEnum.GetType().GetMember(myEnum.ToString()).FirstOrDefault();
+			return enumDisplayName != null ? enumDisplayName.GetCustomAttribute<DisplayAttribute>()?.GetName() : "";
 		}
 		
 	}
